@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Audiometry.xcodeproj">
+      location = "self:/Users/DeMoon/Documents/Swift/Audiometry/Audiometry.xcodeproj">
    </FileRef>
 </Workspace>
