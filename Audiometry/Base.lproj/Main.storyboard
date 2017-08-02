@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tuj-lx-Ccj">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Demo View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Demo View Controller" id="BYZ-38-t0r" customClass="ViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -157,16 +157,16 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5KE-DC-NgI">
-                                <rect key="frame" x="-301" y="532" width="1625" height="88"/>
+                                <rect key="frame" x="-333" y="532" width="1689" height="88"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Volume Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbP-PK-iN4">
-                                        <rect key="frame" x="741.5" y="0.0" width="142.5" height="29"/>
+                                        <rect key="frame" x="773.5" y="0.0" width="142.5" height="29"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.20000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2az-qC-UMM">
-                                        <rect key="frame" x="-2" y="29" width="1629" height="31"/>
+                                        <rect key="frame" x="-2" y="29" width="1693" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="984" id="esU-zs-qio"/>
                                         </constraints>
@@ -175,7 +175,7 @@
                                         </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnI-wz-ucO">
-                                        <rect key="frame" x="795" y="59" width="35" height="29"/>
+                                        <rect key="frame" x="827" y="59" width="35" height="29"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -212,6 +212,14 @@
                                     <action selector="saveVolume:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T1f-3n-eeX"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2tr-Qw-kjv">
+                                <rect key="frame" x="20" y="20" width="98" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <segue destination="tuj-lx-Ccj" kind="show" id="w8B-rL-49Z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -243,7 +251,102 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10.546875" y="51.5625"/>
+            <point key="canvasLocation" x="-620" y="-304"/>
+        </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="K4a-ah-S9L">
+            <objects>
+                <viewController title="Menu View Controller" id="tuj-lx-Ccj" customClass="MenuViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ISd-sq-aj6"/>
+                        <viewControllerLayoutGuide type="bottom" id="UOW-OQ-RMv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Uiq-jD-7av">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audiometry" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X9c-is-o1r">
+                                <rect key="frame" x="383.5" y="227.5" width="257" height="57.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="48"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bki-yo-Vi6">
+                                <rect key="frame" x="416.5" y="354" width="192" height="60"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="192" id="CIs-BY-1yV"/>
+                                    <constraint firstAttribute="height" constant="60" id="q4I-tX-RDV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="colorChange:" destination="tuj-lx-Ccj" eventType="touchDown" id="XMr-8b-GuI"/>
+                                    <action selector="colorRevert:" destination="tuj-lx-Ccj" eventType="touchCancel" id="4Cq-Dg-fUs"/>
+                                    <segue destination="7gP-tL-Dfc" kind="show" id="Yf8-rJ-YOz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xTu-hC-msk">
+                                <rect key="frame" x="416" y="482" width="192" height="60"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="192" id="1rC-4U-iaO"/>
+                                    <constraint firstAttribute="height" constant="60" id="a6w-F5-0hY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Calibration"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="AnX-I4-gUF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Bki-yo-Vi6" firstAttribute="centerY" secondItem="Uiq-jD-7av" secondAttribute="centerY" id="7hM-Rf-ArJ"/>
+                            <constraint firstItem="xTu-hC-msk" firstAttribute="centerX" secondItem="Uiq-jD-7av" secondAttribute="centerX" id="T15-kd-PMy"/>
+                            <constraint firstItem="X9c-is-o1r" firstAttribute="centerY" secondItem="Uiq-jD-7av" secondAttribute="centerY" constant="-128" id="UPv-qh-mJq"/>
+                            <constraint firstItem="Bki-yo-Vi6" firstAttribute="centerX" secondItem="Uiq-jD-7av" secondAttribute="centerX" id="WWE-qG-I6T"/>
+                            <constraint firstItem="xTu-hC-msk" firstAttribute="centerY" secondItem="Uiq-jD-7av" secondAttribute="centerY" constant="128" id="jXh-rX-CD3"/>
+                            <constraint firstItem="X9c-is-o1r" firstAttribute="centerX" secondItem="Uiq-jD-7av" secondAttribute="centerX" id="vlZ-e6-hep"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jPo-gG-egd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-620" y="-1235"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="nKo-26-SRC">
+            <objects>
+                <viewController title="Game View Controller" id="7gP-tL-Dfc" customClass="GameViewController" customModule="Audiometry" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="syX-gg-zhs"/>
+                        <viewControllerLayoutGuide type="bottom" id="w2b-1O-INc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yrK-eV-1lA" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zEf-a5-v7K">
+                                <rect key="frame" x="20" y="20" width="98" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <segue destination="tuj-lx-Ccj" kind="show" id="HX2-1o-TXN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="00V-6u-fVb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="496" y="-1235"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="w8B-rL-49Z"/>
+    </inferredMetricsTieBreakers>
 </document>
