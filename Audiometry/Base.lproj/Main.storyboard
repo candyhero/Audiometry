@@ -14,7 +14,6 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -34,43 +33,52 @@
                                 <rect key="frame" x="40" y="184" width="944" height="400"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Frequencies (Hz)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pcq-3N-y3a">
-                                        <rect key="frame" x="0.0" y="0.0" width="944" height="35.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="944" height="27.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ch2-ui-3S2" userLabel="Sv Label">
-                                        <rect key="frame" x="0.0" y="45.5" width="944" height="35.5"/>
+                                        <rect key="frame" x="0.0" y="37.5" width="944" height="27"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6OA-Fk-qck">
-                                        <rect key="frame" x="0.0" y="91" width="944" height="35.5"/>
+                                        <rect key="frame" x="0.0" y="74.5" width="944" height="27.5"/>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max Volume (dB)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-Po-ks9" userLabel="Max Volume (dB)">
+                                        <rect key="frame" x="0.0" y="112" width="944" height="27"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JKC-B9-LWH" userLabel="Sv Max">
+                                        <rect key="frame" x="0.0" y="149" width="944" height="27.5"/>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Presentation Level (dB)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6H-7B-ANd">
-                                        <rect key="frame" x="0.0" y="136.5" width="944" height="35.5"/>
+                                        <rect key="frame" x="0.0" y="186.5" width="944" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DhU-mX-pb4" userLabel="Sv Presentation">
-                                        <rect key="frame" x="0.0" y="182" width="944" height="36"/>
+                                        <rect key="frame" x="0.0" y="223.5" width="944" height="27.5"/>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Correction Level (dB)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0B-Xn-Fhz" userLabel="Left Correction Level (dB)">
-                                        <rect key="frame" x="0.0" y="228" width="944" height="35.5"/>
+                                        <rect key="frame" x="0.0" y="261" width="944" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JH9-dy-eF8" userLabel="Sv Left Correction">
-                                        <rect key="frame" x="0.0" y="273.5" width="944" height="35.5"/>
+                                        <rect key="frame" x="0.0" y="298" width="944" height="27.5"/>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Correction Level (dB)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffH-l0-41K">
-                                        <rect key="frame" x="0.0" y="319" width="944" height="35.5"/>
+                                        <rect key="frame" x="0.0" y="335.5" width="944" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cuq-2m-SrH" userLabel="Sv Right Correction">
-                                        <rect key="frame" x="0.0" y="364.5" width="944" height="35.5"/>
+                                        <rect key="frame" x="0.0" y="372.5" width="944" height="27.5"/>
                                     </stackView>
                                 </subviews>
                                 <constraints>
@@ -79,22 +87,29 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="SP4-Ep-kGM" userLabel="Sv Save">
-                                <rect key="frame" x="466.5" y="634" width="92" height="34"/>
+                                <rect key="frame" x="332" y="634" width="360" height="34"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Nm5-ef-TaY" userLabel="Sv Volume">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c1j-tN-fg0">
                                         <rect key="frame" x="0.0" y="0.0" width="92" height="34"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c1j-tN-fg0">
-                                                <rect key="frame" x="0.0" y="0.0" width="92" height="34"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Set Volume"/>
-                                                <connections>
-                                                    <action selector="updateVolume:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QA3-Dj-PhH"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" title="Set Volume"/>
+                                        <connections>
+                                            <action selector="updateVolume:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QA3-Dj-PhH"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T58-Xj-Tzn">
+                                        <rect key="frame" x="192" y="0.0" width="168" height="34"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" title="Load Default P. Level"/>
+                                        <connections>
+                                            <action selector="loadDefaultPrLv:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8B1-oy-OEw"/>
+                                            <action selector="updateVolume:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2R8-OI-CB6"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -111,14 +126,17 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="setVol" destination="c1j-tN-fg0" id="HmV-Hp-tzY"/>
+                        <outlet property="pbLoadDefaultPresentLv" destination="T58-Xj-Tzn" id="8sR-JR-mcw"/>
+                        <outlet property="pbSetCurrentVol" destination="c1j-tN-fg0" id="bIc-qt-855"/>
                         <outlet property="svButtons" destination="6OA-Fk-qck" id="Olq-ri-Tl2"/>
                         <outlet property="svLabels" destination="Ch2-ui-3S2" id="jBN-O0-OsH"/>
                         <outlet property="svLeftCorrectLv" destination="JH9-dy-eF8" id="j4Y-cc-Oqc"/>
+                        <outlet property="svMaxLv" destination="JKC-B9-LWH" id="aK7-mY-0Ru"/>
                         <outlet property="svPresentLv" destination="DhU-mX-pb4" id="p7i-2j-7p4"/>
                         <outlet property="svRightCorrectLv" destination="cuq-2m-SrH" id="9yJ-YM-Mt0"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-7.0312499999999991" y="50"/>
         </scene>
