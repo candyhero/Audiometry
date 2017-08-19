@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     //*******************
     // Constants
     //*******************
+    let DB_SYSTEM_MAX: Double! = 105.0 // At volume amplitude = 1.0
     let DB_DEFAULT: Double! = 70.0
     let RAMP_TIME: Double! = 1.5
     let RAMP_TIMESTEP: Double! = 0.01
@@ -29,7 +30,7 @@ class ViewController: UIViewController {
     var generator: AKOperationGenerator! = nil
     
     var array_pbPlay = [UIButton]()
-    var array_tbMaxLv = [UITextField]()
+    var array_tb70dBHL = [UITextField]()
     var array_tbPresentLv = [UITextField]()
     var array_tbCorrectLv = [UITextField]()
     
@@ -42,7 +43,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var svLabels: UIStackView!
     @IBOutlet weak var svButtons: UIStackView!
-    @IBOutlet weak var svMaxLv: UIStackView!
+    @IBOutlet weak var sv70dBHL: UIStackView!
     @IBOutlet weak var svPresentLv: UIStackView!
     @IBOutlet weak var svLeftCorrectLv: UIStackView!
     @IBOutlet weak var svRightCorrectLv: UIStackView!
@@ -146,7 +147,7 @@ class ViewController: UIViewController {
             // Put the strings in to a string array
             var array_db = [String]()
             
-            array_db.append(array_tbMaxLv[i].text!)
+            array_db.append(array_tb70dBHL[i].text!)
             array_db.append(array_tbPresentLv[i].text!)
             array_db.append(array_tbCorrectLv[i * 2].text!)
             array_db.append(array_tbCorrectLv[i * 2 + 1].text!)
@@ -166,7 +167,7 @@ class ViewController: UIViewController {
             // In case a new frequency is added, which has no default settings
             if(array_db != nil){
                 
-                array_tbMaxLv[i].text = array_db?[0] ?? nil
+                array_tb70dBHL[i].text = array_db?[0] ?? nil
                 array_tbPresentLv[i].text = array_db?[1] ?? nil
                 array_tbCorrectLv[i * 2].text = array_db?[2] ?? nil
                 
@@ -180,12 +181,18 @@ class ViewController: UIViewController {
     }
     
     // Covert dB to amplitude in double (0.0 to 1.0 range)
-    func dbToAmp (_ db: Double!, _ maxDB: Double!) -> Double{
+    func dbToAmp (_ dBHL: Double!, _ at70dBHL_DB: Double!) -> Double{
         
-        let ampDB: Double = db - maxDB
+        //
+        let deltaFrom70dBHL = dBHL - DB_DEFAULT
+        
+        // volume in absolute dB to be converted to amplitude
+        // 1.0 amplitude <-> 0 absoulte dB
+        let ampDB: Double = deltaFrom70dBHL + at70dBHL_DB - DB_SYSTEM_MAX
         
         let amp: Double = pow(10.0, ampDB / 20.0)
         
+        print(amp)
         return ((amp > 1) ? 1 : amp)
     }
     
@@ -198,12 +205,12 @@ class ViewController: UIViewController {
         }
         
         // retrieve vol
-        let maxPresentLv: String = array_tbMaxLv[currentIndex].text!
+        let at70dBHL_Txt: String = array_tb70dBHL[currentIndex].text!
         let presentTxt: String = array_tbPresentLv[currentIndex].text!
         let leftCorrectTxt: String = array_tbCorrectLv[currentIndex * 2].text!
         let rightCorrectTxt: String = array_tbCorrectLv[currentIndex * 2 + 1].text!
         
-        let maxDB: Double! = Double(maxPresentLv) ?? 0.0
+        let at70dBHL_DB: Double! = Double(at70dBHL_Txt) ?? 0.0
         let presentDB: Double! = Double(presentTxt) ?? 0.0
         let leftCorrectDB: Double! = Double(leftCorrectTxt) ?? 0.0
         let rightCorrectDB: Double! = Double(rightCorrectTxt) ?? 0.0
@@ -211,8 +218,8 @@ class ViewController: UIViewController {
         for i in stride(from: 0.0, through: 1.0, by: RAMP_TIMESTEP){
 //            print(String(i))
             DispatchQueue.main.asyncAfter(deadline: .now() + i * RAMP_TIME, execute: {
-                self.generator.parameters[1] = self.dbToAmp((presentDB! + leftCorrectDB!) * i, maxDB)
-                self.generator.parameters[2] = self.dbToAmp((presentDB! + rightCorrectDB!) * i, maxDB)
+                self.generator.parameters[1] = self.dbToAmp((presentDB! + leftCorrectDB!) * i, at70dBHL_DB)
+                self.generator.parameters[2] = self.dbToAmp((presentDB! + rightCorrectDB!) * i, at70dBHL_DB)
             })
         }
     }
@@ -254,7 +261,7 @@ class ViewController: UIViewController {
         // Config stackviews
         setupStackview(svLabels)
         setupStackview(svButtons)
-        setupStackview(svMaxLv)
+        setupStackview(sv70dBHL)
         setupStackview(svPresentLv)
         setupStackview(svLeftCorrectLv)
         setupStackview(svRightCorrectLv)
@@ -287,13 +294,13 @@ class ViewController: UIViewController {
             array_pbPlay += [new_pbPlay]
             svButtons.addArrangedSubview(new_pbPlay)
             
-            // Add textboxes to svMaxLv
-            let new_tbMaxLv = UITextField()
-            new_tbMaxLv.borderStyle = .roundedRect
-            new_tbMaxLv.textAlignment = .center
+            // Add textboxes to sv70dBHL
+            let new_tb70dBHL = UITextField()
+            new_tb70dBHL.borderStyle = .roundedRect
+            new_tb70dBHL.textAlignment = .center
             
-            array_tbMaxLv += [new_tbMaxLv]
-            svMaxLv.addArrangedSubview(new_tbMaxLv)
+            array_tb70dBHL += [new_tb70dBHL]
+            sv70dBHL.addArrangedSubview(new_tb70dBHL)
             
             // Add textboxes to svPresentLv for volume input in dB
             let new_tbPresentLv = UITextField()
