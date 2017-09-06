@@ -30,9 +30,9 @@ class ViewController: UIViewController {
     var generator: AKOperationGenerator! = nil
     
     var array_pbPlay = [UIButton]()
-    var array_tb70dBHL = [UITextField]()
-    var array_tbPresentLv = [UITextField]()
-    var array_tbCorrectLv = [UITextField]()
+    var array_tbExpectedDBSPL = [UITextField]()
+    var array_tbPresentDBHL = [UITextField]()
+    var array_tbMeasuredDBSPL = [UITextField]()
     
     let settings = UserDefaults.standard
     //*******************
@@ -43,10 +43,10 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var svLabels: UIStackView!
     @IBOutlet weak var svButtons: UIStackView!
-    @IBOutlet weak var sv70dBHL: UIStackView!
-    @IBOutlet weak var svPresentLv: UIStackView!
-    @IBOutlet weak var svLeftCorrectLv: UIStackView!
-    @IBOutlet weak var svRightCorrectLv: UIStackView!
+    @IBOutlet weak var svExpectedDBSPL: UIStackView!
+    @IBOutlet weak var svPresentDBHL: UIStackView!
+    @IBOutlet weak var svLeftMeasuredDBSPL: UIStackView!
+    @IBOutlet weak var svRightMeasuredDBSPL: UIStackView!
     
     //*******************
     // IBActions
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         
         for i in 0..<ARRAY_FREQUENCY.count {
             
-            array_tbPresentLv[i].text = String(DB_DEFAULT)
+            array_tbPresentDBHL[i].text = String(DB_DEFAULT)
         }
     }
     
@@ -147,10 +147,10 @@ class ViewController: UIViewController {
             // Put the strings in to a string array
             var array_db = [String]()
             
-            array_db.append(array_tb70dBHL[i].text!)
-            array_db.append(array_tbPresentLv[i].text!)
-            array_db.append(array_tbCorrectLv[i * 2].text!)
-            array_db.append(array_tbCorrectLv[i * 2 + 1].text!)
+            array_db.append(array_tbExpectedDBSPL[i].text!)
+            array_db.append(array_tbPresentDBHL[i].text!)
+            array_db.append(array_tbMeasuredDBSPL[i * 2].text!)
+            array_db.append(array_tbMeasuredDBSPL[i * 2 + 1].text!)
             
             // Map volume (dB) string array to their respective frequencies
             settings.set(array_db, forKey: String(ARRAY_FREQUENCY[i]))
@@ -167,28 +167,25 @@ class ViewController: UIViewController {
             // In case a new frequency is added, which has no default settings
             if(array_db != nil){
                 
-                array_tb70dBHL[i].text = array_db?[0] ?? nil
-                array_tbPresentLv[i].text = array_db?[1] ?? nil
-                array_tbCorrectLv[i * 2].text = array_db?[2] ?? nil
+                array_tbExpectedDBSPL[i].text = array_db?[0] ?? nil
+                array_tbPresentDBHL[i].text = array_db?[1] ?? nil
+                array_tbMeasuredDBSPL[i * 2].text = array_db?[2] ?? nil
                 
                 // Hardcode meanwhile to avoid error 
                 // when applying old settings to new UI
                 if((array_db!.count) > 3){
-                    array_tbCorrectLv[i * 2 + 1].text = array_db?[3] ?? nil
+                    array_tbMeasuredDBSPL[i * 2 + 1].text = array_db?[3] ?? nil
                 }
             }
         }
     }
     
     // Covert dB to amplitude in double (0.0 to 1.0 range)
-    func dbToAmp (_ dBHL: Double!, _ at70dBHL_DB: Double!) -> Double{
-        
-        //
-        let deltaFrom70dBHL = dBHL - DB_DEFAULT
+    func dbToAmp (_ dB: Double!) -> Double{
         
         // volume in absolute dB to be converted to amplitude
         // 1.0 amplitude <-> 0 absoulte dB
-        let ampDB: Double = deltaFrom70dBHL + at70dBHL_DB - DB_SYSTEM_MAX
+        let ampDB: Double = dB - DB_SYSTEM_MAX
         
         let amp: Double = pow(10.0, ampDB / 20.0)
         
@@ -205,21 +202,24 @@ class ViewController: UIViewController {
         }
         
         // retrieve vol
-        let at70dBHL_Txt: String = array_tb70dBHL[currentIndex].text!
-        let presentTxt: String = array_tbPresentLv[currentIndex].text!
-        let leftCorrectTxt: String = array_tbCorrectLv[currentIndex * 2].text!
-        let rightCorrectTxt: String = array_tbCorrectLv[currentIndex * 2 + 1].text!
+        let expectedTxt: String = array_tbExpectedDBSPL[currentIndex].text!
+        let presentTxt: String = array_tbPresentDBHL[currentIndex].text!
+        let leftMeasuredTxt: String = array_tbMeasuredDBSPL[currentIndex * 2].text!
+        let rightMeasuredTxt: String = array_tbMeasuredDBSPL[currentIndex * 2 + 1].text!
         
-        let at70dBHL_DB: Double! = Double(at70dBHL_Txt) ?? 0.0
-        let presentDB: Double! = Double(presentTxt) ?? 0.0
-        let leftCorrectDB: Double! = Double(leftCorrectTxt) ?? 0.0
-        let rightCorrectDB: Double! = Double(rightCorrectTxt) ?? 0.0
+        let expectedDBSPL: Double! = Double(expectedTxt) ?? 0.0
+        let presentDBHL: Double! = Double(presentTxt) ?? 0.0
+        let leftMeasuredDBSPL: Double! = Double(leftMeasuredTxt) ?? expectedDBSPL
+        let rightMeasuredDBSPL: Double! = Double(rightMeasuredTxt) ?? expectedDBSPL
+        
+        let leftCorrectionFactor: Double! = expectedDBSPL - leftMeasuredDBSPL
+        let rightCorrectionFactor: Double! = expectedDBSPL - rightMeasuredDBSPL
         
         for i in stride(from: 0.0, through: 1.0, by: RAMP_TIMESTEP){
 //            print(String(i))
             DispatchQueue.main.asyncAfter(deadline: .now() + i * RAMP_TIME, execute: {
-                self.generator.parameters[1] = self.dbToAmp((presentDB! + leftCorrectDB!) * i, at70dBHL_DB)
-                self.generator.parameters[2] = self.dbToAmp((presentDB! + rightCorrectDB!) * i, at70dBHL_DB)
+                self.generator.parameters[1] = self.dbToAmp((presentDBHL! + leftCorrectionFactor!) * i)
+                self.generator.parameters[2] = self.dbToAmp((presentDBHL! + rightCorrectionFactor!) * i)
             })
         }
     }
@@ -261,10 +261,10 @@ class ViewController: UIViewController {
         // Config stackviews
         setupStackview(svLabels)
         setupStackview(svButtons)
-        setupStackview(sv70dBHL)
-        setupStackview(svPresentLv)
-        setupStackview(svLeftCorrectLv)
-        setupStackview(svRightCorrectLv)
+        setupStackview(svExpectedDBSPL)
+        setupStackview(svPresentDBHL)
+        setupStackview(svLeftMeasuredDBSPL)
+        setupStackview(svRightMeasuredDBSPL)
         
         //Creating play buttons for each respective freq
         for i in 0..<ARRAY_FREQUENCY.count {
@@ -295,36 +295,36 @@ class ViewController: UIViewController {
             svButtons.addArrangedSubview(new_pbPlay)
             
             // Add textboxes to sv70dBHL
-            let new_tb70dBHL = UITextField()
-            new_tb70dBHL.borderStyle = .roundedRect
-            new_tb70dBHL.textAlignment = .center
+            let new_tbExpectedSPL = UITextField()
+            new_tbExpectedSPL.borderStyle = .roundedRect
+            new_tbExpectedSPL.textAlignment = .center
             
-            array_tb70dBHL += [new_tb70dBHL]
-            sv70dBHL.addArrangedSubview(new_tb70dBHL)
+            array_tbExpectedDBSPL += [new_tbExpectedSPL]
+            svExpectedDBSPL.addArrangedSubview(new_tbExpectedSPL)
             
             // Add textboxes to svPresentLv for volume input in dB
-            let new_tbPresentLv = UITextField()
-            new_tbPresentLv.borderStyle = .roundedRect
-            new_tbPresentLv.textAlignment = .center
-            new_tbPresentLv.text = String(DB_DEFAULT)
+            let new_tbPresentDBHL = UITextField()
+            new_tbPresentDBHL.borderStyle = .roundedRect
+            new_tbPresentDBHL.textAlignment = .center
+            new_tbPresentDBHL.text = String(DB_DEFAULT)
             
-            array_tbPresentLv += [new_tbPresentLv]
-            svPresentLv.addArrangedSubview(new_tbPresentLv)
+            array_tbPresentDBHL += [new_tbPresentDBHL]
+            svPresentDBHL.addArrangedSubview(new_tbPresentDBHL)
             
-            // Add textboxes to svCorrectLV for volume input in dB
-            let new_tbLeftCorrectLv = UITextField()
-            new_tbLeftCorrectLv.borderStyle = .roundedRect
-            new_tbLeftCorrectLv.textAlignment = .center
+            // Add textboxes to svMeasuredLV for volume input in dB
+            let new_tbLeftMeasureDBSPL = UITextField()
+            new_tbLeftMeasureDBSPL.borderStyle = .roundedRect
+            new_tbLeftMeasureDBSPL.textAlignment = .center
             
-            array_tbCorrectLv += [new_tbLeftCorrectLv]
-            svLeftCorrectLv.addArrangedSubview(new_tbLeftCorrectLv)
+            array_tbMeasuredDBSPL += [new_tbLeftMeasureDBSPL]
+            svLeftMeasuredDBSPL.addArrangedSubview(new_tbLeftMeasureDBSPL)
             
-            let new_tbrightCorrectLv = UITextField()
-            new_tbrightCorrectLv.borderStyle = .roundedRect
-            new_tbrightCorrectLv.textAlignment = .center
+            let new_tbRightMeasureDBSPL = UITextField()
+            new_tbRightMeasureDBSPL.borderStyle = .roundedRect
+            new_tbRightMeasureDBSPL.textAlignment = .center
             
-            array_tbCorrectLv += [new_tbrightCorrectLv]
-            svRightCorrectLv.addArrangedSubview(new_tbrightCorrectLv)
+            array_tbMeasuredDBSPL += [new_tbRightMeasureDBSPL]
+            svRightMeasuredDBSPL.addArrangedSubview(new_tbRightMeasureDBSPL)
         }
 
     }

@@ -44,7 +44,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6OA-Fk-qck">
                                         <rect key="frame" x="0.0" y="74.5" width="944" height="27.5"/>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70 dBHL level (dB)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-Po-ks9" userLabel="Max Volume (dB)">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expected sound pressure level for 70 dB HL (dB SPL)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-Po-ks9" userLabel="Max Volume (dB)">
                                         <rect key="frame" x="0.0" y="112" width="944" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -62,7 +62,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DhU-mX-pb4" userLabel="Sv Presentation">
                                         <rect key="frame" x="0.0" y="223.5" width="944" height="27.5"/>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Correction Level (dB)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0B-Xn-Fhz" userLabel="Left Correction Level (dB)">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Measured Level for 70 dB HL (dB SPL) " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0B-Xn-Fhz" userLabel="Left Correction Level (dB)">
                                         <rect key="frame" x="0.0" y="261" width="944" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -71,7 +71,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JH9-dy-eF8" userLabel="Sv Left Correction">
                                         <rect key="frame" x="0.0" y="298" width="944" height="27.5"/>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Correction Level (dB)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffH-l0-41K">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Measured Level for 70 dB HL (dB SPL) " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffH-l0-41K">
                                         <rect key="frame" x="0.0" y="335.5" width="944" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -128,12 +128,12 @@
                     <connections>
                         <outlet property="pbLoadDefaultPresentLv" destination="T58-Xj-Tzn" id="8sR-JR-mcw"/>
                         <outlet property="pbSetCurrentVol" destination="c1j-tN-fg0" id="bIc-qt-855"/>
-                        <outlet property="sv70dBHL" destination="JKC-B9-LWH" id="5Zo-x7-E9S"/>
                         <outlet property="svButtons" destination="6OA-Fk-qck" id="Olq-ri-Tl2"/>
+                        <outlet property="svExpectedDBSPL" destination="JKC-B9-LWH" id="UmG-1w-rLs"/>
                         <outlet property="svLabels" destination="Ch2-ui-3S2" id="jBN-O0-OsH"/>
-                        <outlet property="svLeftCorrectLv" destination="JH9-dy-eF8" id="j4Y-cc-Oqc"/>
-                        <outlet property="svPresentLv" destination="DhU-mX-pb4" id="p7i-2j-7p4"/>
-                        <outlet property="svRightCorrectLv" destination="cuq-2m-SrH" id="9yJ-YM-Mt0"/>
+                        <outlet property="svLeftMeasuredDBSPL" destination="JH9-dy-eF8" id="blW-JD-SLF"/>
+                        <outlet property="svPresentDBHL" destination="DhU-mX-pb4" id="rCP-q0-pcW"/>
+                        <outlet property="svRightMeasuredDBSPL" destination="cuq-2m-SrH" id="LGz-WD-DPd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
