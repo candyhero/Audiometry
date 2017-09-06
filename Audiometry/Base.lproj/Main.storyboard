@@ -44,7 +44,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6OA-Fk-qck">
                                         <rect key="frame" x="0.0" y="74.5" width="944" height="27.5"/>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expected sound pressure level for 70 dB HL (dB SPL)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-Po-ks9" userLabel="Max Volume (dB)">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expected Sound Pressure Level for 70 dB HL (dB SPL)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-Po-ks9" userLabel="Max Volume (dB)">
                                         <rect key="frame" x="0.0" y="112" width="944" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -87,7 +87,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="SP4-Ep-kGM" userLabel="Sv Save">
-                                <rect key="frame" x="332" y="634" width="360" height="34"/>
+                                <rect key="frame" x="195" y="634" width="634" height="34"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c1j-tN-fg0">
                                         <rect key="frame" x="0.0" y="0.0" width="92" height="34"/>
@@ -110,6 +110,18 @@
                                             <action selector="updateVolume:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2R8-OI-CB6"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fHe-3n-wqG">
+                                        <rect key="frame" x="460" y="0.0" width="174" height="34"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" title="Clear Measured Level"/>
+                                        <connections>
+                                            <action selector="clearMeasuredLv:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rMP-3n-Wlb"/>
+                                            <action selector="loadDefaultPrLv:" destination="BYZ-38-t0r" eventType="touchUpInside" id="psz-Nf-cs4"/>
+                                            <action selector="updateVolume:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uxm-we-6oB"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -126,6 +138,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="pbClearMesauredLv" destination="fHe-3n-wqG" id="TAI-Cp-Arw"/>
                         <outlet property="pbLoadDefaultPresentLv" destination="T58-Xj-Tzn" id="8sR-JR-mcw"/>
                         <outlet property="pbSetCurrentVol" destination="c1j-tN-fg0" id="bIc-qt-855"/>
                         <outlet property="svButtons" destination="6OA-Fk-qck" id="Olq-ri-Tl2"/>

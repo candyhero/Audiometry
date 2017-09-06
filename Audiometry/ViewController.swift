@@ -40,6 +40,7 @@ class ViewController: UIViewController {
     //*******************
     @IBOutlet weak var pbSetCurrentVol: UIButton!
     @IBOutlet weak var pbLoadDefaultPresentLv: UIButton!
+    @IBOutlet weak var pbClearMesauredLv: UIButton!
     
     @IBOutlet weak var svLabels: UIStackView!
     @IBOutlet weak var svButtons: UIStackView!
@@ -64,6 +65,14 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func clearMeasuredLv(_ sender: UIButton) {
+        
+        for i in 0..<ARRAY_FREQUENCY.count {
+            
+            array_tbMeasuredDBSPL[2*i].text = ""
+            array_tbMeasuredDBSPL[2*i+1].text = ""
+        }
+    }
     
     @IBAction func playSignal(_ sender: UIButton) {
         // No tone playing at all, simply toggle on
