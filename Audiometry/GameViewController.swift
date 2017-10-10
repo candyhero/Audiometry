@@ -150,7 +150,7 @@ class GameViewController: UIViewController {
     
     func thresholdFound() {
         
-        UserDefaults.standard.set(dict_freq[array_freq[currentIndex]], forKey: "thresholdValue")
+        UserDefaults.standard.set(thresholdDB, forKey: "thresholdValue")
         UserDefaults.standard.set(dict_freq[array_freq[currentIndex]], forKey: "result")
         
         performSegue(withIdentifier: "segueResult", sender: nil)
