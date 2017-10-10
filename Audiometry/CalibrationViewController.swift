@@ -193,7 +193,7 @@ class CalibrationViewController: UIViewController {
         lbCurrentSetting.text = currentSetting
     }
     
-    func backupCurrentSetting() {
+    @objc func backupCurrentSetting() {
         UserDefaults.standard.set(currentSetting, forKey: "currentSetting")
     }
     
@@ -357,7 +357,7 @@ class CalibrationViewController: UIViewController {
     //*******************
     
     //Calls this function when the tap is recognized to clear keyboard
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         
         //Causes the view (or one of its embedded text fields)
         //to resign the first responder status.
