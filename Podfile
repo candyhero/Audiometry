@@ -14,6 +14,6 @@ target 'Audiometry' do
 
   pod 'AudioKit', '~> 4.0'
 
-#pod 'Charts'
+  pod 'Charts'
 
 end

@@ -329,7 +329,7 @@ class GameViewController: UIViewController {
         // To load settings
         // Determine current freq
         // !!!!! Move save setting to title VC
-        array_freq = UserDefaults.standard.array(forKey: "freq")! as! [Double]
+        array_freq = UserDefaults.standard.array(forKey: "freqArray")! as! [Double]
         
         
         // generator to be configured by setting generator.parameter
