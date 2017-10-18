@@ -18,6 +18,7 @@
 		4EA58AE01F62045C00E0CDFE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58ADB1F62045C00E0CDFE /* GameScene.swift */; };
 		4EA58AE11F62045C00E0CDFE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58ADC1F62045C00E0CDFE /* GameViewController.swift */; };
 		4EA58AE41F62081F00E0CDFE /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */; };
+		4EFABCFF1F9682580039A56A /* CalibrationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFABCFE1F9682580039A56A /* CalibrationStackView.swift */; };
 		D033EE0A26D9F3FECA4E4254 /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 003B38F239FB10F6ED42CB64 /* Pods_Audiometry.framework */; };
 		F0C9133FBF6DB89C870AB368 /* Pods_AudiometryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC1F80DF0E41D58F76264596 /* Pods_AudiometryTests.framework */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		4EA58ADB1F62045C00E0CDFE /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		4EA58ADC1F62045C00E0CDFE /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
+		4EFABCFE1F9682580039A56A /* CalibrationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationStackView.swift; sourceTree = "<group>"; };
 		A80E953D5E17B8188291AD42 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 		EC1F80DF0E41D58F76264596 /* Pods_AudiometryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudiometryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -134,6 +136,7 @@
 				4E02DB901F22B23300DB509A /* Info.plist */,
 				4E02DB881F22B23300DB509A /* Main.storyboard */,
 				4E6E8C701F8C443F0029F937 /* ThresholdViewController.swift */,
+				4EFABCFE1F9682580039A56A /* CalibrationStackView.swift */,
 			);
 			path = Audiometry;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EFABCFF1F9682580039A56A /* CalibrationStackView.swift in Sources */,
 				4E6E8C711F8C443F0029F937 /* ThresholdViewController.swift in Sources */,
 				4E02DB851F22B23300DB509A /* AppDelegate.swift in Sources */,
 				4EA58AE01F62045C00E0CDFE /* GameScene.swift in Sources */,

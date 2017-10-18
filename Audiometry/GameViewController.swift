@@ -326,12 +326,6 @@ class GameViewController: UIViewController {
         // Setup oscillator player which generates pure tones
         //*******************
         
-        // To load settings
-        // Determine current freq
-        // !!!!! Move save setting to title VC
-        array_freq = UserDefaults.standard.array(forKey: "freqArray")! as! [Double]
-        
-        
         // generator to be configured by setting generator.parameter
         // param
         
