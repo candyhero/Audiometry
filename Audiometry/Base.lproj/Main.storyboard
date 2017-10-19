@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jf6-Dc-WkP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cTp-f6-a1r">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -37,7 +37,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Start"/>
                                         <connections>
-                                            <segue destination="Xos-0w-K0n" kind="show" id="7OY-Te-kPu"/>
+                                            <action selector="startTesting:" destination="cTp-f6-a1r" eventType="touchUpInside" id="JtY-6L-1tA"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dab-8t-SDg">
@@ -65,7 +65,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="View Results"/>
                                         <connections>
-                                            <segue destination="jf6-Dc-WkP" kind="show" id="tha-xa-Ntj"/>
+                                            <action selector="viewResults:" destination="cTp-f6-a1r" eventType="touchUpInside" id="qns-26-MK9"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -85,6 +85,10 @@
                             <constraint firstItem="lJh-zi-akX" firstAttribute="centerY" secondItem="wbj-he-gXG" secondAttribute="centerY" constant="-150" id="sAA-4a-eeR"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="Xos-0w-K0n" kind="show" identifier="segueMainTest" id="FC5-4y-7Vx"/>
+                        <segue destination="jf6-Dc-WkP" kind="show" identifier="segueResultFromMenu" id="y9i-Lp-jb7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YUe-jA-rry" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -593,7 +597,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="tha-xa-Ntj"/>
-        <segue reference="hE8-GH-ZbE"/>
+        <segue reference="y9i-Lp-jb7"/>
+        <segue reference="81L-1q-GLz"/>
     </inferredMetricsTieBreakers>
 </document>

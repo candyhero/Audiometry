@@ -28,8 +28,8 @@ class CalibrationStackView: UIStackView {
 //
 //    }
     
-    init(){
-    }
+//    init(){
+//    }
     
     func loadSetting(setting: String!){
         

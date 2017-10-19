@@ -515,7 +515,7 @@ class CalibrationViewController: UIViewController {
             let new_tbLeftMeasureDBSPL = UITextField()
             new_tbLeftMeasureDBSPL.borderStyle = .roundedRect
             new_tbLeftMeasureDBSPL.textAlignment = .center
-//            new_tbLeftMeasureDBSPL.keyboardType = UIKeyboardType.decimalPad
+            new_tbLeftMeasureDBSPL.keyboardType = UIKeyboardType.decimalPad
             
             array_tbMeasuredDBSPL += [new_tbLeftMeasureDBSPL]
             svLeftMeasuredDBSPL.addArrangedSubview(new_tbLeftMeasureDBSPL)
@@ -523,7 +523,7 @@ class CalibrationViewController: UIViewController {
             let new_tbRightMeasureDBSPL = UITextField()
             new_tbRightMeasureDBSPL.borderStyle = .roundedRect
             new_tbRightMeasureDBSPL.textAlignment = .center
-//            new_tbRightMeasureDBSPL.keyboardType = UIKeyboardType.decimalPad
+            new_tbRightMeasureDBSPL.keyboardType = UIKeyboardType.decimalPad
             
             array_tbMeasuredDBSPL += [new_tbRightMeasureDBSPL]
             svRightMeasuredDBSPL.addArrangedSubview(new_tbRightMeasureDBSPL)

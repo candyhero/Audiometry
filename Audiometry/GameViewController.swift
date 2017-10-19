@@ -397,7 +397,6 @@ class GameViewController: UIViewController {
     
     func findThresholdAtFreq(_ freq: Double!){
         
-        
         generator.parameters[0] = freq
         
         dict_freq[freq] = [Double]()
@@ -414,7 +413,6 @@ class GameViewController: UIViewController {
         currentPlaycase = Int(arc4random_uniform(2) + 1)
         playSignalCase()
     }
-
     
     //
     // UI
