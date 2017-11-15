@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E01A86D1FA3D9D900986CBF /* TestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E01A86C1FA3D9D900986CBF /* TestPlayer.swift */; };
+		4E01A86F1FA3D9E900986CBF /* CalibrationPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E01A86E1FA3D9E900986CBF /* CalibrationPlayer.swift */; };
+		4E01A8711FA3DDDE00986CBF /* TestFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E01A8701FA3DDDE00986CBF /* TestFlow.swift */; };
 		4E02DB851F22B23300DB509A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E02DB841F22B23300DB509A /* AppDelegate.swift */; };
 		4E02DB8A1F22B23300DB509A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E02DB881F22B23300DB509A /* Main.storyboard */; };
 		4E02DB8C1F22B23300DB509A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E02DB8B1F22B23300DB509A /* Assets.xcassets */; };
@@ -14,11 +17,12 @@
 		4E02DB9A1F22B23300DB509A /* AudiometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E02DB991F22B23300DB509A /* AudiometryTests.swift */; };
 		4E6E8C711F8C443F0029F937 /* ThresholdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6E8C701F8C443F0029F937 /* ThresholdViewController.swift */; };
 		4E98DF7B1F67E1A90037286B /* TitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E772ACE1F630B0200CC6922 /* TitleViewController.swift */; };
-		4EA58ADF1F62045C00E0CDFE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4EA58ADA1F62045C00E0CDFE /* GameScene.sks */; };
-		4EA58AE01F62045C00E0CDFE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58ADB1F62045C00E0CDFE /* GameScene.swift */; };
-		4EA58AE11F62045C00E0CDFE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58ADC1F62045C00E0CDFE /* GameViewController.swift */; };
+		4EA58AE11F62045C00E0CDFE /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58ADC1F62045C00E0CDFE /* TestViewController.swift */; };
 		4EA58AE41F62081F00E0CDFE /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */; };
+		4ED8C9D61FBCB61E0042C997 /* Animal_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 4ED8C9D51FBCB61E0042C997 /* Animal_Icons */; };
+		4EDD82401F9A7B0100F77471 /* Animal_Tones in Resources */ = {isa = PBXBuildFile; fileRef = 4EDD823E1F9A7B0100F77471 /* Animal_Tones */; };
 		4EFABCFF1F9682580039A56A /* CalibrationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFABCFE1F9682580039A56A /* CalibrationStackView.swift */; };
+		4EFFD74C1FA8E1AB004DE1FC /* FreqSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFFD74B1FA8E1AB004DE1FC /* FreqSelectionViewController.swift */; };
 		D033EE0A26D9F3FECA4E4254 /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 003B38F239FB10F6ED42CB64 /* Pods_Audiometry.framework */; };
 		F0C9133FBF6DB89C870AB368 /* Pods_AudiometryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC1F80DF0E41D58F76264596 /* Pods_AudiometryTests.framework */; };
 /* End PBXBuildFile section */
@@ -51,6 +55,9 @@
 		0B7F7595FF932DDE4D45C5BF /* Pods-AudiometryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryTests/Pods-AudiometryTests.release.xcconfig"; sourceTree = "<group>"; };
 		16E389AFCFB396D78020485F /* Pods-Audiometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.release.xcconfig"; sourceTree = "<group>"; };
 		25D07026B739EDB85ABFEED5 /* Pods-AudiometryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryTests/Pods-AudiometryTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4E01A86C1FA3D9D900986CBF /* TestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPlayer.swift; sourceTree = "<group>"; };
+		4E01A86E1FA3D9E900986CBF /* CalibrationPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationPlayer.swift; sourceTree = "<group>"; };
+		4E01A8701FA3DDDE00986CBF /* TestFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFlow.swift; sourceTree = "<group>"; };
 		4E02DB811F22B23300DB509A /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E02DB841F22B23300DB509A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E02DB891F22B23300DB509A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -62,11 +69,12 @@
 		4E02DB9B1F22B23300DB509A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E6E8C701F8C443F0029F937 /* ThresholdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdViewController.swift; sourceTree = "<group>"; };
 		4E772ACE1F630B0200CC6922 /* TitleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleViewController.swift; sourceTree = "<group>"; };
-		4EA58ADA1F62045C00E0CDFE /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		4EA58ADB1F62045C00E0CDFE /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		4EA58ADC1F62045C00E0CDFE /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		4EA58ADC1F62045C00E0CDFE /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
+		4ED8C9D51FBCB61E0042C997 /* Animal_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Icons; sourceTree = "<group>"; };
+		4EDD823E1F9A7B0100F77471 /* Animal_Tones */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Tones; sourceTree = "<group>"; };
 		4EFABCFE1F9682580039A56A /* CalibrationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationStackView.swift; sourceTree = "<group>"; };
+		4EFFD74B1FA8E1AB004DE1FC /* FreqSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqSelectionViewController.swift; sourceTree = "<group>"; };
 		A80E953D5E17B8188291AD42 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 		EC1F80DF0E41D58F76264596 /* Pods_AudiometryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudiometryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -125,10 +133,14 @@
 		4E02DB831F22B23300DB509A /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
+				4ED8C9D51FBCB61E0042C997 /* Animal_Icons */,
+				4EDD823E1F9A7B0100F77471 /* Animal_Tones */,
 				4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */,
-				4EA58ADA1F62045C00E0CDFE /* GameScene.sks */,
-				4EA58ADB1F62045C00E0CDFE /* GameScene.swift */,
-				4EA58ADC1F62045C00E0CDFE /* GameViewController.swift */,
+				4E01A86E1FA3D9E900986CBF /* CalibrationPlayer.swift */,
+				4E01A86C1FA3D9D900986CBF /* TestPlayer.swift */,
+				4EFFD74B1FA8E1AB004DE1FC /* FreqSelectionViewController.swift */,
+				4E01A8701FA3DDDE00986CBF /* TestFlow.swift */,
+				4EA58ADC1F62045C00E0CDFE /* TestViewController.swift */,
 				4E772ACE1F630B0200CC6922 /* TitleViewController.swift */,
 				4E02DB841F22B23300DB509A /* AppDelegate.swift */,
 				4E02DB8B1F22B23300DB509A /* Assets.xcassets */,
@@ -264,8 +276,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EA58ADF1F62045C00E0CDFE /* GameScene.sks in Resources */,
+				4EDD82401F9A7B0100F77471 /* Animal_Tones in Resources */,
 				4E02DB8F1F22B23300DB509A /* LaunchScreen.storyboard in Resources */,
+				4ED8C9D61FBCB61E0042C997 /* Animal_Icons in Resources */,
 				4E02DB8C1F22B23300DB509A /* Assets.xcassets in Resources */,
 				4E02DB8A1F22B23300DB509A /* Main.storyboard in Resources */,
 			);
@@ -392,12 +405,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EFABCFF1F9682580039A56A /* CalibrationStackView.swift in Sources */,
+				4EFFD74C1FA8E1AB004DE1FC /* FreqSelectionViewController.swift in Sources */,
+				4E01A8711FA3DDDE00986CBF /* TestFlow.swift in Sources */,
 				4E6E8C711F8C443F0029F937 /* ThresholdViewController.swift in Sources */,
 				4E02DB851F22B23300DB509A /* AppDelegate.swift in Sources */,
-				4EA58AE01F62045C00E0CDFE /* GameScene.swift in Sources */,
-				4EA58AE11F62045C00E0CDFE /* GameViewController.swift in Sources */,
+				4E01A86D1FA3D9D900986CBF /* TestPlayer.swift in Sources */,
+				4EA58AE11F62045C00E0CDFE /* TestViewController.swift in Sources */,
 				4EA58AE41F62081F00E0CDFE /* CalibrationViewController.swift in Sources */,
 				4E98DF7B1F67E1A90037286B /* TitleViewController.swift in Sources */,
+				4E01A86F1FA3D9E900986CBF /* CalibrationPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +508,7 @@
 				SDKROOT = iphoneos11.0;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -541,6 +558,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos11.0;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};

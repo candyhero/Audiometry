@@ -19,9 +19,6 @@ class CalibrationViewController: UIViewController {
     let RAMP_TIME: Double! = 1.5
     let RAMP_TIMESTEP: Double! = 0.01
     
-//    let ARRAY_FREQUENCY: [Double]! = [250.0, 500.0, 750.0, 1000.0, 1500.0,
-//                           2000.0, 3000.0, 4000.0, 6000.0, 8000.0]
-    
     //*******************
     // Variables
     //*******************
@@ -131,6 +128,8 @@ class CalibrationViewController: UIViewController {
             newSetting[freqKey] = array_db
         }
         
+        print(newSetting)
+        
         // Store the setting dictionary into user defaults
         UserDefaults.standard.set(newSetting, forKey: settingKey)
         
@@ -196,8 +195,6 @@ class CalibrationViewController: UIViewController {
     @objc func backupCurrentSetting() {
         UserDefaults.standard.set(currentSetting, forKey: "currentSetting")
     }
-    
-    
     
     @IBAction func loadOther(_ sender: UIButton) {
         
@@ -443,7 +440,6 @@ class CalibrationViewController: UIViewController {
     }
     
     func setupStackview(_ sv: UIStackView!){
-        
         sv.axis = .horizontal
         sv.distribution = .fillEqually
         sv.alignment = .center
@@ -536,8 +532,9 @@ class CalibrationViewController: UIViewController {
         
         super.viewDidLoad()
         
-        array_freq = UserDefaults.standard.array(forKey: "freqArray") as! [Double]!
-            ?? [Double]()
+        // Load frequencies
+        array_freq = UserDefaults.standard.array(forKey: "freqArray")
+            as! [Double]! ?? [Double]()
         
         setupAudioPlayer()
         
