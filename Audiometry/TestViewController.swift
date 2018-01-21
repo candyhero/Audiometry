@@ -21,17 +21,15 @@ let ANIMATE_SCALE: CGFloat! = 0.85
 
 class TestViewController: UIViewController {
     
-    
     private var _currentTestFlow = TestFlow()
+    private var timer: Timer?
     
     private var array_freqSeq: [Int]!
-    
-    private var timer: Timer?
+    var flag_practiceMode: Bool!
     
     // a map to record trials and results
     //
     @IBOutlet private weak var lbIsPlaying: UILabel!
-    @IBOutlet private weak var lbPhaseState: UILabel!
     @IBOutlet private weak var lbCurrentSetting: UILabel!
     @IBOutlet private weak var lbDebug: UILabel!
     
@@ -39,6 +37,7 @@ class TestViewController: UIViewController {
     @IBOutlet private weak var ivSecondInterval: UIImageView!
     
     @IBOutlet private weak var svIcons: UIStackView!
+    @IBOutlet private weak var svDebug: UIStackView!
     
     @IBOutlet private weak var pbFirstInterval: UIButton!
     @IBOutlet private weak var pbSecondInterval: UIButton!
@@ -70,19 +69,16 @@ class TestViewController: UIViewController {
             break
         }
         
-        print(bool_sender)
-        
-        let flag_thresholdFound =
+        let isThresholdFound: Bool! =
             _currentTestFlow.checkThreshold(bool_sender)
         
-        if(flag_thresholdFound!){
-            print(array_freqSeq)
+        if(isThresholdFound){
             // Pop the next freqSeq
             if(array_freqSeq.count > 0) {
                 testNextFrequency()
             }
             else {
-                _currentTestFlow.saveResult()
+//                _currentTestFlow.saveResult()
                 performSegue(withIdentifier: "segueResult", sender: nil)
             }
         }
@@ -163,7 +159,6 @@ class TestViewController: UIViewController {
     private func testNextFrequency(){
         let nextFreq = array_freqSeq.removeFirst()
         
-        
         DispatchQueue.main.async { [unowned self] in
             let pbImgDir = "Animal_Icons/" + ARRAY_FREQ_DIR[nextFreq]
             let pbImg = UIImage(named: pbImgDir) as UIImage?
@@ -189,6 +184,20 @@ class TestViewController: UIViewController {
         super.viewDidLoad()
         
         array_freqSeq = UserDefaults.standard.array(forKey: "array_freqSeq") as! [Int]
+        
+//        flag_practiceMode = false
+        
+        if(!flag_practiceMode) {
+            svDebug.alpha = 0.0
+        }
+        else {
+            svDebug.alpha = 1.0
+        }
+        print(svDebug.alpha)
+        
+        let currentSetting = UserDefaults.standard.string(forKey: "_currentSetting") ?? "None"
+        
+        lbCurrentSetting.text! = currentSetting
         
         testNextFrequency()
     }

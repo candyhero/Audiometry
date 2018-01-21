@@ -20,12 +20,17 @@ let ARRAY_FREQ_DIR = ["250Hz_Bee", "500Hz_Owl", "",
                       "6000Hz_Cricket", "8000Hz_Bat"]
 
 class TitleViewController: UIViewController {
+    
     @IBAction func startTesting(_ sender: UIButton) {
         let currentSettingKey = UserDefaults.standard.string(
-            forKey: "currentSetting") ?? nil
+            forKey: "currentSetting") as? String
         
-        if(currentSettingKey == nil){
+        if(currentSettingKey != nil){
             
+            performSegue(withIdentifier: "segueFreqSelection", sender: nil)
+        }
+        else {
+        
             // Prompt for user to input setting name
             let alertController = UIAlertController(
                 title: "Error",
@@ -38,24 +43,20 @@ class TitleViewController: UIViewController {
             
             self.present(alertController, animated: true, completion: nil)
         }
-        else {
-            
-            performSegue(withIdentifier: "segueFreqSelection", sender: nil)
-        }
     }
     
     @IBAction func viewResults(_ sender: UIButton) {
         
+        let patientProfiles = UserDefaults.standard.array(forKey: "patientProfiles") as? [String]
         
-        let array_freqSeq = UserDefaults.standard.array(
-            forKey: "array_freqSeq") as! [Int]
-        let dict_thresholdDB = UserDefaults.standard.dictionary(
-            forKey: "dict_thresholdDB") as! [String: Double]
-        
-        
-        if(array_freqSeq.count != dict_thresholdDB.count){
+        // Validate results
+        if(patientProfiles != nil) {
+            // Display valid results in charts
+            performSegue(withIdentifier: "segueResultFromMenu", sender: nil)
+        }
+        else { // Error
             
-            // Prompt for user to input setting name
+            // Prompt Error message
             let alertController = UIAlertController(
                 title: "Error",
                 message: "There is no result!", preferredStyle: .alert)
@@ -66,10 +67,6 @@ class TitleViewController: UIViewController {
             alertController.addAction(cancelAction)
             
             self.present(alertController, animated: true, completion: nil)
-        }
-        else {
-            
-            performSegue(withIdentifier: "segueResultFromMenu", sender: nil)
         }
     }
     

@@ -12,8 +12,10 @@ target 'Audiometry' do
     # Pods for testing
   end
 
-  pod 'AudioKit', '~> 4.0'
+  pod 'AudioKit', '4.0.4'
 
-  pod 'Charts'
+  pod 'Charts', '3.0.4'
+  
+  pod 'ExpandableCell'
 
 end

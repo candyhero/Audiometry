@@ -10,18 +10,17 @@ import Foundation
 
 class TestFlow {
     
+    private let SYSTEM_DEFAULT_DB = 50.0
+    
     // Pre-init'ed
     private var array_correctionFactors = [Double]()
     
     private var dict_thresholdDB = [String: Double]()
     private var dict_freqTrackList = [String: [Double]]()
     
-    // Temp buff for each freq run,
-    // Init before each run
-    private var dict_rightCount: [Double: Int]!
-    private var dict_wrongCount: [Double: Int]!
+    private var dict_isLastCorrect = [Int: Bool]()
     
-    private var flag_initialPhase: Bool!
+    private var _flag_initialPhase: Bool!
     
     private var _currentPlayCase: Int!
     private var _currentDB: Double!
@@ -60,9 +59,7 @@ class TestFlow {
         _currentSetting = UserDefaults.standard.dictionary(
             forKey: currentSettingKey!) as? [String : [String]]
         
-        
-        
-        flag_initialPhase = false
+//        _flag_initialPhase = true
         
         for i in 0..<ARRAY_FREQ.count {
             
@@ -105,17 +102,15 @@ class TestFlow {
         let rightCorrFactor: Double! =
             array_correctionFactors[_currentFreqIndex * 2 + 1]
         
-        _currentDB = 70.0
-        flag_initialPhase = false
+        _currentDB = SYSTEM_DEFAULT_DB
         
         player.updateFreq(currentFreq)
         player.updateCorrectionFactors(leftCorrFactor, rightCorrFactor)
         
         // Init buffs at current Freq to storing results
+        _flag_initialPhase = true
         dict_freqTrackList[String(currentFreq)] = [Double]()
-        
-        dict_rightCount = [Double:Int]()
-        dict_wrongCount = [Double:Int]()
+        dict_isLastCorrect.removeAll()
         
         // Start playing
         playSignalCase()
@@ -126,9 +121,10 @@ class TestFlow {
         // Set init volume & random play case
         player.updatePlayerVolume(_currentDB)
         
-        // Update playe case
-        //currentPlaycase = Int(arc4random_uniform(3))
+        // Draw new case
         _currentPlayCase = Int(arc4random_uniform(2) + 1)
+        // Uncomment to enable no sound interval
+        //currentPlaycase = Int(arc4random_uniform(3))
         
         switch _currentPlayCase {
             
@@ -161,21 +157,42 @@ class TestFlow {
     func checkThreshold(_ bool_sender: Bool!) -> Bool!{
         // Update dB track list at this freq
         let currentFreq = ARRAY_FREQ[_currentFreqIndex]
-        dict_freqTrackList[String(currentFreq)]?.append(_currentDB)
+        dict_freqTrackList[String(currentFreq)]!.append(_currentDB)
         
-        // Update right/wrong counts
-        if(bool_sender){
-            dict_rightCount[_currentDB] = (dict_rightCount[_currentDB] ?? 0) + 1
+        let currentDB_intKey: Int = Int(_currentDB)
+        let isLastCorrect: Bool! = dict_isLastCorrect[currentDB_intKey] ?? false
+        
+        // Determine if test can be ended
+        if(bool_sender && isLastCorrect){
+            // Twice correct in a row on the same freq
+            // Update threshold
+            dict_thresholdDB[String(currentFreq)] = _currentDB
+            
+            // End testing on this freq
+            saveResult()
+            return true
         }
-        else {
-            dict_wrongCount[_currentDB] = (dict_wrongCount[_currentDB] ?? 0) + 1
+        
+        dict_isLastCorrect[currentDB_intKey] = bool_sender
+        
+        // Else, just update and play next db
+        // Check if phase has changed
+        if(_flag_initialPhase) {
+            
+            // If first correct / incorrect after previous incorrects / corrects
+            // change phase
+            if(_currentDB > SYSTEM_DEFAULT_DB && bool_sender) ||
+                (_currentDB < SYSTEM_DEFAULT_DB && !bool_sender){
+                
+                _flag_initialPhase = false
+            }
         }
         
         // Compute next dB
         var nextDB: Double!
         
-        if(!flag_initialPhase) {
-            nextDB = _currentDB + (bool_sender ? -10 : 20)
+        if(_flag_initialPhase) {
+            nextDB = _currentDB + (bool_sender ? -20 : 20)
         }
         else {
             nextDB = _currentDB + (bool_sender ? -5 : 10)
@@ -185,58 +202,37 @@ class TestFlow {
         nextDB = (nextDB > 100) ? 100 : nextDB
         nextDB = (nextDB < 0) ? 0 : nextDB
         
-        if(!flag_initialPhase){
-            if((dict_rightCount[_currentDB] ?? 0) > 0 &&
-                (dict_wrongCount[nextDB] ?? 0) > 0){
-                
-                flag_initialPhase = true
-            }
-        }
-        else {
-            if(bool_sender){
-                let rightCurrent: Int! = dict_rightCount[_currentDB] ?? 0
-                let wrongCurrent: Int! = dict_wrongCount[_currentDB] ?? 1
-                let wrongNext: Int! = dict_wrongCount[nextDB] ?? 0
-                let rightNext: Int! = dict_rightCount[nextDB] ?? 1
-                
-                if(rightCurrent > wrongCurrent && wrongNext > rightNext){
-                    dict_thresholdDB[String(currentFreq)] = _currentDB
-                }
-            }
-            else {
-                let rightUpper: Int! = dict_rightCount[_currentDB + 5] ?? 0
-                let wrongUpper: Int! = dict_wrongCount[_currentDB + 5] ?? 1
-                let wrongCurrent: Int! = dict_wrongCount[_currentDB] ?? 0
-                let rightCurrent: Int! = dict_rightCount[_currentDB] ?? 1
-                
-                if(rightUpper > wrongUpper && wrongCurrent > rightCurrent){
-                    dict_thresholdDB[String(currentFreq)] = _currentDB + 5
-                }
-            }
-        }
-        
         // Load new volume
-        player.updatePlayerVolume(nextDB)
         _currentDB = nextDB!
         
-        // Draw new case
-        //currentPlaycase = Int(arc4random_uniform(3))
-        _currentPlayCase = Int(arc4random_uniform(2) + 1)
-        
-        if(dict_thresholdDB[String(currentFreq)] == nil){
-            
-            playSignalCase()
-            return false
-        }
-        else {
-            return true
-        }
+        playSignalCase()
+        return false
     }
     
     func saveResult() {
         // Save threshold and track history if threshold found
-        print("Saving Test Result")
-        UserDefaults.standard.set(dict_thresholdDB, forKey: "dict_thresholdDB")
-        UserDefaults.standard.set(dict_freqTrackList, forKey: "dict_result")
+        let patientName =  UserDefaults.standard.string(forKey: "patientName")
+        var patientProfiles = UserDefaults.standard.array(forKey: "patientProfiles") as? [String]
+        var array_freqSeq = UserDefaults.standard.array(forKey:  "freqSeq" + patientName!) as? [Int]
+        
+        if(patientProfiles == nil) {
+            patientProfiles = [String]()
+        }
+        
+        if(patientProfiles!.first != patientName!){
+            patientProfiles!.insert(patientName!, at: 0)
+        }
+        
+        if(array_freqSeq == nil) {
+            array_freqSeq = [Int]()
+        }
+        
+        array_freqSeq!.append(_currentFreqIndex)
+        
+        UserDefaults.standard.set(patientProfiles!, forKey: "patientProfiles")
+
+        UserDefaults.standard.set(array_freqSeq, forKey: "freqSeq" + patientName!)
+        UserDefaults.standard.set(dict_thresholdDB, forKey: "db" + patientName!)
+        UserDefaults.standard.set(dict_freqTrackList, forKey: patientName!)
     }
 }

@@ -14,28 +14,28 @@ class CalibrationViewController: UIViewController {
     //*******************
     // Constants
     //*******************
-    let DB_SYSTEM_MAX: Double! = 105.0 // At volume amplitude = 1.0
-    let DB_DEFAULT: Double! = 70.0
-    let RAMP_TIME: Double! = 1.5
-    let RAMP_TIMESTEP: Double! = 0.01
+    private let _DB_SYSTEM_MAX: Double! = 105.0 // At volume amplitude = 1.0
+    private let _DB_DEFAULT: Double! = 70.0
+    private let _RAMP_TIME: Double! = 0.1
+    private let _RAMP_TIMESTEP: Double! = 0.01
     
     //*******************
     // Variables
     //*******************
-    var currentIndex: Int! = -1
     
-    var generator: AKOperationGenerator! = nil
+    private var _array_freq: [Double]!
+    private var _array_picker: [String]!
     
-    var array_freq: [Double]!
-    var array_picker: [String]!
+    private var _array_pbPlay = [UIButton]()
+    private var _array_tbExpectedDBSPL = [UITextField]()
+    private var _array_tbPresentDBHL = [UITextField]()
+    private var _array_tbMeasuredDBSPL = [UITextField]()
     
-    var array_pbPlay = [UIButton]()
-    var array_tbExpectedDBSPL = [UITextField]()
-    var array_tbPresentDBHL = [UITextField]()
-    var array_tbMeasuredDBSPL = [UITextField]()
+    private var _currentSetting: String!
+    private var _currentSelection: String!
+    private var _currentIndex: Int! = -1
     
-    var currentSetting: String!
-    var currentSelection: String!
+    private var _generator: AKOperationGenerator! = nil
     
     //*******************
     // Outlets
@@ -101,7 +101,7 @@ class CalibrationViewController: UIViewController {
     
     @IBAction func saveToCurrent(_ sender: UIButton) {
         
-        self.saveSetting(currentSetting)
+        self.saveSetting(_currentSetting)
     }
     
     
@@ -113,53 +113,51 @@ class CalibrationViewController: UIViewController {
         // with their corresponding freqs
         var newSetting = [String: [String]]()
         
-        for i in 0..<array_freq.count {
+        for i in 0..<_array_freq.count {
             
             // Put the strings in to a string array
-            var array_db = [String]()
+            var _array_db = [String]()
             
-            array_db.append(array_tbExpectedDBSPL[i].text!)
-            array_db.append(array_tbPresentDBHL[i].text!)
-            array_db.append(array_tbMeasuredDBSPL[i * 2].text!)
-            array_db.append(array_tbMeasuredDBSPL[i * 2 + 1].text!)
+            _array_db.append(_array_tbExpectedDBSPL[i].text!)
+            _array_db.append(_array_tbPresentDBHL[i].text!)
+            _array_db.append(_array_tbMeasuredDBSPL[i * 2].text!)
+            _array_db.append(_array_tbMeasuredDBSPL[i * 2 + 1].text!)
             
             // Map volume (dB) string array to their respective frequencies
-            let freqKey: String = String(array_freq[i])
-            newSetting[freqKey] = array_db
+            let freqKey: String = String(_array_freq[i])
+            newSetting[freqKey] = _array_db
         }
-        
-        print(newSetting)
         
         // Store the setting dictionary into user defaults
         UserDefaults.standard.set(newSetting, forKey: settingKey)
         
         // Update setting list if this is a new setting
-        if(!array_picker.contains(settingKey)){
-            array_picker.append(settingKey)
-            UserDefaults.standard.set(array_picker, forKey: "settingList")
+        if(!_array_picker.contains(settingKey)){
+            _array_picker.append(settingKey)
+            UserDefaults.standard.set(_array_picker, forKey: "settingList")
         }
         
         // Update current setting string
-        currentSetting = settingKey
+        _currentSetting = settingKey
         backupCurrentSetting()
-        lbCurrentSetting.text = currentSetting
+        lbCurrentSetting.text = _currentSetting
     }
     
     @IBAction func deleteCurrent(_ sender: UIButton) {
         
         // Find the setting from the setting list
-        if let index = array_picker.index(where: {$0 == currentSetting}) {
+        if let index = _array_picker.index(where: {$0 == _currentSetting}) {
             
             // If found
             // Remove the setting name from the setting list
-            array_picker.remove(at: index)
-            UserDefaults.standard.set(array_picker, forKey: "settingList")
+            _array_picker.remove(at: index)
+            UserDefaults.standard.set(_array_picker, forKey: "settingList")
             
             // Remove the setting object from UserDefaults.standard
-            UserDefaults.standard.removeObject(forKey: currentSetting)
+            UserDefaults.standard.removeObject(forKey: _currentSetting)
             
-            currentSetting = nil
-            backupCurrentSetting() 
+            _currentSetting = nil
+            backupCurrentSetting()
             lbCurrentSetting.text = "None"
             
             checkCurrentPB()
@@ -171,42 +169,39 @@ class CalibrationViewController: UIViewController {
         
         var setting = UserDefaults.standard.dictionary(forKey: settingKey)!
         
-        for i in 0..<array_freq.count {
+        for i in 0..<_array_freq.count {
             
             // Retrieve saved volume strings by trying every key (freq)
-            let freqKey: String = String(array_freq[i])
-            var array_db = setting[freqKey] as! [String]! ?? nil
+            let freqKey: String = String(_array_freq[i])
+            var _array_db = setting[freqKey] as! [String]! ?? nil
             
-            // In case a new frequency is added, which has no default UserDefaults.standard
-            if(array_db != nil){
+            if(_array_db != nil){
                 
-                array_tbExpectedDBSPL[i].text = array_db?[0] ?? nil
-                array_tbPresentDBHL[i].text = array_db?[1] ?? nil
-                array_tbMeasuredDBSPL[i * 2].text = array_db?[2] ?? nil
-                array_tbMeasuredDBSPL[i * 2 + 1].text = array_db?[3] ?? nil
+                _array_tbExpectedDBSPL[i].text = _array_db?[0] ?? nil
+                _array_tbPresentDBHL[i].text = _array_db?[1] ?? nil
+                _array_tbMeasuredDBSPL[i * 2].text = _array_db?[2] ?? nil
+                _array_tbMeasuredDBSPL[i * 2 + 1].text = _array_db?[3] ?? nil
             }
         }
         
-        currentSetting = settingKey
+        _currentSetting = settingKey
         backupCurrentSetting()
-        lbCurrentSetting.text = currentSetting
+        lbCurrentSetting.text = _currentSetting
     }
     
     @objc func backupCurrentSetting() {
-        UserDefaults.standard.set(currentSetting, forKey: "currentSetting")
+        UserDefaults.standard.set(_currentSetting, forKey: "_currentSetting")
     }
     
     @IBAction func loadOther(_ sender: UIButton) {
         
-        let temp = UserDefaults.standard.array(forKey: "settingList")
+        let settingList = UserDefaults.standard.array(forKey: "settingList")
             as! [String]! ?? nil
         let alertController: UIAlertController!
         
-        if temp != nil && temp!.count > 0 {
+        if settingList != nil && settingList!.count > 0 {
             
-//            array_picker = temp!
-            
-            currentSelection = array_picker[0]
+            _currentSelection = _array_picker[0]
             
             alertController = UIAlertController(
                 title: "Select a different setting",
@@ -224,7 +219,7 @@ class CalibrationViewController: UIViewController {
             let confirmAction = UIAlertAction(
                 title: "Confirm", style: .default) {(_) in
                 
-                self.loadSetting(self.currentSelection)
+                self.loadSetting(self._currentSelection)
                     
                 self.checkCurrentPB()
             }
@@ -255,7 +250,7 @@ class CalibrationViewController: UIViewController {
     
     func checkLoadList() {
         
-        if(array_picker.count == 0) {
+        if(_array_picker.count == 0) {
             pbLoadOther.isEnabled = false;
             pbLoadOther.setTitleColor(.lightGray, for: .normal)
         }
@@ -268,7 +263,7 @@ class CalibrationViewController: UIViewController {
     
     func checkCurrentPB()
     {
-        if(currentSetting == nil){
+        if(_currentSetting == nil){
             pbSaveToCurrent.isEnabled = false;
             pbDeleteCurrent.isEnabled = false;
             
@@ -293,59 +288,55 @@ class CalibrationViewController: UIViewController {
     
     @IBAction func loadDefaultPrLv(_ sender: UIButton) {
         
-        for i in 0..<array_freq.count {
+        for i in 0..<_array_freq.count {
             
-            array_tbPresentDBHL[i].text = String(DB_DEFAULT)
+            _array_tbPresentDBHL[i].text = String(_DB_DEFAULT)
         }
     }
     
     @IBAction func clearMeasuredLv(_ sender: UIButton) {
         
-        for i in 0..<array_freq.count {
+        for i in 0..<_array_freq.count {
             
-            array_tbMeasuredDBSPL[i * 2].text = ""
-            array_tbMeasuredDBSPL[i * 2 + 1].text = ""
+            _array_tbMeasuredDBSPL[i * 2].text = ""
+            _array_tbMeasuredDBSPL[i * 2 + 1].text = ""
         }
     }
     
-    
-    
-    
     @IBAction func playSignal(_ sender: UIButton) {
         // No tone playing at all, simply toggle on
-        if(!generator.isStarted){
+        if(!_generator.isStarted){
             
-            currentIndex = array_pbPlay.index(of: sender)!
-            array_pbPlay[currentIndex].setTitle("On", for: .normal)
+            _currentIndex = _array_pbPlay.index(of: sender)!
+            _array_pbPlay[_currentIndex].setTitle("On", for: .normal)
             
-            generator.start()
+            _generator.start()
             
             // Update freq & vol
-            generator.parameters[0] = array_freq[currentIndex]
+            _generator.parameters[0] = _array_freq[_currentIndex]
             updatePlayerVolume()
-            
         }
         // Same tone, toggle it off
-        else if(array_pbPlay[currentIndex] == sender){
+        else if(_array_pbPlay[_currentIndex] == sender){
             
-            array_pbPlay[currentIndex].setTitle("Off", for: .normal)
-            currentIndex = -1
+            _array_pbPlay[_currentIndex].setTitle("Off", for: .normal)
+            _currentIndex = -1
             
-            generator.stop()
+            _generator.stop()
         }
         // Else tone, switch frequency
         else {
             
-            let senderIndex = array_pbPlay.index(of: sender)!
+            let senderIndex = _array_pbPlay.index(of: sender)!
             
-            array_pbPlay[currentIndex].setTitle("Off", for: .normal)
-            currentIndex = senderIndex
+            _array_pbPlay[_currentIndex].setTitle("Off", for: .normal)
+            _currentIndex = senderIndex
             
             // Update freq & vol
-            generator.parameters[0] = array_freq[currentIndex]
+            _generator.parameters[0] = _array_freq[_currentIndex]
             updatePlayerVolume()
             
-            array_pbPlay[currentIndex].setTitle("On", for: .normal)
+            _array_pbPlay[_currentIndex].setTitle("On", for: .normal)
         }
     }
     
@@ -368,11 +359,11 @@ class CalibrationViewController: UIViewController {
         
         // volume in absolute dB to be converted to amplitude
         // 1.0 amplitude <-> 0 absoulte dB
-        let ampDB: Double = dB - DB_SYSTEM_MAX
+        let ampDB: Double = dB - _DB_SYSTEM_MAX
         
         let amp: Double = pow(10.0, ampDB / 20.0)
         
-        print(amp)
+//        print(amp)
         return ((amp > 1) ? 1 : amp)
     }
     
@@ -380,18 +371,18 @@ class CalibrationViewController: UIViewController {
     func updatePlayerVolume()
     {
         // skip if not playing currently
-        if(!generator.isStarted || (currentIndex == -1)){
+        if(!_generator.isStarted || (_currentIndex == -1)){
             return
         }
         
         // retrieve vol
-        let expectedTxt: String = array_tbExpectedDBSPL[currentIndex].text!
-        let presentTxt: String = array_tbPresentDBHL[currentIndex].text!
+        let expectedTxt: String = _array_tbExpectedDBSPL[_currentIndex].text!
+        let presentTxt: String = _array_tbPresentDBHL[_currentIndex].text!
         
         let leftMeasuredTxt: String =
-            array_tbMeasuredDBSPL[currentIndex * 2].text!
+            _array_tbMeasuredDBSPL[_currentIndex * 2].text!
         let rightMeasuredTxt: String =
-            array_tbMeasuredDBSPL[currentIndex * 2 + 1].text!
+            _array_tbMeasuredDBSPL[_currentIndex * 2 + 1].text!
         
         let expectedDBSPL: Double! = Double(expectedTxt) ?? 0.0
         let presentDBHL: Double! = Double(presentTxt) ?? 0.0
@@ -404,14 +395,14 @@ class CalibrationViewController: UIViewController {
         let leftCorrectionFactor: Double! = expectedDBSPL - leftMeasuredDBSPL
         let rightCorrectionFactor: Double! = expectedDBSPL - rightMeasuredDBSPL
         
-        for i in stride(from: 0.0, through: 1.0, by: RAMP_TIMESTEP){
-//            print(String(i))
+        for i in stride(from: 0.0, through: 1.0, by: _RAMP_TIMESTEP){
+
             DispatchQueue.main.asyncAfter(
-                deadline: .now() + i * RAMP_TIME, execute:
+                deadline: .now() + i * _RAMP_TIME, execute:
             {
-                self.generator.parameters[1] = self.dbToAmp(
+                self._generator.parameters[1] = self.dbToAmp(
                     (presentDBHL! + leftCorrectionFactor!) * i)
-                self.generator.parameters[2] = self.dbToAmp(
+                self._generator.parameters[2] = self.dbToAmp(
                     (presentDBHL! + rightCorrectionFactor!) * i)
             })
         }
@@ -422,8 +413,8 @@ class CalibrationViewController: UIViewController {
         // Setup oscillator player which generates pure tones
         //*******************
         
-        // generator to be configured by setting generator.parameters
-        generator = AKOperationGenerator(numberOfChannels: 2) {
+        // _generator to be configured by setting _generator.parameters
+        _generator = AKOperationGenerator(numberOfChannels: 2) {
             
             parameters in
             
@@ -435,7 +426,7 @@ class CalibrationViewController: UIViewController {
             return [leftOutput, rightOutput]
         }
         
-        AudioKit.output = generator
+        AudioKit.output = _generator
         AudioKit.start()
     }
     
@@ -460,11 +451,11 @@ class CalibrationViewController: UIViewController {
         setupStackview(svRightMeasuredDBSPL)
         
         //Creating play buttons for each respective freq
-        for i in 0..<array_freq.count {
+        for i in 0..<_array_freq.count {
             
             // Add frequency labels to svLabels
             let new_lbFreq = UILabel()
-            new_lbFreq.text = String(array_freq[i])
+            new_lbFreq.text = String(_array_freq[i])
             new_lbFreq.textAlignment = .center
             
             svLabels.addArrangedSubview(new_lbFreq)
@@ -485,7 +476,7 @@ class CalibrationViewController: UIViewController {
                 top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
             
             // Add the button to our current button array
-            array_pbPlay += [new_pbPlay]
+            _array_pbPlay += [new_pbPlay]
             svButtons.addArrangedSubview(new_pbPlay)
             
             // Add textboxes to sv70dBHL
@@ -494,7 +485,7 @@ class CalibrationViewController: UIViewController {
             new_tbExpectedSPL.textAlignment = .center
             new_tbExpectedSPL.keyboardType = UIKeyboardType.decimalPad
             
-            array_tbExpectedDBSPL += [new_tbExpectedSPL]
+            _array_tbExpectedDBSPL += [new_tbExpectedSPL]
             svExpectedDBSPL.addArrangedSubview(new_tbExpectedSPL)
             
             // Add textboxes to svPresentLv for volume input in dB
@@ -502,9 +493,9 @@ class CalibrationViewController: UIViewController {
             new_tbPresentDBHL.borderStyle = .roundedRect
             new_tbPresentDBHL.textAlignment = .center
             new_tbPresentDBHL.keyboardType = UIKeyboardType.decimalPad
-            new_tbPresentDBHL.text = String(DB_DEFAULT)
+            new_tbPresentDBHL.text = String(_DB_DEFAULT)
             
-            array_tbPresentDBHL += [new_tbPresentDBHL]
+            _array_tbPresentDBHL += [new_tbPresentDBHL]
             svPresentDBHL.addArrangedSubview(new_tbPresentDBHL)
             
             // Add textboxes to svMeasuredLV for volume input in dB
@@ -513,7 +504,7 @@ class CalibrationViewController: UIViewController {
             new_tbLeftMeasureDBSPL.textAlignment = .center
             new_tbLeftMeasureDBSPL.keyboardType = UIKeyboardType.decimalPad
             
-            array_tbMeasuredDBSPL += [new_tbLeftMeasureDBSPL]
+            _array_tbMeasuredDBSPL += [new_tbLeftMeasureDBSPL]
             svLeftMeasuredDBSPL.addArrangedSubview(new_tbLeftMeasureDBSPL)
             
             let new_tbRightMeasureDBSPL = UITextField()
@@ -521,7 +512,7 @@ class CalibrationViewController: UIViewController {
             new_tbRightMeasureDBSPL.textAlignment = .center
             new_tbRightMeasureDBSPL.keyboardType = UIKeyboardType.decimalPad
             
-            array_tbMeasuredDBSPL += [new_tbRightMeasureDBSPL]
+            _array_tbMeasuredDBSPL += [new_tbRightMeasureDBSPL]
             svRightMeasuredDBSPL.addArrangedSubview(new_tbRightMeasureDBSPL)
         }
 
@@ -533,23 +524,22 @@ class CalibrationViewController: UIViewController {
         super.viewDidLoad()
         
         // Load frequencies
-        array_freq = UserDefaults.standard.array(forKey: "freqArray")
-            as! [Double]! ?? [Double]()
+        _array_freq = ARRAY_FREQ
         
         setupAudioPlayer()
         
         setupMainStackview()
         
         // Reload previous setting
-        currentSetting = UserDefaults.standard.string(forKey: "currentSetting")
+        _currentSetting = UserDefaults.standard.string(forKey: "_currentSetting")
             ?? nil
         
         // Load setting List
-        array_picker = UserDefaults.standard.array(forKey: "settingList")
+        _array_picker = UserDefaults.standard.array(forKey: "settingList")
             as! [String]! ?? [String]()
         
-        if(currentSetting != nil) {
-            loadSetting(currentSetting)
+        if(_currentSetting != nil) {
+            loadSetting(_currentSetting)
         }
         
         
@@ -599,20 +589,18 @@ extension CalibrationViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        return array_picker.count
+        return _array_picker.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        return array_picker[row]
+        return _array_picker[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
                     inComponent component: Int) {
         
-        currentSelection = array_picker[row]
-        
-//        pbLoad.setTitle(currentSetting, for: .normal)
+        _currentSelection = _array_picker[row]
     }
 }
 

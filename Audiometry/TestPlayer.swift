@@ -31,24 +31,23 @@ class TestPlayer {
             
             let leftSine = AKOperation.sineWave(frequency: parameters[0],
                                                 amplitude: parameters[1])
-            
             let rightSine = AKOperation.sineWave(frequency: parameters[0],
                                                  amplitude: parameters[2])
             
             let clock = AKOperation.periodicTrigger(period: PULSE_TIME)
-            
+
             let leftOutput = leftSine.triggeredWithEnvelope(
                 trigger: clock,
                 attack: ATTACK_TIME,
                 hold: HOLD_TIME,
                 release: RELEASE_TIME)
-            
+
             let rightOutput = rightSine.triggeredWithEnvelope(
                 trigger: clock,
                 attack: ATTACK_TIME,
                 hold: HOLD_TIME,
                 release: RELEASE_TIME)
-            
+
             return [leftOutput, rightOutput]
         }
         
@@ -59,7 +58,7 @@ class TestPlayer {
     func updateFreq (_ newFreq: Double!) {
         
         self.generator.parameters[0] = newFreq
-        print(newFreq)
+//        print(newFreq)
     }
     
     func updateCorrectionFactors(_ left: Double!, _ right: Double!) {
@@ -67,7 +66,7 @@ class TestPlayer {
         self.leftCorrFactor = left
         self.rightCorrFactor = right
         
-        print(left, right)
+//        print(left, right)
     }
     
     func updatePlayerVolume(_ newExpectedVol: Double!) {
@@ -81,8 +80,10 @@ class TestPlayer {
         self.generator.parameters[2] = self.dbToAmp(
             newExpectedVol + rightCorrFactor)
         
-        print(newExpectedVol)
+//        print(newExpectedVol)
     }
+        
+        
     
     func play() {
         self.generator.start()
@@ -95,10 +96,6 @@ class TestPlayer {
     }
     
     @objc func stop() {
-        if(generator.isStarted)
-        {
-        }
-        print("y")
         self.generator.stop()
     }
     
