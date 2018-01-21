@@ -15,7 +15,5 @@ target 'Audiometry' do
   pod 'AudioKit', '4.0.4'
 
   pod 'Charts', '3.0.4'
-  
-  pod 'ExpandableCell'
 
 end

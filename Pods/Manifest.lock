@@ -5,18 +5,15 @@ PODS:
   - Charts (3.0.4):
     - Charts/Core (= 3.0.4)
   - Charts/Core (3.0.4)
-  - ExpandableCell (1.2.1)
 
 DEPENDENCIES:
   - AudioKit (= 4.0.4)
   - Charts (= 3.0.4)
-  - ExpandableCell
 
 SPEC CHECKSUMS:
   AudioKit: 647145c0462dc9dc8a8582998cd6db5f2e1ea848
   Charts: 0705898046257443f0afbbc3179f4b67507b6e48
-  ExpandableCell: 283526533c2c197a2457bdd98706290d03903ae1
 
-PODFILE CHECKSUM: 2fdb9d9f1a5d39a6bbc1c2ba4bb99388dc7ba9cb
+PODFILE CHECKSUM: 0665c7e2705482be5f268634c5a361eb39b9857d
 
 COCOAPODS: 1.4.0.beta.2
