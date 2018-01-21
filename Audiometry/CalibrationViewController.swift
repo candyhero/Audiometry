@@ -190,7 +190,7 @@ class CalibrationViewController: UIViewController {
     }
     
     @objc func backupCurrentSetting() {
-        UserDefaults.standard.set(_currentSetting, forKey: "_currentSetting")
+        UserDefaults.standard.set(_currentSetting, forKey: "currentSetting")
     }
     
     @IBAction func loadOther(_ sender: UIButton) {
@@ -531,7 +531,7 @@ class CalibrationViewController: UIViewController {
         setupMainStackview()
         
         // Reload previous setting
-        _currentSetting = UserDefaults.standard.string(forKey: "_currentSetting")
+        _currentSetting = UserDefaults.standard.string(forKey: "currentSetting")
             ?? nil
         
         // Load setting List
