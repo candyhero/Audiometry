@@ -14,8 +14,8 @@ import MediaPlayer
 let ARRAY_FREQ: [Double]! = [250.0, 500.0, 750.0, 1000.0, 1500.0,
                              2000.0, 3000.0, 4000.0, 6000.0, 8000.0]
 
-let ARRAY_FREQ_DIR = ["250Hz_Bee", "500Hz_Owl", "",
-                      "1000Hz_Cat", "", "2000Hz_Mouse",
+let ARRAY_FREQ_DIR = ["250Hz_Bee", "500Hz_Owl", "750Hz_Dog",
+                      "1000Hz_Cat", "1500Hz_Frog", "2000Hz_Mouse",
                       "3000Hz_Rattlesnake", "4000Hz_Bird",
                       "6000Hz_Cricket", "8000Hz_Bat"]
 
