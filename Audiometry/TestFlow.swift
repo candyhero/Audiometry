@@ -195,7 +195,7 @@ class TestFlow {
             nextDB = _currentDB + (bool_sender ? -20 : 20)
         }
         else {
-            nextDB = _currentDB + (bool_sender ? -5 : 10)
+            nextDB = _currentDB + (bool_sender ? -10 : 5)
         }
         
         // Bound next db between [0, 100] dbHL
