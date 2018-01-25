@@ -18,7 +18,7 @@ class TestFlow {
     private var dict_thresholdDB = [String: Double]()
     private var dict_freqTrackList = [String: [Double]]()
     
-    private var dict_isLastCorrect = [Int: Bool]()
+    private var dict_hasBeenAscendingCorrect = [Int: Bool]()
     
     private var _flag_initialPhase: Bool!
     
@@ -110,7 +110,7 @@ class TestFlow {
         // Init buffs at current Freq to storing results
         _flag_initialPhase = true
         dict_freqTrackList[String(currentFreq)] = [Double]()
-        dict_isLastCorrect.removeAll()
+        dict_hasBeenAscendingCorrect.removeAll()
         
         // Start playing
         playSignalCase()
@@ -157,23 +157,33 @@ class TestFlow {
     func checkThreshold(_ bool_sender: Bool!) -> Bool!{
         // Update dB track list at this freq
         let currentFreq = ARRAY_FREQ[_currentFreqIndex]
+        let lastDB: Double? = dict_freqTrackList[String(currentFreq)]?.last
+        
         dict_freqTrackList[String(currentFreq)]!.append(_currentDB)
         
-        let currentDB_intKey: Int = Int(_currentDB)
-        let isLastCorrect: Bool! = dict_isLastCorrect[currentDB_intKey] ?? false
+        let wasLastCorrect = (_currentDB < lastDB ?? _currentDB + 1)
         
-        // Determine if test can be ended
-        if(bool_sender && isLastCorrect){
-            // Twice correct in a row on the same freq
-            // Update threshold
-            dict_thresholdDB[String(currentFreq)] = _currentDB
+        // Determine if this is an ascending + response
+        if(!wasLastCorrect && bool_sender) {
             
-            // End testing on this freq
-            saveResult()
-            return true
+            let currentDB_intKey: Int = Int(_currentDB)
+            let hasBeenAscendingCorrect: Bool! = dict_hasBeenAscendingCorrect[currentDB_intKey] ?? false
+            
+            // Determine if test can be ended
+            if(hasBeenAscendingCorrect){
+                // Twice correct in a row on the same freq
+                // Update threshold
+                dict_thresholdDB[String(currentFreq)] = _currentDB
+                
+                // End testing on this freq
+                saveResult()
+                return true
+            }
+            else {
+                
+                dict_hasBeenAscendingCorrect[currentDB_intKey] = true
+            }
         }
-        
-        dict_isLastCorrect[currentDB_intKey] = bool_sender
         
         // Else, just update and play next db
         // Check if phase has changed

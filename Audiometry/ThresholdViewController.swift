@@ -159,7 +159,6 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
     func updateGraph(_ patientName: String!, _ freq: Double!){
         
         // Load dB and result lists
-        
         let dict_freqSeqArrays = UserDefaults.standard.dictionary(
             forKey: patientName!) as! [String: [Double]]
         
@@ -175,14 +174,23 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
             lineChartEntry.append(temp_value) // here we add it to the data set
         }
         
-        let line1 = LineChartDataSet(values: lineChartEntry, label: "Number") //Here we convert lineChartEntry to a LineChartDataSet
+        let line1 = LineChartDataSet(values: lineChartEntry, label: "Presentation Level in dB") //Here we convert lineChartEntry to a LineChartDataSet
         line1.colors = [NSUIColor.blue] //Sets the colour to blue
         
+        // Set y-axis
+        let leftAxis = chartView.getAxis(YAxis.AxisDependency.left)
+        let rightAxis = chartView.getAxis(YAxis.AxisDependency.right)
+        
+        leftAxis.granularity = ((array_freqSeqDB.max()! - array_freqSeqDB.min()!) > 30) ? 10 : 5
+        
+        rightAxis.enabled = false
+        rightAxis.drawGridLinesEnabled = false
+        
+        //
         let data = LineChartData() //This is the object that will be added to the chart
         data.addDataSet(line1) //Adds the line to the dataSet
         
         chartView.data = data //finally - it adds the chart data to the chart and causes an update
-        //chartView.chartDescription?.text = "My awesome chart" // Here we set the description for the graph
     }
 
     private func loadResult() {
