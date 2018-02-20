@@ -88,7 +88,6 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func handleExpandClose(button: UIButton!){
-//        print("Expanding & Closing", button.tag)
         
         let patientIndex = button.tag
         let patientName = patientProfiles[patientIndex]
@@ -129,7 +128,7 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
         // Retrieve patient brief info
         let patientName: String! = patientProfiles[indexPath.section]
         
-        let freq = ARRAY_FREQ[patientFreqSeq[patientName]![indexPath.row]]
+        let freq = ARRAY_DEFAULT_FREQ[patientFreqSeq[patientName]![indexPath.row]]
         let thresholdDB: Double! = patientThresholds[patientName]![String(freq)]
         
         // Configure table cell style
@@ -150,9 +149,9 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let patientName: String! = patientProfiles[indexPath.section]
         
-        let freq = ARRAY_FREQ[patientFreqSeq[patientName]![indexPath.row]]
+        let freq = ARRAY_DEFAULT_FREQ[patientFreqSeq[patientName]![indexPath.row]]
         
-        updateGraph(patientName, freq)
+        updateGraph(patientName, Double(freq))
     }
     
     // Plot functions
@@ -222,7 +221,7 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
         loadResult()
         
         updateGraph(patientProfiles.first!,
-                ARRAY_FREQ[patientFreqSeq[patientProfiles.first!]![0]])
+                Double(ARRAY_DEFAULT_FREQ[patientFreqSeq[patientProfiles.first!]![0]]))
     }
     
     override func didReceiveMemoryWarning() {

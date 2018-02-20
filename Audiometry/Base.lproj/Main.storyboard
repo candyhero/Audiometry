@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -446,15 +445,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2wu-yB-huc" userLabel="svFreq">
-                                <rect key="frame" x="20" y="144" width="984" height="80"/>
+                                <rect key="frame" x="20" y="104" width="984" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="PYA-kX-hL4"/>
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXn-5M-t1f">
-                                <rect key="frame" x="40" y="344.5" width="944" height="80"/>
+                                <rect key="frame" x="40" y="264" width="944" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="TO0-ug-21d"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="TO0-ug-21d"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="24"/>
                                 <nil key="textColor"/>
@@ -469,6 +468,46 @@
                                     <segue destination="cTp-f6-a1r" kind="show" id="iKs-G0-LoR"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="u28-MZ-bff">
+                                <rect key="frame" x="162.5" y="452" width="699" height="38"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6KR-ar-Gc1">
+                                        <rect key="frame" x="0.0" y="0.0" width="115" height="38"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="L. Ear Only">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="94A-jP-ejF">
+                                        <rect key="frame" x="175" y="0.0" width="116" height="38"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="R. Ear Only">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbU-aX-zmc">
+                                        <rect key="frame" x="351" y="0.0" width="144" height="38"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="L. Ear -&gt; R. Ear">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jLg-dZ-IA9">
+                                        <rect key="frame" x="555" y="0.0" width="144" height="38"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="R. Ear -&gt; L. Ear">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="pXE-KM-hq8">
                                 <rect key="frame" x="43.5" y="530" width="937" height="38"/>
                                 <subviews>
@@ -568,16 +607,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="pXE-KM-hq8" firstAttribute="top" secondItem="u28-MZ-bff" secondAttribute="bottom" constant="40" id="6wb-MH-aT8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jXn-5M-t1f" secondAttribute="trailing" constant="20" id="8Gf-ms-t3X"/>
                             <constraint firstItem="2wu-yB-huc" firstAttribute="leading" secondItem="a3s-Id-1d4" secondAttribute="leadingMargin" id="8pz-xh-9H2"/>
                             <constraint firstItem="pXE-KM-hq8" firstAttribute="centerX" secondItem="a3s-Id-1d4" secondAttribute="centerX" id="9pt-Hl-VOD"/>
                             <constraint firstItem="mtC-ky-4IU" firstAttribute="top" secondItem="pXE-KM-hq8" secondAttribute="bottom" constant="40" id="GXt-E4-jta"/>
+                            <constraint firstItem="jXn-5M-t1f" firstAttribute="top" secondItem="2wu-yB-huc" secondAttribute="bottom" constant="80" id="KDs-uz-FVJ"/>
                             <constraint firstItem="mtC-ky-4IU" firstAttribute="centerX" secondItem="a3s-Id-1d4" secondAttribute="centerX" id="Ojj-Dv-xJt"/>
                             <constraint firstItem="jXn-5M-t1f" firstAttribute="leading" secondItem="a3s-Id-1d4" secondAttribute="leadingMargin" constant="20" id="Omp-mG-vAm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2wu-yB-huc" secondAttribute="trailing" id="VrI-rl-Klh"/>
                             <constraint firstItem="daf-Af-oK0" firstAttribute="top" secondItem="mtC-ky-4IU" secondAttribute="bottom" constant="80" id="WsI-C5-hY8"/>
-                            <constraint firstItem="2wu-yB-huc" firstAttribute="centerY" secondItem="a3s-Id-1d4" secondAttribute="centerY" constant="-200" id="itE-ek-uzh"/>
-                            <constraint firstItem="jXn-5M-t1f" firstAttribute="centerY" secondItem="a3s-Id-1d4" secondAttribute="centerY" id="qXV-p1-dTW"/>
+                            <constraint firstItem="2wu-yB-huc" firstAttribute="centerY" secondItem="a3s-Id-1d4" secondAttribute="centerY" constant="-240" id="itE-ek-uzh"/>
+                            <constraint firstItem="u28-MZ-bff" firstAttribute="centerX" secondItem="a3s-Id-1d4" secondAttribute="centerX" id="rX3-xS-I8c"/>
                         </constraints>
                     </view>
                     <connections>
@@ -681,7 +722,6 @@
                                         <state key="normal" title="Load Default P. Level"/>
                                         <connections>
                                             <action selector="loadDefaultPrLv:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8B1-oy-OEw"/>
-                                            <action selector="updateVolume:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2R8-OI-CB6"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fHe-3n-wqG">
@@ -693,8 +733,6 @@
                                         <state key="normal" title="Clear Measured Level"/>
                                         <connections>
                                             <action selector="clearMeasuredLv:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rMP-3n-Wlb"/>
-                                            <action selector="loadDefaultPrLv:" destination="BYZ-38-t0r" eventType="touchUpInside" id="psz-Nf-cs4"/>
-                                            <action selector="updateVolume:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uxm-we-6oB"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -703,7 +741,6 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <action selector="returnToTitle:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qJ9-ad-2yO"/>
                                     <segue destination="cTp-f6-a1r" kind="show" id="ndd-Ne-f7t"/>
                                 </connections>
                             </button>
@@ -805,9 +842,9 @@
                         <outlet property="svButtons" destination="6OA-Fk-qck" id="Olq-ri-Tl2"/>
                         <outlet property="svExpectedDBSPL" destination="JKC-B9-LWH" id="UmG-1w-rLs"/>
                         <outlet property="svLabels" destination="Ch2-ui-3S2" id="jBN-O0-OsH"/>
-                        <outlet property="svLeftMeasuredDBSPL" destination="JH9-dy-eF8" id="blW-JD-SLF"/>
+                        <outlet property="svMeasuredDBSPL_L" destination="JH9-dy-eF8" id="vno-Kn-1oa"/>
+                        <outlet property="svMeasuredDBSPL_R" destination="cuq-2m-SrH" id="J8V-OF-TPq"/>
                         <outlet property="svPresentDBHL" destination="DhU-mX-pb4" id="rCP-q0-pcW"/>
-                        <outlet property="svRightMeasuredDBSPL" destination="cuq-2m-SrH" id="LGz-WD-DPd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -817,6 +854,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="bG4-nT-Jcv"/>
-        <segue reference="81L-1q-GLz"/>
+        <segue reference="iKs-G0-LoR"/>
     </inferredMetricsTieBreakers>
 </document>

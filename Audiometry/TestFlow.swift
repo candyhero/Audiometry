@@ -61,10 +61,10 @@ class TestFlow {
         
 //        _flag_initialPhase = true
         
-        for i in 0..<ARRAY_FREQ.count {
+        for i in 0..<ARRAY_DEFAULT_FREQ.count {
             
             // Retrieve saved volume strings by trying every key (freq)
-            let freqKey: String = String(ARRAY_FREQ[i])
+            let freqKey: String = String(ARRAY_DEFAULT_FREQ[i])
             var array_db = _currentSetting[freqKey] as [String]! ?? nil
             
             // In case a new frequency is added,
@@ -95,7 +95,7 @@ class TestFlow {
         
         // Update player settings
         _currentFreqIndex = freqIndex
-        let currentFreq: Double = ARRAY_FREQ[freqIndex]
+        let currentFreq: Double = Double(ARRAY_DEFAULT_FREQ[freqIndex])
         
         let leftCorrFactor: Double! =
             array_correctionFactors[_currentFreqIndex * 2]
@@ -156,7 +156,7 @@ class TestFlow {
     
     func checkThreshold(_ bool_sender: Bool!) -> Bool!{
         // Update dB track list at this freq
-        let currentFreq = ARRAY_FREQ[_currentFreqIndex]
+        let currentFreq = ARRAY_DEFAULT_FREQ[_currentFreqIndex]
         let lastDB: Double? = dict_freqTrackList[String(currentFreq)]?.last
         
         dict_freqTrackList[String(currentFreq)]!.append(_currentDB)

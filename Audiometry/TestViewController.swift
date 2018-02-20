@@ -9,15 +9,6 @@
 import UIKit
 
 // Global Static Constants shared by player and test flow
-let PLAY_GAP_TIME: Double! = 0.3
-
-let ATTACK_TIME: Double! = 0.06
-let HOLD_TIME: Double! = 0.2
-let RELEASE_TIME: Double! = 0.06
-
-let PULSE_TIME: Double! = 0.38
-let NUM_OF_PULSE: Double! = 3
-let ANIMATE_SCALE: CGFloat! = 0.85
 
 class TestViewController: UIViewController {
     
@@ -103,7 +94,7 @@ class TestViewController: UIViewController {
             let delayTime = PULSE_TIME * pulse
             self.timer = Timer.scheduledTimer(timeInterval: delayTime,
                                               target: self,
-                                              selector: #selector(self.pulseFirst),
+                                              selector: #selector(self.pulseAnimationFirst),
                                               userInfo: nil,
                                               repeats: false)
         }
@@ -113,7 +104,7 @@ class TestViewController: UIViewController {
             let delayTime = PULSE_TIME * (pulse + NUM_OF_PULSE) + PLAY_GAP_TIME
             self.timer = Timer.scheduledTimer(timeInterval: delayTime,
                                               target: self,
-                                              selector: #selector(self.pulseSecond),
+                                              selector: #selector(self.pulseAnimationSecond),
                                               userInfo: nil,
                                               repeats: false)
         }
@@ -124,7 +115,7 @@ class TestViewController: UIViewController {
         )
     }
     
-    @objc private func pulseFirst() {
+    @objc private func pulseAnimationFirst() {
         UIView.animate(withDuration: PULSE_TIME / 2,
                        animations: {
                         self.ivFirstInterval.transform = CGAffineTransform(
@@ -135,7 +126,8 @@ class TestViewController: UIViewController {
                             self.ivFirstInterval.transform = CGAffineTransform.identity
                         }})
     }
-    @objc private func pulseSecond() {
+    
+    @objc private func pulseAnimationSecond() {
         UIView.animate(withDuration: PULSE_TIME / 2,
                        animations: {
                         self.ivSecondInterval.transform = CGAffineTransform(
@@ -160,7 +152,7 @@ class TestViewController: UIViewController {
         let nextFreq = array_freqSeq.removeFirst()
         
         DispatchQueue.main.async { [unowned self] in
-            let pbImgDir = "Animal_Icons/" + ARRAY_FREQ_DIR[nextFreq]
+            let pbImgDir = "Animal_Icons/" + ARRAY_DEFAULT_FREQ_DIR[nextFreq]
             let pbImg = UIImage(named: pbImgDir) as UIImage?
             
             self.ivFirstInterval.contentMode = .scaleAspectFit
@@ -185,15 +177,12 @@ class TestViewController: UIViewController {
         
         array_freqSeq = UserDefaults.standard.array(forKey: "array_freqSeq") as! [Int]
         
-//        flag_practiceMode = false
-        
         if(!flag_practiceMode) {
             svDebug.alpha = 0.0
         }
         else {
-            svDebug.alpha = 1.0
+            svDebug.alpha = 0.0
         }
-        print(svDebug.alpha)
         
         let currentSetting = UserDefaults.standard.string(forKey: "_currentSetting") ?? "None"
         

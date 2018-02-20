@@ -7,285 +7,248 @@
 //
 
 import UIKit
-
-import Foundation
+import RealmSwift
 
 class FreqSelectionViewController: UIViewController {
     
     // play sequence track list
-    private var array_freqSeq = [Int]() // Current Procotol
+    private let realm = try! Realm()
+    private var mainSetting: MainSetting? = nil
+    private var currentProtocol: FrequencyProtocol? = nil
+    
     private var array_pbFreq = [UIButton]()
-    private var array_protocolList: [String]!
-    private var dict_protocols: [String: [Int]]!
-    private var _currentProtocol: Int! = -1
-    private var _currentSelection: Int! = 0
+    private var _currentPickerIndex: Int!
     
     private let ARRAY_DEFAULT_FREQSEQ: [Double]! = [500, 4000, 1000, 8000, 250, 2000]
     
     @IBOutlet weak var svFreq: UIStackView!
-    
     @IBOutlet weak var lbFreqSeq: UILabel!
     
+    // -------
+    //  Label update functions
+    // -------
+    @IBAction func addNewFreq(_ sender: UIButton){
+        let freqID: Int! = array_pbFreq.index(of: sender)!
+        
+        if(!(currentProtocol?.array_freqSeq.contains(freqID))!) {
+            
+            try! realm.write{
+                currentProtocol?.array_freqSeq.append(freqID)
+            }
+            updateLabel()
+        }
+    }
+    
     @IBAction func removeLastFreq(_ sender: UIButton) {
-        if(array_freqSeq.count > 0){
-            let removeID = array_freqSeq.popLast()
+        if((currentProtocol?.array_freqSeq.count)! > 0){
+            
+            try! realm.write{
+                currentProtocol?.array_freqSeq.removeLast()
+            }
             updateLabel()
         }
     }
     
     @IBAction func removeAllFreq(_ sender: UIButton) {
-        if(array_freqSeq.count > 0){
-            array_freqSeq = [Int]()
+        if((currentProtocol?.array_freqSeq.count)! > 0){
             
+            try! realm.write{
+                currentProtocol?.array_freqSeq.removeAll()
+            }
             updateLabel()
         }
     }
     
-    @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
-    
-        if(array_freqSeq.count == 0)
-        {
-            // Prompt for no freq selected error
-            let alertController = UIAlertController(
-                title: "Error",
-                message: "There is no frequency selected!", preferredStyle: .alert)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-                (_) in }
-            
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-            
-            return
-        }
+    func updateLabel(){
         
-        // Prompt for user to input protocol name
-        let alertController = UIAlertController(
-            title: "Save Freq Protocol",
-            message: "Please Enter Protocol Name:", preferredStyle: .alert)
+        var tempFreqSeqStr = String("Test Sequence: ")
         
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
-            (_) in
+        for i in 0..<(currentProtocol?.array_freqSeq.count)! {
             
-            if let field = alertController.textFields?[0] {
-                
-                let protocolName = field.text!
-                
-                // If duplicated name
-                if(self.array_protocolList.contains(protocolName))
-                {
-                    // Prompt for no freq selected error
-                    let alertController = UIAlertController(
-                        title: "Error",
-                        message: "A duplicated protocol already existed.\nPlease save again with a different name.", preferredStyle: .alert)
-                    
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-                        (_) in }
-                    
-                    alertController.addAction(cancelAction)
-                    
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    return
-                }
-                
-                // Else, save protocol
-                self._currentProtocol = self.array_protocolList.count
-                self.array_protocolList.append(protocolName)
-                self.dict_protocols[protocolName] = self.array_freqSeq
-                
-                // Save user name and the test seq
-                UserDefaults.standard.set(self.array_protocolList, forKey: "array_protocolList")
-                UserDefaults.standard.set(self.dict_protocols, forKey: "dict_protocols")
+            let freqID: Int! = currentProtocol?.array_freqSeq[i]
+            tempFreqSeqStr.append(array_pbFreq[freqID].currentTitle!)
+            tempFreqSeqStr.append(" ► ")
+            
+            if(i == 4){
+                tempFreqSeqStr.append("\n")
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-            (_) in }
-        
-        alertController.addTextField { (textField) in
-            textField.placeholder = ""
+        if((currentProtocol?.array_freqSeq.count)! == 0){
+            tempFreqSeqStr.append("None")
         }
         
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
+        lbFreqSeq.text! = tempFreqSeqStr
+    }
+    
+    // ------
+    //  Protocol update functions
+    // ------
+    @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
+    
+        // Prompt for no freq selected error
+        if((currentProtocol?.array_freqSeq.count)! == 0)
+        {
+            errorPrompt(errorMsg: "There is no frequency selected!", uiCtrl: self)
+            return
+        }
         
-        self.present(alertController, animated: true, completion: nil)
+        inputPrompt(promptMsg: "Please Enter Protocol Name:",
+                    errorMsg: "Protocol name cannot be empty!",
+                    fieldMsg: "",
+                    confirmFunction: saveProtocol,
+                    uiCtrl: self)
+    }
+    
+    func saveProtocol(_ newProtocolName: String){
         
+        // If duplicated name
+        if(isProtocolExisted(newProtocolName) ){
+            errorPrompt(
+                errorMsg: "Protocol name already exists!",
+                uiCtrl: self)
+            return
+        }
+        
+        // Else, save protocol
+        try! self.realm.write {
+            let newProtocol = FrequencyProtocol()
+            
+            newProtocol.name = newProtocolName
+            newProtocol.isTestBoth = (currentProtocol?.isTestBoth)!
+            newProtocol.isLeftFirst = (currentProtocol?.isLeftFirst)!
+            
+            for freqID in (currentProtocol?.array_freqSeq)! {
+                newProtocol.array_freqSeq.append(freqID)
+            }
+            
+            let newID = mainSetting?.array_frequencyProtocols.count
+            mainSetting?.frequencyProtocolIndex = newID!
+            mainSetting?.array_frequencyProtocols.append(newProtocol)
+        }
     }
     
     @IBAction func loadFreqSeqProtocol(_ sender: UIButton) {
         
-        // Prompt user protocol pickerview
-        let alertController: UIAlertController!
-        
-        if array_protocolList!.count > 0 {
-            
-            alertController = UIAlertController(
-                title: "Select a different setting",
-                message: "\n\n\n\n\n\n\n\n\n",
-                preferredStyle: .alert)
-            
-            let picker = UIPickerView(frame:
-                CGRect(x: 0, y: 50, width: 260, height: 160))
-            
-            picker.delegate = self
-            picker.dataSource = self
-            
-            alertController.view.addSubview(picker)
-            
-            let confirmAction = UIAlertAction(
-            title: "Confirm", style: .default) {(_) in
-                
-                self._currentProtocol = self._currentSelection
-                
-                let protocolName = self.array_protocolList[self._currentSelection]
-                self.array_freqSeq = self.dict_protocols[protocolName]!
-                
-                self.updateLabel()
-            }
-            
-            alertController.addAction(confirmAction)
+        if (mainSetting?.array_frequencyProtocols.count)! > 0 {
+            _currentPickerIndex = (mainSetting?.array_frequencyProtocols.count)! - 1
+            pickerPrompt(confirmFunction: loadProtocol,
+                         uiCtrl: self)
         }
         else {
-            
-            alertController = UIAlertController(
-                title: "Error",
-                message: "There is no saved protcol!",
-                preferredStyle: .alert)
+            errorPrompt(errorMsg: "There is no saved protcol!",
+                        uiCtrl: self)
         }
+    }
+    
+    func loadProtocol(){
+        let targetProtocol = mainSetting?.array_frequencyProtocols[_currentPickerIndex]
         
-        let cancelAction = UIAlertAction(
-        title: "Cancel", style: .cancel) {(_) in }
-        
-        alertController.addAction(cancelAction)
-        
-        self.present(alertController, animated: true, completion: nil)
+        try! realm.write {
+            mainSetting?.frequencyProtocolIndex = _currentPickerIndex
+            currentProtocol?.isLeftFirst = (targetProtocol?.isLeftFirst)!
+            currentProtocol?.isTestBoth = (targetProtocol?.isTestBoth)!
+            currentProtocol?.array_freqSeq = List<Int>()
+            
+            for freqID in (targetProtocol?.array_freqSeq)! {
+                currentProtocol?.array_freqSeq.append(freqID)
+            }
+        }
+        updateLabel()
     }
     
     @IBAction func deleteFreqSeqProtocol(_ sender: UIButton) {
         
         // Validate current protocol
-        if(_currentProtocol < 0) {
+        if((mainSetting?.frequencyProtocolIndex)! < 0) {
             
-            // Error case
-            let alertController = UIAlertController(
-                title: "Error",
-                message: "There is no selected protcol!",
-                preferredStyle: .alert)
-            
-            let cancelAction = UIAlertAction(
-            title: "Cancel", style: .cancel) {(_) in }
-            
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-            
+            errorPrompt(errorMsg: "There is no selected protcol!",
+                        uiCtrl: self)
             return
         }
         
         // Delete the protocol from both list and dict
-        let protocolName = array_protocolList[_currentProtocol]
+        try! realm.write {
+            let currentID = mainSetting?.frequencyProtocolIndex
+            let targetProtocol = mainSetting?.array_frequencyProtocols[currentID!]
+            
+            mainSetting?.array_frequencyProtocols.remove(at: currentID!)
+            mainSetting?.frequencyProtocolIndex = -1
+            
+            realm.delete(targetProtocol!)
+        }
         
-        array_protocolList.remove(at: _currentProtocol)
-        dict_protocols.removeValue(forKey: protocolName)
-        
-        // Nullify current protocol
-        _currentProtocol = -1
-
-        // Save user name and the test seq
-        UserDefaults.standard.set(array_protocolList, forKey: "array_protocolList")
-        UserDefaults.standard.set(dict_protocols, forKey: "dict_protocols")
+        updateLabel()
     }
     
+    func isProtocolExisted(_ protocolName: String) -> Bool{
+        
+        return (mainSetting?.array_frequencyProtocols.filter("name = %@", protocolName).count)! > 0
+    }
+    
+    
+    // ------
+    //  Test-related functions
+    // ------
+    
     @IBAction func startPracticeTest(_ sender: UIButton) {
-        startTesting(true)
+        startTesting(isPracticeMode: true)
     }
     
     @IBAction func startMainTest(_ sender: UIButton) {
-        startTesting(false)
+        startTesting(isPracticeMode: false)
     }
     
-    func startTesting(_ isPracticeMode: Bool!) {
+    func startTesting(isPracticeMode: Bool!) {
         
         // Error, no freq selected
-        if(array_freqSeq.count == 0){
-            
-            let alertController = UIAlertController(
-                title: "Error",
-                message: "There is no frequency selected!", preferredStyle: .alert)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-                (_) in }
-            
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-            
+        if(currentProtocol?.array_freqSeq.count == 0){
+            errorPrompt(errorMsg: "There is no frequency selected!",
+                        uiCtrl: self)
             return
         }
         
         // For practice mode validation
-        if(isPracticeMode && (array_freqSeq.count > 1)) {
+        if(isPracticeMode && (currentProtocol?.array_freqSeq.count)! > 1) {
             
-            // Prompt for user to input patient name
-            let alertController = UIAlertController(
-                title: "Error",
-                message: "Only one frequency can be tested under practice mode!", preferredStyle: .alert)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-                (_) in }
-            
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-            
+            errorPrompt(
+                errorMsg: "Only one frequency can be tested under practice mode!",
+                uiCtrl: self)
             return
         }
         
         // Prompt for user to input setting name
-        let alertController = UIAlertController(
-            title: "Save Patient Profile",
-            message: "Please Enter Patient's Name:", preferredStyle: .alert)
+        inputPrompt(promptMsg: "Please Enter Patient's Name:",
+                    errorMsg: "Patient name cannot be empty!",
+                    fieldMsg: "i.e. John Smith 1",
+                    confirmFunction: {(patientName: String) -> Void in
+                        self.savePatientProfile(patientName)
+                        self.performSegue(withIdentifier: "segueMainTest", sender: isPracticeMode)},
+                    uiCtrl: self)
         
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
-            (_) in
+    }
+    
+    func savePatientProfile(_ patientName: String) {
+        // Format date
+        let date = NSDate();
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        
+        let localDate = dateFormatter.string(from: date as Date)
+        
+        // Prepare to test
+        // Init' patient profile & save test seq
+        self.mainSetting = self.realm.objects(MainSetting.self).first
+        
+        try! self.realm.write {
+            let newPatientProfile = PatientProfile()
+            newPatientProfile.name = patientName
+            newPatientProfile.testDate = localDate
             
-            if let field = alertController.textFields?[0] {
-                
-                let date = NSDate();
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .short
-                dateFormatter.timeStyle = .short
-                
-                let localDate = dateFormatter.string(from: date as Date)
-                
-                let patientName = field.text! + ", " + localDate
-                
-                // Save user name and the test seq
-                UserDefaults.standard.set(patientName, forKey: "patientName")
-                UserDefaults.standard.set(self.array_freqSeq, forKey: "array_freqSeq")
-                
-                self.performSegue(withIdentifier: "segueMainTest", sender: isPracticeMode)
-            }
-            else {
-                // user did not fill field
-                
-            }
+            newPatientProfile.calibrationSetting = mainSetting?.array_calibrationSettings[(self.mainSetting?.calibrationSettingIndex)!]
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-            (_) in }
-        
-        alertController.addTextField { (textField) in
-            textField.placeholder = "i.e. John Smith 1"
-        }
-        
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
-        
-        self.present(alertController, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -297,57 +260,28 @@ class FreqSelectionViewController: UIViewController {
         }
     }
     
-    @IBAction func addNewFreq(_ sender: UIButton)
-    {
-        let freqID: Int! = array_pbFreq.index(of: sender)!
-        
-        if(!array_freqSeq.contains(freqID)) {
-            
-            array_freqSeq.append(freqID)
-            updateLabel()
-        }
-    }
-    
-    func updateLabel()
-    {
-        var tempFreqSeqStr = String("Test Sequence: ")
-        
-        for i in 0..<array_freqSeq.count {
-            
-            let freqID: Int! = array_freqSeq[i]
-            tempFreqSeqStr.append(array_pbFreq[freqID].currentTitle!)
-            tempFreqSeqStr.append(" ► ")
-            
-            if(i == 4){
-                tempFreqSeqStr.append("\n")
-            }
-        }
-        
-        if(array_freqSeq.count == 0){
-            
-            tempFreqSeqStr.append("None")
-        }
-        
-        lbFreqSeq.text! = tempFreqSeqStr
-    }
-    
     // Init' function
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
-        // Load protocol list
-        array_protocolList = UserDefaults.standard.array(forKey: "array_protocolList") as? [String]
-        
-        dict_protocols = UserDefaults.standard.dictionary(forKey: "dict_protocols") as? [String: [Int]]
-        
-        // If there is no protocol list yet
-        if(array_protocolList == nil){
-            array_protocolList = [String]()
-            dict_protocols = [String: [Int]]()
+        try! realm.write {
+            // Load Setting
+            mainSetting = realm.objects(MainSetting.self).first
+            
+            currentProtocol = mainSetting?.frequencyProtocol
+            
+            currentProtocol?.array_freqSeq.removeAll()
+            currentProtocol?.isTestBoth = true
+            currentProtocol?.isLeftFirst = true
         }
         
-        // Setup UI
+        _currentPickerIndex = (mainSetting?.array_frequencyProtocols.count)! - 1
+        
+        setupUI()
+        updateLabel()
+    }
+    
+    func setupUI(){
         svFreq.axis = .horizontal
         svFreq.distribution = .fillEqually
         svFreq.alignment = .center
@@ -356,16 +290,14 @@ class FreqSelectionViewController: UIViewController {
         lbFreqSeq.textAlignment = .center
         lbFreqSeq.numberOfLines = 0
         
-        for i in 0..<ARRAY_FREQ.count {
+        for i in 0..<ARRAY_DEFAULT_FREQ.count {
             // Set up buttons
-            
             let new_pbFreq = UIButton(type:.system)
             
             new_pbFreq.bounds = CGRect(x:0, y:0, width:300, height:300)
-            new_pbFreq.setTitle(String(ARRAY_FREQ[i])+" Hz", for: .normal)
+            new_pbFreq.setTitle(String(ARRAY_DEFAULT_FREQ[i])+" Hz", for: .normal)
             new_pbFreq.backgroundColor = UIColor.gray
             new_pbFreq.setTitleColor(UIColor.white, for: .normal)
-            
             
             // Binding an action function to the new button
             // i.e. to play signal
@@ -379,14 +311,6 @@ class FreqSelectionViewController: UIViewController {
             svFreq.addArrangedSubview(new_pbFreq)
         }
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if(segue.identifier == "segueMainTest") {
-//            if let mainTest = segue.destination as? TestViewController {
-//                mainTest.setFreqSeq(sender as? [Int])
-//            }
-//        }
-//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -402,16 +326,18 @@ extension FreqSelectionViewController: UIPickerViewDelegate, UIPickerViewDataSou
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        return array_protocolList.count
+        return (mainSetting?.array_frequencyProtocols.count)!
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        return array_protocolList[row]
+        let count = (mainSetting?.array_frequencyProtocols.count)!
+        return mainSetting?.array_frequencyProtocols[count - row - 1].name
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
                     inComponent component: Int) {
-        _currentSelection = row
+        let count = (mainSetting?.array_frequencyProtocols.count)!
+        _currentPickerIndex = count - row - 1
     }
 }

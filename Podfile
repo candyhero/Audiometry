@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '11.0'
 
 target 'Audiometry' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -12,8 +12,10 @@ target 'Audiometry' do
     # Pods for testing
   end
 
-  pod 'AudioKit', '4.0.4'
+  pod 'AudioKit'
 
-  pod 'Charts', '3.0.4'
+  pod 'Charts'
+  # pod 'ChartsRealm'
 
+  pod 'RealmSwift'
 end

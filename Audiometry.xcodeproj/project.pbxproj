@@ -13,13 +13,19 @@
 		4E02DB8A1F22B23300DB509A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E02DB881F22B23300DB509A /* Main.storyboard */; };
 		4E02DB8C1F22B23300DB509A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E02DB8B1F22B23300DB509A /* Assets.xcassets */; };
 		4E02DB8F1F22B23300DB509A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E02DB8D1F22B23300DB509A /* LaunchScreen.storyboard */; };
+		4E3A82A3203B949200235EB7 /* CalibrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3A82A2203B949200235EB7 /* CalibrationModel.swift */; };
+		4E3A82A7203B996B00235EB7 /* AppUtililty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3A82A6203B996B00235EB7 /* AppUtililty.swift */; };
+		4E3DDB032028F41400C09CA1 /* PatientProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3DDB022028F41400C09CA1 /* PatientProfile.swift */; };
 		4E6E8C711F8C443F0029F937 /* ThresholdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6E8C701F8C443F0029F937 /* ThresholdViewController.swift */; };
-		4E98DF7B1F67E1A90037286B /* TitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E772ACE1F630B0200CC6922 /* TitleViewController.swift */; };
+		4E7151462030343800B000AD /* TitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7151452030343700B000AD /* TitleViewController.swift */; };
+		4E7151482030FFBD00B000AD /* FrequencyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7151472030FFBD00B000AD /* FrequencyProtocol.swift */; };
+		4E9D9F3C2028F9F700E8FF0F /* TestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9D9F3B2028F9F700E8FF0F /* TestResult.swift */; };
+		4E9D9F3E20295BA100E8FF0F /* CalibrationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9D9F3D20295BA100E8FF0F /* CalibrationSetting.swift */; };
+		4E9D9F4220295F0300E8FF0F /* MainSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9D9F4120295F0300E8FF0F /* MainSetting.swift */; };
 		4EA58AE11F62045C00E0CDFE /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58ADC1F62045C00E0CDFE /* TestViewController.swift */; };
 		4EA58AE41F62081F00E0CDFE /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */; };
 		4ED8C9D61FBCB61E0042C997 /* Animal_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 4ED8C9D51FBCB61E0042C997 /* Animal_Icons */; };
 		4EDD82401F9A7B0100F77471 /* Animal_Tones in Resources */ = {isa = PBXBuildFile; fileRef = 4EDD823E1F9A7B0100F77471 /* Animal_Tones */; };
-		4EFABCFF1F9682580039A56A /* CalibrationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFABCFE1F9682580039A56A /* CalibrationStackView.swift */; };
 		4EFFD74C1FA8E1AB004DE1FC /* FreqSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFFD74B1FA8E1AB004DE1FC /* FreqSelectionViewController.swift */; };
 		D033EE0A26D9F3FECA4E4254 /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 003B38F239FB10F6ED42CB64 /* Pods_Audiometry.framework */; };
 		F0C9133FBF6DB89C870AB368 /* Pods_AudiometryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC1F80DF0E41D58F76264596 /* Pods_AudiometryTests.framework */; };
@@ -62,13 +68,19 @@
 		4E02DB8E1F22B23300DB509A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E02DB901F22B23300DB509A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E02DB951F22B23300DB509A /* AudiometryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudiometryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E3A82A2203B949200235EB7 /* CalibrationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationModel.swift; sourceTree = "<group>"; };
+		4E3A82A6203B996B00235EB7 /* AppUtililty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtililty.swift; sourceTree = "<group>"; };
+		4E3DDB022028F41400C09CA1 /* PatientProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientProfile.swift; sourceTree = "<group>"; };
 		4E6E8C701F8C443F0029F937 /* ThresholdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdViewController.swift; sourceTree = "<group>"; };
-		4E772ACE1F630B0200CC6922 /* TitleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleViewController.swift; sourceTree = "<group>"; };
+		4E7151452030343700B000AD /* TitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleViewController.swift; sourceTree = "<group>"; };
+		4E7151472030FFBD00B000AD /* FrequencyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyProtocol.swift; sourceTree = "<group>"; };
+		4E9D9F3B2028F9F700E8FF0F /* TestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestResult.swift; sourceTree = "<group>"; };
+		4E9D9F3D20295BA100E8FF0F /* CalibrationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationSetting.swift; sourceTree = "<group>"; };
+		4E9D9F4120295F0300E8FF0F /* MainSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSetting.swift; sourceTree = "<group>"; };
 		4EA58ADC1F62045C00E0CDFE /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
 		4ED8C9D51FBCB61E0042C997 /* Animal_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Icons; sourceTree = "<group>"; };
 		4EDD823E1F9A7B0100F77471 /* Animal_Tones */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Tones; sourceTree = "<group>"; };
-		4EFABCFE1F9682580039A56A /* CalibrationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationStackView.swift; sourceTree = "<group>"; };
 		4EFFD74B1FA8E1AB004DE1FC /* FreqSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqSelectionViewController.swift; sourceTree = "<group>"; };
 		A80E953D5E17B8188291AD42 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 		EC1F80DF0E41D58F76264596 /* Pods_AudiometryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudiometryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +120,7 @@
 		4E02DB781F22B23300DB509A = {
 			isa = PBXGroup;
 			children = (
+				4E3DDB012028F3F400C09CA1 /* Models */,
 				4E02DB831F22B23300DB509A /* Audiometry */,
 				4E02DB821F22B23300DB509A /* Products */,
 				0D592C1C71F2898B3E7D66B5 /* Pods */,
@@ -129,21 +142,34 @@
 			children = (
 				4ED8C9D51FBCB61E0042C997 /* Animal_Icons */,
 				4EDD823E1F9A7B0100F77471 /* Animal_Tones */,
+				4E3A82A6203B996B00235EB7 /* AppUtililty.swift */,
+				4E7151452030343700B000AD /* TitleViewController.swift */,
 				4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */,
-				4E01A86C1FA3D9D900986CBF /* TestPlayer.swift */,
+				4E3A82A2203B949200235EB7 /* CalibrationModel.swift */,
 				4EFFD74B1FA8E1AB004DE1FC /* FreqSelectionViewController.swift */,
-				4E01A8701FA3DDDE00986CBF /* TestFlow.swift */,
 				4EA58ADC1F62045C00E0CDFE /* TestViewController.swift */,
-				4E772ACE1F630B0200CC6922 /* TitleViewController.swift */,
+				4E01A8701FA3DDDE00986CBF /* TestFlow.swift */,
+				4E01A86C1FA3D9D900986CBF /* TestPlayer.swift */,
+				4E6E8C701F8C443F0029F937 /* ThresholdViewController.swift */,
+				4E02DB881F22B23300DB509A /* Main.storyboard */,
 				4E02DB841F22B23300DB509A /* AppDelegate.swift */,
 				4E02DB8B1F22B23300DB509A /* Assets.xcassets */,
 				4E02DB8D1F22B23300DB509A /* LaunchScreen.storyboard */,
 				4E02DB901F22B23300DB509A /* Info.plist */,
-				4E02DB881F22B23300DB509A /* Main.storyboard */,
-				4E6E8C701F8C443F0029F937 /* ThresholdViewController.swift */,
-				4EFABCFE1F9682580039A56A /* CalibrationStackView.swift */,
 			);
 			path = Audiometry;
+			sourceTree = "<group>";
+		};
+		4E3DDB012028F3F400C09CA1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4E9D9F4120295F0300E8FF0F /* MainSetting.swift */,
+				4E9D9F3D20295BA100E8FF0F /* CalibrationSetting.swift */,
+				4E7151472030FFBD00B000AD /* FrequencyProtocol.swift */,
+				4E3DDB022028F41400C09CA1 /* PatientProfile.swift */,
+				4E9D9F3B2028F9F700E8FF0F /* TestResult.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		B214FCD9223E5BD901117B45 /* Frameworks */ = {
@@ -317,12 +343,16 @@
 				"${PODS_ROOT}/AudioKit/iOS/AudioKit.framework",
 				"${PODS_ROOT}/AudioKit/iOS/AudioKitUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AudioKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AudioKitUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -402,15 +432,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EFABCFF1F9682580039A56A /* CalibrationStackView.swift in Sources */,
 				4EFFD74C1FA8E1AB004DE1FC /* FreqSelectionViewController.swift in Sources */,
+				4E7151482030FFBD00B000AD /* FrequencyProtocol.swift in Sources */,
 				4E01A8711FA3DDDE00986CBF /* TestFlow.swift in Sources */,
 				4E6E8C711F8C443F0029F937 /* ThresholdViewController.swift in Sources */,
+				4E3A82A3203B949200235EB7 /* CalibrationModel.swift in Sources */,
+				4E9D9F3C2028F9F700E8FF0F /* TestResult.swift in Sources */,
+				4E3A82A7203B996B00235EB7 /* AppUtililty.swift in Sources */,
+				4E9D9F3E20295BA100E8FF0F /* CalibrationSetting.swift in Sources */,
 				4E02DB851F22B23300DB509A /* AppDelegate.swift in Sources */,
 				4E01A86D1FA3D9D900986CBF /* TestPlayer.swift in Sources */,
 				4EA58AE11F62045C00E0CDFE /* TestViewController.swift in Sources */,
 				4EA58AE41F62081F00E0CDFE /* CalibrationViewController.swift in Sources */,
-				4E98DF7B1F67E1A90037286B /* TitleViewController.swift in Sources */,
+				4E9D9F4220295F0300E8FF0F /* MainSetting.swift in Sources */,
+				4E3DDB032028F41400C09CA1 /* PatientProfile.swift in Sources */,
+				4E7151462030343800B000AD /* TitleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,7 +610,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Audiometry/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TriCounty.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -598,7 +634,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Audiometry/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TriCounty.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";

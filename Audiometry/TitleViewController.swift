@@ -7,84 +7,54 @@
 //
 
 import UIKit
-import AudioKit
-import MediaPlayer
-
-
-let ARRAY_FREQ: [Double]! = [250.0, 500.0, 750.0, 1000.0, 1500.0,
-                             2000.0, 3000.0, 4000.0, 6000.0, 8000.0]
-
-let ARRAY_FREQ_DIR = ["250Hz_Bee", "500Hz_Owl", "750Hz_Dog",
-                      "1000Hz_Cat", "1500Hz_Frog", "2000Hz_Mouse",
-                      "3000Hz_Rattlesnake", "4000Hz_Bird",
-                      "6000Hz_Cricket", "8000Hz_Bat"]
+import RealmSwift
 
 class TitleViewController: UIViewController {
+
+    private let realm = try! Realm()
+    private var mainSetting: MainSetting? = nil
     
     @IBAction func startTesting(_ sender: UIButton) {
-        let currentSettingKey = UserDefaults.standard.string(
-            forKey: "currentSetting") as? String
-        
-        if(currentSettingKey != nil){
-            
+
+        if((mainSetting?.calibrationSettingIndex)! >= 0){
             performSegue(withIdentifier: "segueFreqSelection", sender: nil)
-        }
-        else {
-        
-            // Prompt for user to input setting name
-            let alertController = UIAlertController(
-                title: "Error",
-                message: "There is no calibration setting selected!", preferredStyle: .alert)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-                (_) in }
-            
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
+        } else {
+            // Prompt for user error
+            errorPrompt(
+                errorMsg: "There is no calibration setting selected!",
+                uiCtrl: self)
         }
     }
     
     @IBAction func viewResults(_ sender: UIButton) {
-        
-        let patientProfiles = UserDefaults.standard.array(forKey: "patientProfiles") as? [String]
-        
         // Validate results
-        if(patientProfiles != nil) {
+        if((mainSetting?.array_patientProfiles.count)! > 0) {
             // Display valid results in charts
             performSegue(withIdentifier: "segueResultFromMenu", sender: nil)
-        }
-        else { // Error
-            
-            // Prompt Error message
-            let alertController = UIAlertController(
-                title: "Error",
-                message: "There is no result!", preferredStyle: .alert)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-                (_) in }
-            
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
+        } else {
+            // Error
+            errorPrompt(errorMsg: "There is no result!",
+                        uiCtrl: self)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // Init' a new one if not already existed
+        if(realm.objects(MainSetting.self).count == 0){
+            
+            try! realm.write {
+                realm.add(MainSetting())
+            }
+        }
+        
+        // Load Setting
+        mainSetting = self.realm.objects(MainSetting.self).first!
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func colorChange(_ sender: UIButton) {
-        sender.backgroundColor = UIColor.gray
-    }
-    
-    @IBAction func colorRevert(_ sender: UIButton) {
-        sender.backgroundColor = UIColor.blue
     }
 }
