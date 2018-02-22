@@ -8,12 +8,13 @@
 
 import UIKit
 import Charts
+import RealmSwift
 
 class ThresholdViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
-    private var patientProfiles: [String]!
-    private var patientThresholds = [String: [String: Double]]()
-    private var patientFreqSeq = [String: [Int]]()
+    private let realm = try! Realm()
+    private var mainSetting: MainSetting? = nil
+    private var array_freqSeq: List<Int>? = nil
     
     private var patientSectionRows = [Int]() // section, row
     
@@ -31,47 +32,31 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let indexPath = tbPatients.indexPathForSelectedRow
         
-        let patientName = patientProfiles[indexPath!.section]
+        let currentPatient = mainSetting?.array_patientProfiles[indexPath!.section]
         
-        let alertMessage = "Are you sure to delete \"" + patientName + "\" ?"
+        let alertMsg = "Are you sure to delete \"" + (currentPatient?.name)! + "\" ?"
         
-        // Prompt for user to input setting name
-        let alertController = UIAlertController(
-            title: "Delete Patient Profile",
-            message: alertMessage, preferredStyle: .alert)
+        alertPrompt(alertTitle: "Delete patient profile",
+                    alertMsg: alertMsg,
+                    confirmFunction: deletePatient,
+                    uiCtrl: self)
+    }
+    
+    func deletePatient(){
+        let indexPath = tbPatients.indexPathForSelectedRow
+        self.patientSectionRows.remove(at: indexPath!.section)
         
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
-            (_) in
-            
-            UserDefaults.standard.removeObject(forKey: patientName)
-            UserDefaults.standard.removeObject(forKey: "db" + patientName)
-            UserDefaults.standard.removeObject(forKey: "freqSeq" + patientName)
-            
-            self.patientSectionRows.remove(at: indexPath!.section)
-            self.patientProfiles.remove(at: indexPath!.section)
-            self.patientThresholds.removeValue(forKey: patientName)
-            self.patientFreqSeq.removeValue(forKey: patientName)
-            
-            let indexSet = IndexSet([indexPath!.section])
-            self.tbPatients.deleteSections(indexSet, with: .fade)
-            
-            UserDefaults.standard.set(self.patientProfiles, forKey: "patientProfiles")
+        try! realm.write {
+            mainSetting?.array_patientProfiles.remove(at: indexPath!.section)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-            (_) in }
-        
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
-        
-        self.present(alertController, animated: true, completion: nil)
-        
+        self.tbPatients.deleteSections(IndexSet([indexPath!.section]), with: .fade)
     }
     
     // Header section
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        return patientProfiles.count
+        return (mainSetting?.array_patientProfiles.count)!
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -81,7 +66,9 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
         
-        button.setTitle(patientProfiles[section], for: .normal)
+        let patientName = mainSetting?.array_patientProfiles[section].name
+        
+        button.setTitle(patientName, for: .normal)
         button.tag = section
         
         return button
@@ -89,12 +76,11 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @objc func handleExpandClose(button: UIButton!){
         
-        let patientIndex = button.tag
-        let patientName = patientProfiles[patientIndex]
+        let currentPatient = mainSetting?.array_patientProfiles[button.tag]
         
         var array_indexPath = [IndexPath]()
         
-        for freqIndex in patientFreqSeq[patientName]!.indices {
+        for freqIndex in (currentPatient?.array_testResults.indices)! {
             let indexPath = IndexPath(row: freqIndex, section: button.tag)
             array_indexPath.append(indexPath)
         }
@@ -102,13 +88,10 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
         if(patientSectionRows[button.tag] > 0){
             
             patientSectionRows[button.tag] = 0
-            
             tbPatients.deleteRows(at: array_indexPath, with: .fade)
         }
         else {
-            
-            patientSectionRows[button.tag] = patientFreqSeq[patientName]!.count
-            
+            patientSectionRows[button.tag] = (currentPatient?.array_testResults.count)!
             tbPatients.insertRows(at: array_indexPath, with: .fade)
         }
     }
@@ -126,15 +109,18 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Retrieve patient brief info
-        let patientName: String! = patientProfiles[indexPath.section]
-        
-        let freq = ARRAY_DEFAULT_FREQ[patientFreqSeq[patientName]![indexPath.row]]
-        let thresholdDB: Double! = patientThresholds[patientName]![String(freq)]
+        let currentPatient = mainSetting?.array_patientProfiles[indexPath.section]
+        let currentTestResult = currentPatient?.array_testResults[indexPath.row]
         
         // Configure table cell style
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         
-        cell.textLabel?.text = String(freq) + " Hz; Threshold (dB): " + String(thresholdDB)
+        cell.textLabel?.text = String(describing: (currentTestResult?.freq)!)
+            + " Hz; Threshold (dB): "
+            + String(describing: (currentTestResult?.thresholdDB_L)!)
+            + " / "
+            + String(describing: (currentTestResult?.thresholdDB_R)!)
+        
         cell.textLabel?.font = cell.textLabel?.font.withSize(14)
         cell.textLabel?.textAlignment = .center;
         
@@ -147,87 +133,91 @@ class ThresholdViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let patientName: String! = patientProfiles[indexPath.section]
+        let currentPatient = mainSetting?.array_patientProfiles[indexPath.section]
+        let currentTestResult = currentPatient?.array_testResults[indexPath.row]
         
-        let freq = ARRAY_DEFAULT_FREQ[patientFreqSeq[patientName]![indexPath.row]]
-        
-        updateGraph(patientName, Double(freq))
+        updateGraph(currentTestResult!)
     }
     
     // Plot functions
-    func updateGraph(_ patientName: String!, _ freq: Double!){
+    func updateGraph(_ testResult: TestResult){
         
         // Load dB and result lists
-        let dict_freqSeqArrays = UserDefaults.standard.dictionary(
-            forKey: patientName!) as! [String: [Double]]
+        lbFreq.text = String(testResult.freq)
         
-        lbFreq.text = String(freq)
-        
-        var lineChartEntry  = [ChartDataEntry]() //this is the Array that will eventually be displayed on the graph.
-        
-        let array_freqSeqDB: [Double]! = dict_freqSeqArrays[String(freq)] ?? nil
+        var lineChartEntry_L  = [ChartDataEntry]()
+        var lineChartEntry_R  = [ChartDataEntry]()
         
         //here is the for loop
-        for i in 0..<array_freqSeqDB.count {
-            let temp_value = ChartDataEntry(x: Double(i), y: array_freqSeqDB[i]) // here we set the X and Y status in a data chart entry
-            lineChartEntry.append(temp_value) // here we add it to the data set
+        for i in 0..<(testResult.array_trackingDB_L.count) {
+            let temp_value = ChartDataEntry(x: Double(i),
+                                            y: testResult.array_trackingDB_L[i])
+            lineChartEntry_L.append(temp_value)
         }
         
-        let line1 = LineChartDataSet(values: lineChartEntry, label: "Presentation Level in dB") //Here we convert lineChartEntry to a LineChartDataSet
-        line1.colors = [NSUIColor.blue] //Sets the colour to blue
+        for i in 0..<(testResult.array_trackingDB_R.count) {
+            let temp_value = ChartDataEntry(x: Double(i),
+                                            y: testResult.array_trackingDB_R[i])
+            lineChartEntry_R.append(temp_value) // here we add it to the data set
+        }
+        
+        let line_L = LineChartDataSet(values: lineChartEntry_L,
+                                     label: "Presentation Level in dB")
+        line_L.colors = [NSUIColor.red] //Sets the colour to blue
+        
+        let line_R = LineChartDataSet(values: lineChartEntry_R,
+                                     label: "Presentation Level in dB")
+        line_R.colors = [NSUIColor.blue]
         
         // Set y-axis
         let leftAxis = chartView.getAxis(YAxis.AxisDependency.left)
         let rightAxis = chartView.getAxis(YAxis.AxisDependency.right)
         
-        leftAxis.granularity = ((array_freqSeqDB.max()! - array_freqSeqDB.min()!) > 30) ? 10 : 5
+        let max_L = testResult.array_trackingDB_L.max() ?? _DB_SYSTEM_MAX
+        let max_R = testResult.array_trackingDB_R.max() ?? _DB_SYSTEM_MAX
+        let min_L = testResult.array_trackingDB_L.min() ?? _DB_SYSTEM_MIN
+        let min_R = testResult.array_trackingDB_R.min() ?? _DB_SYSTEM_MIN
+        
+        leftAxis.granularity =
+            ((max(max_L!, max_R!) - min(min_L!, min_R!)) > 30) ? 10 : 5
         
         rightAxis.enabled = false
         rightAxis.drawGridLinesEnabled = false
         
         //
-        let data = LineChartData() //This is the object that will be added to the chart
-        data.addDataSet(line1) //Adds the line to the dataSet
+        let data = LineChartData()
         
-        chartView.data = data //finally - it adds the chart data to the chart and causes an update
-    }
-
-    private func loadResult() {
+        data.addDataSet(line_L) //Adds the line to the dataSet
+        data.addDataSet(line_R)
         
-        patientProfiles = UserDefaults.standard.array(forKey: "patientProfiles") as? [String]
-        
-        // Retrieve array of freq
-        for patientName in patientProfiles {
-            
-            let dict_thresholdDB = UserDefaults.standard.dictionary(
-                forKey: "db" + patientName) as! [String: Double]
-            
-            let array_freqSeq = UserDefaults.standard.array(
-                    forKey: "freqSeq" + patientName) as! [Int]
-            
-            patientThresholds[patientName] = dict_thresholdDB
-            patientFreqSeq[patientName] = array_freqSeq
-            
-            patientSectionRows.append(0)
-        }
-        
-        patientSectionRows[0] = patientFreqSeq[patientProfiles.first!]!.count
+        chartView.data = data
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        mainSetting = realm.objects(MainSetting.self).first
         
-        loadResult()
+        // Load result
+        for patientProfile in (mainSetting?.array_patientProfiles)! {
+            patientSectionRows.append(0)
+        }
         
-        updateGraph(patientProfiles.first!,
-                Double(ARRAY_DEFAULT_FREQ[patientFreqSeq[patientProfiles.first!]![0]]))
+        var mostCurrentPatient = mainSetting?.array_patientProfiles.first
+        
+        try! realm.write{
+            while(mostCurrentPatient?.array_testResults.count == 0)
+            {
+                mainSetting?.array_patientProfiles.removeFirst()
+                mostCurrentPatient = mainSetting?.array_patientProfiles.first
+            }
+        }
+        
+        patientSectionRows[0] = (mostCurrentPatient!.array_testResults.count)
+        updateGraph((mostCurrentPatient?.array_testResults.first)!)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }

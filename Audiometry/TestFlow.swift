@@ -7,39 +7,39 @@
 //
 
 import Foundation
+import RealmSwift
 
 class TestFlow {
     
     private let SYSTEM_DEFAULT_DB = 50.0
     
-    // Pre-init'ed
-    private var array_correctionFactors = [Double]()
+    private let realm = try! Realm()
+    private var mainSetting: MainSetting? = nil
+    private var patientProfile: PatientProfile? = nil
+    private var currentTestResult: TestResult? = nil
+    private var calibrationSetting: CalibrationSetting? = nil
     
-    private var dict_thresholdDB = [String: Double]()
-    private var dict_freqTrackList = [String: [Double]]()
-    
+    // Used to determine when test ends
     private var dict_hasBeenAscendingCorrect = [Int: Bool]()
     
     private var _flag_initialPhase: Bool!
     
     private var _currentPlayCase: Int!
     private var _currentDB: Double!
-    private var _currentFreqIndex: Int!
-    private var _currentSetting: [String: [String]]!
     
 //    private var thresholdDB: Double! = nil
     private var player: TestPlayer! = nil
     
     init() {
-        player = TestPlayer()
+        mainSetting = realm.objects(MainSetting.self).first
         
-        loadCalibrationSetting()
+        player = TestPlayer()
+        // retrieve calibration setting for current freq
+        let calibrationSettingID = mainSetting?.calibrationSettingIndex
+        calibrationSetting = mainSetting?.array_calibrationSettings[calibrationSettingID!]
+        
+        patientProfile = mainSetting?.array_patientProfiles.first
     }
-    
-    // Getters & setters
-//    func setFreqSeq (array_freqSeq:[Int]!) {
-//        self.array_freqSeq = array_freqSeq
-//    }
     
     func currentPlayCase() -> Int! {
         return _currentPlayCase
@@ -50,76 +50,58 @@ class TestFlow {
     }
     
     // functions
-    private func loadCalibrationSetting() {
+    private func loadSettingAtFreq(_ currentFreqID: Int!){
         
-        // retrieve calibration setting for all freqs
-        let currentSettingKey =
-            UserDefaults.standard.string(forKey: "currentSetting") ?? nil
+        let presentDBHL = calibrationSetting?.array_presentDBHL[currentFreqID]
+        let expectedDBSPL = calibrationSetting?.array_expectedDBSPL[currentFreqID]
+        let measuredDBSPL_L = calibrationSetting?.array_measuredDBSPL_L[currentFreqID]
+        let measuredDBSPL_R = calibrationSetting?.array_measuredDBSPL_R[currentFreqID]
         
-        _currentSetting = UserDefaults.standard.dictionary(
-            forKey: currentSettingKey!) as? [String : [String]]
+        // Create test result profile for current freq
+        currentTestResult = TestResult()
         
-//        _flag_initialPhase = true
+        currentTestResult?.freq = ARRAY_DEFAULT_FREQ[currentFreqID]
+        currentTestResult?.presentDBHL = presentDBHL!
+        currentTestResult?.expectedDBSPL = expectedDBSPL!
         
-        for i in 0..<ARRAY_DEFAULT_FREQ.count {
-            
-            // Retrieve saved volume strings by trying every key (freq)
-            let freqKey: String = String(ARRAY_DEFAULT_FREQ[i])
-            var array_db = _currentSetting[freqKey] as [String]! ?? nil
-            
-            // In case a new frequency is added,
-            // which has no default UserDefaults.standard
-            if(array_db != nil){
-                
-                let expectedTxt: String! = array_db?[0] ?? nil
-                let leftMeasuredTxt: String! = array_db?[2] ?? nil
-                let rightMeasuredTxt: String! = array_db?[3] ?? nil
-                
-                let expectedDBSPL: Double! = Double(expectedTxt) ?? 0.0
-                
-                let leftMeasuredDBSPL: Double! =
-                    Double(leftMeasuredTxt) ?? expectedDBSPL
-                let rightMeasuredDBSPL: Double! =
-                    Double(rightMeasuredTxt) ?? expectedDBSPL
-                
-                // Extract the correction factors in dB
-                array_correctionFactors.append(
-                    expectedDBSPL - leftMeasuredDBSPL)
-                array_correctionFactors.append(
-                    expectedDBSPL - rightMeasuredDBSPL)
-            }
-        }
+        currentTestResult?.measuredDBSPL_L = measuredDBSPL_L!
+        currentTestResult?.measuredDBSPL_R = measuredDBSPL_R!
     }
     
-    func findThresholdAtFreq(_ freqIndex: Int!){
+    func findThresholdAtFreq(_ currentFreqID: Int!){
+        // Init' player and settings if first time (L or R)
+        let currentFreqSeqID: Int! = (mainSetting?.frequencyTestIndex)!
         
-        // Update player settings
-        _currentFreqIndex = freqIndex
-        let currentFreq: Double = Double(ARRAY_DEFAULT_FREQ[freqIndex])
+        if((patientProfile?.array_testResults.count)! == currentFreqSeqID) {
+            // First Left/ Right ear test
+            loadSettingAtFreq(currentFreqID)
+        }
+        else {
+            currentTestResult = patientProfile?.array_testResults[currentFreqSeqID]
+        }
         
-        let leftCorrFactor: Double! =
-            array_correctionFactors[_currentFreqIndex * 2]
-        let rightCorrFactor: Double! =
-            array_correctionFactors[_currentFreqIndex * 2 + 1]
+        // Config audio settings
+        let correctionFactor_L: Double = (currentTestResult?.expectedDBSPL)! - (currentTestResult?.measuredDBSPL_L)!
+        let correctionFactor_R: Double = (currentTestResult?.expectedDBSPL)! - (currentTestResult?.measuredDBSPL_R)!
+        
+        player.updateFreq(Double((currentTestResult?.freq)!) )
+        player.updateCorrectionFactors(correctionFactor_L, correctionFactor_R)
+        player.initPlayerVolume()
         
         _currentDB = SYSTEM_DEFAULT_DB
         
-        player.updateFreq(currentFreq)
-        player.updateCorrectionFactors(leftCorrFactor, rightCorrFactor)
-        
         // Init buffs at current Freq to storing results
         _flag_initialPhase = true
-        dict_freqTrackList[String(currentFreq)] = [Double]()
         dict_hasBeenAscendingCorrect.removeAll()
         
         // Start playing
         playSignalCase()
     }
     
-    private func playSignalCase() {
+    func playSignalCase() {
         
         // Set init volume & random play case
-        player.updatePlayerVolume(_currentDB)
+        player.updatePlayerVolume(_currentDB, mainSetting?.frequencyProtocol?.isLeft)
         
         // Draw new case
         _currentPlayCase = Int(arc4random_uniform(2) + 1)
@@ -156,10 +138,18 @@ class TestFlow {
     
     func checkThreshold(_ bool_sender: Bool!) -> Bool!{
         // Update dB track list at this freq
-        let currentFreq = ARRAY_DEFAULT_FREQ[_currentFreqIndex]
-        let lastDB: Double? = dict_freqTrackList[String(currentFreq)]?.last
+        var lastDB: Double?
         
-        dict_freqTrackList[String(currentFreq)]!.append(_currentDB)
+        try! realm.write {
+            
+            if(mainSetting?.frequencyProtocol?.isLeft)!{
+                lastDB = currentTestResult?.array_trackingDB_L.last
+                currentTestResult?.array_trackingDB_L.append(_currentDB)
+            } else {
+                lastDB = currentTestResult?.array_trackingDB_R.last
+                currentTestResult?.array_trackingDB_R.append(_currentDB)
+            }
+        }
         
         let wasLastCorrect = (_currentDB < lastDB ?? _currentDB + 1)
         
@@ -172,15 +162,26 @@ class TestFlow {
             // Determine if test can be ended
             if(hasBeenAscendingCorrect){
                 // Twice correct in a row on the same freq
-                // Update threshold
-                dict_thresholdDB[String(currentFreq)] = _currentDB
+                try! realm.write {
+                    // Update threshold & Increment freq test index
+                    if(mainSetting?.frequencyProtocol?.isLeft)!{
+                        currentTestResult?.thresholdDB_L = _currentDB
+                    }
+                    else {
+                        currentTestResult?.thresholdDB_R = _currentDB
+                    }
+                    
+                    if(patientProfile?.array_testResults.count == 0){
+                        patientProfile?.array_testResults.append(currentTestResult!)
+                    }
+                    
+                    mainSetting?.frequencyTestIndex += 1
+                    
+                }
                 
-                // End testing on this freq
-                saveResult()
                 return true
             }
             else {
-                
                 dict_hasBeenAscendingCorrect[currentDB_intKey] = true
             }
         }
@@ -209,40 +210,12 @@ class TestFlow {
         }
         
         // Bound next db between [0, 100] dbHL
-        nextDB = (nextDB > 100) ? 100 : nextDB
-        nextDB = (nextDB < 0) ? 0 : nextDB
+        nextDB = (nextDB > _DB_SYSTEM_MAX) ? _DB_SYSTEM_MAX : nextDB
+        nextDB = (nextDB < _DB_SYSTEM_MIN) ? _DB_SYSTEM_MIN : nextDB
         
         // Load new volume
         _currentDB = nextDB!
         
-        playSignalCase()
         return false
-    }
-    
-    func saveResult() {
-        // Save threshold and track history if threshold found
-        let patientName =  UserDefaults.standard.string(forKey: "patientName")
-        var patientProfiles = UserDefaults.standard.array(forKey: "patientProfiles") as? [String]
-        var array_freqSeq = UserDefaults.standard.array(forKey:  "freqSeq" + patientName!) as? [Int]
-        
-        if(patientProfiles == nil) {
-            patientProfiles = [String]()
-        }
-        
-        if(patientProfiles!.first != patientName!){
-            patientProfiles!.insert(patientName!, at: 0)
-        }
-        
-        if(array_freqSeq == nil) {
-            array_freqSeq = [Int]()
-        }
-        
-        array_freqSeq!.append(_currentFreqIndex)
-        
-        UserDefaults.standard.set(patientProfiles!, forKey: "patientProfiles")
-
-        UserDefaults.standard.set(array_freqSeq, forKey: "freqSeq" + patientName!)
-        UserDefaults.standard.set(dict_thresholdDB, forKey: "db" + patientName!)
-        UserDefaults.standard.set(dict_freqTrackList, forKey: patientName!)
     }
 }

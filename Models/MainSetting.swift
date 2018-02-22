@@ -12,10 +12,12 @@ class MainSetting: Object {
     @objc dynamic var calibrationSettingIndex: Int = -1
     var array_calibrationSettings = List<CalibrationSetting>()
     
+    // A sperate protocol used during testing
+    @objc dynamic var frequencyTestIndex: Int = -1
     @objc dynamic var frequencyProtocol: FrequencyProtocol? = nil
+    
     @objc dynamic var frequencyProtocolIndex: Int = -1
     var array_frequencyProtocols = List<FrequencyProtocol>()
     
-    @objc dynamic var patientProfile: PatientProfile? = nil
-    var array_patientProfiles = List<FrequencyProtocol>()
+    var array_patientProfiles = List<PatientProfile>()
 }

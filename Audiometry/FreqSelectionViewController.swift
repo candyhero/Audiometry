@@ -23,12 +23,13 @@ class FreqSelectionViewController: UIViewController {
     
     @IBOutlet weak var svFreq: UIStackView!
     @IBOutlet weak var lbFreqSeq: UILabel!
+    @IBOutlet weak var lbEarOrder: UILabel!
     
     // -------
     //  Label update functions
     // -------
     @IBAction func addNewFreq(_ sender: UIButton){
-        let freqID: Int! = array_pbFreq.index(of: sender)!
+        let freqID: Int! = sender.tag
         
         if(!(currentProtocol?.array_freqSeq.contains(freqID))!) {
             
@@ -116,7 +117,7 @@ class FreqSelectionViewController: UIViewController {
             
             newProtocol.name = newProtocolName
             newProtocol.isTestBoth = (currentProtocol?.isTestBoth)!
-            newProtocol.isLeftFirst = (currentProtocol?.isLeftFirst)!
+            newProtocol.isLeft = (currentProtocol?.isLeft)!
             
             for freqID in (currentProtocol?.array_freqSeq)! {
                 newProtocol.array_freqSeq.append(freqID)
@@ -131,7 +132,8 @@ class FreqSelectionViewController: UIViewController {
     @IBAction func loadFreqSeqProtocol(_ sender: UIButton) {
         
         if (mainSetting?.array_frequencyProtocols.count)! > 0 {
-            _currentPickerIndex = (mainSetting?.array_frequencyProtocols.count)! - 1
+            _currentPickerIndex =
+                (mainSetting?.array_frequencyProtocols.count)! - 1
             pickerPrompt(confirmFunction: loadProtocol,
                          uiCtrl: self)
         }
@@ -146,9 +148,9 @@ class FreqSelectionViewController: UIViewController {
         
         try! realm.write {
             mainSetting?.frequencyProtocolIndex = _currentPickerIndex
-            currentProtocol?.isLeftFirst = (targetProtocol?.isLeftFirst)!
-            currentProtocol?.isTestBoth = (targetProtocol?.isTestBoth)!
-            currentProtocol?.array_freqSeq = List<Int>()
+//            currentProtocol?.isLeft = (targetProtocol?.isLeft)!
+//            currentProtocol?.isTestBoth = (targetProtocol?.isTestBoth)!
+            currentProtocol?.array_freqSeq.removeAll()
             
             for freqID in (targetProtocol?.array_freqSeq)! {
                 currentProtocol?.array_freqSeq.append(freqID)
@@ -190,6 +192,37 @@ class FreqSelectionViewController: UIViewController {
     // ------
     //  Test-related functions
     // ------
+    @IBAction func setLeftFirst(_ sender: UIButton) {
+        try! realm.write {
+            mainSetting?.frequencyProtocol?.isLeft = true
+            mainSetting?.frequencyProtocol?.isTestBoth = true
+        }
+        lbEarOrder.text = sender.titleLabel?.text!
+    }
+    
+    @IBAction func setRightFirst(_ sender: UIButton) {
+        try! realm.write {
+            mainSetting?.frequencyProtocol?.isLeft = false
+            mainSetting?.frequencyProtocol?.isTestBoth = true
+        }
+        lbEarOrder.text = sender.titleLabel?.text!
+    }
+    
+    @IBAction func setLeftOnly(_ sender: UIButton) {
+        try! realm.write {
+            mainSetting?.frequencyProtocol?.isLeft = true
+            mainSetting?.frequencyProtocol?.isTestBoth = false
+        }
+        lbEarOrder.text = sender.titleLabel?.text!
+    }
+    
+    @IBAction func setRightOnly(_ sender: UIButton) {
+        try! realm.write {
+            mainSetting?.frequencyProtocol?.isLeft = false
+            mainSetting?.frequencyProtocol?.isTestBoth = false
+        }
+        lbEarOrder.text = sender.titleLabel?.text!
+    }
     
     @IBAction func startPracticeTest(_ sender: UIButton) {
         startTesting(isPracticeMode: true)
@@ -223,7 +256,8 @@ class FreqSelectionViewController: UIViewController {
                     fieldMsg: "i.e. John Smith 1",
                     confirmFunction: {(patientName: String) -> Void in
                         self.savePatientProfile(patientName)
-                        self.performSegue(withIdentifier: "segueMainTest", sender: isPracticeMode)},
+                        self.performSegue(withIdentifier: "segueMainTest",
+                                          sender: isPracticeMode)},
                     uiCtrl: self)
         
     }
@@ -237,18 +271,18 @@ class FreqSelectionViewController: UIViewController {
         
         let localDate = dateFormatter.string(from: date as Date)
         
-        // Prepare to test
-        // Init' patient profile & save test seq
-        self.mainSetting = self.realm.objects(MainSetting.self).first
+        // Prepare new profile to test
+        let newPatientProfile = PatientProfile()
+        newPatientProfile.name = patientName + ": " + localDate
+        newPatientProfile.testDate = localDate
         
-        try! self.realm.write {
-            let newPatientProfile = PatientProfile()
-            newPatientProfile.name = patientName
-            newPatientProfile.testDate = localDate
-            
-            newPatientProfile.calibrationSetting = mainSetting?.array_calibrationSettings[(self.mainSetting?.calibrationSettingIndex)!]
+        try! realm.write {
+            mainSetting?.frequencyTestIndex = 0
+            mainSetting?.array_patientProfiles.insert(newPatientProfile, at: 0)
         }
         
+        // Test Seq saved in main setting
+        // Load & save calibration setting during testing for each frequency
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -268,14 +302,19 @@ class FreqSelectionViewController: UIViewController {
             // Load Setting
             mainSetting = realm.objects(MainSetting.self).first
             
+            if(mainSetting?.frequencyProtocol == nil)
+            {
+                mainSetting?.frequencyProtocol = FrequencyProtocol()
+            }
+            
             currentProtocol = mainSetting?.frequencyProtocol
             
             currentProtocol?.array_freqSeq.removeAll()
+            
             currentProtocol?.isTestBoth = true
-            currentProtocol?.isLeftFirst = true
+            currentProtocol?.isLeft = true
+            lbEarOrder.text! = "L. Ear -> R. Ear"
         }
-        
-        _currentPickerIndex = (mainSetting?.array_frequencyProtocols.count)! - 1
         
         setupUI()
         updateLabel()
@@ -298,6 +337,7 @@ class FreqSelectionViewController: UIViewController {
             new_pbFreq.setTitle(String(ARRAY_DEFAULT_FREQ[i])+" Hz", for: .normal)
             new_pbFreq.backgroundColor = UIColor.gray
             new_pbFreq.setTitleColor(UIColor.white, for: .normal)
+            new_pbFreq.tag = i
             
             // Binding an action function to the new button
             // i.e. to play signal

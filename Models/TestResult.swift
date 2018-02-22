@@ -16,4 +16,9 @@ class TestResult: Object {
     
     @objc dynamic var thresholdDB_R: Double = 0
     var array_trackingDB_R = List<Double>()
+    
+    @objc dynamic var expectedDBSPL: Double = 0.0
+    @objc dynamic var presentDBHL: Double = 0.0
+    @objc dynamic var measuredDBSPL_L: Double = 0.0
+    @objc dynamic var measuredDBSPL_R: Double = 0.0
 }

@@ -28,18 +28,7 @@
 		4EDD82401F9A7B0100F77471 /* Animal_Tones in Resources */ = {isa = PBXBuildFile; fileRef = 4EDD823E1F9A7B0100F77471 /* Animal_Tones */; };
 		4EFFD74C1FA8E1AB004DE1FC /* FreqSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFFD74B1FA8E1AB004DE1FC /* FreqSelectionViewController.swift */; };
 		D033EE0A26D9F3FECA4E4254 /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 003B38F239FB10F6ED42CB64 /* Pods_Audiometry.framework */; };
-		F0C9133FBF6DB89C870AB368 /* Pods_AudiometryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC1F80DF0E41D58F76264596 /* Pods_AudiometryTests.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		4E02DB961F22B23300DB509A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4E02DB791F22B23300DB509A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4E02DB801F22B23300DB509A;
-			remoteInfo = Audiometry;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		4EF0FDA11F3D1EC300BA37DB /* Embed Frameworks */ = {
@@ -67,7 +56,6 @@
 		4E02DB8B1F22B23300DB509A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E02DB8E1F22B23300DB509A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E02DB901F22B23300DB509A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4E02DB951F22B23300DB509A /* AudiometryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudiometryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E3A82A2203B949200235EB7 /* CalibrationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationModel.swift; sourceTree = "<group>"; };
 		4E3A82A6203B996B00235EB7 /* AppUtililty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtililty.swift; sourceTree = "<group>"; };
 		4E3DDB022028F41400C09CA1 /* PatientProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientProfile.swift; sourceTree = "<group>"; };
@@ -92,14 +80,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D033EE0A26D9F3FECA4E4254 /* Pods_Audiometry.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4E02DB921F22B23300DB509A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F0C9133FBF6DB89C870AB368 /* Pods_AudiometryTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				4E02DB811F22B23300DB509A /* Audiometry.app */,
-				4E02DB951F22B23300DB509A /* AudiometryTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,27 +196,6 @@
 			productReference = 4E02DB811F22B23300DB509A /* Audiometry.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4E02DB941F22B23300DB509A /* AudiometryTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4E02DBA11F22B23300DB509A /* Build configuration list for PBXNativeTarget "AudiometryTests" */;
-			buildPhases = (
-				F28EAEA57FD9D87F3853CA39 /* [CP] Check Pods Manifest.lock */,
-				4E02DB911F22B23300DB509A /* Sources */,
-				4E02DB921F22B23300DB509A /* Frameworks */,
-				4E02DB931F22B23300DB509A /* Resources */,
-				3FFF5E1B77898BECACBE4890 /* [CP] Embed Pods Frameworks */,
-				9E52D374BD328462CB432E9D /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4E02DB971F22B23300DB509A /* PBXTargetDependency */,
-			);
-			name = AudiometryTests;
-			productName = AudiometryTests;
-			productReference = 4E02DB951F22B23300DB509A /* AudiometryTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -253,13 +211,6 @@
 						DevelopmentTeam = S8QF6QA72P;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
-					};
-					4E02DB941F22B23300DB509A = {
-						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = Z3BXXWHC67;
-						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 4E02DB801F22B23300DB509A;
 					};
 				};
 			};
@@ -277,7 +228,6 @@
 			projectRoot = "";
 			targets = (
 				4E02DB801F22B23300DB509A /* Audiometry */,
-				4E02DB941F22B23300DB509A /* AudiometryTests */,
 			);
 		};
 /* End PBXProject section */
@@ -295,31 +245,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4E02DB931F22B23300DB509A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3FFF5E1B77898BECACBE4890 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudiometryTests/Pods-AudiometryTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4EEA58821FE08D2F00CFFDC3 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -374,21 +302,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9E52D374BD328462CB432E9D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudiometryTests/Pods-AudiometryTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		EDA6F938F11A82417FC03C81 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -401,24 +314,6 @@
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Audiometry-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F28EAEA57FD9D87F3853CA39 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AudiometryTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -450,22 +345,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4E02DB911F22B23300DB509A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4E02DB971F22B23300DB509A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4E02DB801F22B23300DB509A /* Audiometry */;
-			targetProxy = 4E02DB961F22B23300DB509A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4E02DB881F22B23300DB509A /* Main.storyboard */ = {
@@ -534,7 +414,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -542,6 +422,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = 2;
+				VALID_ARCHS = arm64;
 			};
 			name = Debug;
 		};
@@ -586,13 +467,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = arm64;
 			};
 			name = Release;
 		};
@@ -612,11 +495,14 @@
 				INFOPLIST_FILE = Audiometry/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TriCounty.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALID_ARCHS = arm64;
 			};
 			name = Debug;
 		};
@@ -636,45 +522,14 @@
 				INFOPLIST_FILE = Audiometry/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TriCounty.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		4E02DBA21F22B23300DB509A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25D07026B739EDB85ABFEED5 /* Pods-AudiometryTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = Z3BXXWHC67;
-				INFOPLIST_FILE = AudiometryTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Fazer.AudiometryTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Audiometry.app/Audiometry";
-			};
-			name = Debug;
-		};
-		4E02DBA31F22B23300DB509A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0B7F7595FF932DDE4D45C5BF /* Pods-AudiometryTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = Z3BXXWHC67;
-				INFOPLIST_FILE = AudiometryTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Fazer.AudiometryTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Audiometry.app/Audiometry";
+				TARGETED_DEVICE_FAMILY = 2;
+				VALID_ARCHS = arm64;
 			};
 			name = Release;
 		};
@@ -695,15 +550,6 @@
 			buildConfigurations = (
 				4E02DB9F1F22B23300DB509A /* Debug */,
 				4E02DBA01F22B23300DB509A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4E02DBA11F22B23300DB509A /* Build configuration list for PBXNativeTarget "AudiometryTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4E02DBA21F22B23300DB509A /* Debug */,
-				4E02DBA31F22B23300DB509A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

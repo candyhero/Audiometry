@@ -57,35 +57,37 @@ class TestPlayer {
     
     func updateFreq (_ newFreq: Double!) {
         
-        self.generator.parameters[0] = newFreq
+        generator.parameters[0] = newFreq
 //        print(newFreq)
     }
     
     func updateCorrectionFactors(_ left: Double!, _ right: Double!) {
         
-        self.leftCorrFactor = left
-        self.rightCorrFactor = right
+        leftCorrFactor = left
+        rightCorrFactor = right
         
-//        print(left, right)
+        print(left, right)
     }
     
-    func updatePlayerVolume(_ newExpectedVol: Double!) {
-        
-        //        print(leftCorrectionFactor)
-        //        print(rightCorrectionFactor)
-        
+    func updatePlayerVolume(_ newExpectedVol: Double!, _ isLeft: Bool!) {
         // Set left & right volume
-        self.generator.parameters[1] = self.dbToAmp(
-            newExpectedVol + leftCorrFactor)
-        self.generator.parameters[2] = self.dbToAmp(
-            newExpectedVol + rightCorrFactor)
-        
-//        print(newExpectedVol)
+        if(isLeft) {
+            generator.parameters[1] = dbToAmp(newExpectedVol + leftCorrFactor)
+        } else {
+            generator.parameters[2] = dbToAmp(newExpectedVol + rightCorrFactor)
+        }
+    }
+    
+    func initPlayerVolume(){
+        // Init' player's vol
+        self.generator.parameters[1] = 0
+        self.generator.parameters[2] = 0
     }
     
     func play() {
         self.generator.start()
         
+        print( generator.parameters[1],  generator.parameters[2])
         timer = Timer.scheduledTimer(timeInterval: PULSE_TIME * NUM_OF_PULSE,
                              target: self,
                              selector: #selector(stop),

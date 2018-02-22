@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import RealmSwift
 
 // Global Static Constants shared by player and test flow
 
 class TestViewController: UIViewController {
     
+    private let realm = try! Realm()
+    private var mainSetting: MainSetting? = nil
+    private var array_freqSeq: List<Int>? = nil
+    
     private var _currentTestFlow = TestFlow()
+    
     private var timer: Timer?
     
-    private var array_freqSeq: [Int]!
     var flag_practiceMode: Bool!
     
     // a map to record trials and results
@@ -34,6 +39,7 @@ class TestViewController: UIViewController {
     @IBOutlet private weak var pbSecondInterval: UIButton!
     @IBOutlet private weak var pbNoSound: UIButton!
     
+    // UI Refresh functions
     @IBAction private func checkResponse(_ sender: UIButton) {
         
         // DispatchQueue default **
@@ -63,33 +69,114 @@ class TestViewController: UIViewController {
         let isThresholdFound: Bool! =
             _currentTestFlow.checkThreshold(bool_sender)
         
-        if(isThresholdFound){
+        if(isThresholdFound){ // Done for this freq
+            
+            let isLastFreq = (mainSetting?.frequencyTestIndex == array_freqSeq?.count)
+            
             // Pop the next freqSeq
-            if(array_freqSeq.count > 0) {
-                testNextFrequency()
+            if(isLastFreq) {
+                let isBothTested = !(mainSetting?.frequencyProtocol?.isTestBoth)!
+                
+                if(isBothTested) {
+                    performSegue(withIdentifier: "segueResult", sender: nil)
+                    return
+                }
+                else {
+                    try! realm.write{
+                        mainSetting?.frequencyProtocol?.isTestBoth = false
+                        mainSetting?.frequencyProtocol?.isLeft =
+                            !(mainSetting?.frequencyProtocol?.isLeft)!
+                        mainSetting?.frequencyTestIndex = 0
+                    }
+                }
             }
-            else {
-//                _currentTestFlow.saveResult()
-                performSegue(withIdentifier: "segueResult", sender: nil)
-            }
+            prepareToTestNextFreq()
         }
         else { // Still testing this frequency
-            DispatchQueue.main.async { [unowned self] in
-                // UI
-                self.pulseAnimation()
-            }
+            
+            self.toggleButtons(toggle: false)
+            
+            // run test
+            timer = Timer.scheduledTimer(timeInterval: 0.5,
+                                         target: self,
+                                         selector: #selector(textNextDB),
+                                         userInfo: nil,
+                                         repeats: false)
         }
     }
     
-    private func pulseAnimation() {
-        self.lbDebug.text = String(self._currentTestFlow.currentDB())
-        self.lbIsPlaying.text = String("Playing")
+    @objc func textNextDB() {
+        DispatchQueue.main.async { [unowned self] in
+            self._currentTestFlow.playSignalCase()
+            self.pulseAnimation()
+        }
+    }
+    
+    private func prepareToTestNextFreq(){
+        
+        let nextFreqSeqID = mainSetting?.frequencyTestIndex
+        let nextFreqID = array_freqSeq![nextFreqSeqID!]
+        
+        DispatchQueue.main.async { [unowned self] in
+            let pbImgDir = "Animal_Icons/" + ARRAY_DEFAULT_FREQ_DIR[nextFreqID]
+            let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
+            
+            
+            print(nextFreqID, pbImgDir)
+            
+            self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
+            self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
+            
+            self.pbFirstInterval.setImage(pbImg, for: .normal)
+            self.pbSecondInterval.setImage(pbImg, for: .normal)
+            
+            self.pbFirstInterval.adjustsImageWhenHighlighted = false
+            self.pbSecondInterval.adjustsImageWhenHighlighted = false
+//            self.pbFirstInterval.adjustsImageWhenDisabled = false
+//            self.pbSecondInterval.adjustsImageWhenDisabled = false
+        }
+        
         
         self.toggleButtons(toggle: false)
+        // run test
+        timer = Timer.scheduledTimer(timeInterval: 0.5,
+                                     target: self,
+                                     selector: #selector(testNextFreq),
+                                     userInfo: nil,
+                                     repeats: false)
+    }
+    
+    @objc func testNextFreq(){
+        DispatchQueue.main.async { [unowned self] in
+            
+            let nextFreqSeqID = self.mainSetting?.frequencyTestIndex
+            let nextFreqID = self.array_freqSeq![nextFreqSeqID!]
+            
+            self._currentTestFlow.findThresholdAtFreq(nextFreqID)
+            self.pulseAnimation()
+        }
+    }
+    
+    private func toggleButtons(toggle: Bool!) {
+        lbIsPlaying.text = toggle ? "Stopped" : "Playing"
+        
+        pbNoSound.isEnabled = toggle
+        pbFirstInterval.isEnabled = toggle
+        pbSecondInterval.isEnabled = toggle
+    }
+    
+    //------------
+    // Animation Functions
+    //------------
+    private func pulseAnimation() {
+        self.lbDebug.text = String(self._currentTestFlow.currentDB())
+        
+        // Disable the buttons first
+//        self.toggleButtons(toggle: false)
         
         let delayTime = PULSE_TIME * NUM_OF_PULSE * 2 + PLAY_GAP_TIME
         
-        // Play Animation
+        // Play pulse Animation by number of times
         for pulse in stride(from: 0, to: NUM_OF_PULSE, by: 1) {
             let delayTime = PULSE_TIME * pulse
             self.timer = Timer.scheduledTimer(timeInterval: delayTime,
@@ -118,77 +205,44 @@ class TestViewController: UIViewController {
     @objc private func pulseAnimationFirst() {
         UIView.animate(withDuration: PULSE_TIME / 2,
                        animations: {
-                        self.ivFirstInterval.transform = CGAffineTransform(
+                        self.pbFirstInterval.transform = CGAffineTransform(
                             scaleX: ANIMATE_SCALE, y: ANIMATE_SCALE)
         },
                        completion: { _ in
                         UIView.animate(withDuration: PULSE_TIME / 2) {
-                            self.ivFirstInterval.transform = CGAffineTransform.identity
+                            self.pbFirstInterval.transform = CGAffineTransform.identity
                         }})
     }
     
     @objc private func pulseAnimationSecond() {
         UIView.animate(withDuration: PULSE_TIME / 2,
                        animations: {
-                        self.ivSecondInterval.transform = CGAffineTransform(
+                        self.pbSecondInterval.transform = CGAffineTransform(
                             scaleX: ANIMATE_SCALE, y: ANIMATE_SCALE)
         },
                        completion: { _ in
                         UIView.animate(withDuration: PULSE_TIME / 2) {
-                            self.ivSecondInterval.transform = CGAffineTransform.identity
+                            self.pbSecondInterval.transform = CGAffineTransform.identity
                         }})
     }
     
-    private func toggleButtons(toggle: Bool!) {
-        
-        lbIsPlaying.text = toggle ? "Stopped" : "Playing"
-        
-        pbNoSound.isEnabled = toggle
-        pbFirstInterval.isEnabled = toggle
-        pbSecondInterval.isEnabled = toggle
-    }
-    
-    private func testNextFrequency(){
-        let nextFreq = array_freqSeq.removeFirst()
-        
-        DispatchQueue.main.async { [unowned self] in
-            let pbImgDir = "Animal_Icons/" + ARRAY_DEFAULT_FREQ_DIR[nextFreq]
-            let pbImg = UIImage(named: pbImgDir) as UIImage?
-            
-            self.ivFirstInterval.contentMode = .scaleAspectFit
-            self.ivSecondInterval.contentMode = .scaleAspectFit
-            
-            self.ivFirstInterval.image = pbImg
-            self.ivSecondInterval.image = pbImg
-        }
-        
-        // run test
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            self._currentTestFlow.findThresholdAtFreq(nextFreq)
-        }
-        
-        DispatchQueue.main.async { [unowned self] in
-            self.pulseAnimation()
-        }
-    }
-    
+    //------------
+    // Init'
+    //------------
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        array_freqSeq = UserDefaults.standard.array(forKey: "array_freqSeq") as! [Int]
+        mainSetting = realm.objects(MainSetting.self).first
+        array_freqSeq = mainSetting?.frequencyProtocol?.array_freqSeq
         
         if(!flag_practiceMode) {
             svDebug.alpha = 0.0
         }
         else {
-            svDebug.alpha = 0.0
+            svDebug.alpha = 1.0
         }
         
-        let currentSetting = UserDefaults.standard.string(forKey: "_currentSetting") ?? "None"
-        
-        lbCurrentSetting.text! = currentSetting
-        
-        testNextFrequency()
+        prepareToTestNextFreq()
     }
     
     override var prefersStatusBarHidden: Bool {

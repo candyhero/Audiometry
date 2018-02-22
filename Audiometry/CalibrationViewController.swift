@@ -103,7 +103,7 @@ class CalibrationViewController: UIViewController {
     
     @IBAction func playSignal(_ sender: UIButton) {
     
-        let newPlayIndex = CalibrationViewController.array_pbPlay.index(of: sender)!
+        let newPlayIndex = sender.tag
         
         calibrationModel.playSingal(newPlayIndex)
     }
@@ -193,6 +193,7 @@ class CalibrationViewController: UIViewController {
             new_pbPlay.setTitle("Off", for: .normal)
             new_pbPlay.backgroundColor = UIColor.gray
             new_pbPlay.setTitleColor(UIColor.white, for: .normal)
+            new_pbPlay.tag = i
             
             // Binding an action function to the new button
             // i.e. to play signal

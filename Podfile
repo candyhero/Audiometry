@@ -4,18 +4,23 @@ platform :ios, '11.0'
 target 'Audiometry' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-
-  # Pods for Audiometry
-
-  target 'AudiometryTests' do
-    inherit! :search_paths
-    # Pods for testing
+  
+  post_install do |installer|
+      installer.pods_project.targets.each do |target|
+          plist_buddy = "/usr/libexec/PlistBuddy"
+          plist = "Pods/Target Support Files/#{target}/Info.plist"
+          
+          puts "Add arm64 & armv7 to #{target} to make it pass iTC verification."
+          
+          `#{plist_buddy} -c "Add UIRequiredDeviceCapabilities array" "#{plist}"`
+          `#{plist_buddy} -c "Add UIRequiredDeviceCapabilities:0 string arm64" "#{plist}"`
+          `#{plist_buddy} -c "Add UIRequiredDeviceCapabilities:1 string armv7" "#{plist}"`
+      end
   end
 
   pod 'AudioKit'
 
   pod 'Charts'
-  # pod 'ChartsRealm'
 
   pod 'RealmSwift'
 end

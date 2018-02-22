@@ -10,7 +10,7 @@ import RealmSwift
 
 class FrequencyProtocol: Object {
     @objc dynamic var name: String = ""
-    @objc dynamic var isLeftFirst: Bool = true
+    @objc dynamic var isLeft: Bool = true
     @objc dynamic var isTestBoth: Bool = true
     
     var array_freqSeq = List<Int>()

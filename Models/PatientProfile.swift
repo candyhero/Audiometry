@@ -11,7 +11,6 @@ import RealmSwift
 class PatientProfile: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var testDate: String = ""
-    @objc dynamic var calibrationSetting: CalibrationSetting? = nil
     
     var array_testResults = List<TestResult>()
     

@@ -21,6 +21,7 @@ let ARRAY_DEFAULT_FREQ_DIR = ["250Hz_Bee", "500Hz_Owl", "750Hz_Dog",
 
 // Calibration Setting Constants
 let _DB_SYSTEM_MAX: Double! = 105.0 // At volume amplitude = 1.0
+let _DB_SYSTEM_MIN: Double! = 0.0 // At volume amplitude = 0.0
 let _DB_DEFAULT: Double! = 70.0
 let _RAMP_TIME: Double! = 0.1
 let _RAMP_TIMESTEP: Double! = 0.01
@@ -53,6 +54,29 @@ func errorPrompt(errorMsg: String,
     uiCtrl.present(alertCtrl, animated: true, completion: nil)
 }
 
+func alertPrompt(alertTitle: String,
+                 alertMsg: String,
+                 confirmFunction: @escaping () -> Void,
+                 uiCtrl: UIViewController) {
+    
+    // Prompt for user to input setting name
+    let alertCtrl = UIAlertController(
+        title: alertTitle,
+        message: alertMsg,
+        preferredStyle: .alert)
+    
+    let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
+        (_) in confirmFunction() }
+    
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
+        (_) in }
+    
+    alertCtrl.addAction(confirmAction)
+    alertCtrl.addAction(cancelAction)
+    
+    uiCtrl.present(alertCtrl, animated: true, completion: nil)
+}
+
 func inputPrompt(promptMsg: String,
                  errorMsg: String,
                  fieldMsg: String,
@@ -61,7 +85,7 @@ func inputPrompt(promptMsg: String,
     
     // Prompt for user to input setting name
     let alertCtrl = UIAlertController(
-        title: "Save Setting",
+        title: "Save",
         message: promptMsg,
         preferredStyle: .alert)
     
