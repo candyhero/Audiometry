@@ -11,7 +11,9 @@ import RealmSwift
 
 class TestFlow {
     
-    private let SYSTEM_DEFAULT_DB = 50.0
+    private let _SYSTEM_DEFAULT_DB = 50.0
+    private let _TEST_MAX_DB = 100.0
+    private let _TEST_MIN_DB = 0.0
     
     private let realm = try! Realm()
     private var mainSetting: MainSetting? = nil
@@ -26,6 +28,7 @@ class TestFlow {
     
     private var _currentPlayCase: Int!
     private var _currentDB: Double!
+    private var _maxDBTrials: Int
     
 //    private var thresholdDB: Double! = nil
     private var player: TestPlayer! = nil
@@ -39,6 +42,8 @@ class TestFlow {
         calibrationSetting = mainSetting?.array_calibrationSettings[calibrationSettingID!]
         
         patientProfile = mainSetting?.array_patientProfiles.first
+        
+        _maxDBTrials = 0
     }
     
     func currentPlayCase() -> Int! {
@@ -88,7 +93,7 @@ class TestFlow {
         player.updateCorrectionFactors(correctionFactor_L, correctionFactor_R)
         player.initPlayerVolume()
         
-        _currentDB = SYSTEM_DEFAULT_DB
+        _currentDB = _SYSTEM_DEFAULT_DB
         
         // Init buffs at current Freq to storing results
         _flag_initialPhase = true
@@ -140,8 +145,10 @@ class TestFlow {
         // Update dB track list at this freq
         var lastDB: Double?
         
+        print(_currentDB)
+        
+        // Update current response to tracking list
         try! realm.write {
-            
             if(mainSetting?.frequencyProtocol?.isLeft)!{
                 lastDB = currentTestResult?.array_trackingDB_L.last
                 currentTestResult?.array_trackingDB_L.append(_currentDB)
@@ -150,36 +157,35 @@ class TestFlow {
                 currentTestResult?.array_trackingDB_R.append(_currentDB)
             }
         }
+        print(_maxDBTrials)
         
-        let wasLastCorrect = (_currentDB < lastDB ?? _currentDB + 1)
+        // Check if 3 max DB in a row
+        if(_currentDB == _TEST_MAX_DB){
+            
+            if(!bool_sender){
+                _maxDBTrials += 1
+            } else {
+                _maxDBTrials = 0
+            }
+            
+            if(_maxDBTrials == 3)
+            {
+                return endTest(-1)
+            }
+        }
         
         // Determine if this is an ascending + response
+        let wasLastCorrect = (_currentDB < lastDB ?? _currentDB + 1)
         if(!wasLastCorrect && bool_sender) {
             
             let currentDB_intKey: Int = Int(_currentDB)
             let hasBeenAscendingCorrect: Bool! = dict_hasBeenAscendingCorrect[currentDB_intKey] ?? false
             
             // Determine if test can be ended
+            // Twice correct in a row on the same freq
             if(hasBeenAscendingCorrect){
-                // Twice correct in a row on the same freq
-                try! realm.write {
-                    // Update threshold & Increment freq test index
-                    if(mainSetting?.frequencyProtocol?.isLeft)!{
-                        currentTestResult?.thresholdDB_L = _currentDB
-                    }
-                    else {
-                        currentTestResult?.thresholdDB_R = _currentDB
-                    }
-                    
-                    if(patientProfile?.array_testResults.count == 0){
-                        patientProfile?.array_testResults.append(currentTestResult!)
-                    }
-                    
-                    mainSetting?.frequencyTestIndex += 1
-                    
-                }
                 
-                return true
+                return endTest(_currentDB)
             }
             else {
                 dict_hasBeenAscendingCorrect[currentDB_intKey] = true
@@ -192,8 +198,8 @@ class TestFlow {
             
             // If first correct / incorrect after previous incorrects / corrects
             // change phase
-            if(_currentDB > SYSTEM_DEFAULT_DB && bool_sender) ||
-                (_currentDB < SYSTEM_DEFAULT_DB && !bool_sender){
+            if(_currentDB > _SYSTEM_DEFAULT_DB && bool_sender) ||
+                (_currentDB < _SYSTEM_DEFAULT_DB && !bool_sender){
                 
                 _flag_initialPhase = false
             }
@@ -210,12 +216,33 @@ class TestFlow {
         }
         
         // Bound next db between [0, 100] dbHL
-        nextDB = (nextDB > _DB_SYSTEM_MAX) ? _DB_SYSTEM_MAX : nextDB
-        nextDB = (nextDB < _DB_SYSTEM_MIN) ? _DB_SYSTEM_MIN : nextDB
+        nextDB = (nextDB > _TEST_MAX_DB) ? _TEST_MAX_DB : nextDB
+        nextDB = (nextDB < _TEST_MIN_DB) ? _TEST_MIN_DB : nextDB
         
         // Load new volume
         _currentDB = nextDB!
         
         return false
+    }
+    
+    func endTest(_ thresholdDB: Double!) -> Bool{
+        try! realm.write {
+            // Update threshold & Increment freq test index
+            if(mainSetting?.frequencyProtocol?.isLeft)!{
+                currentTestResult?.thresholdDB_L = thresholdDB
+            }
+            else {
+                currentTestResult?.thresholdDB_R = thresholdDB
+            }
+            
+            if(patientProfile?.array_testResults.count == mainSetting?.frequencyTestIndex){
+                patientProfile?.array_testResults.append(currentTestResult!)
+            }
+            
+            mainSetting?.frequencyTestIndex += 1
+        }
+        
+        _maxDBTrials = 0
+        return true
     }
 }

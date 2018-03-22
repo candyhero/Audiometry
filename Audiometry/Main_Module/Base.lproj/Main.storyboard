@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cTp-f6-a1r">
+    <device id="ipad9_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Title View Controller-->
+        <scene sceneID="cf7-WR-69U">
+            <objects>
+                <viewController storyboardIdentifier="TitleView" id="cTp-f6-a1r" customClass="TitleViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4Ud-yW-L2I"/>
+                        <viewControllerLayoutGuide type="bottom" id="qea-bF-98W"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wbj-he-gXG">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="5GO-Nb-Xou">
+                                <rect key="frame" x="422" y="333" width="180" height="240"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nwa-Vk-mtq">
+                                        <rect key="frame" x="0.0" y="0.0" width="180" height="60"/>
+                                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="5HT-2c-VDm"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" title="Start"/>
+                                        <connections>
+                                            <action selector="startTesting:" destination="cTp-f6-a1r" eventType="touchUpInside" id="JtY-6L-1tA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dab-8t-SDg">
+                                        <rect key="frame" x="0.0" y="90" width="180" height="60"/>
+                                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="vyo-p4-yZb"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" title="Calibration"/>
+                                        <connections>
+                                            <segue destination="g65-P6-kNW" kind="show" id="mHs-I3-Cul"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MVY-zw-dkX">
+                                        <rect key="frame" x="0.0" y="180" width="180" height="60"/>
+                                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="SVo-mZ-9lh"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                        <state key="normal" title="View Results"/>
+                                        <connections>
+                                            <action selector="viewResults:" destination="cTp-f6-a1r" eventType="touchUpInside" id="qns-26-MK9"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="Ai7-Mi-bUD"/>
+                                </constraints>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audiometry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJh-zi-akX">
+                                <rect key="frame" x="387" y="195.5" width="251.5" height="57.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="48"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lJh-zi-akX" firstAttribute="centerY" secondItem="wbj-he-gXG" secondAttribute="centerY" constant="-160" id="Hii-Kd-RN5"/>
+                            <constraint firstItem="5GO-Nb-Xou" firstAttribute="centerX" secondItem="wbj-he-gXG" secondAttribute="centerX" id="Jae-my-YGI"/>
+                            <constraint firstItem="5GO-Nb-Xou" firstAttribute="top" secondItem="lJh-zi-akX" secondAttribute="bottom" constant="80" id="hPb-g1-mg2"/>
+                            <constraint firstItem="lJh-zi-akX" firstAttribute="centerX" secondItem="wbj-he-gXG" secondAttribute="centerX" id="lbe-3C-HW9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="oIG-ZP-peU" kind="show" identifier="segueResultFromMenu" id="y9i-Lp-jb7"/>
+                        <segue destination="Y3r-HM-Rvd" kind="show" identifier="segueProtocolFromMenu" id="tQG-zn-XiA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YUe-jA-rry" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-477" y="-622"/>
+        </scene>
+        <!--CalibrationView-->
+        <scene sceneID="Zgc-ZO-CFL">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="CalibrationView" storyboardName="Calibration" referencedIdentifier="CalibrationView" id="g65-P6-kNW" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZbA-fG-F0H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-91" y="-642"/>
+        </scene>
+        <!--ResultView-->
+        <scene sceneID="urw-0x-178">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="ResultView" storyboardName="Result" referencedIdentifier="ResultView" id="oIG-ZP-peU" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lSX-kE-zne" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-108" y="-603"/>
+        </scene>
+        <!--Protocol View Controller-->
+        <scene sceneID="yy7-68-HY3">
+            <objects>
+                <viewController storyboardIdentifier="ProtocolView" id="Y3r-HM-Rvd" customClass="ProtocolViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rYx-y9-afQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="nLG-lN-eKU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6lX-Zg-kVC">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="efm-Xe-VU2" userLabel="svFreq">
+                                <rect key="frame" x="20" y="104" width="984" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="Pde-ox-jVr"/>
+                                </constraints>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXe-Pb-BHe">
+                                <rect key="frame" x="40" y="264" width="944" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="s42-0C-uzQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oyg-8O-FTI">
+                                <rect key="frame" x="20" y="20" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <segue destination="cTp-f6-a1r" kind="show" id="MZw-l4-Uea"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gc3-JO-0I7">
+                                <rect key="frame" x="192.5" y="452" width="639" height="38"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iml-Go-6KU">
+                                        <rect key="frame" x="0.0" y="0.0" width="115" height="38"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="L. Ear Only">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setLeftOnly:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="Uqt-en-wd6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28e-V9-IOP">
+                                        <rect key="frame" x="155" y="0.0" width="116" height="38"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="R. Ear Only">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setRightOnly:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="hEr-JY-2TZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uy1-L9-U7i">
+                                        <rect key="frame" x="311" y="0.0" width="144" height="38"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="L. Ear -&gt; R. Ear">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setLeftFirst:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="SMJ-ms-zjL"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7f1-Gd-dqN">
+                                        <rect key="frame" x="495" y="0.0" width="144" height="38"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="R. Ear -&gt; L. Ear">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setRightFirst:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="UVy-Ag-W7v"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="CfS-KY-79T">
+                                <rect key="frame" x="43.5" y="530" width="937" height="38"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOx-bp-4vZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="38"/>
+                                        <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Remove Last">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="removeLastFreq:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="A8j-Fz-WGO"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dE-Y5-4Uz">
+                                        <rect key="frame" x="188" y="0.0" width="97" height="38"/>
+                                        <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Clear All">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="removeAllFreq:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="kTm-gg-4Vg"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APH-kS-42d">
+                                        <rect key="frame" x="345" y="0.0" width="135" height="38"/>
+                                        <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Save Protocol">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="saveFreqSeqProtocol:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="Ike-Xg-61r"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPP-AS-nnX">
+                                        <rect key="frame" x="540" y="0.0" width="135" height="38"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Load Protocol">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loadFreqSeqProtocol:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="63w-6X-Ij3"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XyG-KZ-zIi">
+                                        <rect key="frame" x="735" y="0.0" width="202" height="38"/>
+                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Delete Current Protocol">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteFreqSeqProtocol:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="Cos-LR-eVJ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="9qR-ss-rRh">
+                                <rect key="frame" x="348" y="608" width="328" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6tM-LO-IwS">
+                                        <rect key="frame" x="0.0" y="0.0" width="140" height="80"/>
+                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Practice Mode">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="startPracticeTest:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="Ugr-XJ-2Vp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="03K-L4-Adi">
+                                        <rect key="frame" x="200" y="0.0" width="128" height="80"/>
+                                        <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Run Full Test">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="startMainTest:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="9yx-3K-0T9"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="Ays-cT-ncJ"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cr8-wm-dBM">
+                                <rect key="frame" x="393.5" y="411.5" width="237" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L./R. Ear Order: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bes-qV-dyO">
+                                        <rect key="frame" x="0.0" y="0.0" width="122" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L. Ear -&gt; R. Ear" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pqh-ee-VOG">
+                                        <rect key="frame" x="122" y="0.0" width="115" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="CfS-KY-79T" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="FRe-gn-eo3"/>
+                            <constraint firstItem="yXe-Pb-BHe" firstAttribute="top" secondItem="efm-Xe-VU2" secondAttribute="bottom" constant="80" id="NN0-cj-6Jw"/>
+                            <constraint firstItem="CfS-KY-79T" firstAttribute="top" secondItem="gc3-JO-0I7" secondAttribute="bottom" constant="40" id="PEi-h5-vN6"/>
+                            <constraint firstItem="9qR-ss-rRh" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="PXg-Uj-hsO"/>
+                            <constraint firstItem="yXe-Pb-BHe" firstAttribute="leading" secondItem="6lX-Zg-kVC" secondAttribute="leadingMargin" constant="20" id="QQJ-oF-NTS"/>
+                            <constraint firstItem="9qR-ss-rRh" firstAttribute="top" secondItem="CfS-KY-79T" secondAttribute="bottom" constant="40" id="QkK-iP-fhG"/>
+                            <constraint firstItem="gc3-JO-0I7" firstAttribute="top" secondItem="cr8-wm-dBM" secondAttribute="bottom" constant="20" id="Y7J-fb-raE"/>
+                            <constraint firstItem="nLG-lN-eKU" firstAttribute="top" secondItem="9qR-ss-rRh" secondAttribute="bottom" constant="80" id="eyl-6G-GI4"/>
+                            <constraint firstItem="cr8-wm-dBM" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="ifv-BY-5GB"/>
+                            <constraint firstItem="efm-Xe-VU2" firstAttribute="centerY" secondItem="6lX-Zg-kVC" secondAttribute="centerY" constant="-240" id="iih-aU-EoI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="efm-Xe-VU2" secondAttribute="trailing" id="jSa-im-FlY"/>
+                            <constraint firstItem="efm-Xe-VU2" firstAttribute="leading" secondItem="6lX-Zg-kVC" secondAttribute="leadingMargin" id="sCi-rT-MPd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yXe-Pb-BHe" secondAttribute="trailing" constant="20" id="wHa-QH-oVy"/>
+                            <constraint firstItem="gc3-JO-0I7" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="yt2-gg-M2Y"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="lbEarOrder" destination="Pqh-ee-VOG" id="xem-39-7hV"/>
+                        <outlet property="lbFreqSeq" destination="yXe-Pb-BHe" id="QKO-bx-ebP"/>
+                        <outlet property="leftOnly" destination="Iml-Go-6KU" id="58e-lV-vTy"/>
+                        <outlet property="svFreq" destination="efm-Xe-VU2" id="TW3-Qt-eeH"/>
+                        <segue destination="zek-aF-u6d" kind="show" identifier="segueMainTest" id="noK-1O-j9a">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q0v-ao-aih" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-478" y="147"/>
+        </scene>
+        <!--Test-->
+        <scene sceneID="qcy-fb-0xi">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Test" id="zek-aF-u6d" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jpc-cu-Ctr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-91" y="165"/>
+        </scene>
+    </scenes>
+</document>

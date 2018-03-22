@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Xos-0w-K0n">
+    <device id="ipad12_9" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Test View Controller-->
+        <scene sceneID="jA6-ao-Rbd">
+            <objects>
+                <viewController id="Xos-0w-K0n" customClass="TestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DIX-OQ-mz8"/>
+                        <viewControllerLayoutGuide type="bottom" id="VwC-He-InT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5kn-ku-J6l">
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YIq-yB-AZP" userLabel="svIcons">
+                                <rect key="frame" x="355" y="20" width="656" height="984"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5eT-zC-Hxs">
+                                        <rect key="frame" x="0.0" y="0.0" width="656" height="492"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="5eT-zC-Hxs" secondAttribute="height" multiplier="4:3" id="lWz-lQ-Euj"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="checkResponse:" destination="Xos-0w-K0n" eventType="touchUpInside" id="gke-M1-1md"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMI-ZF-NxX">
+                                        <rect key="frame" x="0.0" y="492" width="656" height="492"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="qMI-ZF-NxX" secondAttribute="height" multiplier="4:3" id="lHE-1U-xdP"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="checkResponse:" destination="Xos-0w-K0n" eventType="touchUpInside" id="adW-dx-gpl"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Uk-Sk-nqx">
+                                <rect key="frame" x="20" y="20" width="97" height="30"/>
+                                <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <segue destination="ChU-uQ-W3X" kind="show" id="81L-1q-GLz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bpw-UR-4Wm">
+                                <rect key="frame" x="1105" y="432" width="241" height="160"/>
+                                <color key="backgroundColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="160" id="uAS-D1-aBA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <state key="normal" title="No Sound">
+                                    <color key="titleColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkResponse:" destination="Xos-0w-K0n" eventType="touchUpInside" id="zgJ-KO-hqI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2Uk-Sk-nqx" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="6VY-Yg-3qc"/>
+                            <constraint firstItem="2Uk-Sk-nqx" firstAttribute="leading" secondItem="5kn-ku-J6l" secondAttribute="leadingMargin" id="Cx6-XU-vK9"/>
+                            <constraint firstItem="YIq-yB-AZP" firstAttribute="centerX" secondItem="5kn-ku-J6l" secondAttribute="centerX" id="Hek-eK-Gio"/>
+                            <constraint firstItem="YIq-yB-AZP" firstAttribute="centerY" secondItem="5kn-ku-J6l" secondAttribute="centerY" id="MYU-ct-FYZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Bpw-UR-4Wm" secondAttribute="trailing" id="Y3L-05-7rn"/>
+                            <constraint firstItem="Bpw-UR-4Wm" firstAttribute="centerY" secondItem="5kn-ku-J6l" secondAttribute="centerY" id="ZFG-Jr-lw8"/>
+                            <constraint firstItem="YIq-yB-AZP" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="kw1-5z-8iO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pbFirstInterval" destination="5eT-zC-Hxs" id="p8s-Ae-X1k"/>
+                        <outlet property="pbNoSound" destination="Bpw-UR-4Wm" id="yzq-5B-rVf"/>
+                        <outlet property="pbSecondInterval" destination="qMI-ZF-NxX" id="b2J-jM-3pD"/>
+                        <outlet property="svIcons" destination="YIq-yB-AZP" id="atM-bc-2Wo"/>
+                        <segue destination="dTb-5d-fPO" kind="show" identifier="segueResult" id="bG4-nT-Jcv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KuR-MS-Dtq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="250.78124999999997" y="287.5"/>
+        </scene>
+        <!--ResultView-->
+        <scene sceneID="UUb-gV-zMc">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="ResultView" storyboardName="Result" referencedIdentifier="ResultView" id="dTb-5d-fPO" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="We5-Ug-8Kv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="250" y="697"/>
+        </scene>
+        <!--TitleView-->
+        <scene sceneID="5EV-TY-yua">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="UIViewController-cTp-f6-a1r" storyboardName="Main" referencedIdentifier="TitleView" id="ChU-uQ-W3X" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dyO-4A-jnK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="643" y="287"/>
+        </scene>
+    </scenes>
+</document>

@@ -201,22 +201,18 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         mainSetting = realm.objects(MainSetting.self).first
         
         // Load result
+        let mostCurrentPatient = mainSetting?.array_patientProfiles.first
+        
         for patientProfile in (mainSetting?.array_patientProfiles)! {
             patientSectionRows.append(0)
         }
         
-        var mostCurrentPatient = mainSetting?.array_patientProfiles.first
-        
-        try! realm.write{
-            while(mostCurrentPatient?.array_testResults.count == 0)
-            {
-                mainSetting?.array_patientProfiles.removeFirst()
-                mostCurrentPatient = mainSetting?.array_patientProfiles.first
-            }
-        }
+        print("gg")
+        print(mostCurrentPatient!.array_testResults.count)
         
         patientSectionRows[0] = (mostCurrentPatient!.array_testResults.count)
         updateGraph((mostCurrentPatient?.array_testResults.first)!)
+        
     }
     
     override func didReceiveMemoryWarning() {

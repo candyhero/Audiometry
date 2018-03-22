@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class FreqSelectionViewController: UIViewController {
+class ProtocolViewController: UIViewController {
     
     // play sequence track list
     private let realm = try! Realm()
@@ -358,7 +358,7 @@ class FreqSelectionViewController: UIViewController {
     }
 }
 
-extension FreqSelectionViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+extension ProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

@@ -17,7 +17,7 @@ class TitleViewController: UIViewController {
     @IBAction func startTesting(_ sender: UIButton) {
 
         if((mainSetting?.calibrationSettingIndex)! >= 0){
-            performSegue(withIdentifier: "segueFreqSelection", sender: nil)
+            performSegue(withIdentifier: "segueProtocolFromMenu", sender: nil)
         } else {
             // Prompt for user error
             errorPrompt(
@@ -32,9 +32,9 @@ class TitleViewController: UIViewController {
             // Display valid results in charts
             performSegue(withIdentifier: "segueResultFromMenu", sender: nil)
         } else {
-            // Error
-            errorPrompt(errorMsg: "There is no result!",
-                        uiCtrl: self)
+            // Prompt Error
+            errorPrompt(errorMsg: "There is no result!", uiCtrl: self)
+            return
         }
     }
     
@@ -51,6 +51,17 @@ class TitleViewController: UIViewController {
         
         // Load Setting
         mainSetting = self.realm.objects(MainSetting.self).first!
+        
+        // Remove last nil patient profiles
+        let mostCurrentPatient = mainSetting?.array_patientProfiles.first
+        
+        // Validate last patient profile
+        try! realm.write{
+            if(mostCurrentPatient?.array_testResults.count == 0)
+            {
+                mainSetting?.array_patientProfiles.removeFirst()
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

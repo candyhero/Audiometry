@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '11.0'
+platform :ios, '9.0'
 
 target 'Audiometry' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -14,7 +14,6 @@ target 'Audiometry' do
           
           `#{plist_buddy} -c "Add UIRequiredDeviceCapabilities array" "#{plist}"`
           `#{plist_buddy} -c "Add UIRequiredDeviceCapabilities:0 string arm64" "#{plist}"`
-          `#{plist_buddy} -c "Add UIRequiredDeviceCapabilities:1 string armv7" "#{plist}"`
       end
   end
 

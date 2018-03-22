@@ -10,8 +10,6 @@ import Foundation
 import AudioKit
 
 class TestPlayer {
-    let DB_SYSTEM_MAX: Double! = 105.0
-    
     var generator: AKOperationGenerator! = nil
     var timer: Timer?
     
@@ -76,6 +74,8 @@ class TestPlayer {
         } else {
             generator.parameters[2] = dbToAmp(newExpectedVol + rightCorrFactor)
         }
+        
+        print(generator.parameters[1], generator.parameters[2])
     }
     
     func initPlayerVolume(){
@@ -85,14 +85,13 @@ class TestPlayer {
     }
     
     func play() {
-        self.generator.start()
-        
-        print( generator.parameters[1],  generator.parameters[2])
         timer = Timer.scheduledTimer(timeInterval: PULSE_TIME * NUM_OF_PULSE,
                              target: self,
                              selector: #selector(stop),
                              userInfo: nil,
                              repeats: false)
+        
+        self.generator.start()
     }
     
     @objc func stop() {
@@ -104,7 +103,7 @@ class TestPlayer {
         
         // volume in absolute dB to be converted to amplitude
         // 1.0 amplitude <-> 0 absoulte dB
-        let ampDB: Double! = dB - DB_SYSTEM_MAX
+        let ampDB: Double! = dB - _DB_SYSTEM_MAX
         
         let amp: Double! = pow(10.0, ampDB / 20.0)
         

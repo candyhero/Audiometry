@@ -25,15 +25,8 @@ class TestViewController: UIViewController {
     
     // a map to record trials and results
     //
-    @IBOutlet private weak var lbIsPlaying: UILabel!
-    @IBOutlet private weak var lbCurrentSetting: UILabel!
-    @IBOutlet private weak var lbDebug: UILabel!
-    
-    @IBOutlet private weak var ivFirstInterval: UIImageView!
-    @IBOutlet private weak var ivSecondInterval: UIImageView!
     
     @IBOutlet private weak var svIcons: UIStackView!
-    @IBOutlet private weak var svDebug: UIStackView!
     
     @IBOutlet private weak var pbFirstInterval: UIButton!
     @IBOutlet private weak var pbSecondInterval: UIButton!
@@ -121,7 +114,6 @@ class TestViewController: UIViewController {
             let pbImgDir = "Animal_Icons/" + ARRAY_DEFAULT_FREQ_DIR[nextFreqID]
             let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
             
-            
             print(nextFreqID, pbImgDir)
             
             self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
@@ -132,8 +124,6 @@ class TestViewController: UIViewController {
             
             self.pbFirstInterval.adjustsImageWhenHighlighted = false
             self.pbSecondInterval.adjustsImageWhenHighlighted = false
-//            self.pbFirstInterval.adjustsImageWhenDisabled = false
-//            self.pbSecondInterval.adjustsImageWhenDisabled = false
         }
         
         
@@ -158,8 +148,6 @@ class TestViewController: UIViewController {
     }
     
     private func toggleButtons(toggle: Bool!) {
-        lbIsPlaying.text = toggle ? "Stopped" : "Playing"
-        
         pbNoSound.isEnabled = toggle
         pbFirstInterval.isEnabled = toggle
         pbSecondInterval.isEnabled = toggle
@@ -169,7 +157,6 @@ class TestViewController: UIViewController {
     // Animation Functions
     //------------
     private func pulseAnimation() {
-        self.lbDebug.text = String(self._currentTestFlow.currentDB())
         
         // Disable the buttons first
 //        self.toggleButtons(toggle: false)
@@ -234,13 +221,6 @@ class TestViewController: UIViewController {
         
         mainSetting = realm.objects(MainSetting.self).first
         array_freqSeq = mainSetting?.frequencyProtocol?.array_freqSeq
-        
-        if(!flag_practiceMode) {
-            svDebug.alpha = 0.0
-        }
-        else {
-            svDebug.alpha = 1.0
-        }
         
         prepareToTestNextFreq()
     }
