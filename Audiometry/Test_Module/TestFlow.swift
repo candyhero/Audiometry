@@ -73,6 +73,7 @@ class TestFlow {
         currentTestResult?.measuredDBSPL_R = measuredDBSPL_R!
     }
     
+    // Begin to test a new frequency
     func findThresholdAtFreq(_ currentFreqID: Int!){
         // Init' player and settings if first time (L or R)
         let currentFreqSeqID: Int! = (mainSetting?.frequencyTestIndex)!
@@ -103,6 +104,7 @@ class TestFlow {
         playSignalCase()
     }
     
+    // Play signal case
     func playSignalCase() {
         
         // Set init volume & random play case
@@ -112,33 +114,37 @@ class TestFlow {
         _currentPlayCase = Int(arc4random_uniform(2) + 1)
         // Uncomment to enable no sound interval
         //currentPlaycase = Int(arc4random_uniform(3))
-        
+        replaySignalCase()
+    }
+    
+    func replaySignalCase(){
         switch _currentPlayCase {
             
         case 0: // Slient interval
             break
             
         case 1: // First interval
-            DispatchQueue.main.asyncAfter(
-                deadline: .now(),
-                execute:{self.player.play()}
-            )
+            self.player.play(0)
             break
             
         case 2: // Second interval
             // First interval time + Slience gap 0.5s
-            let delayTime = PULSE_TIME * NUM_OF_PULSE + PLAY_GAP_TIME
-            
-            DispatchQueue.main.asyncAfter(
-                deadline: .now() + Double(delayTime),
-                execute:{self.player.play()}
-            )
+            let delayTime = PULSE_TIME * Double(NUM_OF_PULSE) + PLAY_GAP_TIME
+            player.play(delayTime)
             break
             
         default: // Should never be this case
             print("Playcase ERROR!!!")
             break
         }
+    }
+    // UI Refresh functions
+    func repeatPlaying() {
+        replaySignalCase()
+    }
+    
+    func pausePlaying() {
+        player.stop()
     }
     
     func checkThreshold(_ bool_sender: Bool!) -> Bool!{
@@ -168,9 +174,9 @@ class TestFlow {
                 _maxDBTrials = 0
             }
             
-            if(_maxDBTrials == 3)
-            {
-                return endTest(-1)
+            if(_maxDBTrials == 3){
+                endTest(-1)
+                return true
             }
         }
         
@@ -184,8 +190,8 @@ class TestFlow {
             // Determine if test can be ended
             // Twice correct in a row on the same freq
             if(hasBeenAscendingCorrect){
-                
-                return endTest(_currentDB)
+                endTest(_currentDB)
+                return true
             }
             else {
                 dict_hasBeenAscendingCorrect[currentDB_intKey] = true
@@ -225,7 +231,8 @@ class TestFlow {
         return false
     }
     
-    func endTest(_ thresholdDB: Double!) -> Bool{
+    // Wrap up test results on this frequency round
+    func endTest(_ thresholdDB: Double!){
         try! realm.write {
             // Update threshold & Increment freq test index
             if(mainSetting?.frequencyProtocol?.isLeft)!{
@@ -243,6 +250,5 @@ class TestFlow {
         }
         
         _maxDBTrials = 0
-        return true
     }
 }

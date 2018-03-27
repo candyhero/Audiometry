@@ -27,6 +27,7 @@
 		4E9D9F4220295F0300E8FF0F /* MainSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9D9F4120295F0300E8FF0F /* MainSetting.swift */; };
 		4EA58AE11F62045C00E0CDFE /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58ADC1F62045C00E0CDFE /* TestViewController.swift */; };
 		4EA58AE41F62081F00E0CDFE /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */; };
+		4EAF3ECA206A5B9B00495D11 /* InstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF3EC9206A5B9B00495D11 /* InstructionViewController.swift */; };
 		4ED8C9D61FBCB61E0042C997 /* Animal_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 4ED8C9D51FBCB61E0042C997 /* Animal_Icons */; };
 		4EDD82401F9A7B0100F77471 /* Animal_Tones in Resources */ = {isa = PBXBuildFile; fileRef = 4EDD823E1F9A7B0100F77471 /* Animal_Tones */; };
 		4EFFD74C1FA8E1AB004DE1FC /* ProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFFD74B1FA8E1AB004DE1FC /* ProtocolViewController.swift */; };
@@ -73,6 +74,7 @@
 		4E9D9F4120295F0300E8FF0F /* MainSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSetting.swift; sourceTree = "<group>"; };
 		4EA58ADC1F62045C00E0CDFE /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
+		4EAF3EC9206A5B9B00495D11 /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
 		4ED8C9D51FBCB61E0042C997 /* Animal_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Icons; sourceTree = "<group>"; };
 		4EDD823E1F9A7B0100F77471 /* Animal_Tones */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Tones; sourceTree = "<group>"; };
 		4EFFD74B1FA8E1AB004DE1FC /* ProtocolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolViewController.swift; sourceTree = "<group>"; };
@@ -155,23 +157,16 @@
 			isa = PBXGroup;
 			children = (
 				4EA58AE31F62081F00E0CDFE /* CalibrationViewController.swift */,
-				4EB6AF432063F22600CED30F /* Calibration */,
 				4E3A82A2203B949200235EB7 /* CalibrationModel.swift */,
 				4E9A8F7C2063DBB0000D8CCE /* Calibration.storyboard */,
 			);
 			path = Calibration_Module;
 			sourceTree = "<group>";
 		};
-		4EB6AF432063F22600CED30F /* Calibration */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Calibration;
-			sourceTree = "<group>";
-		};
 		4EB6AF452063F25F00CED30F /* Test_Module */ = {
 			isa = PBXGroup;
 			children = (
+				4EAF3EC9206A5B9B00495D11 /* InstructionViewController.swift */,
 				4EA58ADC1F62045C00E0CDFE /* TestViewController.swift */,
 				4E01A8701FA3DDDE00986CBF /* TestFlow.swift */,
 				4E01A86C1FA3D9D900986CBF /* TestPlayer.swift */,
@@ -390,6 +385,7 @@
 				4E02DB851F22B23300DB509A /* AppDelegate.swift in Sources */,
 				4E01A86D1FA3D9D900986CBF /* TestPlayer.swift in Sources */,
 				4EA58AE11F62045C00E0CDFE /* TestViewController.swift in Sources */,
+				4EAF3ECA206A5B9B00495D11 /* InstructionViewController.swift in Sources */,
 				4EA58AE41F62081F00E0CDFE /* CalibrationViewController.swift in Sources */,
 				4E9D9F4220295F0300E8FF0F /* MainSetting.swift in Sources */,
 				4E3DDB032028F41400C09CA1 /* PatientProfile.swift in Sources */,

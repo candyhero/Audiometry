@@ -27,15 +27,15 @@ let _RAMP_TIME: Double! = 0.1
 let _RAMP_TIMESTEP: Double! = 0.01
 
 // Main Test Constants
-let PLAY_GAP_TIME: Double! = 0.3
+let PLAY_GAP_TIME: Double! = 0.7
 
 let ATTACK_TIME: Double! = 0.06
 let HOLD_TIME: Double! = 0.2
 let RELEASE_TIME: Double! = 0.06
 
 let PULSE_TIME: Double! = 0.38
-let NUM_OF_PULSE: Double! = 3
-let ANIMATE_SCALE: CGFloat! = 0.85
+let NUM_OF_PULSE: Int! = 3
+let ANIMATE_SCALE: CGFloat! = 0.8
 
 // Global Functions
 func errorPrompt(errorMsg: String,

@@ -257,7 +257,7 @@ class ProtocolViewController: UIViewController {
                     confirmFunction: {(patientName: String) -> Void in
                         self.savePatientProfile(patientName)
                         self.performSegue(withIdentifier: "segueMainTest",
-                                          sender: isPracticeMode)},
+                                          sender: nil)},
                     uiCtrl: self)
         
     }
@@ -283,15 +283,6 @@ class ProtocolViewController: UIViewController {
         
         // Test Seq saved in main setting
         // Load & save calibration setting during testing for each frequency
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "segueMainTest" {
-            if let testViewController = segue.destination as? TestViewController {
-                testViewController.flag_practiceMode = sender as! Bool
-            }
-        }
     }
     
     // Init' function
