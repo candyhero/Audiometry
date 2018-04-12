@@ -112,6 +112,7 @@ class TestFlow {
         
         // Draw new case
         _currentPlayCase = Int(arc4random_uniform(2) + 1)
+        print(_currentPlayCase)
         // Uncomment to enable no sound interval
         //currentPlaycase = Int(arc4random_uniform(3))
         replaySignalCase()
@@ -163,10 +164,16 @@ class TestFlow {
                 currentTestResult?.array_trackingDB_R.append(_currentDB)
             }
         }
-        print(_maxDBTrials)
         
+        // check if 0 db
+        if(_currentDB == _TEST_MIN_DB){
+            if(lastDB == _TEST_MIN_DB && bool_sender){
+                endTest(_TEST_MIN_DB)
+                return true
+            }
+        }
         // Check if 3 max DB in a row
-        if(_currentDB == _TEST_MAX_DB){
+        else if(_currentDB == _TEST_MAX_DB){
             
             if(!bool_sender){
                 _maxDBTrials += 1

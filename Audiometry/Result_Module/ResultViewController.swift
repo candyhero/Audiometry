@@ -115,10 +115,10 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Configure table cell style
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         
-        let label_L = ((currentTestResult?.thresholdDB_L)! > 0) ?
+        let label_L = ((currentTestResult?.thresholdDB_L)! >= 0) ?
             String(describing: (currentTestResult?.thresholdDB_L)!): "NR"
         
-        let label_R = ((currentTestResult?.thresholdDB_R)! > 0) ?
+        let label_R = ((currentTestResult?.thresholdDB_R)! >= 0) ?
             String(describing: (currentTestResult?.thresholdDB_R)!): "NR"
         
         cell.textLabel?.text = String(describing: (currentTestResult?.freq)!)
@@ -207,8 +207,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             patientSectionRows.append(0)
         }
         
-        print("gg")
-        print(mostCurrentPatient!.array_testResults.count)
+//        print(mostCurrentPatient!.array_testResults.count)
         
         patientSectionRows[0] = (mostCurrentPatient!.array_testResults.count)
         updateGraph((mostCurrentPatient?.array_testResults.first)!)

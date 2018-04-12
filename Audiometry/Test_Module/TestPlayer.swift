@@ -86,6 +86,7 @@ class TestPlayer {
         // Init' player's vol
         self.generator.parameters[1] = 0
         self.generator.parameters[2] = 0
+        // self.generator
     }
     
     func play(_ delay: Double!) {
@@ -95,7 +96,7 @@ class TestPlayer {
                                           userInfo: nil,
                                           repeats: false)
         
-        stopTimer = Timer.scheduledTimer(timeInterval: delay + PULSE_TIME * NUM_OF_PULSE,
+        stopTimer = Timer.scheduledTimer(timeInterval: delay + PULSE_TIME * NUM_OF_PULSE - PLAYER_STOP_DELAY,
                                          target: self,
                                          selector: #selector(stop),
                                          userInfo: nil,

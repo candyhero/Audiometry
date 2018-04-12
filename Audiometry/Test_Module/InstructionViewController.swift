@@ -13,11 +13,13 @@ class InstructionViewController: UIViewController {
     @IBOutlet private weak var pbFirstInterval: UIButton!
     @IBOutlet private weak var pbSecondInterval: UIButton!
     
+    @IBOutlet private weak var pbNoSound: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         DispatchQueue.main.async { [unowned self] in
-            let pbImgDir = "Animal_Icons/750Hz_Dog"
+            let pbImgDir = "Shapes/500Hz"
             let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
             
             self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
@@ -28,6 +30,9 @@ class InstructionViewController: UIViewController {
             
             self.pbFirstInterval.adjustsImageWhenHighlighted = false
             self.pbSecondInterval.adjustsImageWhenHighlighted = false
+            self.pbNoSound.adjustsImageWhenHighlighted = false
+            
+            self.pbNoSound.setBackgroundImage(UIImage(named: "Shapes/no_sound"), for: .normal)
         }
     }
     

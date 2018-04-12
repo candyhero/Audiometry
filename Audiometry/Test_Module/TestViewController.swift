@@ -89,22 +89,25 @@ class TestViewController: UIViewController {
             
             // Pop the next freqSeq
             if(isLastFreq) {
-                let isBothTested = !(mainSetting?.frequencyProtocol?.isTestBoth)!
-                
-                if(isBothTested) {
+                // Already tested both ears
+                if(!(mainSetting?.frequencyProtocol?.isTestBoth)!) {
                     performSegue(withIdentifier: "segueResult", sender: nil)
                     return
                 }
                 else {
+                    // Rewind back the first freq in the Q
+                    // and test the other ear
                     try! realm.write{
                         mainSetting?.frequencyProtocol?.isTestBoth = false
                         mainSetting?.frequencyProtocol?.isLeft =
                             !(mainSetting?.frequencyProtocol?.isLeft)!
                         mainSetting?.frequencyTestIndex = 0
                     }
+                    
+                    print("Switching to the other ear")
+                    performSegue(withIdentifier: "segueSwitchEar", sender: nil)
                 }
             }
-            testNewFreq()
         }
         else { // Still testing this frequency
             
@@ -132,7 +135,7 @@ class TestViewController: UIViewController {
         let nextFreqID = array_freqSeq![nextFreqSeqID!]
         
         DispatchQueue.main.async { [unowned self] in
-            let pbImgDir = "Animal_Icons/" + ARRAY_DEFAULT_FREQ_DIR[nextFreqID]
+            let pbImgDir = "Shapes/" + ARRAY_DEFAULT_FREQ_DIR[nextFreqID]
             let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
             
             print(nextFreqID, pbImgDir)
@@ -255,6 +258,9 @@ class TestViewController: UIViewController {
         
         mainSetting = realm.objects(MainSetting.self).first
         array_freqSeq = mainSetting?.frequencyProtocol?.array_freqSeq
+        
+        pbNoSound.setBackgroundImage(UIImage(named: "Shapes/no_sound"), for: .normal)
+        pbNoSound.adjustsImageWhenHighlighted = false
         
         toggleButtons(toggle: false)
         testNewFreq()
