@@ -119,6 +119,8 @@ class TestFlow {
     }
     
     func replaySignalCase(){
+        print(_currentDB)
+        
         switch _currentPlayCase {
             
         case 0: // Slient interval
@@ -152,8 +154,6 @@ class TestFlow {
         // Update dB track list at this freq
         var lastDB: Double?
         
-        print(_currentDB)
-        
         // Update current response to tracking list
         try! realm.write {
             if(mainSetting?.frequencyProtocol?.isLeft)!{
@@ -165,6 +165,7 @@ class TestFlow {
             }
         }
         
+        print(_currentDB, lastDB)
         // check if 0 db
         if(_currentDB == _TEST_MIN_DB){
             if(lastDB == _TEST_MIN_DB && bool_sender){
@@ -190,7 +191,7 @@ class TestFlow {
         // Determine if this is an ascending + response
         let wasLastCorrect = (_currentDB < lastDB ?? _currentDB + 1)
         if(!wasLastCorrect && bool_sender) {
-            
+            print("de???")
             let currentDB_intKey: Int = Int(_currentDB)
             let hasBeenAscendingCorrect: Bool! = dict_hasBeenAscendingCorrect[currentDB_intKey] ?? false
             

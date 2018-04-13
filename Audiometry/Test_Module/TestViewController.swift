@@ -108,6 +108,9 @@ class TestViewController: UIViewController {
                     performSegue(withIdentifier: "segueSwitchEar", sender: nil)
                 }
             }
+            else {
+                testNewFreq()
+            }
         }
         else { // Still testing this frequency
             

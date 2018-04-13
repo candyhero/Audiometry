@@ -165,12 +165,12 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         let line_L = LineChartDataSet(values: lineChartEntry_L,
-                                     label: "Presentation Level in dB")
-        line_L.colors = [NSUIColor.red] //Sets the colour to blue
+                                     label: "Presentation Lv. (Left) in dB")
+        line_L.colors = [NSUIColor.blue] //Sets the colour to blue
         
         let line_R = LineChartDataSet(values: lineChartEntry_R,
-                                     label: "Presentation Level in dB")
-        line_R.colors = [NSUIColor.blue]
+                                     label: "Presentation Lv. (Right) in dB")
+        line_R.colors = [NSUIColor.red]
         
         // Set y-axis
         let leftAxis = chartView.getAxis(YAxis.AxisDependency.left)
