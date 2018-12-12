@@ -1,27 +1,27 @@
 PODS:
-  - AudioKit (4.0.4):
-    - AudioKit/UI (= 4.0.4)
-  - AudioKit/UI (4.0.4)
-  - Charts (3.0.4):
-    - Charts/Core (= 3.0.4)
-  - Charts/Core (3.0.4)
-  - Realm (3.0.2):
-    - Realm/Headers (= 3.0.2)
-  - Realm/Headers (3.0.2)
-  - RealmSwift (3.0.2):
-    - Realm (= 3.0.2)
+  - AudioKit (4.5.4):
+    - AudioKit/Core (= 4.5.4)
+    - AudioKit/UI (= 4.5.4)
+  - AudioKit/Core (4.5.4)
+  - AudioKit/UI (4.5.4):
+    - AudioKit/Core
+  - Charts (3.2.1):
+    - Charts/Core (= 3.2.1)
+  - Charts/Core (3.2.1)
 
 DEPENDENCIES:
   - AudioKit
   - Charts
-  - RealmSwift
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AudioKit
+    - Charts
 
 SPEC CHECKSUMS:
-  AudioKit: 647145c0462dc9dc8a8582998cd6db5f2e1ea848
-  Charts: 0705898046257443f0afbbc3179f4b67507b6e48
-  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
-  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
+  AudioKit: af3f5b73e22f85f3cd03076fea8afbb9658f0938
+  Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
 
-PODFILE CHECKSUM: 8ee870d643327ab8ae3715f388430f2ea4e3c966
+PODFILE CHECKSUM: 8e5bbfdc2476de26c02af33283064462d6cf160b
 
-COCOAPODS: 1.4.0.beta.2
+COCOAPODS: 1.5.3
