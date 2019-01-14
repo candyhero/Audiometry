@@ -32,10 +32,10 @@
 		4EEDE90E21BFB04600028C60 /* ChildrenTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EEDE90C21BFB04600028C60 /* ChildrenTest.storyboard */; };
 		4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */; };
 		4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */; };
-		7466D83D62A81272633068E0 /* Pods_AudiometryKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9099689BD2FED8D8CDF87E6 /* Pods_AudiometryKids.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47AC43770DC4F76FAC3883E4 /* Pods-Audiometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.release.xcconfig"; sourceTree = "<group>"; };
 		4E32DA0521C17EAB00002770 /* Shape_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shape_Icons; sourceTree = "<group>"; };
 		4E32DA0621C17EAB00002770 /* Animal_Tones */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Tones; sourceTree = "<group>"; };
 		4E32DA0721C17EAB00002770 /* Animal_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Icons; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 		4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTestPlayer.swift; sourceTree = "<group>"; };
 		4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultTestPlayer.swift; sourceTree = "<group>"; };
 		7D1C47F07515E0B86F9DF089 /* Pods-AudiometryKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryKids.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids.release.xcconfig"; sourceTree = "<group>"; };
-		C9099689BD2FED8D8CDF87E6 /* Pods_AudiometryKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudiometryKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 		F0915E4BDAAAB3A042149B05 /* Pods-AudiometryKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryKids.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,7 +73,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7466D83D62A81272633068E0 /* Pods_AudiometryKids.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +84,8 @@
 			children = (
 				F0915E4BDAAAB3A042149B05 /* Pods-AudiometryKids.debug.xcconfig */,
 				7D1C47F07515E0B86F9DF089 /* Pods-AudiometryKids.release.xcconfig */,
+				85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */,
+				47AC43770DC4F76FAC3883E4 /* Pods-Audiometry.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -175,7 +176,6 @@
 		B719595A35975C73C45D2886 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C9099689BD2FED8D8CDF87E6 /* Pods_AudiometryKids.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -269,7 +269,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AudiometryKids-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Audiometry-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -284,7 +284,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -295,7 +295,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -481,7 +481,7 @@
 		};
 		4EC0560B21A724E70016AB0D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F0915E4BDAAAB3A042149B05 /* Pods-AudiometryKids.debug.xcconfig */;
+			baseConfigurationReference = 85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -495,13 +495,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = TriCountyProject.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
 		4EC0560C21A724E70016AB0D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D1C47F07515E0B86F9DF089 /* Pods-AudiometryKids.release.xcconfig */;
+			baseConfigurationReference = 47AC43770DC4F76FAC3883E4 /* Pods-Audiometry.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -515,7 +515,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = TriCountyProject.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
