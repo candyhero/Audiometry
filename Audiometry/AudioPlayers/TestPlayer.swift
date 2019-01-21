@@ -13,6 +13,7 @@ protocol TestPlayer {
     // correction factors in dB
     var leftCorrFactor: Double!  { get set }
     var rightCorrFactor: Double!  { get set }
+    var isStarted: Bool! { get set }
     
     init()
     
@@ -47,5 +48,13 @@ extension TestPlayer {
         return ((amp > 1) ? 1 : amp)
     }
     
+    mutating func terminate() {
+        do {
+            isStarted = false
+            try AudioKit.stop()
+        } catch {
+            print(error)
+        }
+    }
 }
 

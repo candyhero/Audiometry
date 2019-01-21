@@ -22,7 +22,7 @@ class CalibrationViewController: UIViewController {
     
     private var array_settings: [CalibrationSetting] = []
     
-    private var player: CalibrationPlayer! = CalibrationPlayer()
+    private var player: CalibrationPlayer!
     private var _currentPickerIndex: Int = 0;
     private var _currentPlayFreq: Int = -1;
 
@@ -232,6 +232,7 @@ class CalibrationViewController: UIViewController {
 // Initialize View
 //------------------------------------------------------------------------------
     func initSettings(){
+        player = CalibrationPlayer()
         // fetch all CalibrationSetting
         let request:NSFetchRequest<GlobalSetting> =
             GlobalSetting.fetchRequest()

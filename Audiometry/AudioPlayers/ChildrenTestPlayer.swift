@@ -21,6 +21,7 @@ class ChildrenTestPlayer : TestPlayer {
     var startTimer2: Timer?
     var stopTimer: Timer?
     
+    var isStarted: Bool!
     var leftCorrFactor: Double!
     var rightCorrFactor: Double!
     
@@ -34,6 +35,7 @@ class ChildrenTestPlayer : TestPlayer {
         
         do {
             file = try AKAudioFile(readFileName: "Animal_Tones/250Hz.wav")
+            isStarted = true
         } catch {
             print(error)
             return
@@ -48,6 +50,7 @@ class ChildrenTestPlayer : TestPlayer {
             print(error)
         }
     }
+    
     func updateFreq (_ newFreq: Int!) {
         do {
             let file = try AKAudioFile(readFileName: "Animal_Tones/"+String(newFreq)+"Hz.wav")
@@ -79,6 +82,8 @@ class ChildrenTestPlayer : TestPlayer {
     }
     
     @objc internal func start() {
+        if(!isStarted) {return}
+        
         self.player.play()
         player.volume = 0
         let corrFactor: Double! = isLeft ? leftCorrFactor : rightCorrFactor

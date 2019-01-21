@@ -38,6 +38,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var pbPrevFreq: UIButton!
     @IBOutlet weak var pbNextFreq: UIButton!
+    @IBOutlet weak var pbDeleteCurrentPatient: UIButton!
     
     @IBAction func deleteCurrentPatient(_ sender: UIButton) {
         let alertMsg = "Are you sure to delete \"" + (currentPatient?.name)! + "\" ?"
@@ -73,6 +74,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         button.setTitle(title, for: .normal)
         button.tag = section
         
+        // add button to array_buttons
         return button
     }
     
@@ -167,6 +169,9 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         patientSectionRows.remove(at: indexPath!.section)
         tbPatients.deleteSections(IndexSet([indexPath!.section]), with: .fade)
+        
+        //update button tags
+        //for button in
     }
     // Plot functions
     func updateGraph(_ values: PatientProfileValues){
@@ -252,6 +257,8 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pbDeleteCurrentPatient.isEnabled = false
         // Load result
         initSettings()
         let mostRecentPatient = array_patients.first!

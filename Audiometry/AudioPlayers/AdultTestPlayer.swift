@@ -15,6 +15,7 @@ class AdultTestPlayer : TestPlayer {
     var startTimer: Timer?
     var stopTimer: Timer?
     
+    var isStarted: Bool!
     var leftCorrFactor: Double!
     var rightCorrFactor: Double!
     
@@ -49,6 +50,7 @@ class AdultTestPlayer : TestPlayer {
         AudioKit.output = generator
         
         do {
+            isStarted = true
             try AudioKit.start()
         } catch {
             print(error)
@@ -87,6 +89,7 @@ class AdultTestPlayer : TestPlayer {
     }
     
     @objc internal func start() {
+        if(!isStarted) {return}
         self.generator.restart()
     }
     

@@ -285,4 +285,8 @@ class TestModel {
             print("\(error), \(error.userInfo)")
         }
     }
+    
+    func terminatePlayer() {
+        player.terminate()
+    }
 }

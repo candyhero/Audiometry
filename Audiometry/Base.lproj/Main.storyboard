@@ -12,7 +12,7 @@
         <!--Title View Controller-->
         <scene sceneID="cf7-WR-69U">
             <objects>
-                <viewController storyboardIdentifier="TitleView" id="cTp-f6-a1r" customClass="TitleViewController" customModule="AudiometryKids" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TitleView" id="cTp-f6-a1r" customClass="TitleViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4Ud-yW-L2I"/>
                         <viewControllerLayoutGuide type="bottom" id="qea-bF-98W"/>
@@ -47,7 +47,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Calibration"/>
                                         <connections>
-                                            <segue destination="WbP-fl-Brp" kind="show" id="rys-ao-c2H"/>
+                                            <segue destination="WbP-fl-Brp" kind="showDetail" id="rys-ao-c2H"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MVY-zw-dkX">
@@ -95,7 +95,7 @@
         <!--Protocol View Controller-->
         <scene sceneID="yy7-68-HY3">
             <objects>
-                <viewController storyboardIdentifier="ProtocolView" id="Y3r-HM-Rvd" customClass="ProtocolViewController" customModule="AudiometryKids" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProtocolView" id="Y3r-HM-Rvd" customClass="ProtocolViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rYx-y9-afQ"/>
                         <viewControllerLayoutGuide type="bottom" id="nLG-lN-eKU"/>
@@ -338,7 +338,7 @@
         <!--Calibration View Controller-->
         <scene sceneID="BnQ-jU-Usx">
             <objects>
-                <viewController storyboardIdentifier="CalibrationView" id="WbP-fl-Brp" customClass="CalibrationViewController" customModule="AudiometryKids" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CalibrationView" id="WbP-fl-Brp" customClass="CalibrationViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DPu-xT-Zy9"/>
                         <viewControllerLayoutGuide type="bottom" id="dqe-qX-nyP"/>
@@ -351,7 +351,7 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="uKx-ej-dTy"/>
+                                    <segue destination="cTp-f6-a1r" kind="showDetail" id="uKx-ej-dTy"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bY2-0E-pNT" userLabel="Sv Main">
@@ -526,7 +526,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="lbCurrentSetting" destination="Ogj-UP-BQ9" id="wNc-7U-XOb"/>
+                        <outlet property="lbCurrentSetting" destination="Ogj-UP-BQ9" id="ALy-D8-nh0"/>
                         <outlet property="pbDeleteCurrent" destination="TOr-ti-8Lg" id="Vl4-zP-lEc"/>
                         <outlet property="pbLoadOther" destination="tdo-CP-2eF" id="sZI-Lw-grc"/>
                         <outlet property="pbSaveCurrent" destination="Vyf-ZB-897" id="Wp5-6h-hy7"/>
@@ -545,7 +545,7 @@
         <!--Result View Controller-->
         <scene sceneID="8mt-vM-H3Y">
             <objects>
-                <viewController storyboardIdentifier="ResultView" id="iwX-Tf-HtX" customClass="ResultViewController" customModule="AudiometryKids" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ResultView" id="iwX-Tf-HtX" customClass="ResultViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hQQ-Jt-xOf"/>
                         <viewControllerLayoutGuide type="bottom" id="IBh-WK-85D"/>
@@ -692,6 +692,7 @@
                     <connections>
                         <outlet property="chartView" destination="sQj-HH-lki" id="jA8-MV-Ly3"/>
                         <outlet property="lbFreq" destination="6vb-TR-fTk" id="4Ut-Tf-qA8"/>
+                        <outlet property="pbDeleteCurrentPatient" destination="AMi-gT-TtR" id="0eq-ke-Vkr"/>
                         <outlet property="pbNextFreq" destination="PTf-x0-oPl" id="cRz-0w-TKS"/>
                         <outlet property="pbPrevFreq" destination="h9I-h5-UhI" id="nw9-h6-zsP"/>
                         <outlet property="tbPatients" destination="V4i-TZ-x9r" id="kIU-cl-Y5F"/>
@@ -719,6 +720,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5hk-Ic-nXm"/>
+        <segue reference="0wf-rk-Jqg"/>
     </inferredMetricsTieBreakers>
 </document>

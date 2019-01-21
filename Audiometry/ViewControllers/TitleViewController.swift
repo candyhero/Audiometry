@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AudioKit
 
 class TitleViewController: UIViewController {
     
@@ -56,6 +57,12 @@ class TitleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        do {
+            try AudioKit.stop()
+        } catch let error as NSError {
+            print("gg")
+        }
         
         // fetch all CalibrationSetting
         let request:NSFetchRequest<GlobalSetting> =

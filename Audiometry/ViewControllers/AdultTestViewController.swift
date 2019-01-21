@@ -121,9 +121,11 @@ class AdultTestViewController: UIViewController {
             print(testModel.nextTestFreq())
             if(testModel.nextTestFreq() < 0) {
                 print("Switching to the other ear")
+                testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueSwitchEar", sender: nil)
             } else if(testModel.nextTestFreq() == 0){
                 // Already tested both ears
+                testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueResult", sender: nil)
             } else {
                 testNewFreq()
