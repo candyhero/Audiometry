@@ -22,14 +22,18 @@ let _RAMP_TIME: Double! = 0.1
 let _RAMP_TIMESTEP: Double! = 0.01
 
 // Main Test Constants
-let PLAY_GAP_TIME: Double! = 0.7
+
+let NUM_OF_PULSE_ADULT: Int! = 3
+let PULSE_TIME_ADULT: Double! = 0.37
+
+let NUM_OF_PULSE_CHILDREN: Int! = 2
+let PULSE_TIME_CHILDREN: Double! = 0.5
 
 let ATTACK_TIME: Double! = 0.035
-let HOLD_TIME: Double! = 0.38
+let HOLD_TIME: Double! = 0.25
 let RELEASE_TIME: Double! = 0.035
 
-let PULSE_TIME: Double! = 0.5
-let NUM_OF_PULSE: Int! = 2
+let PLAY_GAP_TIME: Double! = 0.7
 let PLAYER_STOP_DELAY: Double! = 0.04
 
 let ANIMATE_SCALE: CGFloat! = 0.8

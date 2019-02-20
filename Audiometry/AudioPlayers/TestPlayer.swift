@@ -20,9 +20,11 @@ protocol TestPlayer {
     func updateFreq (_ newFreq: Int!)
     func updateVolume(_ newExpectedVol: Double!, _ isLeft: Bool!)
     
-    func play(_ delay: Double!)
     func start()
     func stop()
+    
+    func playFirstInterval()
+    func playSecondInterval()
     
     func dbToAmp (_ dB: Double!) -> Double
 }

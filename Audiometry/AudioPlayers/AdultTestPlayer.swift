@@ -30,7 +30,7 @@ class AdultTestPlayer : TestPlayer {
             let rightSine = AKOperation.sineWave(frequency: parameters[0],
                                                  amplitude: parameters[2])
             
-            let clock = AKOperation.periodicTrigger(period: PULSE_TIME)
+            let clock = AKOperation.periodicTrigger(period: PULSE_TIME_ADULT)
             
             let leftOutput = leftSine.triggeredWithEnvelope(
                 trigger: clock,
@@ -74,18 +74,37 @@ class AdultTestPlayer : TestPlayer {
         print(generator.parameters[1], generator.parameters[2])
     }
     
-    func play(_ delay: Double!) {
-        startTimer = Timer.scheduledTimer(timeInterval: delay,
-                                          target: self,
-                                          selector: #selector(start),
-                                          userInfo: nil,
-                                          repeats: false)
+    func playFirstInterval() {
+        startTimer = Timer.scheduledTimer(
+            timeInterval: 0.0,
+            target: self,
+            selector: #selector(start),
+            userInfo: nil,
+            repeats: false)
         
-        stopTimer = Timer.scheduledTimer(timeInterval: delay + PULSE_TIME * NUM_OF_PULSE - PLAYER_STOP_DELAY,
-                                         target: self,
-                                         selector: #selector(stop),
-                                         userInfo: nil,
-                                         repeats: false)
+        stopTimer = Timer.scheduledTimer(
+            timeInterval: PULSE_TIME_ADULT*NUM_OF_PULSE_ADULT-PLAYER_STOP_DELAY,
+            target: self,
+            selector: #selector(stop),
+            userInfo: nil,
+            repeats: false)
+    }
+    
+    func playSecondInterval() {
+        let delay: Double! = PULSE_TIME_ADULT*Double(NUM_OF_PULSE_ADULT)+PLAY_GAP_TIME
+        startTimer = Timer.scheduledTimer(
+            timeInterval: delay,
+            target: self,
+            selector: #selector(start),
+            userInfo: nil,
+            repeats: false)
+        
+        stopTimer = Timer.scheduledTimer(
+            timeInterval: delay+PULSE_TIME_ADULT*NUM_OF_PULSE_ADULT-PLAYER_STOP_DELAY,
+            target: self,
+            selector: #selector(stop),
+            userInfo: nil,
+            repeats: false)
     }
     
     @objc internal func start() {

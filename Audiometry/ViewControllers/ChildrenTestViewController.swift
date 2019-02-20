@@ -170,14 +170,14 @@ class ChildrenTestViewController: UIViewController {
                                           userInfo: nil,
                                           repeats: false)
         
-        let firstDuration = PULSE_TIME * Double(NUM_OF_PULSE) + PLAY_GAP_TIME
+        let firstDuration = PULSE_TIME_CHILDREN * Double(NUM_OF_PULSE_CHILDREN) + PLAY_GAP_TIME
         secondTimer = Timer.scheduledTimer(timeInterval: delay + firstDuration,
                                            target: self,
                                            selector: #selector(self.pulseSecondInterval),
                                            userInfo: nil,
                                            repeats: false)
         
-        let totalDuration = PULSE_TIME * Double(NUM_OF_PULSE * 2) + PLAY_GAP_TIME
+        let totalDuration = PULSE_TIME_CHILDREN * Double(NUM_OF_PULSE_CHILDREN * 2) + PLAY_GAP_TIME
         timer = Timer.scheduledTimer(timeInterval: delay + totalDuration,
                                      target: self,
                                      selector: #selector(self.toggleNoSoundOn),
@@ -187,13 +187,13 @@ class ChildrenTestViewController: UIViewController {
     
     @objc private func pulseFirstInterval() {
         pbFirstInterval.isEnabled = true
-        pulseCounter = NUM_OF_PULSE
+        pulseCounter = NUM_OF_PULSE_CHILDREN
         pulseInterval(pbFirstInterval)
     }
     
     @objc private func pulseSecondInterval() {
         pbSecondInterval.isEnabled = true
-        pulseCounter = NUM_OF_PULSE
+        pulseCounter = NUM_OF_PULSE_CHILDREN
         pulseInterval(pbSecondInterval)
     }
     
@@ -201,7 +201,7 @@ class ChildrenTestViewController: UIViewController {
         if(pulseCounter == 0) {return}
         pulseCounter -= 1
         
-        UIView.animate(withDuration: PULSE_TIME / 2,
+        UIView.animate(withDuration: PULSE_TIME_CHILDREN / 2,
                        delay: 0,
                        options: .allowUserInteraction,
                        animations: {
@@ -212,7 +212,7 @@ class ChildrenTestViewController: UIViewController {
     }
     
     @objc private func restoreInterval(_ pbInterval: UIButton) {
-        UIView.animate(withDuration: PULSE_TIME / 2,
+        UIView.animate(withDuration: PULSE_TIME_CHILDREN / 2,
                        delay: 0,
                        options: .allowUserInteraction,
                        animations: {

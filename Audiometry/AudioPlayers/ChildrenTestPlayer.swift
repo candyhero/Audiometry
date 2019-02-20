@@ -55,7 +55,7 @@ class ChildrenTestPlayer : TestPlayer {
         do {
             let file = try AKAudioFile(readFileName: "Animal_Tones/"+String(newFreq)+"Hz.wav")
             player.load(audioFile: file)
-            player.endTime = PULSE_TIME * 2
+            player.endTime = PULSE_TIME_CHILDREN * 2
         } catch {
             print(error)
         }
@@ -67,14 +67,28 @@ class ChildrenTestPlayer : TestPlayer {
         player.pan = isLeft ? -1 : 1
     }
     
-    func play(_ delay: Double!) {
+    func playFirstInterval() {
+        startTimer = Timer.scheduledTimer(timeInterval: 0.0,
+                                          target: self,
+                                          selector: #selector(start),
+                                          userInfo: nil,
+                                          repeats: false)
+        
+        startTimer2 = Timer.scheduledTimer(timeInterval: PULSE_TIME_CHILDREN,
+                                           target: self,
+                                           selector: #selector(start),
+                                           userInfo: nil,
+                                           repeats: false)
+    }
+    func playSecondInterval() {
+        let delay: Double! = PULSE_TIME_CHILDREN*Double(NUM_OF_PULSE_CHILDREN)+PLAY_GAP_TIME
         startTimer = Timer.scheduledTimer(timeInterval: delay,
                                           target: self,
                                           selector: #selector(start),
                                           userInfo: nil,
                                           repeats: false)
         
-        startTimer2 = Timer.scheduledTimer(timeInterval: delay+PULSE_TIME,
+        startTimer2 = Timer.scheduledTimer(timeInterval: delay+PULSE_TIME_CHILDREN,
                                            target: self,
                                            selector: #selector(start),
                                            userInfo: nil,
@@ -84,18 +98,20 @@ class ChildrenTestPlayer : TestPlayer {
     @objc internal func start() {
         if(!isStarted) {return}
         
+        self.player.volume = 0
         self.player.play()
-        player.volume = 0
         let corrFactor: Double! = isLeft ? leftCorrFactor : rightCorrFactor
         
-        for i in stride(from: 0, through: 1, by: 0.01){
+        for i in stride(from: 0, through: 1, by: 0.1){
+            // Attacking/Ramping up
             DispatchQueue.main.asyncAfter(
                 deadline: .now() + i * ATTACK_TIME, execute:
                 {
                     self.player.volume = self.dbToAmp(
                         (self.currentVol + corrFactor) * i)
             })
-            let t = ATTACK_TIME + 1 + i * RELEASE_TIME
+            // Decaying/Ramping down
+            let t = PULSE_TIME_CHILDREN - (1-i) * RELEASE_TIME
             DispatchQueue.main.asyncAfter(
                 deadline: .now() + t, execute:
                 {
@@ -107,6 +123,7 @@ class ChildrenTestPlayer : TestPlayer {
     
     @objc func stop() {
         startTimer?.invalidate()
+        startTimer2?.invalidate()
         stopTimer?.invalidate()
         self.player.stop()
     }

@@ -244,7 +244,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             PatientProfile.fetchRequest()
         let sortByTimestamp = NSSortDescriptor(
             key: #keyPath(PatientProfile.timestamp),
-            ascending: true)
+            ascending: false)
         patientRequest.sortDescriptors = [sortByTimestamp]
         
         do {
@@ -268,8 +268,9 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         let mostRecentValues = getSortedValues(mostRecentPatient)
+        print(mostRecentPatient)
         patientSectionRows[0] = mostRecentValues.count
-        updateGraph(mostRecentValues.first!)
+        //updateGraph(mostRecentValues.first!)
     }
     
     override func didReceiveMemoryWarning() {

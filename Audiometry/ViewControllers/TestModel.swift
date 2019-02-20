@@ -130,10 +130,16 @@ class TestModel {
         player.updateVolume(Double(_currentDB), globalSetting.isTestingLeft)
         
         // Draw new case
-        _currentPlayCase = Int(arc4random_uniform(2) + 1)
+        let randomInt = Int(arc4random_uniform(12))
+        if(randomInt < 2)
+        {
+            _currentPlayCase = 0
+        }
+        else {
+            _currentPlayCase = randomInt%2+1
+        }
+        
         print(_currentPlayCase)
-        // Uncomment to enable no sound interval
-        //currentPlaycase = Int(arc4random_uniform(3))
         replaySignalCase()
     }
     
@@ -146,13 +152,12 @@ class TestModel {
             break
             
         case 1: // First interval
-            self.player.play(0)
+            self.player.playFirstInterval()
             break
             
         case 2: // Second interval
             // First interval time + Slience gap 0.5s
-            let delayTime = PULSE_TIME * Double(NUM_OF_PULSE) + PLAY_GAP_TIME
-            player.play(delayTime)
+            self.player.playSecondInterval()
             break
             
         default: // Should never be this case
