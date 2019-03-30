@@ -1,10 +1,3 @@
-//
-//  TestFlow.swift
-//  Audiometry
-//
-//  Created by Xavier Chan on 10/27/17.
-//  Copyright © 2017 Xavier Chan. All rights reserved.
-//
 
 import Foundation
 import UIKit
@@ -31,16 +24,20 @@ class TestModel {
     
     private var array_testFreqSeq: [Int] = []
     private var array_results: [Int] = []
+    private var array_responses: [Int] = []
     
     // Used to determine when test ends
     private var dict_hasBeenAscendingCorrect = [Int: Bool]()
     
+    private var _isPractice: Bool!
     private var _flag_initialPhase: Bool!
     
     private var currentFreq: Int!
     private var _currentPlayCase: Int!
     private var _currentDB: Int!
     private var _maxDBTrials: Int = 0
+    private var _noSoundCount: Int = 0
+    private var _noSoundCorrect: Int = 0
     
     private var player: TestPlayer!
     
@@ -58,6 +55,8 @@ class TestModel {
     init() {
         // Init test player
         initSettings()
+        
+        _isPractice = globalSetting.patientProfile?.isPractice
         
         if (globalSetting.patientProfile?.isAdult)! {
             player = AdultTestPlayer()
@@ -114,8 +113,12 @@ class TestModel {
         
         // Init buffs at current Freq to storing results
         array_results = []
+        array_responses = []
+        
         _flag_initialPhase = true
         _maxDBTrials = 0
+        _noSoundCount = 0
+        _noSoundCorrect = 0
         _currentDB = _SYSTEM_DEFAULT_DB
         dict_hasBeenAscendingCorrect.removeAll()
     }
@@ -130,13 +133,20 @@ class TestModel {
         player.updateVolume(Double(_currentDB), globalSetting.isTestingLeft)
         
         // Draw new case
-        let randomInt = Int(arc4random_uniform(12))
-        if(randomInt < 2)
+        let randomInt = _isPractice ? Int(arc4random_uniform(8)) : Int(arc4random_uniform(12))
+        
+        // First trial cannot be no sound
+        if(randomInt < 2 && array_results.count > 0 && _currentDB != _TEST_MAX_DB)
         {
             _currentPlayCase = 0
         }
         else {
             _currentPlayCase = randomInt%2+1
+        }
+        
+        // Second trial in practice needs to be no sound
+        if(_isPractice && array_results.count == 1){
+            _currentPlayCase = 0
         }
         
         print(_currentPlayCase)
@@ -173,13 +183,28 @@ class TestModel {
 //------------------------------------------------------------------------------
 // Checking Test progress
 //------------------------------------------------------------------------------
+    func checkNoSound(_ isCorrect: Bool!) -> Bool!{
+        array_results.append(_currentDB)
+        array_responses.append(0)
+        
+        _noSoundCount += 1
+        if(isCorrect){
+            _noSoundCorrect += 1
+        }
+        
+        return false
+    }
+    
     func checkThreshold(_ isCorrect: Bool!, _ isAdult: Bool!) -> Bool!{
+        
         let TEST_MAX_DB = _TEST_MAX_DB
         let TEST_MIN_DB = isAdult ? _TEST_MIN_DB_ADULT : _TEST_MIN_DB_CHILD
         // Update current response to tracking list
         let lastDB = array_results.last
-        array_results.append(_currentDB)
+        let wasLastCorrect = (_currentDB < (lastDB ?? _currentDB+1))
         
+        array_results.append(_currentDB)
+        array_responses.append(isCorrect ? 1 : -1)
         //print(_currentDB, lastDB)
         // check if 0 db
         if(_currentDB == TEST_MIN_DB){
@@ -190,7 +215,7 @@ class TestModel {
         }
         // Check if 3 max DB in a row
         else if (_currentDB == TEST_MAX_DB){
-            if !isCorrect{
+            if (!isCorrect){
                 _maxDBTrials += 1
             } else {
                 _maxDBTrials = 0
@@ -203,10 +228,9 @@ class TestModel {
         }
         
         // Determine if this is an ascending + response
-        let wasLastCorrect = (_currentDB < (lastDB ?? _currentDB+1))
         if (!wasLastCorrect && isCorrect) {
-            let currentDB_intKey: Int = Int(_currentDB)
-            let hasBeenAscendingCorrect: Bool! = dict_hasBeenAscendingCorrect[currentDB_intKey] ?? false
+            let currentDB_key: Int = Int(_currentDB)
+            let hasBeenAscendingCorrect: Bool! = dict_hasBeenAscendingCorrect[currentDB_key] ?? false
             
             // Determine if test can be ended
             // Twice correct in a row on the same freq
@@ -215,7 +239,7 @@ class TestModel {
                 return true
             }
             else {
-                dict_hasBeenAscendingCorrect[currentDB_intKey] = true
+                dict_hasBeenAscendingCorrect[currentDB_key] = true
             }
         }
         
@@ -259,16 +283,22 @@ class TestModel {
                 forEntityName: "PatientProfileValues",
                 into: managedContext) as! PatientProfileValues
         
+        newValues.frequency = Int16(currentFreq)
         
         if globalSetting.isTestingLeft {
             newValues.threshold_L = Int16(thresholdDB)
             newValues.results_L = array_results
+            newValues.responses_L = array_responses
+            newValues.no_sound_count_L = Int16(_noSoundCount)
+            newValues.no_sound_correct_L = Int16(_noSoundCorrect)
         } else {
             newValues.threshold_R = Int16(thresholdDB)
             newValues.results_R = array_results
+            newValues.responses_R = array_responses
+            newValues.no_sound_count_R = Int16(_noSoundCount)
+            newValues.no_sound_correct_R = Int16(_noSoundCorrect)
         }
         
-        newValues.frequency = Int16(currentFreq)
         globalSetting.patientProfile?.addToValues(newValues)
         
         if(array_testFreqSeq.count == 0){

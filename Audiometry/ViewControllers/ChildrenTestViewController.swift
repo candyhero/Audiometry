@@ -1,10 +1,3 @@
-//
-//  TestViewController.swift
-//  Audiometry
-//
-//  Created by Xavier Chan on 7/27/17.
-//  Copyright © 2017 Xavier Chan. All rights reserved.
-//
 
 import UIKit
 
@@ -96,27 +89,23 @@ class ChildrenTestViewController: UIViewController {
         // Compare test blah
         let currentPlaycase: Int! = testModel.currentPlayCase()
         
-        var isCorrect: Bool! = true
-        
         // determine next volume level
+        var isThresholdFound: Bool!
+        
         switch currentPlaycase {
         case 0: // Slient interval
-            
-            isCorrect = (sender == pbNoSound)
+            isThresholdFound = testModel.checkNoSound(sender == pbNoSound)
             break
         case 1: // First interval
-            
-            isCorrect = (sender == pbFirstInterval)
+            isThresholdFound = testModel.checkThreshold( (sender == pbFirstInterval), true)
             break
         case 2: // Second interval
-            
-            isCorrect = (sender == pbSecondInterval)
+            isThresholdFound = testModel.checkThreshold( (sender == pbSecondInterval), true)
             break
         default:
             break
         }
         
-        let isThresholdFound: Bool! = testModel.checkThreshold(isCorrect, true)
         if(isThresholdFound){ // Done for this freq
             print(testModel.nextTestFreq())
             if(testModel.nextTestFreq() < 0) {

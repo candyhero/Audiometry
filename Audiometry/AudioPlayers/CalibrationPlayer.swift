@@ -31,7 +31,7 @@ class CalibrationPlayer {
         do {
             try AudioKit.start()
         } catch let error as NSError {
-            print("gg")
+            print("Cant Start AudioKit", error)
         }
     }
     

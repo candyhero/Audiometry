@@ -2,11 +2,11 @@
 import UIKit
 import CoreData
 
-class ProtocolViewController: UIViewController {
+class PracticeViewController: UIViewController {
     
-//------------------------------------------------------------------------------
-// Local Variables
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    // Local Variables
+    //------------------------------------------------------------------------------
     private let managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext
     
@@ -20,20 +20,20 @@ class ProtocolViewController: UIViewController {
     
     private var _currentPickerIndex: Int = 0;
     
-//------------------------------------------------------------------------------
-// UI Components
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    // UI Components
+    //------------------------------------------------------------------------------
     private var array_pbFreq = [UIButton]()
     
     @IBOutlet weak var svFreq: UIStackView!
     @IBOutlet weak var lbFreqSeq: UILabel!
     @IBOutlet weak var lbEarOrder: UILabel!
-
-//------------------------------------------------------------------------------
-// CoreData
-//------------------------------------------------------------------------------
-    @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
     
+    //------------------------------------------------------------------------------
+    // CoreData
+    //------------------------------------------------------------------------------
+    @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
+        
         // Prompt for no freq selected error
         if(array_testFreqSeq.count == 0)
         {
@@ -125,10 +125,10 @@ class ProtocolViewController: UIViewController {
         
         updateLabel()
     }
-
-//------------------------------------------------------------------------------
-// Test Settings
-//------------------------------------------------------------------------------
+    
+    //------------------------------------------------------------------------------
+    // Test Settings
+    //------------------------------------------------------------------------------
     @IBAction func setLeftFirst(_ sender: UIButton) {
         globalSetting.isTestingLeft = true
         globalSetting.isTestingBoth = true
@@ -196,19 +196,19 @@ class ProtocolViewController: UIViewController {
         
         lbFreqSeq.text! = tempFreqSeqStr
     }
-
-//------------------------------------------------------------------------------
-// Start Testing
-//------------------------------------------------------------------------------
+    
+    //------------------------------------------------------------------------------
+    // Start Testing
+    //------------------------------------------------------------------------------
     @IBAction func startAdultTest(_ sender: UIButton) {
-        startTest(isAdult: true)
+        startPracticeTest(isAdult: true)
     }
     
     @IBAction func startChildrenTest(_ sender: UIButton) {
-        startTest(isAdult: false)
+        startPracticeTest(isAdult: false)
     }
     
-    func startTest(isAdult: Bool!) {
+    func startPracticeTest(isAdult: Bool!) {
         
         // Error, no freq selected
         if(array_testFreqSeq.count == 0){
@@ -227,11 +227,11 @@ class ProtocolViewController: UIViewController {
                         self.savePatientProfile(patientName, isAdult)
                         
                         if(isAdult){
-                            self.performSegue(withIdentifier: "segueAdultTest", sender: nil)
+                            self.performSegue(withIdentifier: "segueAdultPractice", sender: nil)
                         } else {
-                            self.performSegue(withIdentifier: "segueChildrenTest", sender: nil)
+                            self.performSegue(withIdentifier: "segueChildrenPractice", sender: nil)
                         }
-                    },
+        },
                     uiCtrl: self)
     }
     
@@ -252,7 +252,7 @@ class ProtocolViewController: UIViewController {
         profile.name = patientName
         profile.timestamp = Date()
         profile.isAdult = isAdult
-        profile.isPractice = false
+        profile.isPractice = true
         
         globalSetting.patientProfile = profile
         
@@ -266,10 +266,10 @@ class ProtocolViewController: UIViewController {
         // Test Seq saved in main setting
         // Load & save calibration setting during testing for each frequency
     }
-
-//------------------------------------------------------------------------------
-// Initialize View
-//------------------------------------------------------------------------------
+    
+    //------------------------------------------------------------------------------
+    // Initialize View
+    //------------------------------------------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -331,7 +331,7 @@ class ProtocolViewController: UIViewController {
     }
 }
 
-extension ProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+extension PracticeViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

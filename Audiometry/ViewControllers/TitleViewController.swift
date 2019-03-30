@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  Audiometry
-//
-//  Created by Xavier Chan on 11/21/18.
-//  Copyright © 2018 TriCounty. All rights reserved.
-//
 
 import UIKit
 import CoreData
@@ -61,7 +54,7 @@ class TitleViewController: UIViewController {
         do {
             try AudioKit.stop()
         } catch let error as NSError {
-            print("gg")
+            print("Cant stop AudioKit", error)
         }
         
         // fetch all CalibrationSetting

@@ -7,5 +7,5 @@ target 'Audiometry' do
 
   # Pods for Audiometry
   pod 'AudioKit/Core'
-  pod 'Charts'
+  pod 'Charts', '3.2.0'
 end

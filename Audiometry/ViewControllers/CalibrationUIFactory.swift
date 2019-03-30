@@ -1,10 +1,3 @@
-//
-//  CalibrationUIFactory.swift
-//  Audiometry
-//
-//  Created by Xavier Chan on 11/23/18.
-//  Copyright © 2018 TriCounty. All rights reserved.
-//
 
 import Foundation
 import UIKit

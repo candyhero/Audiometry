@@ -1,10 +1,3 @@
-//
-//  CalibrationViewController.swift
-//  Audiometry
-//
-//  Created by Xavier Chan on 11/22/18.
-//  Copyright © 2018 TriCounty. All rights reserved.
-//
 
 import UIKit
 import CoreData

@@ -1,10 +1,3 @@
-//
-//  MenuViewController.swift
-//  Audiometry
-//
-//  Created by Xavier Chan on 7/27/17.
-//  Copyright © 2017 Xavier Chan. All rights reserved.
-//
 
 import UIKit
 import Charts
@@ -29,12 +22,12 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //------------------------------------------------------------------------------
 // UI Components
 //------------------------------------------------------------------------------
-    @IBOutlet weak var lbThreshold: UILabel!
     @IBOutlet weak var lbFreq: UILabel!
     
     @IBOutlet weak var tbPatients: UITableView!
     
-    @IBOutlet weak var chartView: LineChartView!
+    @IBOutlet weak var chartView_L: LineChartView!
+    @IBOutlet weak var chartView_R: LineChartView!
     
     @IBOutlet weak var pbPrevFreq: UIButton!
     @IBOutlet weak var pbNextFreq: UIButton!
@@ -70,7 +63,8 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let patient = array_patients[section]
         let tag = (patient.isAdult) ? "(Adult)":"(Child)"
-        let title = (patient.name ?? "NAME_ERROR") + tag
+        let tag2 = (patient.isPractice) ? "[Practice]" : ""
+        let title = (patient.name ?? "NAME_ERROR") + tag + tag2
         button.setTitle(title, for: .normal)
         button.tag = section
         
@@ -123,9 +117,13 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let label_R = (values.threshold_R >= 0) ?
             String(values.threshold_R): "NR"
         
-        cell.textLabel?.text = String(values.frequency) +
-            " Hz; Threshold (dB): " + label_L + " / " + label_R
+        var labelText = String(values.frequency) + " Hz ; "
+        labelText += "dB Threshold: (L) " + label_L + " (R) " + label_R + " ; "
+        labelText += "Reliability:"
+            + " (L) " + String(values.no_sound_correct_L) + "/" + String(values.no_sound_count_L)
+            + " (R) " + String(values.no_sound_correct_R) + "/" + String(values.no_sound_count_R)
         
+        cell.textLabel?.text = labelText
         cell.textLabel?.font = cell.textLabel?.font.withSize(14)
         cell.textLabel?.textAlignment = .center;
         
@@ -177,7 +175,20 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func updateGraph(_ values: PatientProfileValues){
         
         // Load dB and result lists
-        lbFreq.text = String(values.frequency)
+        let label_L = (values.threshold_L >= 0) ?
+            String(values.threshold_L): "NR"
+        
+        let label_R = (values.threshold_R >= 0) ?
+            String(values.threshold_R): "NR"
+        
+        var labelText = String(values.frequency) + " Hz ; "
+        labelText += "dB Threshold: (L) " + label_L + " (R) " + label_R + " ; "
+        
+        labelText += "Reliability:"
+            + " (L) " + String(values.no_sound_correct_L) + "/" + String(values.no_sound_count_L)
+            + " (R) " + String(values.no_sound_correct_R) + "/" + String(values.no_sound_count_R)
+        
+        lbFreq.text = labelText
         
         var lineChartEntry_L  = [ChartDataEntry]()
         var lineChartEntry_R  = [ChartDataEntry]()
@@ -199,31 +210,79 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let line_R = LineChartDataSet(values: lineChartEntry_R,
                                      label: "Presentation Lv. (Right) in dB")
         
-        line_L.colors = [NSUIColor.blue] //Sets the colour to blue
-        line_R.colors = [NSUIColor.red]
+        if(values.responses_L?.count ?? 0 > 0){
+            line_L.colors = []
+            line_L.circleColors = []
+        }
+        for response in values.responses_L ?? [] {
+            if(response > 0){
+                line_L.circleColors.append(NSUIColor.blue)
+                line_L.colors.append(NSUIColor.blue)
+            }
+            else if(response < 0){
+                line_L.circleColors.append(NSUIColor.red)
+                line_L.colors.append(NSUIColor.red)
+            }
+            else if(response == 0){
+                line_L.circleColors.append(NSUIColor.black)
+                line_L.colors.append(NSUIColor.black)
+            }
+            else {
+                print("Response Error: ", response)
+            }
+        }
+        
+        if(values.responses_R?.count ?? 0 > 0){
+            line_R.colors = []
+            line_R.circleColors = []
+        }
+        for response in values.responses_R ?? [] {
+            if(response > 0){
+                line_R.circleColors.append(NSUIColor.blue)
+                line_R.colors.append(NSUIColor.blue)
+            }
+            else if(response < 0){
+                line_R.circleColors.append(NSUIColor.red)
+                line_R.colors.append(NSUIColor.red)
+            }
+            else if(response == 0){
+                line_R.circleColors.append(NSUIColor.black)
+                line_R.colors.append(NSUIColor.black)
+            }
+            else {
+                print("Response Error: ", response)
+            }
+        }
         
         // Set y-axis
-        let leftAxis = chartView.getAxis(YAxis.AxisDependency.left)
-        let rightAxis = chartView.getAxis(YAxis.AxisDependency.right)
-        
         let max_L = (values.results_L ?? []).max() ?? _DB_SYSTEM_MAX
         let max_R = (values.results_R ?? []).max() ?? _DB_SYSTEM_MAX
         let min_L = (values.results_L ?? []).min() ?? _DB_SYSTEM_MIN
         let min_R = (values.results_R ?? []).min() ?? _DB_SYSTEM_MIN
         
-        leftAxis.granularity =
-            ((max(max_L!, max_R!) - min(min_L!, min_R!)) > 30) ? 10 : 5
+        let leftAxis_L = chartView_L.getAxis(YAxis.AxisDependency.left)
+        let leftAxis_R = chartView_R.getAxis(YAxis.AxisDependency.left)
         
-        rightAxis.enabled = false
-        rightAxis.drawGridLinesEnabled = false
+        leftAxis_L.granularity = ((max_L! - min_L!) > 30) ? 10 : 5
+        leftAxis_R.granularity = ((max_R! - min_R!) > 30) ? 10 : 5
+        
+        let rightAxis_L = chartView_L.getAxis(YAxis.AxisDependency.right)
+        let rightAxis_R = chartView_R.getAxis(YAxis.AxisDependency.right)
+        
+        rightAxis_L.enabled = false
+        rightAxis_R.enabled = false
+        rightAxis_L.drawGridLinesEnabled = false
+        rightAxis_R.drawGridLinesEnabled = false
         
         //
-        let data = LineChartData()
+        let data_L = LineChartData()
+        let data_R = LineChartData()
         
-        data.addDataSet(line_L) //Adds the line to the dataSet
-        data.addDataSet(line_R)
+        data_L.addDataSet(line_L) //Adds the line to the dataSet
+        data_R.addDataSet(line_R)
         
-        chartView.data = data
+        chartView_L.data = data_L
+        chartView_R.data = data_R
     }
     
     func initSettings(){
@@ -270,7 +329,6 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let mostRecentValues = getSortedValues(mostRecentPatient)
         print(mostRecentPatient)
         patientSectionRows[0] = mostRecentValues.count
-        //updateGraph(mostRecentValues.first!)
     }
     
     override func didReceiveMemoryWarning() {

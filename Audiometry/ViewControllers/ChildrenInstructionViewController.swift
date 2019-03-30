@@ -1,10 +1,3 @@
-//
-//  InstructionViewController.swift
-//  Audiometry
-//
-//  Created by Xavier Chan on 3/27/18.
-//  Copyright © 2018 Xavier Chan. All rights reserved.
-//
 
 import UIKit
 
