@@ -25,11 +25,13 @@ class TestModel {
     private var array_testFreqSeq: [Int] = []
     private var array_results: [Int] = []
     private var array_responses: [Int] = []
+    private var array_cases: [Int] = []
     
     // Used to determine when test ends
     private var dict_hasBeenAscendingCorrect = [Int: Bool]()
     
     private var _isPractice: Bool!
+    private var _isAdult: Bool!
     private var _flag_initialPhase: Bool!
     
     private var currentFreq: Int!
@@ -57,8 +59,9 @@ class TestModel {
         initSettings()
         
         _isPractice = globalSetting.patientProfile?.isPractice
+        _isAdult = globalSetting.patientProfile?.isAdult
         
-        if (globalSetting.patientProfile?.isAdult)! {
+        if (_isAdult) {
             player = AdultTestPlayer()
         } else {
             player = ChildrenTestPlayer()
@@ -114,6 +117,7 @@ class TestModel {
         // Init buffs at current Freq to storing results
         array_results = []
         array_responses = []
+        array_cases = []
         
         _flag_initialPhase = true
         _maxDBTrials = 0
@@ -132,25 +136,47 @@ class TestModel {
         // Set init volume & random play case
         player.updateVolume(Double(_currentDB), globalSetting.isTestingLeft)
         
-        // Draw new case
-        let randomInt = _isPractice ? Int(arc4random_uniform(8)) : Int(arc4random_uniform(12))
-        
-        // First trial cannot be no sound
-        if(randomInt < 2 && array_results.count > 0 && _currentDB != _TEST_MAX_DB)
-        {
-            _currentPlayCase = 0
-        }
-        else {
-            _currentPlayCase = randomInt%2+1
-        }
+        _currentPlayCase = randomizePlayCase()
         
         // Second trial in practice needs to be no sound
         if(_isPractice && array_results.count == 1){
             _currentPlayCase = 0
         }
+        else if(array_cases.count >= 2){
+            let counts = array_cases.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+            
+            if((counts[1] ?? 0) > (counts[2] ?? 0) && _currentPlayCase == 1){
+                _currentPlayCase = randomizePlayCase()
+            }
+            else if((counts[2] ?? 0) > (counts[1] ?? 0) && _currentPlayCase == 2){
+                _currentPlayCase = randomizePlayCase()
+            }
+            
+            if(array_cases.last == _currentPlayCase &&
+                array_cases.last == array_cases[array_responses.count-2])
+            {
+                //print("After redrawal: ",    _currentPlayCase)
+                //print("Redraw Again")
+                _currentPlayCase = randomizePlayCase()
+            }
+        }
         
         print(_currentPlayCase)
         replaySignalCase()
+    }
+    
+    func randomizePlayCase() -> Int {
+        let randomInt = _isPractice ? Int.random(in:0 ..< 8) : Int.random(in:0 ..< 12)
+        
+        // First trial cannot be no sound
+        if(randomInt < 2 && array_results.count > 0 &&
+            _currentDB != _TEST_MAX_DB && array_cases.last != 0)
+        {
+            return 0
+        }
+        else {
+            return randomInt%2+1
+        }
     }
     
     func replaySignalCase(){
@@ -186,6 +212,7 @@ class TestModel {
     func checkNoSound(_ isCorrect: Bool!) -> Bool!{
         array_results.append(_currentDB)
         array_responses.append(0)
+        array_cases.append(_currentPlayCase)
         
         _noSoundCount += 1
         if(isCorrect){
@@ -195,20 +222,21 @@ class TestModel {
         return false
     }
     
-    func checkThreshold(_ isCorrect: Bool!, _ isAdult: Bool!) -> Bool!{
-        
+    func checkThreshold(_ isCorrect: Bool!) -> Bool!{
         let TEST_MAX_DB = _TEST_MAX_DB
-        let TEST_MIN_DB = isAdult ? _TEST_MIN_DB_ADULT : _TEST_MIN_DB_CHILD
+        let TEST_MIN_DB = _isAdult ? _TEST_MIN_DB_ADULT : _TEST_MIN_DB_CHILD
         // Update current response to tracking list
         let lastDB = array_results.last
+        let lastPlayCase = array_cases.last
         let wasLastCorrect = (_currentDB < (lastDB ?? _currentDB+1))
         
         array_results.append(_currentDB)
         array_responses.append(isCorrect ? 1 : -1)
+        array_cases.append(_currentPlayCase)
         //print(_currentDB, lastDB)
         // check if 0 db
         if(_currentDB == TEST_MIN_DB){
-            if isCorrect && (lastDB == TEST_MIN_DB){
+            if (isCorrect && (lastDB == TEST_MIN_DB) && lastPlayCase != 0){
                 endTest(TEST_MIN_DB)
                 return true
             }

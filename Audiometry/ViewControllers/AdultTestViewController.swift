@@ -97,10 +97,10 @@ class AdultTestViewController: UIViewController {
             isThresholdFound = testModel.checkNoSound(sender == pbNoSound)
             break
         case 1: // First interval
-            isThresholdFound = testModel.checkThreshold( (sender == pbFirstInterval), false)
+            isThresholdFound = testModel.checkThreshold(sender == pbFirstInterval)
             break
         case 2: // Second interval
-            isThresholdFound = testModel.checkThreshold( (sender == pbSecondInterval), false)
+            isThresholdFound = testModel.checkThreshold(sender == pbSecondInterval)
             break
         default:
             break

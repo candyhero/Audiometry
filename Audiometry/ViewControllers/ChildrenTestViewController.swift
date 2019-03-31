@@ -97,10 +97,10 @@ class ChildrenTestViewController: UIViewController {
             isThresholdFound = testModel.checkNoSound(sender == pbNoSound)
             break
         case 1: // First interval
-            isThresholdFound = testModel.checkThreshold( (sender == pbFirstInterval), true)
+            isThresholdFound = testModel.checkThreshold(sender == pbFirstInterval)
             break
         case 2: // Second interval
-            isThresholdFound = testModel.checkThreshold( (sender == pbSecondInterval), true)
+            isThresholdFound = testModel.checkThreshold(sender == pbSecondInterval)
             break
         default:
             break
