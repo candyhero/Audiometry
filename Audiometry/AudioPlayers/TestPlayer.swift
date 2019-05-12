@@ -35,7 +35,7 @@ extension TestPlayer {
         leftCorrFactor = left
         rightCorrFactor = right
         
-        print(left, right)
+        print("L.Vol.: ", left, "; R.Vol.: ", right)
     }
     
     // Covert dB to amplitude in double (0.0 to 1.0 range)

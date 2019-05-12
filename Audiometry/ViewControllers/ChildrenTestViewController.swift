@@ -10,7 +10,10 @@ class ChildrenTestViewController: UIViewController {
     
     // Used by animator
     private var timer, firstTimer, secondTimer: Timer?
-    private var pulseCounter: Int = 0
+    private var pulseCounter: Int!
+    
+    private var buttonCounter: Int!
+    private var lastButton: UIButton!
     
     @IBOutlet private weak var svIcons: UIStackView!
     
@@ -25,6 +28,9 @@ class ChildrenTestViewController: UIViewController {
 // Main Flow
 //------------------------------------------------------------------------------
     private func testNewFreq(){
+        pulseCounter = 0
+        buttonCounter = 0
+        
         let freq: Int = testModel.nextTestFreq()
         // Setup UI for next freq
         DispatchQueue.main.async { [unowned self] in
@@ -84,6 +90,25 @@ class ChildrenTestViewController: UIViewController {
 //------------------------------------------------------------------------------
     @IBAction private func checkResponse(_ sender: UIButton) {
         pausePlaying(sender)
+        
+        //Check if same button 5 times in a row
+        if(sender == lastButton ?? nil){
+            buttonCounter += 1
+        }
+        else {
+            buttonCounter = 0
+        }
+        
+        if(buttonCounter >= 4){
+            buttonCounter = 0
+            
+            errorPrompt(
+                errorMsg: "Please ask for re-instrcution.",
+                uiCtrl: self)
+        }
+        
+        print("Button Spam Count: ", buttonCounter)
+        lastButton = sender
         
         // DispatchQueue default **
         // Compare test blah

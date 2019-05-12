@@ -161,7 +161,7 @@ class TestModel {
             }
         }
         
-        print(_currentPlayCase)
+        print("Playcase: ", _currentPlayCase)
         replaySignalCase()
     }
     
@@ -180,7 +180,7 @@ class TestModel {
     }
     
     func replaySignalCase(){
-        print(_currentDB)
+        print("Current dB Lv: ", _currentDB)
         
         switch _currentPlayCase {
             
