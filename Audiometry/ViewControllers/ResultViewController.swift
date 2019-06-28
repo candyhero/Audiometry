@@ -42,6 +42,114 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     uiCtrl: self)
     }
     
+    @IBAction func exportAllPatients(_ sender: UIButton) {
+        
+        // if no patient data
+        if(array_patients.count == 0){
+            return
+        }
+        
+        // Create CSV
+        var csvText = ""
+        
+        for patientProfile in array_patients{
+            csvText.append("Patient Name, \(patientProfile.name!)\n")
+            csvText.append("Testing Time, \(patientProfile.timestamp!)\n")
+            
+            let patientProfileValues = getSortedValues(patientProfile)
+            for values in patientProfileValues{
+                csvText.append(extractPatientProfileValues(values))
+            }
+        }
+        print(csvText)
+        
+        // Create .csv file
+        do {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+            
+            let fileName = "AudiometryPatientExport_\(dateFormatter.string(from: Date())).csv"
+            print("FileName: \(fileName)")
+            
+            let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+            
+            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
+            
+            let activityVC = UIActivityViewController(activityItems: [path!], applicationActivities: [])
+//            activityVC.excludedActivityTypes = [
+//                UIActivity.ActivityType.assignToContact,
+//                UIActivity.ActivityType.saveToCameraRoll,
+//                UIActivity.ActivityType.postToFlickr,
+//                UIActivity.ActivityType.postToVimeo,
+//                UIActivity.ActivityType.postToTencentWeibo,
+//                UIActivity.ActivityType.postToTwitter,
+//                UIActivity.ActivityType.postToFacebook,
+//                UIActivity.ActivityType.openInIBooks
+//            ]
+            present(activityVC, animated: true, completion: nil)
+            
+            if let popOver = activityVC.popoverPresentationController {
+                popOver.sourceView = self.view
+                //popOver.sourceRect =
+                //popOver.barButtonItem
+            }
+            
+        } catch {
+            
+            print("Failed to create file")
+            print("\(error)")
+        }
+    }
+    
+    func extractPatientProfileValues(_ values: PatientProfileValues) -> String{
+        var csvText = ""
+        
+        if(values.results_L != nil){
+            csvText.append(" , Frequency, \(values.frequency), Left\n")
+            // Print left values
+            csvText.append(" , , Threshold Level, \(values.threshold_L)\n")
+            // Arrays
+            csvText.append(" , , Sound Levels")
+            for level in values.results_L!{
+                csvText.append(", \(level)")
+            }
+            csvText.append("\n")
+            csvText.append(" , , Response Correctness")
+            for response in values.responses_L ?? [] {
+                csvText.append(", \(response)")
+            }
+            csvText.append("\n")
+            //
+            csvText.append(" , , # of No Sound Responses, \(values.no_sound_count_L)\n")
+            csvText.append(" , , # of Correct No Sound Responses, \(values.no_sound_correct_L)\n")
+            csvText.append("\n")
+        }
+        
+        if(values.results_R != nil){
+            csvText.append(" , Frequency, \(values.frequency), Right\n")
+            // Print left values
+            csvText.append(" , , Threshold Level, \(values.threshold_R)\n")
+            // Arrays
+            csvText.append(" , , Sound Levels")
+            for level in values.results_R!{
+                csvText.append(", \(level)")
+            }
+            csvText.append("\n")
+            csvText.append(" , , Response Correctness")
+            for response in values.responses_R ?? [] {
+                csvText.append(", \(response)")
+            }
+            csvText.append("\n")
+            //
+            csvText.append(" , , # of No Sound Responses, \(values.no_sound_count_R)\n")
+            csvText.append(" , , # of Correct No Sound Responses, \(values.no_sound_correct_R)\n")
+            csvText.append("\n")
+        }
+        
+        return csvText
+    }
+    
+    
 //------------------------------------------------------------------------------
 // TableView Functions
 //------------------------------------------------------------------------------
@@ -285,19 +393,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         chartView_R.data = data_R
     }
     
-    func initSettings(){
-        // fetch global setting
-        let settingRequest:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        settingRequest.fetchLimit = 1
-        
-        do {
-            globalSetting = try managedContext.fetch(settingRequest).first
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
-        }
-        
+    func fetchAllPatientProfiles() {
         // fetch all PatientProfiles
         let patientRequest:NSFetchRequest<PatientProfile> =
             PatientProfile.fetchRequest()
@@ -312,6 +408,22 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             print("Could not fetch calibration setting.")
             print("\(error), \(error.userInfo)")
         }
+    }
+    
+    func initSettings(){
+        // fetch global setting
+        let settingRequest:NSFetchRequest<GlobalSetting> =
+            GlobalSetting.fetchRequest()
+        settingRequest.fetchLimit = 1
+        
+        do {
+            globalSetting = try managedContext.fetch(settingRequest).first
+        } catch let error as NSError{
+            print("Could not fetch global setting.")
+            print("\(error), \(error.userInfo)")
+        }
+        
+        fetchAllPatientProfiles()
     }
     
     override func viewDidLoad() {
