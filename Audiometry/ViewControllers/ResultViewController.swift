@@ -56,10 +56,25 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // Create CSV
         var csvText = ""
+        var tempText = ""
         
         for patientProfile in _array_patients{
             csvText.append("Patient Name, \(patientProfile.name!)\n")
-            csvText.append("Testing Time, \(patientProfile.timestamp!)\n")
+            
+            tempText = (patientProfile.timestamp != nil) ?
+                ("Start Time, \(patientProfile.timestamp!)\n") :
+                ("Start Time, N/A\n")
+            csvText.append(tempText)
+            
+            tempText = (patientProfile.endTime != nil) ?
+                ("End Time, \(patientProfile.endTime!)\n") :
+                ("End Time, N/A\n")
+            csvText.append(tempText)
+            
+            tempText = (patientProfile.durationSeconds > 0) ?
+                ("Duration (sec), \(patientProfile.durationSeconds)\n") :
+                ("Duration (sec), N/A\n")
+            csvText.append(tempText)
             
             let patientProfileValues = getSortedValues(patientProfile)
             for values in patientProfileValues{
