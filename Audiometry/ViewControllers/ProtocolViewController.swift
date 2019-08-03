@@ -51,12 +51,12 @@ class ProtocolViewController: UIViewController {
     func saveProtocol(_ newProtocolName: String){
         
         // If duplicated name
-        if(false){
-            errorPrompt(
-                errorMsg: "Protocol name already exists!",
-                uiCtrl: self)
-            return
-        }
+//        if(false){
+//            errorPrompt(
+//                errorMsg: "Protocol name already exists!",
+//                uiCtrl: self)
+//            return
+//        }
         
         // Else, save protocol
         let setting = NSEntityDescription.insertNewObject(

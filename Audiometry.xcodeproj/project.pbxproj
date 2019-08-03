@@ -33,6 +33,7 @@
 		4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */; };
 		4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */; };
 		6724711722451F320019BB8B /* PracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6724711622451F320019BB8B /* PracticeViewController.swift */; };
+		67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */; };
 		DFB5839F2D0852BF2E70694E /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA9281A44F4747B4223B59A /* Pods_Audiometry.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultTestPlayer.swift; sourceTree = "<group>"; };
 		5AA9281A44F4747B4223B59A /* Pods_Audiometry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audiometry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6724711622451F320019BB8B /* PracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeViewController.swift; sourceTree = "<group>"; };
+		67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
 		7D1C47F07515E0B86F9DF089 /* Pods-AudiometryKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryKids.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids.release.xcconfig"; sourceTree = "<group>"; };
 		85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 		F0915E4BDAAAB3A042149B05 /* Pods-AudiometryKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryKids.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids.debug.xcconfig"; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				4E4B3C7921A7266000191AF3 /* TitleViewController.swift */,
+				67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */,
 				4E4B3C9621A7D32E00191AF3 /* CalibrationUIFactory.swift */,
 				4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */,
 				4E4B3CEF21B03CF000191AF3 /* ProtocolViewController.swift */,
@@ -328,6 +331,7 @@
 				4E4B3CF621B1988000191AF3 /* ResultViewController.swift in Sources */,
 				4E4B3CED21A9B3FC00191AF3 /* AdultInstructionViewController.swift in Sources */,
 				4EEDE90B21BEABBC00028C60 /* ChildrenInstructionViewController.swift in Sources */,
+				67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */,
 				4E4B3C9221A745EA00191AF3 /* AudiometryModel.xcdatamodeld in Sources */,
 				4EC055F921A724E60016AB0D /* AppDelegate.swift in Sources */,
 				4E4B3C7E21A7266000191AF3 /* TestPlayer.swift in Sources */,

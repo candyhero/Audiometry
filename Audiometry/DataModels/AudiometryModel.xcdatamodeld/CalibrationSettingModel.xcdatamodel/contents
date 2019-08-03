@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18D109" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CalibrationSetting" representedClassName="CalibrationSetting" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -22,6 +22,8 @@
         <relationship name="patientProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientProfile" inverseName="globalSetting" inverseEntity="PatientProfile" syncable="YES"/>
     </entity>
     <entity name="PatientProfile" representedClassName="PatientProfile" syncable="YES" codeGenerationType="class">
+        <attribute name="durationSeconds" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="endTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="isAdult" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPractice" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -30,6 +32,10 @@
         <relationship name="values" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="PatientProfileValues" inverseName="profile" inverseEntity="PatientProfileValues" syncable="YES"/>
     </entity>
     <entity name="PatientProfileValues" representedClassName="PatientProfileValues" syncable="YES" codeGenerationType="class">
+        <attribute name="durationSeconds_L" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="durationSeconds_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="endTime_L" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="endTime_R" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="frequency" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="no_sound_correct_L" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="no_sound_correct_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -39,6 +45,8 @@
         <attribute name="responses_R" optional="YES" attributeType="Transformable" customClassName="[Int]" syncable="YES"/>
         <attribute name="results_L" optional="YES" attributeType="Transformable" customClassName="[Int]" syncable="YES"/>
         <attribute name="results_R" optional="YES" attributeType="Transformable" customClassName="[Int]" syncable="YES"/>
+        <attribute name="startTime_L" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="startTime_R" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="threshold_L" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="threshold_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientProfile" inverseName="values" inverseEntity="PatientProfile" syncable="YES"/>
@@ -54,8 +62,8 @@
         <element name="CalibrationSetting" positionX="-372.671875" positionY="-46.83203125" width="128" height="105"/>
         <element name="CalibrationSettingValues" positionX="-54" positionY="18" width="128" height="135"/>
         <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="120"/>
-        <element name="PatientProfile" positionX="-180" positionY="81" width="128" height="135"/>
-        <element name="PatientProfileValues" positionX="-171" positionY="90" width="128" height="225"/>
+        <element name="PatientProfile" positionX="-180" positionY="81" width="128" height="165"/>
+        <element name="PatientProfileValues" positionX="-171" positionY="90" width="128" height="315"/>
         <element name="TestSetting" positionX="-189" positionY="63" width="128" height="120"/>
     </elements>
 </model>

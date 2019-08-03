@@ -20,7 +20,7 @@
         <!--Adult Test View Controller-->
         <scene sceneID="jA6-ao-Rbd">
             <objects>
-                <viewController id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="AudiometryKids" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DIX-OQ-mz8"/>
                         <viewControllerLayoutGuide type="bottom" id="VwC-He-InT"/>
@@ -155,10 +155,10 @@
             </objects>
             <point key="canvasLocation" x="250.78124999999997" y="287.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Pause View Controller-->
         <scene sceneID="Pic-34-55A">
             <objects>
-                <viewController id="eEg-l9-aEs" sceneMemberID="viewController">
+                <viewController id="eEg-l9-aEs" customClass="PauseViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ra8-Zp-pXY"/>
                         <viewControllerLayoutGuide type="bottom" id="TiW-v8-wmN"/>
@@ -167,16 +167,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="04f-DG-o9J">
-                                <rect key="frame" x="268" y="473" width="830" height="78"/>
-                                <color key="backgroundColor" red="0.4505490186545118" green="0.91333660530061822" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                <state key="normal" title="Continue After Switching the Earphone"/>
-                                <connections>
-                                    <segue destination="Xos-0w-K0n" kind="show" id="QZl-a3-Dzc"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xGj-8Z-nbi">
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
@@ -184,24 +174,49 @@
                                     <segue destination="1SS-Hc-TLl" kind="showDetail" id="oPb-8s-FZZ"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GmR-MD-8t1">
+                                <rect key="frame" x="268" y="440.5" width="830" height="143.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbl-Cm-EPg">
+                                        <rect key="frame" x="359" y="0.0" width="112.5" height="57.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="04f-DG-o9J">
+                                        <rect key="frame" x="0.0" y="65.5" width="830" height="78"/>
+                                        <color key="backgroundColor" red="0.4505490186545118" green="0.91333660530061822" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Continue After Switching the Earphone"/>
+                                        <connections>
+                                            <segue destination="Xos-0w-K0n" kind="show" id="QZl-a3-Dzc"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.79475296463830714" green="1" blue="0.63224668155982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="xGj-8Z-nbi" firstAttribute="top" secondItem="ra8-Zp-pXY" secondAttribute="bottom" id="Ai5-xf-b0Y"/>
-                            <constraint firstItem="04f-DG-o9J" firstAttribute="centerY" secondItem="X4E-YG-IhF" secondAttribute="centerY" id="YYb-g3-3ga"/>
-                            <constraint firstItem="04f-DG-o9J" firstAttribute="centerX" secondItem="X4E-YG-IhF" secondAttribute="centerX" id="nq2-EP-2Mr"/>
+                            <constraint firstItem="GmR-MD-8t1" firstAttribute="centerY" secondItem="X4E-YG-IhF" secondAttribute="centerY" id="Ic6-Hc-lsP"/>
+                            <constraint firstItem="GmR-MD-8t1" firstAttribute="centerX" secondItem="X4E-YG-IhF" secondAttribute="centerX" id="lfK-bs-gHd"/>
                             <constraint firstItem="xGj-8Z-nbi" firstAttribute="leading" secondItem="X4E-YG-IhF" secondAttribute="leadingMargin" id="sK1-6E-QOX"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lbCaption" destination="Fbl-Cm-EPg" id="iot-Xh-07D"/>
+                        <outlet property="pbContinue" destination="04f-DG-o9J" id="ldJ-FG-WNl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sev-9s-8kD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="922" y="287"/>
+            <point key="canvasLocation" x="921.96193265007309" y="286.5234375"/>
         </scene>
         <!--Adult Instruction View Controller-->
         <scene sceneID="rjg-Ks-cq9">
             <objects>
-                <viewController storyboardIdentifier="AdultInstructionView" id="H19-23-Hv8" customClass="AdultInstructionViewController" customModule="AudiometryKids" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdultInstructionView" id="H19-23-Hv8" customClass="AdultInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X8z-cw-Fej"/>
                         <viewControllerLayoutGuide type="bottom" id="gpb-8g-Tlx"/>
@@ -346,7 +361,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zC6-iA-2Wg"/>
-        <segue reference="N3n-S4-2S0"/>
+        <segue reference="oPb-8s-FZZ"/>
+        <segue reference="QZl-a3-Dzc"/>
     </inferredMetricsTieBreakers>
 </document>

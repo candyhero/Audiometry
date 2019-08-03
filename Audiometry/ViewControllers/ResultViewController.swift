@@ -8,16 +8,17 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //------------------------------------------------------------------------------
 // Local Variables
 //------------------------------------------------------------------------------
-    private let managedContext = (UIApplication.shared.delegate as!
+    private let _managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext
     
-    private var globalSetting: GlobalSetting!
-    private var currentPatient: PatientProfile!
+    private var _globalSetting: GlobalSetting!
+    private var _currentPatient: PatientProfile!
     
-    private var array_patients: [PatientProfile] = []
-    private var array_freqSeq: [Int] = []
+    private var _array_patients: [PatientProfile] = []
+    private var _array_freqSeq: [Int] = []
+    private var _array_buttons: [UIButton] = []
     
-    private var patientSectionRows: [Int] = [] // section, row
+    private var _patientSectionRows: [Int] = [] // section, row
     
 //------------------------------------------------------------------------------
 // UI Components
@@ -34,7 +35,11 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var pbDeleteCurrentPatient: UIButton!
     
     @IBAction func deleteCurrentPatient(_ sender: UIButton) {
-        let alertMsg = "Are you sure to delete \"" + (currentPatient?.name)! + "\" ?"
+//        print("Count: ", _array_buttons.count)
+//        for button in _array_buttons{
+//            print(button.tag)
+//        }
+        let alertMsg = "Are you sure to delete \"" + (_currentPatient?.name)! + "\" ?"
         
         alertPrompt(alertTitle: "Delete patient profile",
                     alertMsg: alertMsg,
@@ -45,14 +50,14 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func exportAllPatients(_ sender: UIButton) {
         
         // if no patient data
-        if(array_patients.count == 0){
+        if(_array_patients.count == 0){
             return
         }
         
         // Create CSV
         var csvText = ""
         
-        for patientProfile in array_patients{
+        for patientProfile in _array_patients{
             csvText.append("Patient Name, \(patientProfile.name!)\n")
             csvText.append("Testing Time, \(patientProfile.timestamp!)\n")
             
@@ -155,7 +160,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //------------------------------------------------------------------------------
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        return array_patients.count
+        return _array_patients.count
     }
     
     func tableView(_ tableView: UITableView,
@@ -169,21 +174,23 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
                          action: #selector(handleExpandClose),
                          for: .touchUpInside)
         
-        let patient = array_patients[section]
+        let patient = _array_patients[section]
         let tag = (patient.isAdult) ? "(Adult)":"(Child)"
         let tag2 = (patient.isPractice) ? "[Practice]" : ""
         let title = (patient.name ?? "NAME_ERROR") + tag + tag2
         button.setTitle(title, for: .normal)
         button.tag = section
         
+        _array_buttons.append(button)
         // add button to array_buttons
         return button
     }
     
     @objc func handleExpandClose(button: UIButton!){
         
-        currentPatient = array_patients[button.tag]
-        let values = getSortedValues(currentPatient)
+        _currentPatient = _array_patients[button.tag]
+        
+        let values = getSortedValues(_currentPatient)
         var array_indexPath = [IndexPath]()
         
         for freqIndex in values.indices {
@@ -191,13 +198,13 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             array_indexPath.append(indexPath)
         }
         
-        if(patientSectionRows[button.tag] > 0){
+        if(_patientSectionRows[button.tag] > 0){
             
-            patientSectionRows[button.tag] = 0
+            _patientSectionRows[button.tag] = 0
             tbPatients.deleteRows(at: array_indexPath, with: .fade)
         }
         else {
-            patientSectionRows[button.tag] = values.count
+            _patientSectionRows[button.tag] = values.count
             tbPatients.insertRows(at: array_indexPath, with: .fade)
         }
     }
@@ -208,13 +215,29 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // Cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return patientSectionRows[section]
+        return _patientSectionRows[section]
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Retrieve patient brief info
-        currentPatient = array_patients[indexPath.section]
-        let values = getSortedValues(currentPatient)[indexPath.row]
+        _currentPatient = _array_patients[indexPath.section]
+        let values = getSortedValues(_currentPatient)[indexPath.row]
+        
+        print(_currentPatient)
+        
+        if(values.durationSeconds_L > 0){
+            print("L:")
+            print(values.startTime_L!)
+            print(values.endTime_L!)
+            print(values.durationSeconds_L)
+        }
+        
+        if(values.durationSeconds_R > 0){
+            print("R:")
+            print(values.startTime_R!)
+            print(values.endTime_R!)
+            print(values.durationSeconds_R)
+        }
         
         // Configure table cell style
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
@@ -244,8 +267,8 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        currentPatient = array_patients[indexPath.section]
-        let values = getSortedValues(currentPatient)
+        _currentPatient = _array_patients[indexPath.section]
+        let values = getSortedValues(_currentPatient)
         updateGraph(values[indexPath.row])
     }
     
@@ -269,11 +292,11 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         
-        let patient = array_patients[indexPath!.section]
-        managedContext.delete(patient)
-        array_patients.remove(at: indexPath!.section)
+        let patient = _array_patients[indexPath!.section]
+        _managedContext.delete(patient)
+        _array_patients.remove(at: indexPath!.section)
         
-        patientSectionRows.remove(at: indexPath!.section)
+        _patientSectionRows.remove(at: indexPath!.section)
         tbPatients.deleteSections(IndexSet([indexPath!.section]), with: .fade)
         
         //update button tags
@@ -318,44 +341,37 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let line_R = LineChartDataSet(values: lineChartEntry_R,
                                      label: "Presentation Lv. (Right) in dB")
         
+        line_L.colors=[NSUIColor.blue]
+        line_R.colors=[NSUIColor.red]
         if(values.responses_L?.count ?? 0 > 0){
-            line_L.colors = []
             line_L.circleColors = []
         }
         for response in values.responses_L ?? [] {
             if(response > 0){
-                line_L.circleColors.append(NSUIColor.blue)
-                line_L.colors.append(NSUIColor.blue)
+                line_L.circleColors.append(NSUIColor.green)
             }
             else if(response < 0){
-                line_L.circleColors.append(NSUIColor.red)
-                line_L.colors.append(NSUIColor.red)
+                line_L.circleColors.append(NSUIColor.magenta)
             }
             else if(response == 0){
                 line_L.circleColors.append(NSUIColor.black)
-                line_L.colors.append(NSUIColor.black)
             }
             else {
                 print("Response Error: ", response)
             }
         }
-        
         if(values.responses_R?.count ?? 0 > 0){
-            line_R.colors = []
             line_R.circleColors = []
         }
         for response in values.responses_R ?? [] {
             if(response > 0){
-                line_R.circleColors.append(NSUIColor.blue)
-                line_R.colors.append(NSUIColor.blue)
+                line_R.circleColors.append(NSUIColor.green)
             }
             else if(response < 0){
-                line_R.circleColors.append(NSUIColor.red)
-                line_R.colors.append(NSUIColor.red)
+                line_R.circleColors.append(NSUIColor.magenta)
             }
             else if(response == 0){
                 line_R.circleColors.append(NSUIColor.black)
-                line_R.colors.append(NSUIColor.black)
             }
             else {
                 print("Response Error: ", response)
@@ -389,8 +405,22 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         data_L.addDataSet(line_L) //Adds the line to the dataSet
         data_R.addDataSet(line_R)
         
+        data_L.setValueFont(NSUIFont.systemFont(ofSize: 12.0))
+        data_R.setValueFont(NSUIFont.systemFont(ofSize: 12.0))
+        
         chartView_L.data = data_L
         chartView_R.data = data_R
+        
+        chartView_L.drawGridBackgroundEnabled = true
+        chartView_R.drawGridBackgroundEnabled = true
+        
+        chartView_L.gridBackgroundColor =
+            NSUIColor(red: 0.6, green: 0.6, blue: 1.0, alpha: 0.6)
+        chartView_R.gridBackgroundColor =
+            NSUIColor(red: 1.0, green: 0.6, blue: 0.6, alpha: 0.6)
+        
+        chartView_L.legend.font = NSUIFont.systemFont(ofSize: 16.0)
+        chartView_R.legend.font = NSUIFont.systemFont(ofSize: 16.0)
     }
     
     func fetchAllPatientProfiles() {
@@ -403,7 +433,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         patientRequest.sortDescriptors = [sortByTimestamp]
         
         do {
-            array_patients = try managedContext.fetch(patientRequest)
+            _array_patients = try _managedContext.fetch(patientRequest)
         } catch let error as NSError{
             print("Could not fetch calibration setting.")
             print("\(error), \(error.userInfo)")
@@ -417,7 +447,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         settingRequest.fetchLimit = 1
         
         do {
-            globalSetting = try managedContext.fetch(settingRequest).first
+            _globalSetting = try _managedContext.fetch(settingRequest).first
         } catch let error as NSError{
             print("Could not fetch global setting.")
             print("\(error), \(error.userInfo)")
@@ -432,15 +462,15 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         pbDeleteCurrentPatient.isEnabled = false
         // Load result
         initSettings()
-        let mostRecentPatient = array_patients.first!
+        let mostRecentPatient = _array_patients.first!
         
-        for patientProfile in array_patients {
-            patientSectionRows.append(0)
+        for patientProfile in _array_patients {
+            _patientSectionRows.append(0)
         }
         
         let mostRecentValues = getSortedValues(mostRecentPatient)
         print(mostRecentPatient)
-        patientSectionRows[0] = mostRecentValues.count
+        _patientSectionRows[0] = mostRecentValues.count
     }
     
     override func didReceiveMemoryWarning() {
