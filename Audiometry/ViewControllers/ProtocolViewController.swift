@@ -7,23 +7,23 @@ class ProtocolViewController: UIViewController {
 //------------------------------------------------------------------------------
 // Local Variables
 //------------------------------------------------------------------------------
-    private let managedContext = (UIApplication.shared.delegate as!
+    private let _managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext
     
-    private var globalSetting: GlobalSetting! = nil
-    private var currentSetting: TestSetting! = nil
+    private var _globalSetting: GlobalSetting! = nil
+    private var _currentSetting: TestSetting! = nil
     
-    private var array_settings: [TestSetting] = []
-    private var array_testFreqSeq: [Int] = []
+    private var _array_settings: [TestSetting] = []
+    private var _array_testFreqSeq: [Int] = []
     
-    private let ARRAY_DEFAULT_FREQSEQ: [Double]! = [500, 4000, 1000, 8000, 250, 2000]
+//    private let _ARRAY_DEFAULT_FREQ_SEQ: [Double]! = [500, 4000, 1000, 8000, 250, 2000]
     
     private var _currentPickerIndex: Int = 0;
     
 //------------------------------------------------------------------------------
 // UI Components
 //------------------------------------------------------------------------------
-    private var array_pbFreq = [UIButton]()
+    private var _array_pbFreq = [UIButton]()
     
     @IBOutlet weak var svFreq: UIStackView!
     @IBOutlet weak var lbFreqSeq: UILabel!
@@ -35,7 +35,7 @@ class ProtocolViewController: UIViewController {
     @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
     
         // Prompt for no freq selected error
-        if(array_testFreqSeq.count == 0)
+        if(_array_testFreqSeq.count == 0)
         {
             errorPrompt(errorMsg: "There is no frequency selected!", uiCtrl: self)
             return
@@ -61,18 +61,18 @@ class ProtocolViewController: UIViewController {
         // Else, save protocol
         let setting = NSEntityDescription.insertNewObject(
             forEntityName: "TestSetting",
-            into: managedContext) as! TestSetting
+            into: _managedContext) as! TestSetting
         
         setting.name = newProtocolName
         setting.timestamp = Date()
-        setting.frequencySequence = array_testFreqSeq
-        setting.isTestLeftFirst = globalSetting.isTestingLeft
-        setting.isTestBoth = globalSetting.isTestingBoth
+        setting.frequencySequence = _array_testFreqSeq
+        setting.isTestLeftFirst = _globalSetting.isTestingLeft
+        setting.isTestBoth = _globalSetting.isTestingBoth
         
-        currentSetting = setting
+        _currentSetting = setting
         
         do{
-            try managedContext.save()
+            try _managedContext.save()
         } catch let error as NSError{
             print("Could not save test protocol.")
             print("\(error), \(error.userInfo)")
@@ -87,13 +87,13 @@ class ProtocolViewController: UIViewController {
             TestSetting.fetchRequest()
         
         do {
-            array_settings = try managedContext.fetch(request)
+            _array_settings = try _managedContext.fetch(request)
         } catch let error as NSError{
             print("Could not fetch calibration setting.")
             print("\(error), \(error.userInfo)")
         }
         
-        if array_settings.count > 0 {
+        if _array_settings.count > 0 {
             pickerPrompt(confirmFunction: loadProtocol,
                          uiCtrl: self)
         }
@@ -104,24 +104,24 @@ class ProtocolViewController: UIViewController {
     }
     
     func loadProtocol(){
-        currentSetting = array_settings[_currentPickerIndex]
-        array_testFreqSeq = currentSetting.frequencySequence ?? []
+        _currentSetting = _array_settings[_currentPickerIndex]
+        _array_testFreqSeq = _currentSetting.frequencySequence ?? []
         updateLabel()
     }
     
     @IBAction func deleteFreqSeqProtocol(_ sender: UIButton) {
         
         // Validate current protocol
-        if(currentSetting == nil) {
+        if(_currentSetting == nil) {
             
             errorPrompt(errorMsg: "There is no selected protcol!",
                         uiCtrl: self)
             return
         }
         
-        managedContext.delete(currentSetting)
-        currentSetting = nil
-        array_testFreqSeq = []
+        _managedContext.delete(_currentSetting)
+        _currentSetting = nil
+        _array_testFreqSeq = []
         
         updateLabel()
     }
@@ -130,47 +130,47 @@ class ProtocolViewController: UIViewController {
 // Test Settings
 //------------------------------------------------------------------------------
     @IBAction func setLeftFirst(_ sender: UIButton) {
-        globalSetting.isTestingLeft = true
-        globalSetting.isTestingBoth = true
+        _globalSetting.isTestingLeft = true
+        _globalSetting.isTestingBoth = true
         lbEarOrder.text = sender.titleLabel?.text!
     }
     
     @IBAction func setRightFirst(_ sender: UIButton) {
-        globalSetting.isTestingLeft = false
-        globalSetting.isTestingBoth = true
+        _globalSetting.isTestingLeft = false
+        _globalSetting.isTestingBoth = true
         lbEarOrder.text = sender.titleLabel?.text!
     }
     
     @IBAction func setLeftOnly(_ sender: UIButton) {
-        globalSetting.isTestingLeft = true
-        globalSetting.isTestingBoth = false
+        _globalSetting.isTestingLeft = true
+        _globalSetting.isTestingBoth = false
         lbEarOrder.text = sender.titleLabel?.text!
     }
     
     @IBAction func setRightOnly(_ sender: UIButton) {
-        globalSetting.isTestingLeft = false
-        globalSetting.isTestingBoth = false
+        _globalSetting.isTestingLeft = false
+        _globalSetting.isTestingBoth = false
         lbEarOrder.text = sender.titleLabel?.text!
     }
     
     @IBAction func addNewFreq(_ sender: UIButton){
         let freqID: Int! = sender.tag
-        if(!array_testFreqSeq.contains(freqID) ){
-            array_testFreqSeq.append(freqID)
+        if(!_array_testFreqSeq.contains(freqID) ){
+            _array_testFreqSeq.append(freqID)
             updateLabel()
         }
     }
     
     @IBAction func removeLastFreq(_ sender: UIButton) {
-        if(array_testFreqSeq.count > 0) {
-            array_testFreqSeq.removeLast()
+        if(_array_testFreqSeq.count > 0) {
+            _array_testFreqSeq.removeLast()
             updateLabel()
         }
     }
     
     @IBAction func removeAllFreq(_ sender: UIButton) {
-        if(array_testFreqSeq.count > 0) {
-            array_testFreqSeq.removeAll()
+        if(_array_testFreqSeq.count > 0) {
+            _array_testFreqSeq.removeAll()
             updateLabel()
         }
     }
@@ -180,7 +180,7 @@ class ProtocolViewController: UIViewController {
         var tempFreqSeqStr = String("Test Sequence: ")
         
         var freqCount = 0
-        for freq in array_testFreqSeq {
+        for freq in _array_testFreqSeq {
             freqCount += 1
             tempFreqSeqStr.append(String(freq) + " Hz")
             tempFreqSeqStr.append(" ► ")
@@ -211,13 +211,11 @@ class ProtocolViewController: UIViewController {
     func startTest(isAdult: Bool!) {
         
         // Error, no freq selected
-        if(array_testFreqSeq.count == 0){
+        if(_array_testFreqSeq.count == 0){
             errorPrompt(errorMsg: "There is no frequency selected!",
                         uiCtrl: self)
             return
         }
-        
-        globalSetting.testFrequencySequence = array_testFreqSeq
         
         // Prompt for user to input setting name
         inputPrompt(promptMsg: "Please Enter Patient's Name:",
@@ -247,17 +245,20 @@ class ProtocolViewController: UIViewController {
         // Prepare new profile to test
         let profile = NSEntityDescription.insertNewObject(
             forEntityName: "PatientProfile",
-            into: managedContext) as! PatientProfile
+            into: _managedContext) as! PatientProfile
         
         profile.name = patientName
         profile.timestamp = Date()
         profile.isAdult = isAdult
         profile.isPractice = false
         
-        globalSetting.patientProfile = profile
+        _globalSetting.testFrequencySequence = _array_testFreqSeq
+        _globalSetting.currentTestCount = 0
+        _globalSetting.totalTestCount = Int16(_globalSetting.isTestingBoth ? _array_testFreqSeq.count*2 : _array_testFreqSeq.count)
+        _globalSetting.patientProfile = profile
         
         do{
-            try managedContext.save()
+            try _managedContext.save()
         } catch let error as NSError{
             print("Could not save test settings to global setting.")
             print("\(error), \(error.userInfo)")
@@ -267,9 +268,9 @@ class ProtocolViewController: UIViewController {
         // Load & save calibration setting during testing for each frequency
     }
 
-//------------------------------------------------------------------------------
-// Initialize View
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    // Initialize View
+    //------------------------------------------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -282,9 +283,9 @@ class ProtocolViewController: UIViewController {
         request.fetchLimit = 1
         
         do {
-            globalSetting = try managedContext.fetch(request).first
-            globalSetting.isTestingLeft = true
-            globalSetting.isTestingBoth = true
+            _globalSetting = try _managedContext.fetch(request).first
+            _globalSetting.isTestingLeft = true
+            _globalSetting.isTestingBoth = true
             lbEarOrder.text! = "L. Ear -> R. Ear"
             
         } catch let error as NSError{
@@ -320,7 +321,7 @@ class ProtocolViewController: UIViewController {
                 top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
             
             // Add the button to our current button array
-            array_pbFreq += [new_pbFreq]
+            _array_pbFreq += [new_pbFreq]
             svFreq.addArrangedSubview(new_pbFreq)
         }
     }
@@ -339,12 +340,12 @@ extension ProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        return array_settings.count
+        return _array_settings.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        return array_settings[row].name
+        return _array_settings[row].name
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,

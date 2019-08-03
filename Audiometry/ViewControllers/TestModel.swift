@@ -18,63 +18,63 @@ class TestModel {
     private let _managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext
     
+    // All test setup settings
     private var _globalSetting: GlobalSetting!
-    private var _dict_patientProfileValues: [Int:PatientProfileValues] = [:]
-    private var _dict_calibrationValues: [Int:CalibrationSettingValues] = [:]
+    
+    private var _isPractice: Bool!
+    private var _isAdult: Bool!
     
     private var _startTime: Date!
     private var _endTime: Date!
+    
+    private var _testPlayer: TestPlayer!
+    
+    // Buffers
+    private var _dict_patientProfileValues: [Int:PatientProfileValues] = [:]
+    private var _dict_calibrationValues: [Int:CalibrationSettingValues] = [:]
     
     private var _array_testFreqSeq: [Int] = []
     private var _array_results: [Int] = []
     private var _array_responses: [Int] = []
     private var _array_cases: [Int] = []
     
-    // Used to determine when test ends
-    private var _dict_hasBeenAscendingCorrect = [Int: Bool]()
-    
-    private var _isPractice: Bool!
-    private var _isAdult: Bool!
-    private var _flag_initialPhase: Bool!
-    
+    // In-test settings
     private var _currentFreq: Int!
     private var _currentPlayCase: Int!
     private var _currentDB: Int!
+    
+    private var _flag_initialPhase: Bool!
+    private var _dict_hasBeenAscendingCorrect = [Int: Bool]()
     
     private var _maxDBTrials: Int = 0
     private var _noSoundCount: Int = 0
     private var _noSoundCorrect: Int = 0
     
-    private var _testPlayer: TestPlayer!
-    
-    func nextTestFreq() -> Int{
+//------------------------------------------------------------------------------
+// Getter functions
+//------------------------------------------------------------------------------
+    func getNewTestFreq() -> Int{
         return _currentFreq
     }
     
-    func currentPlayCase() -> Int! {
+    func getCurrentPlayCase() -> Int! {
         return _currentPlayCase
+    }
+    
+    func getCurrentProgress() -> Int!{
+        let currentTestCount = Int(_globalSetting.currentTestCount)
+        let totalTestCount = Int(_globalSetting.totalTestCount)
+        
+        if(totalTestCount > 0){
+            return 100 * currentTestCount / totalTestCount
+        }
+        return -1
     }
     
 //------------------------------------------------------------------------------
 // Initialize Settings
 //------------------------------------------------------------------------------
     init() {
-        // Init test player
-        initSettings()
-        
-        _isPractice = _globalSetting.patientProfile?.isPractice
-        _isAdult = _globalSetting.patientProfile?.isAdult
-        
-        if (_isAdult) {
-            _testPlayer = AdultTestPlayer()
-        } else {
-            _testPlayer = ChildrenTestPlayer()
-        }
-        
-        setupNextFreq()
-    }
-    
-    func initSettings(){
         // fetch global setting
         let request:NSFetchRequest<GlobalSetting> =
             GlobalSetting.fetchRequest()
@@ -98,12 +98,24 @@ class TestModel {
             print("Could not fetch global setting.")
             print("\(error), \(error.userInfo)")
         }
+        
+        _isPractice = _globalSetting.patientProfile?.isPractice
+        _isAdult = _globalSetting.patientProfile?.isAdult
+        
+        if (_isAdult) {
+            _testPlayer = AdultTestPlayer()
+        } else {
+            _testPlayer = ChildrenTestPlayer()
+        }
+        
+        // Proceed to setup next freq testing
+        setupForNextFreq()
     }
     
 //------------------------------------------------------------------------------
 // Setup for new test freq
 //------------------------------------------------------------------------------
-    private func setupNextFreq(){
+    private func setupForNextFreq(){
         _currentFreq = _array_testFreqSeq.removeFirst()
         
         // Config Test Player
@@ -171,7 +183,7 @@ class TestModel {
         replaySignalCase()
     }
     
-    func randomizePlayCase() -> Int {
+    private func randomizePlayCase() -> Int {
         let randomInt = _isPractice ? Int.random(in:0 ..< 8) : Int.random(in:0 ..< 12)
         
         // First trial cannot be no sound
@@ -345,6 +357,7 @@ class TestModel {
                 Int16(_endTime.timeIntervalSince(_startTime))
         }
         
+        _globalSetting.currentTestCount += 1
         _globalSetting.patientProfile?.addToValues(newValues)
         _globalSetting.patientProfile?.endTime = _endTime
         
@@ -360,7 +373,7 @@ class TestModel {
                 _currentFreq = 0
             }
         } else {
-            setupNextFreq()
+            setupForNextFreq()
         }
         
         do{

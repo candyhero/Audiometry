@@ -24,6 +24,7 @@ class ChildrenTestViewController: UIViewController {
     @IBOutlet private weak var pbRepeat: UIButton!
     @IBOutlet private weak var pbPause: UIButton!
     
+    @IBOutlet weak var lbProgress: UILabel!
 //------------------------------------------------------------------------------
 // Main Flow
 //------------------------------------------------------------------------------
@@ -32,6 +33,8 @@ class ChildrenTestViewController: UIViewController {
         buttonCounter = 0
         
         let freq: Int = testModel.getNewTestFreq()
+        let currentProgress: Int = testModel.getCurrentProgress()
+        
         // Setup UI for next freq
         DispatchQueue.main.async { [unowned self] in
             let imgDir = "Animal_Icons/"+String(freq)+"Hz"
@@ -47,6 +50,8 @@ class ChildrenTestViewController: UIViewController {
 
             self.pbFirstInterval.adjustsImageWhenHighlighted = false
             self.pbSecondInterval.adjustsImageWhenHighlighted = false
+            
+            self.lbProgress.text = "Test Progress: "+String(currentProgress)+"%"
         }
 
         // run test

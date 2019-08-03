@@ -10,7 +10,7 @@ class AdultTestViewController: UIViewController {
     
     // Used by animator
     private var timer, firstTimer, secondTimer: Timer?
-    private var pulseCounter: Int = 0
+    private var pulseCounter: Int!
     
     private var buttonCounter: Int!
     private var lastButton: UIButton!
@@ -24,16 +24,21 @@ class AdultTestViewController: UIViewController {
     @IBOutlet private weak var pbRepeat: UIButton!
     @IBOutlet private weak var pbPause: UIButton!
     
+    @IBOutlet weak var lbInstruction: UILabel!
+    @IBOutlet weak var lbProgress: UILabel!
 //------------------------------------------------------------------------------
 // Main Flow
 //------------------------------------------------------------------------------
     private func testNewFreq(){
+        pulseCounter = 0
+        buttonCounter = 0
+        
         let freq: Int = testModel.getNewTestFreq()
         let currentProgress: Int = testModel.getCurrentProgress()
-        print("Progress: ", currentProgress)
         
         // Setup UI for next freq
         DispatchQueue.main.async { [unowned self] in
+            // Loading Pictures
             let imgDir = "Shape_Icons/"+String(freq)+"Hz"
             let img = UIImage(named:imgDir)?.withRenderingMode(.alwaysOriginal)
             
@@ -47,6 +52,9 @@ class AdultTestViewController: UIViewController {
             
             self.pbFirstInterval.adjustsImageWhenHighlighted = false
             self.pbSecondInterval.adjustsImageWhenHighlighted = false
+            
+            // Loading Captions
+            self.lbProgress.text = "Test Progress: "+String(currentProgress)+"%"
         }
         
         // run test

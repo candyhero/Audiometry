@@ -225,20 +225,20 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         print(_currentPatient)
         
-        if(values.durationSeconds_L > 0){
-            print("L:")
-            print(values.startTime_L!)
-            print(values.endTime_L!)
-            print(values.durationSeconds_L)
-        }
-        
-        if(values.durationSeconds_R > 0){
-            print("R:")
-            print(values.startTime_R!)
-            print(values.endTime_R!)
-            print(values.durationSeconds_R)
-        }
-        
+//        if(values.durationSeconds_L > 0){
+//            print("L:")
+//            print(values.startTime_L!)
+//            print(values.endTime_L!)
+//            print(values.durationSeconds_L)
+//        }
+//
+//        if(values.durationSeconds_R > 0){
+//            print("R:")
+//            print(values.startTime_R!)
+//            print(values.endTime_R!)
+//            print(values.durationSeconds_R)
+//        }
+
         // Configure table cell style
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         
@@ -415,7 +415,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         chartView_R.drawGridBackgroundEnabled = true
         
         chartView_L.gridBackgroundColor =
-            NSUIColor(red: 0.6, green: 0.6, blue: 1.0, alpha: 0.6)
+            NSUIColor(red: 0.5, green: 0.8, blue: 0.95, alpha: 0.6)
         chartView_R.gridBackgroundColor =
             NSUIColor(red: 1.0, green: 0.6, blue: 0.6, alpha: 0.6)
         

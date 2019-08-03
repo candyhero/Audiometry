@@ -118,11 +118,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Progress: __%" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f05-pX-Q5d">
+                                <rect key="frame" x="1046" y="20" width="300" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="Auq-RT-y51"/>
+                                    <constraint firstAttribute="width" constant="300" id="Zyu-SN-soM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="1EF-nR-31E" firstAttribute="trailing" secondItem="5kn-ku-J6l" secondAttribute="trailingMargin" id="2Jx-RE-rva"/>
                             <constraint firstItem="2Uk-Sk-nqx" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="6VY-Yg-3qc"/>
+                            <constraint firstItem="f05-pX-Q5d" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="7oj-sf-Xjm"/>
                             <constraint firstItem="Bpw-UR-4Wm" firstAttribute="centerY" secondItem="5kn-ku-J6l" secondAttribute="centerY" id="7pR-p5-J6h"/>
                             <constraint firstItem="2Uk-Sk-nqx" firstAttribute="leading" secondItem="5kn-ku-J6l" secondAttribute="leadingMargin" id="Cx6-XU-vK9"/>
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="leading" secondItem="yRV-Wa-CQF" secondAttribute="trailing" constant="20" id="FzC-JQ-E9D"/>
@@ -137,10 +148,13 @@
                             <constraint firstItem="1bH-v6-7C1" firstAttribute="leading" secondItem="5kn-ku-J6l" secondAttribute="leadingMargin" id="kjV-nR-14o"/>
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="kw1-5z-8iO"/>
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="leading" secondItem="1bH-v6-7C1" secondAttribute="trailing" constant="20" id="l7A-Ly-OfL"/>
+                            <constraint firstItem="f05-pX-Q5d" firstAttribute="trailing" secondItem="5kn-ku-J6l" secondAttribute="trailingMargin" id="sjM-rs-9WI"/>
                             <constraint firstItem="VwC-He-InT" firstAttribute="top" secondItem="1bH-v6-7C1" secondAttribute="bottom" constant="20" id="x2W-Hg-hzA"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="lbInstruction" destination="yRV-Wa-CQF" id="poc-jd-HMn"/>
+                        <outlet property="lbProgress" destination="f05-pX-Q5d" id="x7k-k6-9Vz"/>
                         <outlet property="pbFirstInterval" destination="5eT-zC-Hxs" id="p8s-Ae-X1k"/>
                         <outlet property="pbNoSound" destination="Bpw-UR-4Wm" id="yzq-5B-rVf"/>
                         <outlet property="pbPause" destination="1EF-nR-31E" id="Myd-fk-bql"/>
@@ -153,7 +167,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KuR-MS-Dtq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="250.78124999999997" y="287.5"/>
+            <point key="canvasLocation" x="250.36603221083453" y="287.109375"/>
         </scene>
         <!--Pause View Controller-->
         <scene sceneID="Pic-34-55A">
@@ -361,7 +375,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="oPb-8s-FZZ"/>
-        <segue reference="QZl-a3-Dzc"/>
+        <segue reference="zC6-iA-2Wg"/>
+        <segue reference="N3n-S4-2S0"/>
     </inferredMetricsTieBreakers>
 </document>
