@@ -28,7 +28,10 @@ class AdultTestViewController: UIViewController {
 // Main Flow
 //------------------------------------------------------------------------------
     private func testNewFreq(){
-        let freq: Int = testModel.nextTestFreq()
+        let freq: Int = testModel.getNewTestFreq()
+        let currentProgress: Int = testModel.getCurrentProgress()
+        print("Progress: ", currentProgress)
+        
         // Setup UI for next freq
         DispatchQueue.main.async { [unowned self] in
             let imgDir = "Shape_Icons/"+String(freq)+"Hz"
@@ -109,7 +112,7 @@ class AdultTestViewController: UIViewController {
         
         // DispatchQueue default **
         // Compare test blah
-        let currentPlaycase: Int! = testModel.currentPlayCase()
+        let currentPlaycase: Int! = testModel.getCurrentPlayCase()
         
         // determine next volume level
         var isThresholdFound: Bool!
@@ -129,12 +132,12 @@ class AdultTestViewController: UIViewController {
         }
         
         if(isThresholdFound){ // Done for this freq
-            print(testModel.nextTestFreq())
-            if(testModel.nextTestFreq() < 0) {
+            print(testModel.getNewTestFreq())
+            if(testModel.getNewTestFreq() < 0) {
                 print("Switching to the other ear")
                 testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueSwitchEar", sender: nil)
-            } else if(testModel.nextTestFreq() == 0){
+            } else if(testModel.getNewTestFreq() == 0){
                 // Already tested both ears
                 testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueResult", sender: nil)
