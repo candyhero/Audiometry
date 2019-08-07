@@ -6,7 +6,7 @@ import CoreData
 class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
 //------------------------------------------------------------------------------
-// Local Variables
+// Local Variables  
 //------------------------------------------------------------------------------
     private let _managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext
@@ -45,80 +45,6 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     alertMsg: alertMsg,
                     confirmFunction: deletePatient,
                     uiCtrl: self)
-    }
-    
-    @IBAction func exportAllPatients(_ sender: UIButton) {
-        
-        // if no patient data
-        if(_array_patients.count == 0){
-            return
-        }
-        
-        // Create CSV
-        var csvText = ""
-        var tempText = ""
-        
-        for patientProfile in _array_patients{
-            csvText.append("Patient Name, \(patientProfile.name!)\n")
-            
-            tempText = (patientProfile.timestamp != nil) ?
-                ("Start Time, \(patientProfile.timestamp!)\n") :
-                ("Start Time, N/A\n")
-            csvText.append(tempText)
-            
-            tempText = (patientProfile.endTime != nil) ?
-                ("End Time, \(patientProfile.endTime!)\n") :
-                ("End Time, N/A\n")
-            csvText.append(tempText)
-            
-            tempText = (patientProfile.durationSeconds > 0) ?
-                ("Duration (sec), \(patientProfile.durationSeconds)\n") :
-                ("Duration (sec), N/A\n")
-            csvText.append(tempText)
-            
-            let patientProfileValues = getSortedValues(patientProfile)
-            for values in patientProfileValues{
-                csvText.append(extractPatientProfileValues(values))
-            }
-        }
-        print(csvText)
-        
-        // Create .csv file
-        do {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-            
-            let fileName = "AudiometryPatientExport_\(dateFormatter.string(from: Date())).csv"
-            print("FileName: \(fileName)")
-            
-            let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-            
-            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
-            
-            let activityVC = UIActivityViewController(activityItems: [path!], applicationActivities: [])
-//            activityVC.excludedActivityTypes = [
-//                UIActivity.ActivityType.assignToContact,
-//                UIActivity.ActivityType.saveToCameraRoll,
-//                UIActivity.ActivityType.postToFlickr,
-//                UIActivity.ActivityType.postToVimeo,
-//                UIActivity.ActivityType.postToTencentWeibo,
-//                UIActivity.ActivityType.postToTwitter,
-//                UIActivity.ActivityType.postToFacebook,
-//                UIActivity.ActivityType.openInIBooks
-//            ]
-            present(activityVC, animated: true, completion: nil)
-            
-            if let popOver = activityVC.popoverPresentationController {
-                popOver.sourceView = self.view
-                //popOver.sourceRect =
-                //popOver.barButtonItem
-            }
-            
-        } catch {
-            
-            print("Failed to create file")
-            print("\(error)")
-        }
     }
     
     func extractPatientProfileValues(_ values: PatientProfileValues) -> String{
@@ -169,7 +95,187 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return csvText
     }
     
+    @IBAction func exportAllPatients(_ sender: UIButton) {
+        
+        // if no patient data
+        if(_array_patients.count == 0){
+            return
+        }
+        
+        // Create CSV
+        var csvText = ""
+        var tempText = ""
+        
+        for patientProfile in _array_patients{
+            csvText.append("Patient Name, \(patientProfile.name!)\n")
+            
+            tempText = (patientProfile.timestamp != nil) ?
+                ("Start Time, \(patientProfile.timestamp!)\n") :
+                ("Start Time, N/A\n")
+            csvText.append(tempText)
+            
+            tempText = (patientProfile.endTime != nil) ?
+                ("End Time, \(patientProfile.endTime!)\n") :
+                ("End Time, N/A\n")
+            csvText.append(tempText)
+            
+            tempText = (patientProfile.durationSeconds > 0) ?
+                ("Duration(sec), \(patientProfile.durationSeconds)\n") :
+                ("Duration(sec), N/A\n")
+            csvText.append(tempText)
+            
+            let patientProfileValues = getSortedValues(patientProfile)
+            for values in patientProfileValues{
+                csvText.append(extractPatientProfileValues(values))
+            }
+        }
+        //print(csvText)
+        
+        // Create .csv file
+        do {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+            
+            let fileName = "AudiometryPatientExport_\(dateFormatter.string(from: Date())).csv"
+            print("FileName: \(fileName)")
+            
+            let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+            
+            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
+            
+            let activityVC = UIActivityViewController(activityItems: [path!], applicationActivities: [])
+//            activityVC.excludedActivityTypes = [
+//                UIActivity.ActivityType.assignToContact,
+//                UIActivity.ActivityType.saveToCameraRoll,
+//                UIActivity.ActivityType.postToFlickr,
+//                UIActivity.ActivityType.postToVimeo,
+//                UIActivity.ActivityType.postToTencentWeibo,
+//                UIActivity.ActivityType.postToTwitter,
+//                UIActivity.ActivityType.postToFacebook,
+//                UIActivity.ActivityType.openInIBooks
+//            ]
+            present(activityVC, animated: true, completion: nil)
+            
+            if let popOver = activityVC.popoverPresentationController {
+                popOver.sourceView = self.view
+                //popOver.sourceRect =
+                //popOver.barButtonItem
+            }
+            
+        } catch {
+            
+            print("Failed to create file")
+            print("\(error)")
+        }
+    }
     
+    @IBAction func exportAllPatientsInRows(_ sender: UIButton){
+        // if no patient data
+        if(_array_patients.count == 0){
+            return
+        }
+        
+        // Create CSV
+        var csvText = ""
+        
+        csvText.append("Patient Name,")
+        csvText.append("Start Time,")
+        csvText.append("End Time,")
+        csvText.append("Duration(sec),")
+        
+        csvText.append("Result(L),")
+        for FREQ in ARRAY_DEFAULT_FREQ{
+            csvText.append("\(FREQ),")
+        }
+        csvText.append("Result(R),")
+        for FREQ in ARRAY_DEFAULT_FREQ{
+            csvText.append("\(FREQ),")
+        }
+        csvText.append("\n")
+        
+        for patientProfile in _array_patients{
+            csvText.append( "\(patientProfile.name!),")
+            csvText.append(
+                (patientProfile.timestamp != nil) ?
+                    "\(patientProfile.timestamp!)," : "N/A,"
+            )
+            csvText.append(
+                (patientProfile.endTime != nil) ?
+                    "\(patientProfile.endTime!)," : "N/A,"
+            )
+            csvText.append(
+                (patientProfile.durationSeconds > 0) ?
+                    "\(patientProfile.durationSeconds)," : "N/A,"
+            )
+            
+            let patientProfileValues = getSortedValues(patientProfile)
+            var dict_threshold_L = [Int:Int]()
+            var dict_threshold_R = [Int:Int]()
+            
+            for values in patientProfileValues{
+                dict_threshold_L[Int(values.frequency)] = Int(values.threshold_L)
+                dict_threshold_R[Int(values.frequency)] = Int(values.threshold_R)
+            }
+            
+            csvText.append( ",")
+            for FREQ in ARRAY_DEFAULT_FREQ{
+                let threshold_L = dict_threshold_L[FREQ, default:0]
+                switch threshold_L{
+                case 0:
+                    csvText.append(",")
+                    break
+                case -1:
+                    csvText.append("NR,")
+                    break
+                default:
+                    csvText.append("\(threshold_L),")
+                }
+            }
+            csvText.append( ",")
+            for FREQ in ARRAY_DEFAULT_FREQ{
+                let threshold_R = dict_threshold_R[FREQ, default:0]
+                switch threshold_R{
+                case 0:
+                    csvText.append(",")
+                    break
+                case -1:
+                    csvText.append("NR,")
+                    break
+                default:
+                    csvText.append("\(threshold_R),")
+                }
+            }
+            
+            csvText.append("\n")
+        }
+        //print(csvText)
+        
+        // Create .csv file
+        do {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+            
+            let fileName = "AudiometryPatientExport_\(dateFormatter.string(from: Date())).csv"
+            print("FileName: \(fileName)")
+            
+            let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+            
+            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
+            
+            let activityVC = UIActivityViewController(activityItems: [path!], applicationActivities: [])
+            
+            present(activityVC, animated: true, completion: nil)
+            
+            if let popOver = activityVC.popoverPresentationController {
+                popOver.sourceView = self.view
+            }
+            
+        } catch {
+            
+            print("Failed to create file")
+            print("\(error)")
+        }
+    }
 //------------------------------------------------------------------------------
 // TableView Functions
 //------------------------------------------------------------------------------

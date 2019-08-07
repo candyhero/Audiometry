@@ -53,6 +53,10 @@ class TestModel {
 //------------------------------------------------------------------------------
 // Getter functions
 //------------------------------------------------------------------------------
+    func getTestLauguage() -> String{
+        return _globalSetting.testLanguage ?? "Invalid"
+    }
+    
     func getNewTestFreq() -> Int{
         return _currentFreq
     }
@@ -74,7 +78,7 @@ class TestModel {
 //------------------------------------------------------------------------------
 // Initialize Settings
 //------------------------------------------------------------------------------
-    init() {
+    private func loadGlobalSetting() {
         // fetch global setting
         let request:NSFetchRequest<GlobalSetting> =
             GlobalSetting.fetchRequest()
@@ -98,6 +102,10 @@ class TestModel {
             print("Could not fetch global setting.")
             print("\(error), \(error.userInfo)")
         }
+    }
+    
+    init() {
+        loadGlobalSetting()
         
         _isPractice = _globalSetting.patientProfile?.isPractice
         _isAdult = _globalSetting.patientProfile?.isAdult

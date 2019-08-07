@@ -6,14 +6,14 @@ class AdultTestViewController: UIViewController {
 //------------------------------------------------------------------------------
 // Local Variables
 //------------------------------------------------------------------------------
-    private var testModel = TestModel()
+    private var _testModel = TestModel()
     
     // Used by animator
     private var timer, firstTimer, secondTimer: Timer?
     private var pulseCounter: Int!
     
     private var buttonCounter: Int!
-    private var lastButton: UIButton!
+    private var pbLastClicked: UIButton!
     
     @IBOutlet private weak var svIcons: UIStackView!
     
@@ -29,32 +29,34 @@ class AdultTestViewController: UIViewController {
 //------------------------------------------------------------------------------
 // Main Flow
 //------------------------------------------------------------------------------
+    private func loadButtonUI() {
+        let freq: Int = _testModel.getNewTestFreq()
+        let imgDir = "Shape_Icons/"+String(freq)+"Hz"
+        let img = UIImage(named:imgDir)?.withRenderingMode(.alwaysOriginal)
+        
+        print(freq, imgDir)
+        
+        self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
+        self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
+        
+        self.pbFirstInterval.setImage(img, for: .normal)
+        self.pbSecondInterval.setImage(img, for: .normal)
+        
+        self.pbFirstInterval.adjustsImageWhenHighlighted = false
+        self.pbSecondInterval.adjustsImageWhenHighlighted = false
+    }
+    
     private func testNewFreq(){
         pulseCounter = 0
         buttonCounter = 0
         
-        let freq: Int = testModel.getNewTestFreq()
-        let currentProgress: Int = testModel.getCurrentProgress()
-        
         // Setup UI for next freq
         DispatchQueue.main.async { [unowned self] in
-            // Loading Pictures
-            let imgDir = "Shape_Icons/"+String(freq)+"Hz"
-            let img = UIImage(named:imgDir)?.withRenderingMode(.alwaysOriginal)
+            // Loading Progress Caption
+            let currentProgress: Int = self._testModel.getCurrentProgress()
+            self.lbProgress.text = "Test Progress: \(currentProgress)%"
             
-            print(freq, imgDir)
-            
-            self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
-            self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
-            
-            self.pbFirstInterval.setImage(img, for: .normal)
-            self.pbSecondInterval.setImage(img, for: .normal)
-            
-            self.pbFirstInterval.adjustsImageWhenHighlighted = false
-            self.pbSecondInterval.adjustsImageWhenHighlighted = false
-            
-            // Loading Captions
-            self.lbProgress.text = "Test Progress: "+String(currentProgress)+"%"
+            self.loadButtonUI()
         }
         
         // run test
@@ -68,7 +70,7 @@ class AdultTestViewController: UIViewController {
     
     @objc func testNextDB() {
         DispatchQueue.main.async { [unowned self] in
-            self.testModel.playSignalCase()
+            self._testModel.playSignalCase()
             self.pulseAnimation(0)
         }
     }
@@ -79,7 +81,7 @@ class AdultTestViewController: UIViewController {
     @IBAction private func repeatPlaying(_ sender: UIButton) {
         pulseToggle(isPlaying: true)
         pulseAnimation(0)
-        testModel.replaySignalCase()
+        _testModel.replaySignalCase()
     }
     
     @IBAction private func pausePlaying(_ sender: UIButton) {
@@ -90,7 +92,7 @@ class AdultTestViewController: UIViewController {
         secondTimer?.invalidate()
         timer?.invalidate()
         pulseCounter = 0
-        testModel.pausePlaying()
+        _testModel.pausePlaying()
     }
 
 //------------------------------------------------------------------------------
@@ -100,7 +102,7 @@ class AdultTestViewController: UIViewController {
         pausePlaying(sender)
         
         //Check if same button 5 times in a row
-        if(sender == lastButton ?? nil){
+        if(sender == pbLastClicked ?? nil){
             buttonCounter += 1
         }
         else {
@@ -116,38 +118,38 @@ class AdultTestViewController: UIViewController {
         }
         
         print("Button Spam Count: ", buttonCounter)
-        lastButton = sender
+        pbLastClicked = sender
         
         // DispatchQueue default **
         // Compare test blah
-        let currentPlaycase: Int! = testModel.getCurrentPlayCase()
+        let currentPlaycase: Int! = _testModel.getCurrentPlayCase()
         
         // determine next volume level
         var isThresholdFound: Bool!
         
         switch currentPlaycase {
         case 0: // Slient interval
-            isThresholdFound = testModel.checkNoSound(sender == pbNoSound)
+            isThresholdFound = _testModel.checkNoSound(sender == pbNoSound)
             break
         case 1: // First interval
-            isThresholdFound = testModel.checkThreshold(sender == pbFirstInterval)
+            isThresholdFound = _testModel.checkThreshold(sender == pbFirstInterval)
             break
         case 2: // Second interval
-            isThresholdFound = testModel.checkThreshold(sender == pbSecondInterval)
+            isThresholdFound = _testModel.checkThreshold(sender == pbSecondInterval)
             break
         default:
             break
         }
         
         if(isThresholdFound){ // Done for this freq
-            print(testModel.getNewTestFreq())
-            if(testModel.getNewTestFreq() < 0) {
+            print(_testModel.getNewTestFreq())
+            if(_testModel.getNewTestFreq() < 0) {
                 print("Switching to the other ear")
-                testModel.terminatePlayer()
+                _testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueSwitchEar", sender: nil)
-            } else if(testModel.getNewTestFreq() == 0){
+            } else if(_testModel.getNewTestFreq() == 0){
                 // Already tested both ears
-                testModel.terminatePlayer()
+                _testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueResult", sender: nil)
             } else {
                 testNewFreq()
@@ -246,6 +248,14 @@ class AdultTestViewController: UIViewController {
 //------------------------------------------------------------------------------
 // Initialize View
 //------------------------------------------------------------------------------
+    
+    private func loadPortuguse(){
+        lbInstruction.text = PORT_ADULT_INSTRCUTION_TEXT
+        pbNoSound.setTitle(PORT_SILENCE_TEXT, for: .normal)
+        pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
+        pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -253,8 +263,19 @@ class AdultTestViewController: UIViewController {
         let imgNoSound = UIImage(named: "Shape_Icons/no_sound")
         pbNoSound.setBackgroundImage(imgNoSound, for: .normal)
         pbNoSound.adjustsImageWhenHighlighted = false
-        toggleButtons(toggle: false)
         
+        switch _testModel.getTestLauguage(){
+        case "Invalid":
+            print("Invalid language option!!")
+            break
+        case "Portuguese":
+            print("Loading Portugese...")
+            loadPortuguse()
+        default:
+            break
+        }
+        
+        toggleButtons(toggle: false)
         testNewFreq()
     }
     
@@ -262,4 +283,3 @@ class AdultTestViewController: UIViewController {
         return false
     }
 }
-

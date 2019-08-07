@@ -20,6 +20,8 @@ class PracticeViewController: UIViewController {
     
     private var _currentPickerIndex: Int = 0;
     
+    private var _testLanguage: String = "English"
+    
     //------------------------------------------------------------------------------
     // UI Components
     //------------------------------------------------------------------------------
@@ -28,6 +30,7 @@ class PracticeViewController: UIViewController {
     @IBOutlet weak var svFreq: UIStackView!
     @IBOutlet weak var lbFreqSeq: UILabel!
     @IBOutlet weak var lbEarOrder: UILabel!
+    @IBOutlet weak var lbTestLanguage: UILabel!
     
     //------------------------------------------------------------------------------
     // CoreData
@@ -129,6 +132,16 @@ class PracticeViewController: UIViewController {
     //------------------------------------------------------------------------------
     // Test Settings
     //------------------------------------------------------------------------------
+    @IBAction func switchToEnglish(_ sender: UIButton) {
+        _testLanguage = "English"
+        lbTestLanguage.text = _testLanguage
+    }
+    
+    @IBAction func switchToPortuguese(_ sender: UIButton) {
+        _testLanguage = "Portuguese"
+        lbTestLanguage.text = _testLanguage
+    }
+    
     @IBAction func setLeftFirst(_ sender: UIButton) {
         _globalSetting.isTestingLeft = true
         _globalSetting.isTestingBoth = true
@@ -252,10 +265,13 @@ class PracticeViewController: UIViewController {
         profile.isAdult = isAdult
         profile.isPractice = true
         
+        _globalSetting.patientProfile = profile
+        
         _globalSetting.testFrequencySequence = _array_testFreqSeq
+        _globalSetting.testLanguage = _testLanguage
+        
         _globalSetting.currentTestCount = 0
         _globalSetting.totalTestCount = Int16(_globalSetting.isTestingBoth ? _array_testFreqSeq.count*2 : _array_testFreqSeq.count)
-        _globalSetting.patientProfile = profile
         
         do{
             try _managedContext.save()
@@ -303,7 +319,7 @@ class PracticeViewController: UIViewController {
         lbFreqSeq.textAlignment = .center
         lbFreqSeq.numberOfLines = 0
         
-        for freq in DEFAULT_FREQ {
+        for freq in ARRAY_DEFAULT_FREQ {
             // Set up buttons
             let new_pbFreq = UIButton(type:.system)
             

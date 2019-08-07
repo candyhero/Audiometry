@@ -19,6 +19,7 @@
         <attribute name="isTestingBoth" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isTestingLeft" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="testFrequencySequence" optional="YES" attributeType="Transformable" customClassName="[Int]" syncable="YES"/>
+        <attribute name="testLanguage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalTestCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="calibrationSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CalibrationSetting" inverseName="globalSetting" inverseEntity="CalibrationSetting" syncable="YES"/>
         <relationship name="patientProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientProfile" inverseName="globalSetting" inverseEntity="PatientProfile" syncable="YES"/>
@@ -63,7 +64,7 @@
     <elements>
         <element name="CalibrationSetting" positionX="-372.671875" positionY="-46.83203125" width="128" height="105"/>
         <element name="CalibrationSettingValues" positionX="-54" positionY="18" width="128" height="135"/>
-        <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="150"/>
+        <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="165"/>
         <element name="PatientProfile" positionX="-180" positionY="81" width="128" height="165"/>
         <element name="PatientProfileValues" positionX="-171" positionY="90" width="128" height="315"/>
         <element name="TestSetting" positionX="-189" positionY="63" width="128" height="120"/>

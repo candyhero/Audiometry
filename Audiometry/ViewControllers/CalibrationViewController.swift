@@ -62,7 +62,7 @@ class CalibrationViewController: UIViewController {
         pbSaveCurrent.isEnabled = true
         pbDeleteCurrent.isEnabled = true
         
-        for freq in DEFAULT_FREQ {
+        for freq in ARRAY_DEFAULT_FREQ {
             let values = NSEntityDescription.insertNewObject(
                 forEntityName: "CalibrationSettingValues",
                 into: managedContext) as! CalibrationSettingValues
@@ -273,7 +273,7 @@ class CalibrationViewController: UIViewController {
         setupStackview(svMeasuredLv_L)
         setupStackview(svMeasuredLv_R)
         
-        for freq in DEFAULT_FREQ {
+        for freq in ARRAY_DEFAULT_FREQ {
             let settingUI = SettingUI(freq: freq)
             settingUI.pbPlay.addTarget(self,
                                        action: #selector(toggleSingal(_:)),
