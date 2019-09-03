@@ -110,13 +110,14 @@ class ChildrenTestViewController: UIViewController {
         
         if(buttonCounter >= 4){
             buttonCounter = 0
+            _testModel.increaseSpamCount()
             
             errorPrompt(
                 errorMsg: "Please ask for re-instrcution.",
                 uiCtrl: self)
         }
         
-        print("Button Spam Count: ", buttonCounter)
+//        print("Button Spam Count: ", buttonCounter)
         lastButton = sender
         
         // DispatchQueue default **
@@ -141,7 +142,7 @@ class ChildrenTestViewController: UIViewController {
         }
         
         if(isThresholdFound){ // Done for this freq
-            print(_testModel.getNewTestFreq())
+//            print("Next Freq: ", _testModel.getNewTestFreq())
             if(_testModel.getNewTestFreq() < 0) {
                 print("Switching to the other ear")
                 _testModel.terminatePlayer()

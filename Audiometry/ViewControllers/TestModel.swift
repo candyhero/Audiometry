@@ -50,6 +50,8 @@ class TestModel {
     private var _noSoundCount: Int = 0
     private var _noSoundCorrect: Int = 0
     
+    private var _spamCounter: Int = 0
+    
 //------------------------------------------------------------------------------
 // Getter functions
 //------------------------------------------------------------------------------
@@ -146,6 +148,9 @@ class TestModel {
         _startTime = Date()
         
         _flag_initialPhase = true
+        
+        _spamCounter = 0
+        
         _maxDBTrials = 0
         _noSoundCount = 0
         _noSoundCorrect = 0
@@ -330,7 +335,7 @@ class TestModel {
     }
     
     // Wrap up test results on this frequency round
-    func endTest(_ thresholdDB: Int!){
+    private func endTest(_ thresholdDB: Int!){
         _endTime = Date()
         
         // Setup patient profile values for CoreData
@@ -347,6 +352,7 @@ class TestModel {
             newValues.responses_L = _array_responses
             newValues.no_sound_count_L = Int16(_noSoundCount)
             newValues.no_sound_correct_L = Int16(_noSoundCorrect)
+            newValues.spamCount_L = Int16(_spamCounter)
             
             newValues.startTime_L = _startTime
             newValues.endTime_L = _endTime
@@ -358,6 +364,7 @@ class TestModel {
             newValues.responses_R = _array_responses
             newValues.no_sound_count_R = Int16(_noSoundCount)
             newValues.no_sound_correct_R = Int16(_noSoundCorrect)
+            newValues.spamCount_R = Int16(_spamCounter)
             
             newValues.startTime_R = _startTime
             newValues.endTime_R = _endTime
@@ -392,6 +399,11 @@ class TestModel {
         }
         
         print("Test Count: ", _globalSetting.patientProfile?.values?.count)
+    }
+    
+    func increaseSpamCount() {
+        _spamCounter += 1
+        print(_spamCounter)
     }
     
     func terminatePlayer() {
