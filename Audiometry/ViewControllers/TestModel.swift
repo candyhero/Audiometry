@@ -384,6 +384,8 @@ class TestModel {
                 _currentFreq = -1
                 _globalSetting.isTestingBoth = false
                 _globalSetting.isTestingLeft = !(_globalSetting.isTestingLeft)
+                _globalSetting.patientProfile?.earOrder = _globalSetting.isTestingLeft ? "RL" : "LR"
+//                print(_globalSetting.patientProfile?.earOrder)
             } else {
                 _currentFreq = 0
             }

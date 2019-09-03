@@ -305,6 +305,10 @@ class ProtocolViewController: UIViewController {
         profile.isAdult = isAdult
         profile.isPractice = false
         
+        profile.earOrder = _globalSetting.isTestingLeft ? "L" : "R"
+        profile.frequencyOrder = _array_testFreqSeq
+        print(profile)
+        
         _globalSetting.patientProfile = profile
         
         _globalSetting.testFrequencySequence = _array_testFreqSeq
