@@ -31,17 +31,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="tby-38-t5r">
-                                <rect key="frame" x="20" y="20" width="97" height="152"/>
+                                <rect key="frame" x="20" y="461" width="100" height="102"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YKS-n1-fbd">
-                                        <rect key="frame" x="0.0" y="0.0" width="97" height="30"/>
-                                        <state key="normal" title="Return to Title"/>
-                                        <connections>
-                                            <segue destination="EJU-Ww-3zb" kind="showDetail" id="jFb-rL-OgV"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHW-Ue-LL4">
-                                        <rect key="frame" x="0.0" y="50" width="97" height="41"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="41"/>
                                         <color key="backgroundColor" red="1" green="0.58546906399999998" blue="0.0072833478759999999" alpha="0.29612585619999998" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <state key="normal" title="Repeat">
@@ -52,7 +45,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vga-Ag-dLw">
-                                        <rect key="frame" x="0.0" y="111" width="97" height="41"/>
+                                        <rect key="frame" x="0.0" y="61" width="100" height="41"/>
                                         <color key="backgroundColor" red="0.45009386540000001" green="0.98132258650000004" blue="0.4743030667" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <state key="normal" title="Pause">
@@ -65,7 +58,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="lHW-Ue-LL4" secondAttribute="trailing" id="2QF-vJ-2jt"/>
-                                    <constraint firstItem="lHW-Ue-LL4" firstAttribute="top" secondItem="YKS-n1-fbd" secondAttribute="bottom" constant="20" id="OfW-DK-8tB"/>
+                                    <constraint firstAttribute="width" constant="100" id="TE8-up-hER"/>
                                     <constraint firstAttribute="trailing" secondItem="vga-Ag-dLw" secondAttribute="trailing" id="Wep-MX-KU6"/>
                                     <constraint firstItem="vga-Ag-dLw" firstAttribute="top" secondItem="lHW-Ue-LL4" secondAttribute="bottom" constant="20" id="iuk-nE-Dyz"/>
                                 </constraints>
@@ -127,19 +120,28 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YKS-n1-fbd">
+                                <rect key="frame" x="20" y="20" width="97" height="30"/>
+                                <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <segue destination="EJU-Ww-3zb" kind="showDetail" id="jFb-rL-OgV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="E4k-zd-n8R" firstAttribute="centerY" secondItem="g7X-uX-xcW" secondAttribute="centerY" id="2ct-Du-ykX"/>
                             <constraint firstItem="E4k-zd-n8R" firstAttribute="leading" secondItem="Qrf-f3-cWA" secondAttribute="trailing" constant="20" id="46u-oQ-lgp"/>
+                            <constraint firstItem="YKS-n1-fbd" firstAttribute="leading" secondItem="g7X-uX-xcW" secondAttribute="leadingMargin" id="F6G-kl-1RB"/>
                             <constraint firstItem="E4k-zd-n8R" firstAttribute="trailing" secondItem="g7X-uX-xcW" secondAttribute="trailingMargin" id="Gqf-gz-tya"/>
                             <constraint firstItem="Qrf-f3-cWA" firstAttribute="centerX" secondItem="g7X-uX-xcW" secondAttribute="centerX" id="HhJ-Yn-7lb"/>
                             <constraint firstItem="tby-38-t5r" firstAttribute="leading" secondItem="g7X-uX-xcW" secondAttribute="leadingMargin" id="O1Q-GD-XOx"/>
-                            <constraint firstItem="tby-38-t5r" firstAttribute="top" secondItem="04J-ds-2E9" secondAttribute="bottom" id="R9W-g7-Wij"/>
                             <constraint firstItem="zaA-u9-UI4" firstAttribute="top" secondItem="04J-ds-2E9" secondAttribute="bottom" id="Tgh-Ci-cdz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zaA-u9-UI4" secondAttribute="trailing" id="Ymj-E8-QiV"/>
                             <constraint firstItem="Qrf-f3-cWA" firstAttribute="top" secondItem="04J-ds-2E9" secondAttribute="bottom" id="bTV-LM-LXJ"/>
                             <constraint firstItem="e3Z-ae-l6w" firstAttribute="top" secondItem="Qrf-f3-cWA" secondAttribute="bottom" id="iVc-gX-naP"/>
+                            <constraint firstItem="YKS-n1-fbd" firstAttribute="top" secondItem="04J-ds-2E9" secondAttribute="bottom" id="l58-NB-0mm"/>
+                            <constraint firstItem="tby-38-t5r" firstAttribute="centerY" secondItem="g7X-uX-xcW" secondAttribute="centerY" id="t2T-CU-pJB"/>
                             <constraint firstItem="Qrf-f3-cWA" firstAttribute="width" secondItem="Qrf-f3-cWA" secondAttribute="height" multiplier="2:3" id="yIe-rK-gHj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ovi-i9-N4h"/>
@@ -358,7 +360,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="2bL-Pn-Pg0"/>
         <segue reference="jFb-rL-OgV"/>
-        <segue reference="6KL-Kd-kyS"/>
+        <segue reference="dML-5R-KJR"/>
     </inferredMetricsTieBreakers>
 </document>
