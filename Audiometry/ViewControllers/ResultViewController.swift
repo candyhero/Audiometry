@@ -296,9 +296,10 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
                          for: .touchUpInside)
         
         let patient = _array_patients[section]
-        let tag = (patient.isAdult) ? "(Adult)":"(Child)"
-        let tag2 = (patient.isPractice) ? "[Practice]" : ""
-        let title = (patient.name ?? "NAME_ERROR") + tag + tag2
+        let title = "[\(patient.group ?? "NO_GROUP")] \(patient.name ?? "NO_NAME")"
+            + "\(patient.isAdult ? "(Adult)":"(Child)")"
+            + "\(patient.isPractice ? "[Practice]" : "")"
+        
         button.setTitle(title, for: .normal)
         button.tag = section
         

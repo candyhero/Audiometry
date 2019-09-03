@@ -49,6 +49,8 @@
         <attribute name="responses_R" optional="YES" attributeType="Transformable" customClassName="[Int]" syncable="YES"/>
         <attribute name="results_L" optional="YES" attributeType="Transformable" customClassName="[Int]" syncable="YES"/>
         <attribute name="results_R" optional="YES" attributeType="Transformable" customClassName="[Int]" syncable="YES"/>
+        <attribute name="spamCount_L" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="spamCount_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="startTime_L" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="startTime_R" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="threshold_L" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -67,7 +69,7 @@
         <element name="CalibrationSettingValues" positionX="-54" positionY="18" width="128" height="135"/>
         <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="165"/>
         <element name="PatientProfile" positionX="-180" positionY="81" width="128" height="180"/>
-        <element name="PatientProfileValues" positionX="-171" positionY="90" width="128" height="315"/>
+        <element name="PatientProfileValues" positionX="-171" positionY="90" width="128" height="345"/>
         <element name="TestSetting" positionX="-189" positionY="63" width="128" height="120"/>
     </elements>
 </model>
