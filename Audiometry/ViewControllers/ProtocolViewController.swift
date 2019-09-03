@@ -230,23 +230,62 @@ class ProtocolViewController: UIViewController {
             return
         }
         
-        // Prompt for user to input setting name
-        inputPrompt(promptMsg: "Please Enter Patient's Name:",
-                    errorMsg: "Patient name cannot be empty!",
-                    fieldMsg: "i.e. John Smith 1",
-                    confirmFunction: {(patientName: String) -> Void in
-                        self.savePatientProfile(patientName, isAdult)
-                        
-                        if(isAdult){
-                            self.performSegue(withIdentifier: "segueAdultTest", sender: nil)
-                        } else {
-                            self.performSegue(withIdentifier: "segueChildrenTest", sender: nil)
-                        }
-                    },
-                    uiCtrl: self)
+        // Double Textfield Prompt
+        let alertCtrl = UIAlertController(
+            title: "Save",
+            message: "Please Enter Patient's Group & Name:",
+            preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
+            (_) in
+            
+            if let groupField = alertCtrl.textFields?[0],
+                let nameField = alertCtrl.textFields?[1]{
+                
+                if(groupField.text!.count == 0) {
+                    errorPrompt(errorMsg: "Patient group cannot be empty!",
+                                uiCtrl: self)
+                }
+                else if(nameField.text!.count == 0) {
+                    errorPrompt(errorMsg: "Patient name cannot be empty!",
+                                uiCtrl: self)
+                }
+                else {
+                    self.savePatientProfile(groupField.text!,
+                                            nameField.text!,
+                                            isAdult)
+                    
+                    if(isAdult){
+                        self.performSegue(withIdentifier: "segueAdultTest",
+                                          sender: nil)
+                    } else {
+                        self.performSegue(withIdentifier: "segueChildrenTest",
+                                          sender: nil)
+                    }
+                }
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel) {(_) in }
+        
+        alertCtrl.addTextField { (textField) in
+            textField.placeholder = "Patient's Group"
+        }
+        
+        alertCtrl.addTextField { (textField) in
+            textField.placeholder = "Patient's Name, i.e. John Smith 1"
+        }
+        
+        alertCtrl.addAction(confirmAction)
+        alertCtrl.addAction(cancelAction)
+        
+        self.present(alertCtrl, animated: true, completion: nil)
     }
     
-    func savePatientProfile(_ patientName: String, _ isAdult: Bool) {
+    func savePatientProfile(_ patientGroup: String,
+                            _ patientName: String,
+                            _ isAdult: Bool) {
         //        // Format date
         //        let date = NSDate();
         //        let dateFormatter = DateFormatter()
@@ -261,6 +300,7 @@ class ProtocolViewController: UIViewController {
             into: _managedContext) as! PatientProfile
         
         profile.name = patientName
+        profile.group = patientGroup
         profile.timestamp = Date()
         profile.isAdult = isAdult
         profile.isPractice = false

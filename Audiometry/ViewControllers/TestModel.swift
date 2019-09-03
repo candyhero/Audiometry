@@ -9,7 +9,7 @@ class TestModel {
 //------------------------------------------------------------------------------
     private let _SYSTEM_DEFAULT_DB = 50
     private let _TEST_MAX_DB = 100
-    private let _TEST_MIN_DB_ADULT = 20
+    private let _TEST_MIN_DB_ADULT = 15
     private let _TEST_MIN_DB_CHILD = 15
     
 //------------------------------------------------------------------------------
