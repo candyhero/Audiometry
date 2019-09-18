@@ -47,211 +47,14 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     uiCtrl: self)
     }
     
-    func extractPatientProfileValues(_ values: PatientProfileValues) -> String{
-        var csvText = ""
-        
-        if(values.results_L != nil){
-            csvText.append(" , Frequency, \(values.frequency), Left\n")
-            // Print left values
-            csvText.append(" , , Threshold Level, \(values.threshold_L)\n")
-            // Arrays
-            csvText.append(" , , Sound Levels")
-            for level in values.results_L!{
-                csvText.append(", \(level)")
-            }
-            csvText.append("\n")
-            csvText.append(" , , Response Correctness")
-            for response in values.responses_L ?? [] {
-                csvText.append(", \(response)")
-            }
-            csvText.append("\n")
-            //
-            csvText.append(" , , # of No Sound Responses, \(values.no_sound_count_L)\n")
-            csvText.append(" , , # of Correct No Sound Responses, \(values.no_sound_correct_L)\n")
-            csvText.append("\n")
-        }
-        
-        if(values.results_R != nil){
-            csvText.append(" , Frequency, \(values.frequency), Right\n")
-            // Print left values
-            csvText.append(" , , Threshold Level, \(values.threshold_R)\n")
-            // Arrays
-            csvText.append(" , , Sound Levels")
-            for level in values.results_R!{
-                csvText.append(", \(level)")
-            }
-            csvText.append("\n")
-            csvText.append(" , , Response Correctness")
-            for response in values.responses_R ?? [] {
-                csvText.append(", \(response)")
-            }
-            csvText.append("\n")
-            //
-            csvText.append(" , , # of No Sound Responses, \(values.no_sound_count_R)\n")
-            csvText.append(" , , # of Correct No Sound Responses, \(values.no_sound_correct_R)\n")
-            csvText.append("\n")
-        }
-        
-        return csvText
-    }
-    
-    @IBAction func exportAllPatients(_ sender: UIButton) {
-        
+    @IBAction func exportAllPatients(_ sender: UIButton){
         // if no patient data
         if(_array_patients.count == 0){
             return
         }
         
-        // Create CSV
-        var csvText = ""
-        var tempText = ""
-        
-        for patientProfile in _array_patients{
-            csvText.append("Patient Name, \(patientProfile.name!)\n")
-            
-            tempText = (patientProfile.timestamp != nil) ?
-                ("Start Time, \(patientProfile.timestamp!)\n") :
-                ("Start Time, N/A\n")
-            csvText.append(tempText)
-            
-            tempText = (patientProfile.endTime != nil) ?
-                ("End Time, \(patientProfile.endTime!)\n") :
-                ("End Time, N/A\n")
-            csvText.append(tempText)
-            
-            tempText = (patientProfile.durationSeconds > 0) ?
-                ("Duration(sec), \(patientProfile.durationSeconds)\n") :
-                ("Duration(sec), N/A\n")
-            csvText.append(tempText)
-            
-            let patientProfileValues = getSortedValues(patientProfile)
-            for values in patientProfileValues{
-                csvText.append(extractPatientProfileValues(values))
-            }
-        }
-        //print(csvText)
-        
-        // Create .csv file
         do {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-            
-            let fileName = "AudiometryPatientExport_\(dateFormatter.string(from: Date())).csv"
-            print("FileName: \(fileName)")
-            
-            let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-            
-            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
-            
-            let activityVC = UIActivityViewController(activityItems: [path!], applicationActivities: [])
-//            activityVC.excludedActivityTypes = [
-//                UIActivity.ActivityType.assignToContact,
-//                UIActivity.ActivityType.saveToCameraRoll,
-//                UIActivity.ActivityType.postToFlickr,
-//                UIActivity.ActivityType.postToVimeo,
-//                UIActivity.ActivityType.postToTencentWeibo,
-//                UIActivity.ActivityType.postToTwitter,
-//                UIActivity.ActivityType.postToFacebook,
-//                UIActivity.ActivityType.openInIBooks
-//            ]
-            present(activityVC, animated: true, completion: nil)
-            
-            if let popOver = activityVC.popoverPresentationController {
-                popOver.sourceView = self.view
-                //popOver.sourceRect =
-                //popOver.barButtonItem
-            }
-            
-        } catch {
-            
-            print("Failed to create file")
-            print("\(error)")
-        }
-    }
-    
-    @IBAction func exportAllPatientsInRows(_ sender: UIButton){
-        // if no patient data
-        if(_array_patients.count == 0){
-            return
-        }
-        
-        // Create CSV
-        var csvText = ""
-        
-        csvText.append("Patient Name,")
-        csvText.append("Start Time,")
-        csvText.append("End Time,")
-        csvText.append("Duration(sec),")
-        
-        csvText.append("Result(L),")
-        for FREQ in ARRAY_DEFAULT_FREQ{
-            csvText.append("\(FREQ),")
-        }
-        csvText.append("Result(R),")
-        for FREQ in ARRAY_DEFAULT_FREQ{
-            csvText.append("\(FREQ),")
-        }
-        csvText.append("\n")
-        
-        for patientProfile in _array_patients{
-            csvText.append( "\(patientProfile.name!),")
-            csvText.append(
-                (patientProfile.timestamp != nil) ?
-                    "\(patientProfile.timestamp!)," : "N/A,"
-            )
-            csvText.append(
-                (patientProfile.endTime != nil) ?
-                    "\(patientProfile.endTime!)," : "N/A,"
-            )
-            csvText.append(
-                (patientProfile.durationSeconds > 0) ?
-                    "\(patientProfile.durationSeconds)," : "N/A,"
-            )
-            
-            let patientProfileValues = getSortedValues(patientProfile)
-            var dict_threshold_L = [Int:Int]()
-            var dict_threshold_R = [Int:Int]()
-            
-            for values in patientProfileValues{
-                dict_threshold_L[Int(values.frequency)] = Int(values.threshold_L)
-                dict_threshold_R[Int(values.frequency)] = Int(values.threshold_R)
-            }
-            
-            csvText.append( ",")
-            for FREQ in ARRAY_DEFAULT_FREQ{
-                let threshold_L = dict_threshold_L[FREQ, default:0]
-                switch threshold_L{
-                case 0:
-                    csvText.append(",")
-                    break
-                case -1:
-                    csvText.append("NR,")
-                    break
-                default:
-                    csvText.append("\(threshold_L),")
-                }
-            }
-            csvText.append( ",")
-            for FREQ in ARRAY_DEFAULT_FREQ{
-                let threshold_R = dict_threshold_R[FREQ, default:0]
-                switch threshold_R{
-                case 0:
-                    csvText.append(",")
-                    break
-                case -1:
-                    csvText.append("NR,")
-                    break
-                default:
-                    csvText.append("\(threshold_R),")
-                }
-            }
-            
-            csvText.append("\n")
-        }
-        //print(csvText)
-        
-        // Create .csv file
-        do {
+            let csvText = Audiometry.exportAllPatientsInRows(_array_patients)
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
             
@@ -346,20 +149,6 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let values = getSortedValues(_currentPatient)[indexPath.row]
         
         print(_currentPatient)
-        
-//        if(values.durationSeconds_L > 0){
-//            print("L:")
-//            print(values.startTime_L!)
-//            print(values.endTime_L!)
-//            print(values.durationSeconds_L)
-//        }
-//
-//        if(values.durationSeconds_R > 0){
-//            print("R:")
-//            print(values.startTime_R!)
-//            print(values.endTime_R!)
-//            print(values.durationSeconds_R)
-//        }
 
         // Configure table cell style
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
@@ -370,13 +159,14 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let label_R = (values.threshold_R >= 0) ?
             String(values.threshold_R): "NR"
         
-        var labelText = String(values.frequency) + " Hz ; "
-        labelText += "dB Threshold: (L) " + label_L + " (R) " + label_R + " ; "
-        labelText += "Reliability:"
-            + " (L) " + String(values.no_sound_correct_L) + "/" + String(values.no_sound_count_L)
-            + " (R) " + String(values.no_sound_correct_R) + "/" + String(values.no_sound_count_R)
+        cell.textLabel?.text = "\(String(values.frequency)) Hz ; "
+            + "dB Threshold: (L) \(label_L) (R) \(label_R) ; "
+            + "Reliability:"
+            + " (L) \(String(values.no_sound_correct_L))"
+            + "/\(String(values.no_sound_count_L))"
+            + " (R) \(String(values.no_sound_correct_R))"
+            + "/\(String(values.no_sound_count_R))"
         
-        cell.textLabel?.text = labelText
         cell.textLabel?.font = cell.textLabel?.font.withSize(14)
         cell.textLabel?.textAlignment = .center;
         
@@ -397,16 +187,6 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //------------------------------------------------------------------------------
 // CoreData functions
 //------------------------------------------------------------------------------
-    func getSortedValues(_ patient: PatientProfile) -> [PatientProfileValues]{
-        let sortByFrequency = NSSortDescriptor(
-            key: #keyPath(PatientProfileValues.frequency),
-            ascending: true)
-        let sortedValues = patient.values?.sortedArray(
-            using: [sortByFrequency]) as! [PatientProfileValues]
-        
-        return sortedValues
-    }
-    
     func deletePatient(){
         let indexPath = tbPatients.indexPathForSelectedRow
         
@@ -424,6 +204,40 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //update button tags
         //for button in
     }
+    
+    fileprivate func updateCharts(_ values: PatientProfileValues) {
+        // Set y-axis
+        let max_L = (values.results_L ?? []).max() ?? _DB_SYSTEM_MAX
+        let max_R = (values.results_R ?? []).max() ?? _DB_SYSTEM_MAX
+        let min_L = (values.results_L ?? []).min() ?? _DB_SYSTEM_MIN
+        let min_R = (values.results_R ?? []).min() ?? _DB_SYSTEM_MIN
+        
+        let leftAxis_L = chartView_L.getAxis(YAxis.AxisDependency.left)
+        let leftAxis_R = chartView_R.getAxis(YAxis.AxisDependency.left)
+        
+        leftAxis_L.granularity = ((max_L! - min_L!) > 30) ? 10 : 5
+        leftAxis_R.granularity = ((max_R! - min_R!) > 30) ? 10 : 5
+        
+        let rightAxis_L = chartView_L.getAxis(YAxis.AxisDependency.right)
+        let rightAxis_R = chartView_R.getAxis(YAxis.AxisDependency.right)
+        
+        rightAxis_L.enabled = false
+        rightAxis_R.enabled = false
+        rightAxis_L.drawGridLinesEnabled = false
+        rightAxis_R.drawGridLinesEnabled = false
+        
+        chartView_L.drawGridBackgroundEnabled = true
+        chartView_R.drawGridBackgroundEnabled = true
+        
+        chartView_L.gridBackgroundColor =
+            NSUIColor(red: 0.5, green: 0.8, blue: 0.95, alpha: 0.6)
+        chartView_R.gridBackgroundColor =
+            NSUIColor(red: 1.0, green: 0.6, blue: 0.6, alpha: 0.6)
+        
+        chartView_L.legend.font = NSUIFont.systemFont(ofSize: 16.0)
+        chartView_R.legend.font = NSUIFont.systemFont(ofSize: 16.0)
+    }
+    
     // Plot functions
     func updateGraph(_ values: PatientProfileValues){
         
@@ -434,14 +248,13 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let label_R = (values.threshold_R >= 0) ?
             String(values.threshold_R): "NR"
         
-        var labelText = String(values.frequency) + " Hz ; "
-        labelText += "dB Threshold: (L) " + label_L + " (R) " + label_R + " ; "
-        
-        labelText += "Reliability:"
-            + " (L) " + String(values.no_sound_correct_L) + "/" + String(values.no_sound_count_L)
-            + " (R) " + String(values.no_sound_correct_R) + "/" + String(values.no_sound_count_R)
-        
-        lbFreq.text = labelText
+        lbFreq.text = "\(String(values.frequency)) Hz ; "
+            + "dB Threshold: (L) \(label_L) (R) \(label_R) ; "
+            + "Reliability:"
+            + " (L) \(String(values.no_sound_correct_L))"
+            + "/\(String(values.no_sound_count_L))"
+            + " (R) \(String(values.no_sound_correct_R))"
+            + "/\(String(values.no_sound_count_R))"
         
         var lineChartEntry_L  = [ChartDataEntry]()
         var lineChartEntry_R  = [ChartDataEntry]()
@@ -500,26 +313,6 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         
-        // Set y-axis
-        let max_L = (values.results_L ?? []).max() ?? _DB_SYSTEM_MAX
-        let max_R = (values.results_R ?? []).max() ?? _DB_SYSTEM_MAX
-        let min_L = (values.results_L ?? []).min() ?? _DB_SYSTEM_MIN
-        let min_R = (values.results_R ?? []).min() ?? _DB_SYSTEM_MIN
-        
-        let leftAxis_L = chartView_L.getAxis(YAxis.AxisDependency.left)
-        let leftAxis_R = chartView_R.getAxis(YAxis.AxisDependency.left)
-        
-        leftAxis_L.granularity = ((max_L! - min_L!) > 30) ? 10 : 5
-        leftAxis_R.granularity = ((max_R! - min_R!) > 30) ? 10 : 5
-        
-        let rightAxis_L = chartView_L.getAxis(YAxis.AxisDependency.right)
-        let rightAxis_R = chartView_R.getAxis(YAxis.AxisDependency.right)
-        
-        rightAxis_L.enabled = false
-        rightAxis_R.enabled = false
-        rightAxis_L.drawGridLinesEnabled = false
-        rightAxis_R.drawGridLinesEnabled = false
-        
         //
         let data_L = LineChartData()
         let data_R = LineChartData()
@@ -533,16 +326,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         chartView_L.data = data_L
         chartView_R.data = data_R
         
-        chartView_L.drawGridBackgroundEnabled = true
-        chartView_R.drawGridBackgroundEnabled = true
-        
-        chartView_L.gridBackgroundColor =
-            NSUIColor(red: 0.5, green: 0.8, blue: 0.95, alpha: 0.6)
-        chartView_R.gridBackgroundColor =
-            NSUIColor(red: 1.0, green: 0.6, blue: 0.6, alpha: 0.6)
-        
-        chartView_L.legend.font = NSUIFont.systemFont(ofSize: 16.0)
-        chartView_R.legend.font = NSUIFont.systemFont(ofSize: 16.0)
+        updateCharts(values)
     }
     
     func fetchAllPatientProfiles() {
