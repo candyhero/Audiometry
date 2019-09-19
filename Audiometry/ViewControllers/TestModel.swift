@@ -400,7 +400,7 @@ class TestModel {
             print("\(error), \(error.userInfo)")
         }
         
-        print("Test Count: ", _globalSetting.patientProfile?.values?.count)
+//        print("Test Count: ", _globalSetting.patientProfile?.values?.count)
     }
     
     func increaseSpamCount() {
