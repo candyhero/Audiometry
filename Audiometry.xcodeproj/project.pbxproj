@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DFA9E80DF2176D7579F4F4C /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */; };
 		4E32DA0821C17EAC00002770 /* Shape_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 4E32DA0521C17EAB00002770 /* Shape_Icons */; };
 		4E32DA0921C17EAC00002770 /* Animal_Tones in Resources */ = {isa = PBXBuildFile; fileRef = 4E32DA0621C17EAB00002770 /* Animal_Tones */; };
 		4E32DA0A21C17EAC00002770 /* Animal_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 4E32DA0721C17EAB00002770 /* Animal_Icons */; };
@@ -35,11 +36,10 @@
 		6724711722451F320019BB8B /* PracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6724711622451F320019BB8B /* PracticeViewController.swift */; };
 		67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */; };
 		67DCEF2E22F68A8400C3117F /* CaptionText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DCEF2D22F68A8400C3117F /* CaptionText.swift */; };
-		DFB5839F2D0852BF2E70694E /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA9281A44F4747B4223B59A /* Pods_Audiometry.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		47AC43770DC4F76FAC3883E4 /* Pods-Audiometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.release.xcconfig"; sourceTree = "<group>"; };
+		1C9CAD001E93C5B039521F51 /* Pods-Audiometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.release.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.release.xcconfig"; sourceTree = "<group>"; };
 		4E32DA0521C17EAB00002770 /* Shape_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shape_Icons; sourceTree = "<group>"; };
 		4E32DA0621C17EAB00002770 /* Animal_Tones */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Tones; sourceTree = "<group>"; };
 		4E32DA0721C17EAB00002770 /* Animal_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Icons; sourceTree = "<group>"; };
@@ -56,7 +56,6 @@
 		4E4B3CEF21B03CF000191AF3 /* ProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolViewController.swift; sourceTree = "<group>"; };
 		4E4B3CF121B0FA3500191AF3 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
 		4E4B3CF521B1988000191AF3 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
-		4EC055F521A724E60016AB0D /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EC055F821A724E60016AB0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EC0560221A724E70016AB0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4EC0560521A724E70016AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,13 +66,12 @@
 		4EEDE90D21BFB04600028C60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ChildrenTest.storyboard; sourceTree = "<group>"; };
 		4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTestPlayer.swift; sourceTree = "<group>"; };
 		4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultTestPlayer.swift; sourceTree = "<group>"; };
-		5AA9281A44F4747B4223B59A /* Pods_Audiometry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audiometry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6703415723512E4E00ABFB89 /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6724711622451F320019BB8B /* PracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeViewController.swift; sourceTree = "<group>"; };
 		67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
 		67DCEF2D22F68A8400C3117F /* CaptionText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionText.swift; sourceTree = "<group>"; };
-		7D1C47F07515E0B86F9DF089 /* Pods-AudiometryKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryKids.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids.release.xcconfig"; sourceTree = "<group>"; };
-		85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
-		F0915E4BDAAAB3A042149B05 /* Pods-AudiometryKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryKids.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids.debug.xcconfig"; sourceTree = "<group>"; };
+		6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audiometry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFE8D055F906C3049CD786A8 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,22 +79,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFB5839F2D0852BF2E70694E /* Pods_Audiometry.framework in Frameworks */,
+				0DFA9E80DF2176D7579F4F4C /* Pods_Audiometry.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		30F3E21CF4D8BF0C82C8272F /* Pods */ = {
+		1973150BF9644E63FB60AE81 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F0915E4BDAAAB3A042149B05 /* Pods-AudiometryKids.debug.xcconfig */,
-				7D1C47F07515E0B86F9DF089 /* Pods-AudiometryKids.release.xcconfig */,
-				85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */,
-				47AC43770DC4F76FAC3883E4 /* Pods-Audiometry.release.xcconfig */,
+				AFE8D055F906C3049CD786A8 /* Pods-Audiometry.debug.xcconfig */,
+				1C9CAD001E93C5B039521F51 /* Pods-Audiometry.release.xcconfig */,
 			);
-			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		4E4B3C6B21A7264300191AF3 /* Storyboards */ = {
@@ -152,18 +148,10 @@
 			isa = PBXGroup;
 			children = (
 				4EC055F721A724E60016AB0D /* Audiometry */,
-				4EC055F621A724E60016AB0D /* Products */,
-				30F3E21CF4D8BF0C82C8272F /* Pods */,
-				B719595A35975C73C45D2886 /* Frameworks */,
+				1973150BF9644E63FB60AE81 /* Pods */,
+				B4A70806EF3F3D522B8F549B /* Frameworks */,
+				6703415723512E4E00ABFB89 /* Audiometry.app */,
 			);
-			sourceTree = "<group>";
-		};
-		4EC055F621A724E60016AB0D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4EC055F521A724E60016AB0D /* Audiometry.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		4EC055F721A724E60016AB0D /* Audiometry */ = {
@@ -185,10 +173,10 @@
 			path = Audiometry;
 			sourceTree = "<group>";
 		};
-		B719595A35975C73C45D2886 /* Frameworks */ = {
+		B4A70806EF3F3D522B8F549B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5AA9281A44F4747B4223B59A /* Pods_Audiometry.framework */,
+				6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -212,7 +200,7 @@
 			);
 			name = Audiometry;
 			productName = AudiometryKids;
-			productReference = 4EC055F521A724E60016AB0D /* Audiometry.app */;
+			productReference = 6703415723512E4E00ABFB89 /* Audiometry.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -240,7 +228,7 @@
 				Base,
 			);
 			mainGroup = 4EC055EC21A724E60016AB0D;
-			productRefGroup = 4EC055F621A724E60016AB0D /* Products */;
+			productRefGroup = 4EC055EC21A724E60016AB0D;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -296,20 +284,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -498,10 +481,11 @@
 		};
 		4EC0560B21A724E70016AB0D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */;
+			baseConfigurationReference = AFE8D055F906C3049CD786A8 /* Pods-Audiometry.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S8QF6QA72P;
 				INFOPLIST_FILE = Audiometry/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -513,6 +497,7 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TriCounty.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -522,10 +507,11 @@
 		};
 		4EC0560C21A724E70016AB0D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47AC43770DC4F76FAC3883E4 /* Pods-Audiometry.release.xcconfig */;
+			baseConfigurationReference = 1C9CAD001E93C5B039521F51 /* Pods-Audiometry.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S8QF6QA72P;
 				INFOPLIST_FILE = Audiometry/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -537,6 +523,7 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TriCounty.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

@@ -2,9 +2,10 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-AudiometryKids/Shape_Icons
-AudiometryKids/Animal_Icons
-AudiometryKids/Animal_Tones
+Audiometry/Shape_Icons/
+Audiometry/Animal_Icons/
+Audiometry/Animal_Tones/
+Audiometry/Assets.xcassets/
 
 ## Build generated
 build/
@@ -80,4 +81,3 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
-
