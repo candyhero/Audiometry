@@ -252,7 +252,8 @@ class AdultTestViewController: UIViewController {
     
     private func loadPortuguse(){
         lbInstruction.text = PORT_ADULT_INSTRCUTION_TEXT
-        pbNoSound.setTitle(PORT_SILENCE_TEXT, for: .normal)
+        pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
+        pbNoSound.setTitle("", for: .normal)
         pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
         pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
     }
@@ -261,8 +262,7 @@ class AdultTestViewController: UIViewController {
         super.viewDidLoad()
         
         // Set UI
-        let imgNoSound = UIImage(named: "Shape_Icons/no_sound")
-        pbNoSound.setBackgroundImage(imgNoSound, for: .normal)
+        pbNoSound.setBackgroundImage(UIImage(named: "Shape_Icons/no_sound"), for: .normal)
         pbNoSound.adjustsImageWhenHighlighted = false
         
         switch _testModel.getTestLauguage(){
@@ -272,6 +272,7 @@ class AdultTestViewController: UIViewController {
         case "Portuguese":
             print("Loading Portugese...")
             loadPortuguse()
+            break
         default:
             break
         }

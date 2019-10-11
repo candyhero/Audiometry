@@ -199,9 +199,15 @@ class TestModel {
     private func randomizePlayCase() -> Int {
         let randomInt = _isPractice ? Int.random(in:0 ..< 8) : Int.random(in:0 ..< 12)
         
+        var TEST_MAX_DB = _TEST_MAX_DB
+        if(!_isAdult){
+            let q = Double(_TEST_MAX_DB) - (Z_FACTORS[_currentFreq] ?? 0.0)
+            TEST_MAX_DB = Int((q/5).rounded(.down)) * 5
+        }
+        
         // First trial cannot be no sound
         if(randomInt < 2 && _array_results.count > 0 &&
-            _currentDB != _TEST_MAX_DB && _array_cases.last != 0)
+            _currentDB != TEST_MAX_DB && _array_cases.last != 0)
         {
             return 0
         }
@@ -254,8 +260,14 @@ class TestModel {
     }
     
     func checkThreshold(_ isCorrect: Bool!) -> Bool!{
-        let TEST_MAX_DB = _TEST_MAX_DB
+        
         let TEST_MIN_DB = _isAdult ? _TEST_MIN_DB_ADULT : _TEST_MIN_DB_CHILD
+        var TEST_MAX_DB = _TEST_MAX_DB
+        if(!_isAdult){
+            let q = Double(_TEST_MAX_DB) - (Z_FACTORS[_currentFreq] ?? 0.0)
+            TEST_MAX_DB = Int((q/5).rounded(.down)) * 5
+        }
+        
         // Update current response to tracking list
         let lastDB = _array_results.last
         let lastPlayCase = _array_cases.last

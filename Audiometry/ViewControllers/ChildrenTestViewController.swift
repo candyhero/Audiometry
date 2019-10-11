@@ -264,6 +264,7 @@ class ChildrenTestViewController: UIViewController {
             pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
             pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
             pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
+            break
         default:
             pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
             break

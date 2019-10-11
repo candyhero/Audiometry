@@ -17,6 +17,7 @@ class ChildrenTestPlayer : TestPlayer {
     var adsr: AKAmplitudeEnvelope!
     var delay: AKDelay!
     
+    
     var startTimer: Timer?
     var startTimer2: Timer?
     var stopTimer: Timer?
@@ -25,6 +26,7 @@ class ChildrenTestPlayer : TestPlayer {
     var leftCorrFactor: Double!
     var rightCorrFactor: Double!
     
+    var zFactor: Double!
     var currentVol: Double!
     var isLeft: Bool!
     
@@ -53,6 +55,7 @@ class ChildrenTestPlayer : TestPlayer {
     
     func updateFreq (_ newFreq: Int!) {
         do {
+            zFactor = Z_FACTORS[newFreq] ?? 0.0
             let file = try AKAudioFile(readFileName: "Animal_Tones/"+String(newFreq)+"Hz.wav")
             player.load(audioFile: file)
             player.endTime = PULSE_TIME_CHILDREN * 2
@@ -101,22 +104,21 @@ class ChildrenTestPlayer : TestPlayer {
         self.player.volume = 0
         self.player.play()
         let corrFactor: Double! = isLeft ? leftCorrFactor : rightCorrFactor
-        
+        let playingLevel: Double! = self.currentVol + corrFactor + zFactor
+        print("Playing Actual: ", playingLevel)
         for i in stride(from: 0, through: 1, by: 0.1){
             // Attacking/Ramping up
             DispatchQueue.main.asyncAfter(
                 deadline: .now() + i * ATTACK_TIME, execute:
                 {
-                    self.player.volume = self.dbToAmp(
-                        (self.currentVol + corrFactor) * i)
+                    self.player.volume = self.dbToAmp(playingLevel * i)
             })
             // Decaying/Ramping down
             let t = PULSE_TIME_CHILDREN - (1-i) * RELEASE_TIME
             DispatchQueue.main.asyncAfter(
                 deadline: .now() + t, execute:
                 {
-                    self.player.volume = self.dbToAmp(
-                        (self.currentVol + corrFactor) * (1-i))
+                    self.player.volume = self.dbToAmp(playingLevel * (1-i))
             })
         }
     }

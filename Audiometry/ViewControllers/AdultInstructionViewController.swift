@@ -37,7 +37,8 @@ class AdultInstructionViewController: UIViewController {
     
     private func loadPortuguse(){
         lbCaption.text = PORT_ADULT_CAPTION_TEXT
-        pbNoSound.setTitle(PORT_SILENCE_TEXT, for: .normal)
+        pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
+        pbNoSound.setTitle("", for: .normal)
         pbStart.setTitle(PORT_START_TEXT, for: .normal)
         pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
         pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
@@ -56,8 +57,6 @@ class AdultInstructionViewController: UIViewController {
         self.pbFirstInterval.adjustsImageWhenHighlighted = false
         self.pbSecondInterval.adjustsImageWhenHighlighted = false
         self.pbNoSound.adjustsImageWhenHighlighted = false
-        
-        self.pbNoSound.setBackgroundImage(UIImage(named: "Shape_Icons/no_sound"), for: .normal)
     }
     
     override func viewDidLoad() {
@@ -74,6 +73,7 @@ class AdultInstructionViewController: UIViewController {
                 print("Loading Portugese...")
                 self.loadPortuguse()
             default:
+                self.pbNoSound.setBackgroundImage(UIImage(named: "Shape_Icons/no_sound"), for: .normal)
                 break
             }
             self.loadButtonUI()

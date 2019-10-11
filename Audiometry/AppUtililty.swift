@@ -13,6 +13,15 @@ import UIKit
 let ARRAY_DEFAULT_FREQ: [Int] =
     [250, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000]
 //    [250.0, 500.0, 750.0, 1000.0, 1500.0, 2000.0, 3000.0, 4000.0, 6000.0, 8000.0]
+
+let Z_FACTORS: [Int:Double] =
+    [ 250 : 14.1,
+      500 : 16.2,
+     1000 : 18.5,
+     2000 : 10.6,
+     4000 : 15.3,
+     8000 : 23.0 ]
+
 // Calibration Setting Constants
 let _DB_SYSTEM_MAX: Int! = 105 // At volume amplitude = 1.0
 let _DB_SYSTEM_MIN: Int! = 0 // At volume amplitude = 0.0
