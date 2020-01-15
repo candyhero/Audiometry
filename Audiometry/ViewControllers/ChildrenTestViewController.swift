@@ -45,7 +45,7 @@ class ChildrenTestViewController: UIViewController {
         self.pbSecondInterval.adjustsImageWhenHighlighted = false
     }
     
-    private func testNewFreq(){
+    private func testNewFreq() {
         pulseCounter = 0
         buttonCounter = 0
         
@@ -101,14 +101,14 @@ class ChildrenTestViewController: UIViewController {
         pausePlaying(sender)
         
         //Check if same button 5 times in a row
-        if(sender == lastButton ?? nil){
+        if(sender == lastButton ?? nil) {
             buttonCounter += 1
         }
         else {
             buttonCounter = 0
         }
         
-        if(buttonCounter >= 4){
+        if(buttonCounter >= 4) {
             buttonCounter = 0
             _testModel.increaseSpamCount()
             
@@ -141,13 +141,13 @@ class ChildrenTestViewController: UIViewController {
             break
         }
         
-        if(isThresholdFound){ // Done for this freq
+        if(isThresholdFound) { // Done for this freq
 //            print("Next Freq: ", _testModel.getNewTestFreq())
             if(_testModel.getNewTestFreq() < 0) {
                 print("Switching to the other ear")
                 _testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueSwitchEar", sender: nil)
-            } else if(_testModel.getNewTestFreq() == 0){
+            } else if(_testModel.getNewTestFreq() == 0) {
                 // Already tested both ears
                 _testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueResult", sender: nil)
@@ -176,7 +176,7 @@ class ChildrenTestViewController: UIViewController {
         pbSecondInterval.isEnabled = toggle
     }
     
-    private func pulseToggle(isPlaying: Bool!){
+    private func pulseToggle(isPlaying: Bool!) {
         pbPause.isHidden = !isPlaying
         pbRepeat.isHidden = isPlaying
     }
@@ -255,7 +255,7 @@ class ChildrenTestViewController: UIViewController {
         pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
         pbNoSound.adjustsImageWhenHighlighted = false
         
-        switch _testModel.getTestLauguage(){
+        switch _testModel.getTestLauguage() {
         case "Invalid":
             print("Invalid language option!!")
             break

@@ -1,92 +1,59 @@
 
 import UIKit
-import CoreData
-import AudioKit
 
 class TitleViewController: UIViewController {
     
-    private var globalSetting: GlobalSetting! = nil
+    // MARK:
+    private var _globalSetting: GlobalSetting!
     
-    private let managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
+    // MARK:
+    private let _globalSettingRepo = GlobalSettingRepo()
+    private let _patientProfileRepo = PatientProfileRepo()
     
-    @IBAction func startTesting(_ sender: Any) {
-        if(globalSetting.calibrationSetting != nil){
-            performSegue(withIdentifier: "segueProtocolFromTitle", sender: nil)
-        } else {
-            // Prompt for user error
-            errorPrompt(
-                errorMsg: "There is no calibration setting selected!",
-                uiCtrl: self)
-        }
-    }
-    
-    @IBAction func viewResults(_ sender: UIButton) {
-        // fetch all PatientProfiles
-        let patientRequest:NSFetchRequest<PatientProfile> =
-            PatientProfile.fetchRequest()
-        
-        do {
-            var profiles = try managedContext.fetch(patientRequest)
-            for emptyProfile in profiles.filter({$0.values?.count == 0}){
-                managedContext.delete(emptyProfile)
-            }
-            profiles.removeAll(where: {$0.values?.count == 0})
-            
-            if (profiles.count > 0){
-                performSegue(withIdentifier: "segueResultFromTitle", sender: nil)
-            } else {
-                // Prompt for user error
-                errorPrompt(
-                    errorMsg: "There is no result!",
-                    uiCtrl: self)
-            }
-        } catch let error as NSError{
-            print("Could not fetch patient profiles.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
+    // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         do {
-            try AudioKit.stop()
+            _globalSetting = try _globalSettingRepo.fetchGlobalSetting()
+//            try AudioKit.stop()
         } catch let error as NSError {
-            print("Cant stop AudioKit", error)
-        }
-        
-        // fetch all CalibrationSetting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        request.fetchLimit = 1
-        
-        do {
-            let settings = try managedContext.fetch(request)
-            if (settings.count == 0){
-                globalSetting = NSEntityDescription.insertNewObject(
-                    forEntityName: "GlobalSetting",
-                    into: managedContext) as? GlobalSetting
-                do{
-                    try managedContext.save()
-                } catch let error as NSError{
-                    print("Could not save global setting.")
-                    print("\(error), \(error.userInfo)")
-                }
-            } else {
-                globalSetting = settings.first
-            }
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
+            print("[Error] Could not initialize global setting.")
             print("\(error), \(error.userInfo)")
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Controller functions
+    @IBAction func startTesting(_ sender: UIButton) {
+        // Validator
+        if _globalSetting.calibrationSetting == nil {
+            errorPrompt(
+                errorMsg: "There is no calibration setting selected!",
+                uiCtrl: self)
+            return
+        }
+        
+        performSegue(withIdentifier: "segueProtocolFromTitle", sender: nil)
+    }
+    
+    @IBAction func viewResults(_ sender: UIButton) {
+        do {
+            if try _patientProfileRepo.validateAnyPatientProfiles() {
+                performSegue(withIdentifier: "segueResultFromTitle", sender: nil)
+            } else {
+                errorPrompt(
+                    errorMsg: "There is no result!",
+                    uiCtrl: self)
+            }
+        } catch let error as NSError {
+            print("[Error] There is no patient profileg.")
+            print("\(error), \(error.userInfo)")
+        }
     }
 }
 

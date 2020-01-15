@@ -50,7 +50,7 @@ class CalibrationViewController: UIViewController {
                     uiCtrl: self)
     }
     
-    func saveSetting(_ settingName: String){
+    func saveSetting(_ settingName: String) {
         let setting = NSEntityDescription.insertNewObject(
             forEntityName: "CalibrationSetting",
             into: managedContext) as! CalibrationSetting
@@ -149,7 +149,7 @@ class CalibrationViewController: UIViewController {
         }, uiCtrl: self)
     }
     
-    func loadSettingValues(){
+    func loadSettingValues() {
         lbCurrentSetting.text = currentSetting.name!
         
         // Load setting name
@@ -192,9 +192,9 @@ class CalibrationViewController: UIViewController {
         
     }
     
-    @IBAction func toggleSingal(_ sender: UIButton){
+    @IBAction func toggleSingal(_ sender: UIButton) {
         // No tone playing at all, simply toggle on
-        if(!player.isStarted()){
+        if(!player.isStarted()) {
             _currentPlayFreq = sender.tag
             dict_settingUI[sender.tag]!.pbPlay.setTitle("On", for: .normal)
             player.startPlaying()
@@ -204,7 +204,7 @@ class CalibrationViewController: UIViewController {
             player.updateVolume(dict_settingUI[sender.tag]!)
         }
             // Same tone, toggle it off
-        else if(_currentPlayFreq == sender.tag){
+        else if(_currentPlayFreq == sender.tag) {
             dict_settingUI[sender.tag]!.pbPlay.setTitle("Off", for: .normal)
             _currentPlayFreq = -1
             player.stopPlaying()
@@ -224,7 +224,7 @@ class CalibrationViewController: UIViewController {
 //------------------------------------------------------------------------------
 // Initialize View
 //------------------------------------------------------------------------------
-    func initSettings(){
+    func initSettings() {
         player = CalibrationPlayer()
         // fetch all CalibrationSetting
         let request:NSFetchRequest<GlobalSetting> =
@@ -233,7 +233,7 @@ class CalibrationViewController: UIViewController {
         
         do {
             globalSetting = try managedContext.fetch(request).first
-            if(globalSetting.calibrationSetting != nil){
+            if(globalSetting.calibrationSetting != nil) {
                 currentSetting =
                     globalSetting.calibrationSetting ?? CalibrationSetting()
                 
@@ -253,7 +253,7 @@ class CalibrationViewController: UIViewController {
         }
     }
     
-    func setupStackview(_ sv: UIStackView!){
+    func setupStackview(_ sv: UIStackView!) {
         sv.axis = .horizontal
         sv.distribution = .fillEqually
         sv.alignment = .center

@@ -106,7 +106,7 @@ class ChildrenTestPlayer : TestPlayer {
         let corrFactor: Double! = isLeft ? leftCorrFactor : rightCorrFactor
         let playingLevel: Double! = self.currentVol + corrFactor + zFactor
         print("Playing Actual: ", playingLevel)
-        for i in stride(from: 0, through: 1, by: 0.1){
+        for i in stride(from: 0, through: 1, by: 0.1) {
             // Attacking/Ramping up
             DispatchQueue.main.asyncAfter(
                 deadline: .now() + i * ATTACK_TIME, execute:

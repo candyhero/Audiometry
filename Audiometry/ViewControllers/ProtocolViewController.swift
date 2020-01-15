@@ -1,137 +1,104 @@
-
 import UIKit
-import CoreData
 
 class ProtocolViewController: UIViewController {
+    // MARK: Repo
+    private let _globalSettingRepo = GlobalSettingRepo()
+    private let _patientProfileRepo = PatientProfileRepo()
+    private let _testProtocolRepo = TestProtocolRepo()
     
-//------------------------------------------------------------------------------
-// Local Variables
-//------------------------------------------------------------------------------
-    private let _managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
-    
+    // MARK: Local Variables
     private var _globalSetting: GlobalSetting! = nil
-    private var _currentSetting: TestSetting! = nil
+    private var _testProtocol: TestProtocol! = nil
     
-    private var _array_settings: [TestSetting] = []
-    private var _array_testFreqSeq: [Int] = []
-    
-//    private let _ARRAY_DEFAULT_FREQ_SEQ: [Double]! = [500, 4000, 1000, 8000, 250, 2000]
+    private var _testProtocols: [TestProtocol] = []
+    private var _frequencyBuffer: [Int] = []
     
     private var _currentPickerIndex: Int = 0;
     
     private var _testLanguage: String = "English"
     
-//------------------------------------------------------------------------------
-// UI Components
-//------------------------------------------------------------------------------
+    // Segue definitions
+    let SEGUE_TITLE = "segueTitle"
+    let SEGUE_PROTOCOL = "segueProtocol"
+    let SEGUE_ADULT_TEST = "segueAdultTest"
+    let SEGUE_CHILDREN_TEST = "segueChildrenTest"
+    let SEGUE_PAUSE = "seguePause"
+    let SEGUE_RESULT = "segueResult"
+    
+    // MARK: PretestError
+    enum PreTestError: Error {
+        case invalidTestingFrequencies
+        case invalidPaientGroup
+        case invalidPatentName
+    }
+    
+    // MARK: UI Components
     private var _array_pbFreq = [UIButton]()
     
+    @IBOutlet weak var pbAdult: UIButton!
+    @IBOutlet weak var pbChildren: UIButton!
     @IBOutlet weak var svFreq: UIStackView!
     @IBOutlet weak var lbFreqSeq: UILabel!
     @IBOutlet weak var lbEarOrder: UILabel!
     @IBOutlet weak var lbTestLanguage: UILabel!
     
-//------------------------------------------------------------------------------
-// CoreData
-//------------------------------------------------------------------------------
-    @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
-    
-        // Prompt for no freq selected error
-        if(_array_testFreqSeq.count == 0)
-        {
-            errorPrompt(errorMsg: "There is no frequency selected!", uiCtrl: self)
-            return
-        }
+    // MARK: Initialize ViewController
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        inputPrompt(promptMsg: "Please Enter Protocol Name:",
-                    errorMsg: "Protocol name cannot be empty!",
-                    fieldMsg: "",
-                    confirmFunction: saveProtocol,
-                    uiCtrl: self)
-    }
-    
-    func saveProtocol(_ newProtocolName: String){
-        
-        // If duplicated name
-//        if(false){
-//            errorPrompt(
-//                errorMsg: "Protocol name already exists!",
-//                uiCtrl: self)
-//            return
-//        }
-        
-        // Else, save protocol
-        let setting = NSEntityDescription.insertNewObject(
-            forEntityName: "TestSetting",
-            into: _managedContext) as! TestSetting
-        
-        setting.name = newProtocolName
-        setting.timestamp = Date()
-        setting.frequencySequence = _array_testFreqSeq
-        setting.isTestLeftFirst = _globalSetting.isTestingLeft
-        setting.isTestBoth = _globalSetting.isTestingBoth
-        
-        _currentSetting = setting
-        
-        do{
-            try _managedContext.save()
-        } catch let error as NSError{
-            print("Could not save test protocol.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
-    @IBAction func loadFreqSeqProtocol(_ sender: UIButton) {
-        _currentPickerIndex = 0
-        
-        // fetch all CalibrationSetting
-        let request:NSFetchRequest<TestSetting> =
-            TestSetting.fetchRequest()
-        
+        setupUI()
+        updateLabel()
         do {
-            _array_settings = try _managedContext.fetch(request)
+            _globalSetting = try _globalSettingRepo.fetchGlobalSetting()
+            self.setTestEarOrder(isLeft: true, isBoth: true, labelText: "L. Ear -> R. Ear")
+            
+            if(_globalSetting.isPractice) {
+                pbAdult.setTitle("Adult Practice", for: .normal)
+                pbChildren.setTitle("Children Practice", for: .normal)
+            }
         } catch let error as NSError{
-            print("Could not fetch calibration setting.")
+            print("Could not fetch global setting.")
             print("\(error), \(error.userInfo)")
         }
-        
-        if _array_settings.count > 0 {
-            pickerPrompt(confirmFunction: loadProtocol,
-                         uiCtrl: self)
-        }
-        else {
-            errorPrompt(errorMsg: "There is no saved protcol!",
-                        uiCtrl: self)
-        }
     }
     
-    func loadProtocol(){
-        _currentSetting = _array_settings[_currentPickerIndex]
-        _array_testFreqSeq = _currentSetting.frequencySequence ?? []
-        updateLabel()
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func deleteFreqSeqProtocol(_ sender: UIButton) {
+    func setupUI() {
+        svFreq.axis = .horizontal
+        svFreq.distribution = .fillEqually
+        svFreq.alignment = .center
+        svFreq.spacing = 15
         
-        // Validate current protocol
-        if(_currentSetting == nil) {
+        lbFreqSeq.textAlignment = .center
+        lbFreqSeq.numberOfLines = 0
+        
+        for freq in ARRAY_DEFAULT_FREQ {
+            let newButton = ProtocolUIFactory.GetNewFrequencyButton(
+                frequency: freq,
+                action: #selector(addNewFreq(_:))
+            )
             
-            errorPrompt(errorMsg: "There is no selected protcol!",
-                        uiCtrl: self)
-            return
+            _array_pbFreq.append(newButton)
+            svFreq.addArrangedSubview(newButton)
         }
-        
-        _managedContext.delete(_currentSetting)
-        _currentSetting = nil
-        _array_testFreqSeq = []
-        
-        updateLabel()
     }
-
-//------------------------------------------------------------------------------
-// Test Settings
-//------------------------------------------------------------------------------
+    
+    func updateLabel() {
+        var bufferString = String("Test Sequence: ")
+        for freq in _frequencyBuffer {
+            if(bufferString.count >= 60) { bufferString.append("\n") }
+            bufferString.append(String(freq) + " Hz")
+            bufferString.append(" ► ")
+        }
+        if(bufferString.count < 20) { bufferString.append("None") }
+        lbFreqSeq.text! = bufferString
+    }
+    
+    // MARK: UIButton Actions
     @IBAction func switchToEnglish(_ sender: UIButton) {
         _testLanguage = "English"
         lbTestLanguage.text = _testLanguage
@@ -143,88 +110,158 @@ class ProtocolViewController: UIViewController {
     }
     
     @IBAction func setLeftFirst(_ sender: UIButton) {
-        _globalSetting.isTestingLeft = true
-        _globalSetting.isTestingBoth = true
-        lbEarOrder.text = sender.titleLabel?.text!
+        setTestEarOrder(isLeft: false, isBoth: false, labelText: sender.titleLabel?.text)
     }
     
     @IBAction func setRightFirst(_ sender: UIButton) {
-        _globalSetting.isTestingLeft = false
-        _globalSetting.isTestingBoth = true
-        lbEarOrder.text = sender.titleLabel?.text!
+        setTestEarOrder(isLeft: false, isBoth: false, labelText: sender.titleLabel?.text)
     }
     
     @IBAction func setLeftOnly(_ sender: UIButton) {
-        _globalSetting.isTestingLeft = true
-        _globalSetting.isTestingBoth = false
-        lbEarOrder.text = sender.titleLabel?.text!
+        setTestEarOrder(isLeft: false, isBoth: false, labelText: sender.titleLabel?.text)
     }
     
     @IBAction func setRightOnly(_ sender: UIButton) {
-        _globalSetting.isTestingLeft = false
-        _globalSetting.isTestingBoth = false
-        lbEarOrder.text = sender.titleLabel?.text!
+        setTestEarOrder(isLeft: false, isBoth: false, labelText: sender.titleLabel?.text)
     }
     
-    @IBAction func addNewFreq(_ sender: UIButton){
+    func setTestEarOrder(isLeft: Bool, isBoth: Bool, labelText: String?) {
+        _globalSetting.isTestingLeft = isLeft
+        _globalSetting.isTestingBoth = isBoth
+        lbEarOrder.text = labelText
+    }
+    
+    @IBAction func addNewFreq(_ sender: UIButton) {
         let freqID: Int! = sender.tag
-        if(!_array_testFreqSeq.contains(freqID) ){
-            _array_testFreqSeq.append(freqID)
+        if(!_frequencyBuffer.contains(freqID) ) {
+            _frequencyBuffer.append(freqID)
             updateLabel()
         }
     }
     
     @IBAction func removeLastFreq(_ sender: UIButton) {
-        if(_array_testFreqSeq.count > 0) {
-            _array_testFreqSeq.removeLast()
+        if(_frequencyBuffer.count > 0) {
+            _frequencyBuffer.removeLast()
             updateLabel()
         }
     }
     
     @IBAction func removeAllFreq(_ sender: UIButton) {
-        if(_array_testFreqSeq.count > 0) {
-            _array_testFreqSeq.removeAll()
+        if(_frequencyBuffer.count > 0) {
+            _frequencyBuffer.removeAll()
             updateLabel()
         }
     }
     
-    func updateLabel(){
-        
-        var tempFreqSeqStr = String("Test Sequence: ")
-        
-        var freqCount = 0
-        for freq in _array_testFreqSeq {
-            freqCount += 1
-            tempFreqSeqStr.append(String(freq) + " Hz")
-            tempFreqSeqStr.append(" ► ")
-            
-            if(freqCount == 5){
-                tempFreqSeqStr.append("\n")
-            }
+    // MARK: CoreData
+    @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
+        if _frequencyBuffer.count == 0 {
+            errorPrompt(errorMsg: "There is no test frequency selected", uiCtrl: self)
+        } else {
+            inputPrompt(promptMsg: "Please Enter Protocol Name:",
+                        errorMsg: "Protocol name cannot be empty!",
+                        fieldMsg: "",
+                        confirmFunction: saveProtocol,
+                        uiCtrl: self)
         }
-        
-        if(freqCount == 0){
-            tempFreqSeqStr.append("None")
-        }
-        
-        lbFreqSeq.text! = tempFreqSeqStr
     }
-
-//------------------------------------------------------------------------------
-// Start Testing
-//------------------------------------------------------------------------------
+    
+    func saveProtocol(_ protocolName: String) {
+        // If duplicated name
+        //        if(false) {
+        //            errorPrompt(
+        //                errorMsg: "Protocol name already exists!",
+        //                uiCtrl: self)
+        //            return
+        //        }
+        do{
+            try _testProtocol = _testProtocolRepo.saveNewTestProtocol(protocolName, _globalSetting)
+        } catch let error as NSError{
+            print("Could not save test protocol.")
+            print("\(error), \(error.userInfo)")
+        }
+    }
+    
+    @IBAction func loadFreqSeqProtocol(_ sender: UIButton) {
+        _currentPickerIndex = 0
+        do{
+            _testProtocols = try _testProtocolRepo.fetchAllTestProtocols()
+            if _testProtocols.count > 0 {
+                pickerPrompt(confirmFunction: loadProtocol,
+                             uiCtrl: self)
+            }
+            else {
+                errorPrompt(errorMsg: "There is no saved protcol!",
+                            uiCtrl: self)
+            }
+        } catch let error as NSError{
+            print("Could not fetch test protocols.")
+            print("\(error), \(error.userInfo)")
+        }
+    }
+    
+    func loadProtocol() {
+        _testProtocol = _testProtocols[_currentPickerIndex]
+        _frequencyBuffer = _testProtocol.frequencySequence ?? []
+        updateLabel()
+    }
+    
+    @IBAction func deleteFreqSeqProtocol(_ sender: UIButton) {
+        
+        // Validate current protocol
+        if(_testProtocol == nil) {
+            errorPrompt(errorMsg: "There is no selected protcol!", uiCtrl: self)
+            return
+        }
+        
+        do {
+            try _testProtocolRepo.deleteTestProtocol(_testProtocol)
+            _testProtocol = nil
+            _frequencyBuffer = []
+            updateLabel()
+        } catch let error as NSError {
+            print("Could not fetch test protocols.")
+            print("\(error), \(error.userInfo)")
+        }
+    }
+    
+    func savePatientProfile(_ patientGroup: String,
+                            _ patientName: String,
+                            _ isAdult: Bool) throws {
+        //        // Format date
+        //        let date = NSDate();
+        //        let dateFormatter = DateFormatter()
+        //        dateFormatter.dateStyle = .short
+        //        dateFormatter.timeStyle = .short
+        //
+        //        let localDate = dateFormatter.string(from: date as Date)
+        
+        // Prepare new profile to test
+        //        do{
+        //            let profile = try _patientProfileRepo.save(
+        //                patientName, patientGroup, _frequencyBuffer, _globalSetting)
+        //        } catch let error as NSError{
+        //            print("Could not save test settings to global setting.")
+        //            print("\(error), \(error.userInfo)")
+        //        }
+        
+        // Test Seq saved in main setting
+        // Load & save calibration setting during testing for each frequency
+    }
+    
     @IBAction func startAdultTest(_ sender: UIButton) {
-        startTest(isAdult: true)
+        _globalSetting.isAdult = true
+        startTest()
     }
     
     @IBAction func startChildrenTest(_ sender: UIButton) {
-        startTest(isAdult: false)
+        _globalSetting.isAdult = false
+        startTest()
     }
     
-    func startTest(isAdult: Bool!) {
-        
+    func startTest() {
         // Error, no freq selected
-        if(_array_testFreqSeq.count == 0){
+        if(_frequencyBuffer.count == 0) {
             errorPrompt(errorMsg: "There is no frequency selected!",
                         uiCtrl: self)
             return
@@ -236,159 +273,40 @@ class ProtocolViewController: UIViewController {
             message: "Please Enter Patient's Group & Name:",
             preferredStyle: .alert)
         
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
-            (_) in
-            
-            if let groupField = alertCtrl.textFields?[0],
-                let nameField = alertCtrl.textFields?[1]{
-                
-                if(groupField.text!.count == 0) {
-                    errorPrompt(errorMsg: "Patient group cannot be empty!",
-                                uiCtrl: self)
-                }
-                else if(nameField.text!.count == 0) {
-                    errorPrompt(errorMsg: "Patient name cannot be empty!",
-                                uiCtrl: self)
-                }
-                else {
-                    self.savePatientProfile(groupField.text!,
-                                            nameField.text!,
-                                            isAdult)
-                    
-                    if(isAdult){
-                        self.performSegue(withIdentifier: "segueAdultTest",
-                                          sender: nil)
-                    } else {
-                        self.performSegue(withIdentifier: "segueChildrenTest",
-                                          sender: nil)
-                    }
-                }
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .cancel) {(_) in }
-        
-        alertCtrl.addTextField { (textField) in
-            textField.placeholder = "Patient's Group"
-        }
-        
+        alertCtrl.addTextField { (textField) in textField.placeholder = "Patient's Group" }
         alertCtrl.addTextField { (textField) in
             textField.placeholder = "Patient's Name, i.e. John Smith 1"
         }
         
-        alertCtrl.addAction(confirmAction)
-        alertCtrl.addAction(cancelAction)
+        let confirmActionHandler = { (action: UIAlertAction) in
+            if let patientGroup = alertCtrl.textFields?[0].text,
+                let patientName = alertCtrl.textFields?[1].text{
+                
+                let isAdult = self._globalSetting.isAdult
+                
+                do{
+                    guard patientGroup.count > 0 else { throw PreTestError.invalidPaientGroup }
+                    guard patientName.count > 0 else { throw PreTestError.invalidPatentName }
+                    
+                    try self.savePatientProfile(patientGroup, patientName, isAdult)
+                    let segueId = isAdult ? self.SEGUE_ADULT_TEST : self.SEGUE_CHILDREN_TEST
+                    self.performSegue(withIdentifier: segueId, sender: nil)
+                } catch PreTestError.invalidPaientGroup {
+                    errorPrompt(errorMsg: "Patient group cannot be empty!", uiCtrl: self)
+                } catch PreTestError.invalidPatentName {
+                    errorPrompt(errorMsg: "Patient name cannot be empty!", uiCtrl: self)
+                } catch {
+                    print("[Error] Unexpected error: \(error).")
+                }
+            }
+        }
+        
+        alertCtrl.addAction(UIAlertAction(title: "Confirm",
+                                          style: .default,
+                                          handler: confirmActionHandler))
+        alertCtrl.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         self.present(alertCtrl, animated: true, completion: nil)
-    }
-    
-    func savePatientProfile(_ patientGroup: String,
-                            _ patientName: String,
-                            _ isAdult: Bool) {
-        //        // Format date
-        //        let date = NSDate();
-        //        let dateFormatter = DateFormatter()
-        //        dateFormatter.dateStyle = .short
-        //        dateFormatter.timeStyle = .short
-        //
-        //        let localDate = dateFormatter.string(from: date as Date)
-        
-        // Prepare new profile to test
-        let profile = NSEntityDescription.insertNewObject(
-            forEntityName: "PatientProfile",
-            into: _managedContext) as! PatientProfile
-        
-        profile.name = patientName
-        profile.group = patientGroup
-        profile.timestamp = Date()
-        profile.isAdult = isAdult
-        profile.isPractice = false
-        
-        profile.earOrder = _globalSetting.isTestingLeft ? "L" : "R"
-        profile.frequencyOrder = _array_testFreqSeq
-        print(profile)
-        
-        _globalSetting.patientProfile = profile
-        
-        _globalSetting.testFrequencySequence = _array_testFreqSeq
-        _globalSetting.testLanguage = _testLanguage
-        
-        _globalSetting.currentTestCount = 0
-        _globalSetting.totalTestCount = Int16(_globalSetting.isTestingBoth ? _array_testFreqSeq.count*2 : _array_testFreqSeq.count)
-        
-        do{
-            try _managedContext.save()
-        } catch let error as NSError{
-            print("Could not save test settings to global setting.")
-            print("\(error), \(error.userInfo)")
-        }
-        
-        // Test Seq saved in main setting
-        // Load & save calibration setting during testing for each frequency
-    }
-
-    //------------------------------------------------------------------------------
-    // Initialize View
-    //------------------------------------------------------------------------------
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupUI()
-        updateLabel()
-        
-        // fetch global setting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        request.fetchLimit = 1
-        
-        do {
-            _globalSetting = try _managedContext.fetch(request).first
-            _globalSetting.isTestingLeft = true
-            _globalSetting.isTestingBoth = true
-            lbEarOrder.text! = "L. Ear -> R. Ear"
-            
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
-    func setupUI(){
-        svFreq.axis = .horizontal
-        svFreq.distribution = .fillEqually
-        svFreq.alignment = .center
-        svFreq.spacing = 15
-        
-        lbFreqSeq.textAlignment = .center
-        lbFreqSeq.numberOfLines = 0
-        
-        for freq in ARRAY_DEFAULT_FREQ {
-            // Set up buttons
-            let new_pbFreq = UIButton(type:.system)
-            
-            new_pbFreq.bounds = CGRect(x:0, y:0, width:300, height:300)
-            new_pbFreq.setTitle(String(freq)+" Hz", for: .normal)
-            new_pbFreq.backgroundColor = UIColor.gray
-            new_pbFreq.setTitleColor(UIColor.white, for: .normal)
-            new_pbFreq.tag = freq
-            
-            // Binding an action function to the new button
-            // i.e. to play signal
-            new_pbFreq.addTarget(self, action: #selector(addNewFreq(_:)),
-                                 for: .touchUpInside)
-            new_pbFreq.titleEdgeInsets = UIEdgeInsets(
-                top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
-            
-            // Add the button to our current button array
-            _array_pbFreq += [new_pbFreq]
-            svFreq.addArrangedSubview(new_pbFreq)
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 
@@ -398,18 +316,17 @@ extension ProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSource{
         return 1
     }
     
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return _testProtocols.count
+    }
+    
     func pickerView(_ pickerView: UIPickerView,
-                    numberOfRowsInComponent component: Int) -> Int {
-        return _array_settings.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
+                    titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        return _array_settings[row].name
+        return _testProtocols[row].name
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
-                    inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         _currentPickerIndex = row
     }
 }

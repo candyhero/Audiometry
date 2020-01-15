@@ -49,7 +49,7 @@ class ChildrenInstructionViewController: UIViewController {
         
     }
     
-    private func loadPortuguse(){
+    private func loadPortuguse() {
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: "Animal_Icons/emoji")
         

@@ -47,9 +47,9 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     uiCtrl: self)
     }
     
-    @IBAction func exportAllPatients(_ sender: UIButton){
+    @IBAction func exportAllPatients(_ sender: UIButton) {
         // if no patient data
-        if(_array_patients.count == 0){
+        if(_array_patients.count == 0) {
             return
         }
         
@@ -111,7 +111,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return button
     }
     
-    @objc func handleExpandClose(button: UIButton!){
+    @objc func handleExpandClose(button: UIButton!) {
         
         _currentPatient = _array_patients[button.tag]
         
@@ -123,7 +123,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             array_indexPath.append(indexPath)
         }
         
-        if(_patientSectionRows[button.tag] > 0){
+        if(_patientSectionRows[button.tag] > 0) {
             
             _patientSectionRows[button.tag] = 0
             tbPatients.deleteRows(at: array_indexPath, with: .fade)
@@ -187,10 +187,10 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //------------------------------------------------------------------------------
 // CoreData functions
 //------------------------------------------------------------------------------
-    func deletePatient(){
+    func deletePatient() {
         let indexPath = tbPatients.indexPathForSelectedRow
         
-        if(indexPath?.section == nil){
+        if(indexPath?.section == nil) {
             return
         }
         
@@ -239,7 +239,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     // Plot functions
-    func updateGraph(_ values: PatientProfileValues){
+    func updateGraph(_ values: PatientProfileValues) {
         
         // Load dB and result lists
         let label_L = (values.threshold_L >= 0) ?
@@ -278,34 +278,34 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         line_L.colors=[NSUIColor.blue]
         line_R.colors=[NSUIColor.red]
-        if(values.responses_L?.count ?? 0 > 0){
+        if(values.responses_L?.count ?? 0 > 0) {
             line_L.circleColors = []
         }
         for response in values.responses_L ?? [] {
-            if(response > 0){
+            if(response > 0) {
                 line_L.circleColors.append(NSUIColor.green)
             }
-            else if(response < 0){
+            else if(response < 0) {
                 line_L.circleColors.append(NSUIColor.magenta)
             }
-            else if(response == 0){
+            else if(response == 0) {
                 line_L.circleColors.append(NSUIColor.black)
             }
             else {
                 print("Response Error: ", response)
             }
         }
-        if(values.responses_R?.count ?? 0 > 0){
+        if(values.responses_R?.count ?? 0 > 0) {
             line_R.circleColors = []
         }
         for response in values.responses_R ?? [] {
-            if(response > 0){
+            if(response > 0) {
                 line_R.circleColors.append(NSUIColor.green)
             }
-            else if(response < 0){
+            else if(response < 0) {
                 line_R.circleColors.append(NSUIColor.magenta)
             }
-            else if(response == 0){
+            else if(response == 0) {
                 line_R.circleColors.append(NSUIColor.black)
             }
             else {
@@ -346,7 +346,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func initSettings(){
+    func initSettings() {
         // fetch global setting
         let settingRequest:NSFetchRequest<GlobalSetting> =
             GlobalSetting.fetchRequest()

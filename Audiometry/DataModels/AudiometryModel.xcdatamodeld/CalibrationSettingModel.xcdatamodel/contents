@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CalibrationSetting" representedClassName="CalibrationSetting" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -16,6 +16,8 @@
     </entity>
     <entity name="GlobalSetting" representedClassName="GlobalSetting" syncable="YES" codeGenerationType="class">
         <attribute name="currentTestCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isAdult" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isPractice" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isTestingBoth" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isTestingLeft" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="testFrequencySequence" optional="YES" attributeType="Transformable" customClassName="[Int]" syncable="YES"/>
@@ -59,7 +61,7 @@
         <attribute name="threshold_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientProfile" inverseName="values" inverseEntity="PatientProfile" syncable="YES"/>
     </entity>
-    <entity name="TestSetting" representedClassName="TestSetting" syncable="YES" codeGenerationType="class">
+    <entity name="TestProtocol" representedClassName="TestProtocol" syncable="YES" codeGenerationType="class">
         <attribute name="frequencySequence" optional="YES" attributeType="Transformable" customClassName="[Int]" syncable="YES"/>
         <attribute name="isTestBoth" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isTestLeftFirst" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -69,9 +71,9 @@
     <elements>
         <element name="CalibrationSetting" positionX="-372.671875" positionY="-46.83203125" width="128" height="105"/>
         <element name="CalibrationSettingValues" positionX="-54" positionY="18" width="128" height="135"/>
-        <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="165"/>
+        <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="195"/>
         <element name="PatientProfile" positionX="-180" positionY="81" width="128" height="210"/>
         <element name="PatientProfileValues" positionX="-171" positionY="90" width="128" height="345"/>
-        <element name="TestSetting" positionX="-189" positionY="63" width="128" height="120"/>
+        <element name="TestProtocol" positionX="-189" positionY="63" width="128" height="120"/>
     </elements>
 </model>

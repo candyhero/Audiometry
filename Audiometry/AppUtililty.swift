@@ -126,7 +126,7 @@ func inputPrompt(promptMsg: String,
 }
 
 func pickerPrompt(confirmFunction: @escaping () -> Void,
-                  uiCtrl: UIViewController){
+                  uiCtrl: UIViewController) {
     
     let alertCtrl: UIAlertController! = UIAlertController(
         title: "Select a different setting",

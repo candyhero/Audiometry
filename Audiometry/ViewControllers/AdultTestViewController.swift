@@ -46,7 +46,7 @@ class AdultTestViewController: UIViewController {
         self.pbSecondInterval.adjustsImageWhenHighlighted = false
     }
     
-    private func testNewFreq(){
+    private func testNewFreq() {
         pulseCounter = 0
         buttonCounter = 0
         
@@ -102,14 +102,14 @@ class AdultTestViewController: UIViewController {
         pausePlaying(sender)
         
         //Check if same button 5 times in a row
-        if(sender == pbLastClicked ?? nil){
+        if(sender == pbLastClicked ?? nil) {
             buttonCounter += 1
         }
         else {
             buttonCounter = 0
         }
         
-        if(buttonCounter >= 4){
+        if(buttonCounter >= 4) {
             buttonCounter = 0
             _testModel.increaseSpamCount()
             
@@ -142,13 +142,13 @@ class AdultTestViewController: UIViewController {
             break
         }
         
-        if(isThresholdFound){ // Done for this freq
+        if(isThresholdFound) { // Done for this freq
 //            print("Next Freq: ", _testModel.getNewTestFreq())
             if(_testModel.getNewTestFreq() < 0) {
                 print("Switching to the other ear")
                 _testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueSwitchEar", sender: nil)
-            } else if(_testModel.getNewTestFreq() == 0){
+            } else if(_testModel.getNewTestFreq() == 0) {
                 // Already tested both ears
                 _testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueResult", sender: nil)
@@ -177,7 +177,7 @@ class AdultTestViewController: UIViewController {
         pbSecondInterval.isEnabled = toggle
     }
     
-    private func pulseToggle(isPlaying: Bool!){
+    private func pulseToggle(isPlaying: Bool!) {
         pbPause.isHidden = !isPlaying
         pbRepeat.isHidden = isPlaying
     }
@@ -250,7 +250,7 @@ class AdultTestViewController: UIViewController {
 // Initialize View
 //------------------------------------------------------------------------------
     
-    private func loadPortuguse(){
+    private func loadPortuguse() {
         lbInstruction.text = PORT_ADULT_INSTRCUTION_TEXT
         pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
         pbNoSound.setTitle("", for: .normal)
@@ -265,7 +265,7 @@ class AdultTestViewController: UIViewController {
         pbNoSound.setBackgroundImage(UIImage(named: "Shape_Icons/no_sound"), for: .normal)
         pbNoSound.adjustsImageWhenHighlighted = false
         
-        switch _testModel.getTestLauguage(){
+        switch _testModel.getTestLauguage() {
         case "Invalid":
             print("Invalid language option!!")
             break

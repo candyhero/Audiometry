@@ -71,7 +71,7 @@ class TestModel {
         let currentTestCount = Int(_globalSetting.currentTestCount)
         let totalTestCount = Int(_globalSetting.totalTestCount)
         
-        if(totalTestCount > 0){
+        if(totalTestCount > 0) {
             return 100 * currentTestCount / totalTestCount
         }
         return -1
@@ -125,7 +125,7 @@ class TestModel {
 //------------------------------------------------------------------------------
 // Setup for new test freq
 //------------------------------------------------------------------------------
-    private func setupForNextFreq(){
+    private func setupForNextFreq() {
         _currentFreq = _array_testFreqSeq.removeFirst()
         
         // Config Test Player
@@ -170,16 +170,16 @@ class TestModel {
         _currentPlayCase = randomizePlayCase()
         
         // Second trial in practice needs to be no sound
-        if(_isPractice && _array_results.count == 1){
+        if(_isPractice && _array_results.count == 1) {
             _currentPlayCase = 0
         }
-        else if(_array_cases.count >= 2){
+        else if(_array_cases.count >= 2) {
             let counts = _array_cases.reduce(into: [:]) { $0[$1, default: 0] += 1 }
             
-            if((counts[1] ?? 0) > (counts[2] ?? 0) && _currentPlayCase == 1){
+            if((counts[1] ?? 0) > (counts[2] ?? 0) && _currentPlayCase == 1) {
                 _currentPlayCase = randomizePlayCase()
             }
-            else if((counts[2] ?? 0) > (counts[1] ?? 0) && _currentPlayCase == 2){
+            else if((counts[2] ?? 0) > (counts[1] ?? 0) && _currentPlayCase == 2) {
                 _currentPlayCase = randomizePlayCase()
             }
             
@@ -200,7 +200,7 @@ class TestModel {
         let randomInt = _isPractice ? Int.random(in:0 ..< 8) : Int.random(in:0 ..< 12)
         
         var TEST_MAX_DB = _TEST_MAX_DB
-        if(!_isAdult){
+        if(!_isAdult) {
             let q = Double(_TEST_MAX_DB) - (Z_FACTORS[_currentFreq] ?? 0.0)
             TEST_MAX_DB = Int((q/5).rounded(.down)) * 5
         }
@@ -216,7 +216,7 @@ class TestModel {
         }
     }
     
-    func replaySignalCase(){
+    func replaySignalCase() {
         print("Current dB Lv: ", _currentDB)
         
         switch _currentPlayCase {
@@ -252,7 +252,7 @@ class TestModel {
         _array_cases.append(_currentPlayCase)
         
         _noSoundCount += 1
-        if(isCorrect){
+        if(isCorrect) {
             _noSoundCorrect += 1
         }
         
@@ -263,7 +263,7 @@ class TestModel {
         
         let TEST_MIN_DB = _isAdult ? _TEST_MIN_DB_ADULT : _TEST_MIN_DB_CHILD
         var TEST_MAX_DB = _TEST_MAX_DB
-        if(!_isAdult){
+        if(!_isAdult) {
             let q = Double(_TEST_MAX_DB) - (Z_FACTORS[_currentFreq] ?? 0.0)
             TEST_MAX_DB = Int((q/5).rounded(.down)) * 5
         }
@@ -278,21 +278,21 @@ class TestModel {
         _array_cases.append(_currentPlayCase)
         //print(_currentDB, lastDB)
         // check if 0 db
-        if(_currentDB == TEST_MIN_DB){
-            if (isCorrect && (lastDB == TEST_MIN_DB) && lastPlayCase != 0){
+        if(_currentDB == TEST_MIN_DB) {
+            if (isCorrect && (lastDB == TEST_MIN_DB) && lastPlayCase != 0) {
                 endTest(TEST_MIN_DB)
                 return true
             }
         }
         // Check if 3 max DB in a row
-        else if (_currentDB == TEST_MAX_DB){
-            if (!isCorrect){
+        else if (_currentDB == TEST_MAX_DB) {
+            if (!isCorrect) {
                 _maxDBTrials += 1
             } else {
                 _maxDBTrials = 0
             }
             
-            if(_maxDBTrials == 3){
+            if(_maxDBTrials == 3) {
                 endTest(-1)
                 return true
             }
@@ -305,7 +305,7 @@ class TestModel {
             
             // Determine if test can be ended
             // Twice correct in a row on the same freq
-            if(hasBeenAscendingCorrect){
+            if(hasBeenAscendingCorrect) {
                 endTest(_currentDB)
                 return true
             }
@@ -321,7 +321,7 @@ class TestModel {
             // If first correct / incorrect after previous incorrects / corrects
             // change phase
             if(_currentDB > _SYSTEM_DEFAULT_DB && isCorrect) ||
-                (_currentDB < _SYSTEM_DEFAULT_DB && !isCorrect){
+                (_currentDB < _SYSTEM_DEFAULT_DB && !isCorrect) {
                 
                 _flag_initialPhase = false
             }
@@ -347,7 +347,7 @@ class TestModel {
     }
     
     // Wrap up test results on this frequency round
-    private func endTest(_ thresholdDB: Int!){
+    private func endTest(_ thresholdDB: Int!) {
         _endTime = Date()
         
         // Setup patient profile values for CoreData
@@ -391,8 +391,8 @@ class TestModel {
         let profileDuration = _endTime.timeIntervalSince((_globalSetting.patientProfile?.timestamp)!)
         _globalSetting.patientProfile?.durationSeconds = Int16(profileDuration)
         
-        if(_array_testFreqSeq.count == 0){
-            if(_globalSetting.isTestingBoth){
+        if(_array_testFreqSeq.count == 0) {
+            if(_globalSetting.isTestingBoth) {
                 _currentFreq = -1
                 _globalSetting.isTestingBoth = false
                 _globalSetting.isTestingLeft = !(_globalSetting.isTestingLeft)

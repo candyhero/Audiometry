@@ -14,7 +14,7 @@ class CalibrationPlayer {
     
     private var _generator: AKOperationGenerator! = nil
     
-    init(){
+    init() {
         // _generator to be configured by setting _generator.parameters
         _generator = AKOperationGenerator(channelCount: 2) {
             parameters in
@@ -39,22 +39,22 @@ class CalibrationPlayer {
         return _generator.isStarted
     }
     
-    func startPlaying(){
+    func startPlaying() {
         _generator.start()
     }
     
-    func stopPlaying(){
+    func stopPlaying() {
         _generator.stop()
     }
     
-    func updateFreq(_ freq: Int){
+    func updateFreq(_ freq: Int) {
         _generator.parameters[0] = Double(freq)
     }
     
     // Update volume to currently playing frequency tone
-    func updateVolume(_ ui: SettingUI){
+    func updateVolume(_ ui: SettingUI) {
         // skip if not playing currently
-        if(!_generator.isStarted){
+        if(!_generator.isStarted) {
             return
         }
         
@@ -68,7 +68,7 @@ class CalibrationPlayer {
         let leftCorrectionFactor = expectedLv - leftMeasuredLv
         let rightCorrectionFactor = expectedLv - rightMeasuredLv
         
-        for i in stride(from: 0.0, through: 1.0, by: _RAMP_TIMESTEP){
+        for i in stride(from: 0.0, through: 1.0, by: _RAMP_TIMESTEP) {
             DispatchQueue.main.asyncAfter(
                 deadline: .now() + i * _RAMP_TIME, execute:
                 {

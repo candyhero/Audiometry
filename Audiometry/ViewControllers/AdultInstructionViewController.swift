@@ -35,7 +35,7 @@ class AdultInstructionViewController: UIViewController {
         }
     }
     
-    private func loadPortuguse(){
+    private func loadPortuguse() {
         lbCaption.text = PORT_ADULT_CAPTION_TEXT
         pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
         pbNoSound.setTitle("", for: .normal)

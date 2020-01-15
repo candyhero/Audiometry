@@ -20,7 +20,7 @@ class PauseViewController: UIViewController {
     @IBOutlet weak var lbCaption: UILabel!
     @IBOutlet weak var pbContinue: UIButton!
     
-    func initCaption(){
+    func initCaption() {
         // fetch global setting
         let request:NSFetchRequest<GlobalSetting> =
             GlobalSetting.fetchRequest()
@@ -37,7 +37,7 @@ class PauseViewController: UIViewController {
         lbCaption.text = "Great job! Half way done!"
         pbContinue.setTitle("Continue", for: .normal)
         
-//        if((globalSetting.patientProfile?.isAdult)!){
+//        if((globalSetting.patientProfile?.isAdult)!) {
 //            lbCaption.text = "Great job! Half way done!"
 //            pbContinue.setTitle("Continue", for: .normal)
 //        }
