@@ -36,4 +36,17 @@ class CalibrationSettingRepo {
         
         return setting
     }
+    
+    func fetchAll() throws -> [CalibrationSetting] {
+        // fetch all CalibrationSetting
+        let request:NSFetchRequest<CalibrationSetting> =
+            CalibrationSetting.fetchRequest()
+        
+        let sortByTimestamp = NSSortDescriptor(
+            key: #keyPath(CalibrationSetting.timestamp),
+            ascending: true)
+        request.sortDescriptors = [sortByTimestamp]
+        
+        return try _managedContext.fetch(request)
+    }
 }

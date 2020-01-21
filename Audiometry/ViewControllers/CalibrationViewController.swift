@@ -4,29 +4,17 @@ import CoreData
 
 class CalibrationViewController: UIViewController, Storyboarded {
 
-//------------------------------------------------------------------------------
-// Local Variables
-//------------------------------------------------------------------------------
-    weak var coordinator: MainCoordinator?
-    
-    private let globalSettingRepo: GlobalSettingRepo = GlobalSettingRepo()
-    private let calibrationSettingRepo: CalibrationSettingRepo = CalibrationSettingRepo()
-    
+    // MARK: Properties
+    weak var coordinator: CalibrationCoordinator!
     private var globalSetting: GlobalSetting!
     private var currentSetting: CalibrationSetting!
-    
     private var array_settings: [CalibrationSetting] = []
     
     private var player: CalibrationPlayer!
     private var _currentPickerIndex: Int = 0;
     private var _currentPlayFreq: Int = -1;
     
-    private let managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
-
-//------------------------------------------------------------------------------
-// UI Components
-//------------------------------------------------------------------------------
+    // MARK: UI Components
     private var dict_settingUI: [Int: SettingUI] = [:]
     
     @IBOutlet var pbSaveCurrent: UIButton!
@@ -49,8 +37,8 @@ class CalibrationViewController: UIViewController, Storyboarded {
 //        initSettings()
     }
     
-    @IBAction func goBack(_ sender: Any) {
-        coordinator?.goBack()
+    @IBAction func back(_ sender: Any) {
+        coordinator?.back()
     }
     
     // MARK: Initialize ViewController
@@ -93,21 +81,15 @@ class CalibrationViewController: UIViewController, Storyboarded {
     func initSettings() {
         player = CalibrationPlayer()
         
-        do {
-            globalSetting = try globalSettingRepo.fetchGlobalSetting()
-            if(globalSetting.calibrationSetting == nil) {
-                lbCurrentSetting.text = "None"
-                pbSaveCurrent.isEnabled = false
-                pbDeleteCurrent.isEnabled = false
-            }
-            else {
-                currentSetting = globalSetting.calibrationSetting ?? CalibrationSetting()
-                lbCurrentSetting.text = currentSetting.name
-                loadSettingValues()
-            }
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
+        if(globalSetting.calibrationSetting == nil) {
+            lbCurrentSetting.text = "None"
+            pbSaveCurrent.isEnabled = false
+            pbDeleteCurrent.isEnabled = false
+        }
+        else {
+            currentSetting = globalSetting.calibrationSetting ?? CalibrationSetting()
+            lbCurrentSetting.text = currentSetting.name
+            loadSettingValues(self.currentSetting)
         }
     }
     
@@ -126,109 +108,62 @@ class CalibrationViewController: UIViewController, Storyboarded {
         pbSaveCurrent.isEnabled = true
         pbDeleteCurrent.isEnabled = true
         
-        var valuesArray = [CalibrationSettingValues]()
-        for freq in ARRAY_DEFAULT_FREQ {
-            let values = CalibrationSettingValues()
-            
-            let settingUI = dict_settingUI[freq]
-            
-            values.frequency = Int16(freq)
-            
-            values.expectedLv = Double((settingUI?.tfExpectedLv.text)!) ?? 0.0
-            values.presentationLv = Double((settingUI?.tfPresentationLv.text)!) ?? 0.0
-            values.measuredLv_L = Double((settingUI?.tfMeasuredLv_L.text)!) ?? 0.0
-            values.measuredLv_R = Double((settingUI?.tfMeasuredLv_R.text)!) ?? 0.0
-            valuesArray.append(values)
-//            setting.addToValues(values)
-//            values.context
-        }
-        
-        do {
-            currentSetting = try calibrationSettingRepo.saveNewCalibrationSetting(
-                settingName, valuesArray)
-        } catch let error as NSError {
-            print("")
+        coordinator?.saveCalibrationSetting(
+            settingName: settingName,
+            values: self.extractValuesFromUi()
+        )
+    }
+    
+    func extractValuesFromUi() -> [CalibrationSettingValues] {
+        return dict_settingUI.map{ freq, settingUI in
+            return settingUI.toValues()
         }
     }
     
     @IBAction func updateCurrentSetting(_ sender: UIButton) {
         currentSetting.timestamp = Date()
-        
-        for settingValues in currentSetting.values! {
-            let values = settingValues as! CalibrationSettingValues
-            
-            let settingUI = dict_settingUI[Int(values.frequency)]
-            
-            values.expectedLv = Double((settingUI?.tfExpectedLv.text)!) ?? 0.0
-            values.presentationLv = Double((settingUI?.tfPresentationLv.text)!) ?? 0.0
-            values.measuredLv_L = Double((settingUI?.tfMeasuredLv_L.text)!) ?? 0.0
-            values.measuredLv_R = Double((settingUI?.tfMeasuredLv_R.text)!) ?? 0.0
+        let allValues = currentSetting.getDictionary()
+        dict_settingUI.map{ freq, settingUI in
+            return settingUI.exportValues(allValues[freq]!)
         }
         
-        do{
-            try managedContext.save()
-        } catch let error as NSError{
-            print("Could not update calibration setting.")
-            print("\(error), \(error.userInfo)")
-        }
+//        do{
+//            try managedContext.save()
+//        } catch let error as NSError{
+//            print("Could not update calibration setting.")
+//            print("\(error), \(error.userInfo)")
+//        }
     }
     
     @IBAction func loadOtherSetting(_ sender: UIButton) {
+        array_settings = coordinator.fetchAllCalibrationSettings()
+        
         _currentPickerIndex = 0
-        
-        // fetch all CalibrationSetting
-        let request:NSFetchRequest<CalibrationSetting> =
-            CalibrationSetting.fetchRequest()
-        
-        let sortByTimestamp = NSSortDescriptor(
-            key: #keyPath(CalibrationSetting.timestamp),
-            ascending: true)
-        request.sortDescriptors = [sortByTimestamp]
-        
-        do {
-            array_settings = try managedContext.fetch(request)
-        } catch let error as NSError{
-            print("Could not fetch calibration setting.")
-            print("\(error), \(error.userInfo)")
-        }
-        
         pickerPrompt(confirmFunction: {()->Void in
-            do{
-                self.currentSetting = self.array_settings[self._currentPickerIndex]
-                self.globalSetting.calibrationSetting = self.currentSetting
-                
-                self.loadSettingValues()
-                
-                self.pbSaveCurrent.isEnabled = true
-                self.pbDeleteCurrent.isEnabled = true
-                
-                try self.managedContext.save()
-                print("Done Loading", self.currentSetting.name!)
-            } catch let error as NSError{
-                print("Could not update calibration setting.")
-                print("\(error), \(error.userInfo)")
-            }
+            let picked = self.array_settings[self._currentPickerIndex]
+            self.currentSetting = picked
+            self.coordinator?.updateGlobalSetting(picked)
+            self.loadSettingValues(picked)
+            
+            self.pbSaveCurrent.isEnabled = true
+            self.pbDeleteCurrent.isEnabled = true
+            
+            print("Done Loading", self.currentSetting.name!)
         }, uiCtrl: self)
     }
     
-    func loadSettingValues() {
+    func loadSettingValues(_ setting: CalibrationSetting) {
         lbCurrentSetting.text = currentSetting.name!
         
         // Load setting name
         for settingValues in currentSetting.values! {
             let values = settingValues as! CalibrationSettingValues
-            
-            let settingUI = dict_settingUI[Int(values.frequency)]
-            
-            settingUI?.tfExpectedLv.text = String(values.expectedLv)
-            settingUI?.tfPresentationLv.text = String(values.presentationLv)
-            settingUI?.tfMeasuredLv_L.text = String(values.measuredLv_L)
-            settingUI?.tfMeasuredLv_R.text = String(values.measuredLv_R)
+            dict_settingUI[Int(values.frequency)]?.updateDisplayValues(values)
         }
     }
     
     @IBAction func deleteCurrentSetting(_ sender: UIButton) {
-        managedContext.delete(currentSetting)
+//        managedContext.delete(currentSetting)
         currentSetting = nil
         globalSetting.calibrationSetting = nil
         lbCurrentSetting.text = "None"

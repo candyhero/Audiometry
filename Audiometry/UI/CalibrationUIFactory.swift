@@ -18,6 +18,24 @@ struct SettingUI {
         tfMeasuredLv_L = CalibrationUIFactory.newTextField()
         tfMeasuredLv_R = CalibrationUIFactory.newTextField()
     }
+    
+    func toValues() -> CalibrationSettingValues {
+        return exportValues(CalibrationSettingValues())
+    }
+    func exportValues(_ values: CalibrationSettingValues) -> CalibrationSettingValues {
+        values.expectedLv = Double(self.tfExpectedLv.text!) ?? 0.0
+        values.presentationLv = Double(self.tfPresentationLv.text!) ?? 0.0
+        values.measuredLv_L = Double(self.tfMeasuredLv_L.text!) ?? 0.0
+        values.measuredLv_R = Double(self.tfMeasuredLv_R.text!) ?? 0.0
+        return values
+    }
+    
+    func updateDisplayValues(_ values: CalibrationSettingValues) {
+        self.tfExpectedLv.text = String(values.expectedLv)
+        self.tfPresentationLv.text = String(values.presentationLv)
+        self.tfMeasuredLv_L.text = String(values.measuredLv_L)
+        self.tfMeasuredLv_R.text = String(values.measuredLv_R)
+    }
 }
 
 class CalibrationUIFactory {

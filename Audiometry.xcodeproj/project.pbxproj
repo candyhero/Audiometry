@@ -38,6 +38,9 @@
 		67B58CF423D5F795003EFEE6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF323D5F795003EFEE6 /* Coordinator.swift */; };
 		67B58CF623D5F7BC003EFEE6 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */; };
 		67B58CF823D5F812003EFEE6 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */; };
+		67B58CFA23D73833003EFEE6 /* TestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF923D73833003EFEE6 /* TestCoordinator.swift */; };
+		67B58CFC23D748DF003EFEE6 /* CalibrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */; };
+		67B58CFF23D763FF003EFEE6 /* CalibrationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */; };
 		67DCEF2E22F68A8400C3117F /* CaptionText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DCEF2D22F68A8400C3117F /* CaptionText.swift */; };
 		67E329B323CE28AC0068C2E2 /* GlobalSettingRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */; };
 		67E329B523CE2C6A0068C2E2 /* PatientProfileRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */; };
@@ -79,6 +82,9 @@
 		67B58CF323D5F795003EFEE6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		67B58CF923D73833003EFEE6 /* TestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoordinator.swift; sourceTree = "<group>"; };
+		67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationCoordinator.swift; sourceTree = "<group>"; };
+		67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationSetting.swift; sourceTree = "<group>"; };
 		67DCEF2D22F68A8400C3117F /* CaptionText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionText.swift; sourceTree = "<group>"; };
 		67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettingRepo.swift; sourceTree = "<group>"; };
 		67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientProfileRepo.swift; sourceTree = "<group>"; };
@@ -136,9 +142,9 @@
 			children = (
 				67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */,
 				4E4B3C7921A7266000191AF3 /* TitleViewController.swift */,
+				4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */,
 				4E4B3CEF21B03CF000191AF3 /* TestProtocolViewController.swift */,
 				67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */,
-				4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */,
 				4EEDE90A21BEABBC00028C60 /* ChildrenInstructionViewController.swift */,
 				4EEDE90421BE876E00028C60 /* ChildrenTestViewController.swift */,
 				4E4B3CEA21A9B3FC00191AF3 /* AdultInstructionViewController.swift */,
@@ -170,6 +176,7 @@
 		4EC055F721A724E60016AB0D /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
+				67B58CFD23D763EE003EFEE6 /* Entities */,
 				67B58CF223D5F786003EFEE6 /* Coordinators */,
 				4E32DA0621C17EAB00002770 /* Animal_Tones */,
 				4E32DA0521C17EAB00002770 /* Shape_Icons */,
@@ -194,8 +201,18 @@
 				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
 				67B58CF323D5F795003EFEE6 /* Coordinator.swift */,
 				67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */,
+				67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */,
+				67B58CF923D73833003EFEE6 /* TestCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		67B58CFD23D763EE003EFEE6 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		67E329B123CE28880068C2E2 /* Repositories */ = {
@@ -351,10 +368,12 @@
 				67E329B823CF5F190068C2E2 /* TestProtocolRepo.swift in Sources */,
 				4E4B3C7D21A7266000191AF3 /* CalibrationPlayer.swift in Sources */,
 				4EEDE90621BE876E00028C60 /* ChildrenTestViewController.swift in Sources */,
+				67B58CFC23D748DF003EFEE6 /* CalibrationCoordinator.swift in Sources */,
 				4E4B3CF021B03CF000191AF3 /* TestProtocolViewController.swift in Sources */,
 				67B58CF623D5F7BC003EFEE6 /* Storyboarded.swift in Sources */,
 				4E4B3C8321A7266000191AF3 /* TitleViewController.swift in Sources */,
 				67E329B323CE28AC0068C2E2 /* GlobalSettingRepo.swift in Sources */,
+				67B58CFA23D73833003EFEE6 /* TestCoordinator.swift in Sources */,
 				67E329B523CE2C6A0068C2E2 /* PatientProfileRepo.swift in Sources */,
 				4E4B3C9521A757DA00191AF3 /* AppUtililty.swift in Sources */,
 				4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */,
@@ -368,6 +387,7 @@
 				4E4B3CF621B1988000191AF3 /* ResultViewController.swift in Sources */,
 				4E4B3CED21A9B3FC00191AF3 /* AdultInstructionViewController.swift in Sources */,
 				4EEDE90B21BEABBC00028C60 /* ChildrenInstructionViewController.swift in Sources */,
+				67B58CFF23D763FF003EFEE6 /* CalibrationSetting.swift in Sources */,
 				67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */,
 				4E4B3C9221A745EA00191AF3 /* AudiometryModel.xcdatamodeld in Sources */,
 				67B58CF423D5F795003EFEE6 /* Coordinator.swift in Sources */,

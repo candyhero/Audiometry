@@ -10,15 +10,18 @@ import UIKit
 
 class MainCoordinator: Coordinator {
     
+    var _childCoordinators = [Coordinator]()
+    var _navigationController: UINavigationController
+    
+    private let _calibrationCoordinator: CalibrationCoordinator
+    
     // MARK:
     private var _globalSetting: GlobalSetting!
     private let _globalSettingRepo = GlobalSettingRepo()
     
-    var _childCoordinators = [Coordinator]()
-    var _navigationController: UINavigationController
-    
-    init(navigationController: UINavigationController) {
+    init(_ navigationController: UINavigationController) {
         self._navigationController = navigationController
+        self._calibrationCoordinator = CalibrationCoordinator(_navigationController)
         do {
             self._globalSetting = try _globalSettingRepo.fetchGlobalSetting()
         } catch let error as NSError {
@@ -30,13 +33,14 @@ class MainCoordinator: Coordinator {
         showTitleView(sender: nil)
     }
     
-    func goBack() {
+    func back() {
         self._navigationController.popViewController(animated: true)
     }
     
     func initView(){
         
     }
+    
     func showTitleView(sender: Any?) {
         let vc = TitleViewController.instantiate()
         vc.coordinator = self
@@ -46,7 +50,7 @@ class MainCoordinator: Coordinator {
     
     func showCalibrationView(sender: Any?) {
         let vc = CalibrationViewController.instantiate()
-        vc.coordinator = self
+        vc.coordinator = self._calibrationCoordinator
         self._navigationController.setNavigationBarHidden(true, animated: false)
         self._navigationController.show(vc, sender: nil)
     }

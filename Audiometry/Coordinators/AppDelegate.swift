@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navController = UINavigationController()
         
         // send that into our coordinator so that it can display view controllers
-        coordinator = MainCoordinator(navigationController: navController)
+        coordinator = MainCoordinator(navController)
         
         // tell the coordinator to take over control
         coordinator?.start()
