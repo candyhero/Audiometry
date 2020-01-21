@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="H19-23-Hv8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="H19-23-Hv8">
     <device id="ipad12_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -66,9 +66,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Uk-Sk-nqx">
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="1SS-Hc-TLl" kind="showDetail" id="zC6-iA-2Wg"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bpw-UR-4Wm">
                                 <rect key="frame" x="1031" y="354.5" width="315" height="315"/>
@@ -183,9 +180,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xGj-8Z-nbi">
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="1SS-Hc-TLl" kind="showDetail" id="oPb-8s-FZZ"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GmR-MD-8t1">
                                 <rect key="frame" x="268" y="440.5" width="830" height="143.5"/>
@@ -272,9 +266,6 @@
                                     <constraint firstAttribute="height" constant="30" id="hXc-iQ-oea"/>
                                 </constraints>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="1SS-Hc-TLl" kind="showDetail" id="QnM-NE-8XN"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3JU-sZ-hLL">
                                 <rect key="frame" x="1031" y="884" width="315" height="120"/>
@@ -369,17 +360,8 @@
             </objects>
             <point key="canvasLocation" x="-422.10834553440702" y="286.5234375"/>
         </scene>
-        <!--TitleView-->
-        <scene sceneID="lxq-RT-Vbn">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="TitleView" id="1SS-Hc-TLl" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tog-8X-Bck" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="250" y="687"/>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zC6-iA-2Wg"/>
         <segue reference="N3n-S4-2S0"/>
     </inferredMetricsTieBreakers>
 </document>

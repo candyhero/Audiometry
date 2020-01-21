@@ -1,8 +1,8 @@
 
 import UIKit
 
-class TitleViewController: UIViewController {
-    
+class TitleViewController: UIViewController, Storyboarded {
+    weak var coordinator: MainCoordinator?
     // MARK:
     private var _globalSetting: GlobalSetting!
     
@@ -29,7 +29,11 @@ class TitleViewController: UIViewController {
     }
     
     // MARK: Controller functions
-    @IBAction func startTesting(_ sender: UIButton) {
+    @IBAction func showCalibrationView(_ sender: UIButton) {
+        coordinator?.showCalibrationView(sender: sender)
+    }
+    
+    @IBAction func prepareTestProtocol(_ sender: UIButton) {
         // Validator
         if _globalSetting.calibrationSetting == nil {
             errorPrompt(
@@ -38,10 +42,10 @@ class TitleViewController: UIViewController {
             return
         }
         
-        performSegue(withIdentifier: "segueProtocolFromTitle", sender: nil)
+        coordinator?.showTestProtoclView(sender: sender)
     }
     
-    @IBAction func viewResults(_ sender: UIButton) {
+    @IBAction func showResultView(_ sender: UIButton) {
         do {
             if try _patientProfileRepo.validateAnyPatientProfiles() {
                 performSegue(withIdentifier: "segueResultFromTitle", sender: nil)
@@ -54,6 +58,7 @@ class TitleViewController: UIViewController {
             print("[Error] There is no patient profileg.")
             print("\(error), \(error.userInfo)")
         }
+        coordinator?.showResultView(sender: sender)
     }
 }
 

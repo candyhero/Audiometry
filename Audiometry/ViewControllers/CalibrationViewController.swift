@@ -2,13 +2,15 @@
 import UIKit
 import CoreData
 
-class CalibrationViewController: UIViewController {
+class CalibrationViewController: UIViewController, Storyboarded {
 
 //------------------------------------------------------------------------------
 // Local Variables
 //------------------------------------------------------------------------------
-    private let managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
+    weak var coordinator: MainCoordinator?
+    
+    private let globalSettingRepo: GlobalSettingRepo = GlobalSettingRepo()
+    private let calibrationSettingRepo: CalibrationSettingRepo = CalibrationSettingRepo()
     
     private var globalSetting: GlobalSetting!
     private var currentSetting: CalibrationSetting!
@@ -18,6 +20,9 @@ class CalibrationViewController: UIViewController {
     private var player: CalibrationPlayer!
     private var _currentPickerIndex: Int = 0;
     private var _currentPlayFreq: Int = -1;
+    
+    private let managedContext = (UIApplication.shared.delegate as!
+        AppDelegate).persistentContainer.viewContext
 
 //------------------------------------------------------------------------------
 // UI Components
@@ -37,10 +42,76 @@ class CalibrationViewController: UIViewController {
     @IBOutlet weak var svPresentationLv: UIStackView!
     @IBOutlet weak var svMeasuredLv_L: UIStackView!
     @IBOutlet weak var svMeasuredLv_R: UIStackView!
-
-//------------------------------------------------------------------------------
-// CRUD for CalibrationSetting
-//------------------------------------------------------------------------------
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initUI()
+//        initSettings()
+    }
+    
+    @IBAction func goBack(_ sender: Any) {
+        coordinator?.goBack()
+    }
+    
+    // MARK: Initialize ViewController
+    fileprivate func initUI() {
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        // Get default frequencies from util setting files
+        // and setup the UI
+        setupStackview(svFreqLabels)
+        setupStackview(svPlayButtons)
+        setupStackview(svExpectedLv)
+        setupStackview(svPresentationLv)
+        setupStackview(svMeasuredLv_L)
+        setupStackview(svMeasuredLv_R)
+        
+        for freq in ARRAY_DEFAULT_FREQ {
+            let settingUI = SettingUI(freq: freq)
+            settingUI.pbPlay.addTarget(self,
+                                       action: #selector(toggleSingal(_:)),
+                                       for: .touchUpInside)
+            dict_settingUI[freq] = settingUI
+            
+            // Displaying in subview
+            svFreqLabels.addArrangedSubview(settingUI.lbFreq)
+            svPlayButtons.addArrangedSubview(settingUI.pbPlay)
+            svExpectedLv.addArrangedSubview(settingUI.tfExpectedLv)
+            svPresentationLv.addArrangedSubview(settingUI.tfPresentationLv)
+            svMeasuredLv_L.addArrangedSubview(settingUI.tfMeasuredLv_L)
+            svMeasuredLv_R.addArrangedSubview(settingUI.tfMeasuredLv_R)
+        }
+    }
+    
+    func setupStackview(_ sv: UIStackView!) {
+        sv.axis = .horizontal
+        sv.distribution = .fillEqually
+        sv.alignment = .center
+        sv.spacing = 20
+    }
+    
+    func initSettings() {
+        player = CalibrationPlayer()
+        
+        do {
+            globalSetting = try globalSettingRepo.fetchGlobalSetting()
+            if(globalSetting.calibrationSetting == nil) {
+                lbCurrentSetting.text = "None"
+                pbSaveCurrent.isEnabled = false
+                pbDeleteCurrent.isEnabled = false
+            }
+            else {
+                currentSetting = globalSetting.calibrationSetting ?? CalibrationSetting()
+                lbCurrentSetting.text = currentSetting.name
+                loadSettingValues()
+            }
+        } catch let error as NSError{
+            print("Could not fetch global setting.")
+            print("\(error), \(error.userInfo)")
+        }
+    }
+    
+    // MARK: Calibration CRUD
     @IBAction func saveAsNewSetting(_ sender: UIButton) {
         
         inputPrompt(promptMsg: "Please enter setting name:",
@@ -51,21 +122,13 @@ class CalibrationViewController: UIViewController {
     }
     
     func saveSetting(_ settingName: String) {
-        let setting = NSEntityDescription.insertNewObject(
-            forEntityName: "CalibrationSetting",
-            into: managedContext) as! CalibrationSetting
-        
-        setting.name = settingName
-        setting.timestamp = Date()
-        
         lbCurrentSetting.text = settingName
         pbSaveCurrent.isEnabled = true
         pbDeleteCurrent.isEnabled = true
         
+        var valuesArray = [CalibrationSettingValues]()
         for freq in ARRAY_DEFAULT_FREQ {
-            let values = NSEntityDescription.insertNewObject(
-                forEntityName: "CalibrationSettingValues",
-                into: managedContext) as! CalibrationSettingValues
+            let values = CalibrationSettingValues()
             
             let settingUI = dict_settingUI[freq]
             
@@ -75,17 +138,16 @@ class CalibrationViewController: UIViewController {
             values.presentationLv = Double((settingUI?.tfPresentationLv.text)!) ?? 0.0
             values.measuredLv_L = Double((settingUI?.tfMeasuredLv_L.text)!) ?? 0.0
             values.measuredLv_R = Double((settingUI?.tfMeasuredLv_R.text)!) ?? 0.0
-            setting.addToValues(values)
+            valuesArray.append(values)
+//            setting.addToValues(values)
+//            values.context
         }
         
-        currentSetting = setting
-        globalSetting.calibrationSetting = setting
-        
-        do{
-            try managedContext.save()
-        } catch let error as NSError{
-            print("Could not save calibration setting.")
-            print("\(error), \(error.userInfo)")
+        do {
+            currentSetting = try calibrationSettingRepo.saveNewCalibrationSetting(
+                settingName, valuesArray)
+        } catch let error as NSError {
+            print("")
         }
     }
     
@@ -175,9 +237,9 @@ class CalibrationViewController: UIViewController {
         self.pbDeleteCurrent.isEnabled = false
     }
     
-//------------------------------------------------------------------------------
-// View utiliy functions
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
+    // View utiliy functions
+    //------------------------------------------------------------------------------
     @IBAction func loadDefaultPresentationLv(_ sender: UIButton) {
         for settingUI in dict_settingUI.values {
             settingUI.tfPresentationLv.text = String(_DB_DEFAULT)
@@ -220,77 +282,6 @@ class CalibrationViewController: UIViewController {
             player.updateFreq(_currentPlayFreq)
             player.updateVolume(dict_settingUI[sender.tag]!)
         }
-    }
-//------------------------------------------------------------------------------
-// Initialize View
-//------------------------------------------------------------------------------
-    func initSettings() {
-        player = CalibrationPlayer()
-        // fetch all CalibrationSetting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        request.fetchLimit = 1
-        
-        do {
-            globalSetting = try managedContext.fetch(request).first
-            if(globalSetting.calibrationSetting != nil) {
-                currentSetting =
-                    globalSetting.calibrationSetting ?? CalibrationSetting()
-                
-                loadSettingValues()
-                lbCurrentSetting.text = currentSetting.name
-                
-            }
-            else {
-                lbCurrentSetting.text = "None"
-                pbSaveCurrent.isEnabled = false
-                pbDeleteCurrent.isEnabled = false
-            }
-            
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
-    func setupStackview(_ sv: UIStackView!) {
-        sv.axis = .horizontal
-        sv.distribution = .fillEqually
-        sv.alignment = .center
-        sv.spacing = 20
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        // Get default frequencies from util setting files
-        // and setup the UI
-        setupStackview(svFreqLabels)
-        setupStackview(svPlayButtons)
-        setupStackview(svExpectedLv)
-        setupStackview(svPresentationLv)
-        setupStackview(svMeasuredLv_L)
-        setupStackview(svMeasuredLv_R)
-        
-        for freq in ARRAY_DEFAULT_FREQ {
-            let settingUI = SettingUI(freq: freq)
-            settingUI.pbPlay.addTarget(self,
-                                       action: #selector(toggleSingal(_:)),
-                                       for: .touchUpInside)
-            dict_settingUI[freq] = settingUI
-            
-            // Displaying in subview
-            svFreqLabels.addArrangedSubview(settingUI.lbFreq)
-            svPlayButtons.addArrangedSubview(settingUI.pbPlay)
-            svExpectedLv.addArrangedSubview(settingUI.tfExpectedLv)
-            svPresentationLv.addArrangedSubview(settingUI.tfPresentationLv)
-            svMeasuredLv_L.addArrangedSubview(settingUI.tfMeasuredLv_L)
-            svMeasuredLv_R.addArrangedSubview(settingUI.tfMeasuredLv_R)
-        }
-        // Load from CoreData all calibration settings
-        // and their sub values by freqs
-        initSettings()
     }
     
     override func didReceiveMemoryWarning() {

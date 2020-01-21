@@ -1,6 +1,8 @@
 import UIKit
 
-class ProtocolViewController: UIViewController {
+class TestProtocolViewController: UIViewController, Storyboarded {
+    weak var coordinator: MainCoordinator?
+    
     // MARK: Repo
     private let _globalSettingRepo = GlobalSettingRepo()
     private let _patientProfileRepo = PatientProfileRepo()
@@ -310,7 +312,7 @@ class ProtocolViewController: UIViewController {
     }
 }
 
-extension ProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+extension TestProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

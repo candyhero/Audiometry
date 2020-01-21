@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cTp-f6-a1r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cTp-f6-a1r">
     <device id="ipad10_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Title View Controller-->
         <scene sceneID="cf7-WR-69U">
             <objects>
-                <viewController storyboardIdentifier="TitleView" id="cTp-f6-a1r" customClass="TitleViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TitleViewController" id="cTp-f6-a1r" customClass="TitleViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4Ud-yW-L2I"/>
                         <viewControllerLayoutGuide type="bottom" id="qea-bF-98W"/>
@@ -34,7 +34,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Start"/>
                                         <connections>
-                                            <action selector="startTesting:" destination="cTp-f6-a1r" eventType="touchUpInside" id="1xa-eS-dGI"/>
+                                            <action selector="prepareTestProtocol:" destination="cTp-f6-a1r" eventType="touchUpInside" id="1xa-eS-dGI"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c5c-0e-X0P">
@@ -47,8 +47,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Practice"/>
                                         <connections>
-                                            <action selector="startTesting:" destination="cTp-f6-a1r" eventType="touchUpInside" id="Lue-di-6RC"/>
-                                            <segue destination="98J-wo-Ehx" kind="show" id="KCN-nr-J9z"/>
+                                            <action selector="prepareTestProtocol:" destination="cTp-f6-a1r" eventType="touchUpInside" id="Lue-di-6RC"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dab-8t-SDg">
@@ -61,7 +60,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Calibration"/>
                                         <connections>
-                                            <segue destination="WbP-fl-Brp" kind="showDetail" id="rys-ao-c2H"/>
+                                            <action selector="showCalibrationView:" destination="cTp-f6-a1r" eventType="touchUpInside" id="5PG-xk-PxS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MVY-zw-dkX">
@@ -74,7 +73,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="View Results"/>
                                         <connections>
-                                            <action selector="viewResults:" destination="cTp-f6-a1r" eventType="touchUpInside" id="qns-26-MK9"/>
+                                            <action selector="showResultView:" destination="cTp-f6-a1r" eventType="touchUpInside" id="qns-26-MK9"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -97,19 +96,15 @@
                             <constraint firstItem="lJh-zi-akX" firstAttribute="centerX" secondItem="wbj-he-gXG" secondAttribute="centerX" id="lbe-3C-HW9"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="Y3r-HM-Rvd" kind="show" identifier="segueProtocolFromTitle" id="94T-w3-BCe"/>
-                        <segue destination="iwX-Tf-HtX" kind="show" identifier="segueResultFromTitle" id="Fsl-Dc-Egp"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YUe-jA-rry" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-477" y="-622"/>
         </scene>
-        <!--Protocol View Controller-->
+        <!--Test Protocol View Controller-->
         <scene sceneID="yy7-68-HY3">
             <objects>
-                <viewController storyboardIdentifier="ProtocolView" id="Y3r-HM-Rvd" customClass="ProtocolViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TestProtocolViewController" id="Y3r-HM-Rvd" customClass="TestProtocolViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rYx-y9-afQ"/>
                         <viewControllerLayoutGuide type="bottom" id="nLG-lN-eKU"/>
@@ -137,9 +132,6 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="5hk-Ic-nXm"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gc3-JO-0I7">
                                 <rect key="frame" x="236.5" y="518" width="639" height="38"/>
@@ -389,7 +381,7 @@
         <!--Calibration View Controller-->
         <scene sceneID="BnQ-jU-Usx">
             <objects>
-                <viewController storyboardIdentifier="CalibrationView" id="WbP-fl-Brp" customClass="CalibrationViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CalibrationViewController" id="WbP-fl-Brp" customClass="CalibrationViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DPu-xT-Zy9"/>
                         <viewControllerLayoutGuide type="bottom" id="dqe-qX-nyP"/>
@@ -402,7 +394,7 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="cTp-f6-a1r" kind="showDetail" id="uKx-ej-dTy"/>
+                                    <action selector="goBack:" destination="WbP-fl-Brp" eventType="touchUpInside" id="Hwr-lx-BZW"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bY2-0E-pNT" userLabel="Sv Main">
@@ -608,9 +600,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWs-cg-CKn">
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="0wf-rk-Jqg"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FcF-v1-OIM">
                                 <rect key="frame" x="459.5" y="80" width="193.5" height="20.5"/>
@@ -827,9 +816,6 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="MLj-qe-4GS"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="cyU-I1-gfR">
                                 <rect key="frame" x="236.5" y="518" width="639" height="38"/>
@@ -1080,8 +1066,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="soV-Dc-qAS"/>
-        <segue reference="Xp3-la-tot"/>
-        <segue reference="0wf-rk-Jqg"/>
+        <segue reference="S5N-7u-244"/>
+        <segue reference="hfc-YE-1Ho"/>
     </inferredMetricsTieBreakers>
 </document>

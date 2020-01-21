@@ -21,7 +21,6 @@ struct SettingUI {
 }
 
 class CalibrationUIFactory {
-    
     static func newLabel(_ text: String) -> UILabel {
         let label = UILabel()
         label.text = text

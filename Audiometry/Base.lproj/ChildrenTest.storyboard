@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ResultView-->
-        <scene sceneID="Suq-Ss-rFf">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="ResultView" id="npX-wU-hFR" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kc3-j3-Tur" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="251" y="-117"/>
-        </scene>
         <!--Children Test View Controller-->
         <scene sceneID="QVS-mb-LPB">
             <objects>
@@ -123,9 +115,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YKS-n1-fbd">
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="EJU-Ww-3zb" kind="showDetail" id="jFb-rL-OgV"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -155,7 +144,6 @@
                         <outlet property="pbSecondInterval" destination="lgb-LX-Ddq" id="kpc-Jf-UuA"/>
                         <outlet property="svIcons" destination="Qrf-f3-cWA" id="yNa-L0-In9"/>
                         <segue destination="4xs-O5-bdk" kind="show" identifier="segueSwitchEar" id="2bL-Pn-Pg0"/>
-                        <segue destination="npX-wU-hFR" kind="showDetail" identifier="segueResult" id="it3-2m-x0y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UpN-4c-t75" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -177,9 +165,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bgb-fT-YWn">
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="EJU-Ww-3zb" kind="showDetail" id="dyW-jr-jKy"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="quV-DB-wKK">
                                 <rect key="frame" x="268" y="440.5" width="830" height="143.5"/>
@@ -291,9 +276,6 @@
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yiQ-Cw-ZiX">
                                         <rect key="frame" x="0.0" y="0.0" width="97" height="29"/>
                                         <state key="normal" title="Return to Title"/>
-                                        <connections>
-                                            <segue destination="EJU-Ww-3zb" kind="showDetail" id="dBq-r5-Uqm"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yvl-4D-QvU">
                                         <rect key="frame" x="0.0" y="49" width="97" height="41"/>
@@ -350,18 +332,8 @@
             </objects>
             <point key="canvasLocation" x="-422.10834553440702" y="286.5234375"/>
         </scene>
-        <!--TitleView-->
-        <scene sceneID="q6S-oU-CE5">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="TitleView" id="EJU-Ww-3zb" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kdD-AW-EKo" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="250" y="687"/>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="2bL-Pn-Pg0"/>
-        <segue reference="jFb-rL-OgV"/>
         <segue reference="dML-5R-KJR"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -21,7 +21,7 @@
 		4E4B3C9721A7D32E00191AF3 /* CalibrationUIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3C9621A7D32E00191AF3 /* CalibrationUIFactory.swift */; };
 		4E4B3CA521A9A30900191AF3 /* AdultTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E4B3CA221A9A30900191AF3 /* AdultTest.storyboard */; };
 		4E4B3CED21A9B3FC00191AF3 /* AdultInstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CEA21A9B3FC00191AF3 /* AdultInstructionViewController.swift */; };
-		4E4B3CF021B03CF000191AF3 /* ProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CEF21B03CF000191AF3 /* ProtocolViewController.swift */; };
+		4E4B3CF021B03CF000191AF3 /* TestProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CEF21B03CF000191AF3 /* TestProtocolViewController.swift */; };
 		4E4B3CF321B0FA3600191AF3 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CF121B0FA3500191AF3 /* TestModel.swift */; };
 		4E4B3CF621B1988000191AF3 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CF521B1988000191AF3 /* ResultViewController.swift */; };
 		4EC055F921A724E60016AB0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC055F821A724E60016AB0D /* AppDelegate.swift */; };
@@ -34,6 +34,10 @@
 		4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */; };
 		4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */; };
 		67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */; };
+		67B58CF123D4CDF7003EFEE6 /* CalibrationSettingRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */; };
+		67B58CF423D5F795003EFEE6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF323D5F795003EFEE6 /* Coordinator.swift */; };
+		67B58CF623D5F7BC003EFEE6 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */; };
+		67B58CF823D5F812003EFEE6 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */; };
 		67DCEF2E22F68A8400C3117F /* CaptionText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DCEF2D22F68A8400C3117F /* CaptionText.swift */; };
 		67E329B323CE28AC0068C2E2 /* GlobalSettingRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */; };
 		67E329B523CE2C6A0068C2E2 /* PatientProfileRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */; };
@@ -56,7 +60,7 @@
 		4E4B3C9621A7D32E00191AF3 /* CalibrationUIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationUIFactory.swift; sourceTree = "<group>"; };
 		4E4B3CA321A9A30900191AF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AdultTest.storyboard; sourceTree = "<group>"; };
 		4E4B3CEA21A9B3FC00191AF3 /* AdultInstructionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdultInstructionViewController.swift; sourceTree = "<group>"; };
-		4E4B3CEF21B03CF000191AF3 /* ProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolViewController.swift; sourceTree = "<group>"; };
+		4E4B3CEF21B03CF000191AF3 /* TestProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestProtocolViewController.swift; sourceTree = "<group>"; };
 		4E4B3CF121B0FA3500191AF3 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
 		4E4B3CF521B1988000191AF3 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		4EC055F821A724E60016AB0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +75,10 @@
 		4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultTestPlayer.swift; sourceTree = "<group>"; };
 		6703415723512E4E00ABFB89 /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
+		67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationSettingRepo.swift; sourceTree = "<group>"; };
+		67B58CF323D5F795003EFEE6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		67DCEF2D22F68A8400C3117F /* CaptionText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionText.swift; sourceTree = "<group>"; };
 		67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettingRepo.swift; sourceTree = "<group>"; };
 		67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientProfileRepo.swift; sourceTree = "<group>"; };
@@ -126,8 +134,9 @@
 		4E4B3C7721A7266000191AF3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */,
 				4E4B3C7921A7266000191AF3 /* TitleViewController.swift */,
-				4E4B3CEF21B03CF000191AF3 /* ProtocolViewController.swift */,
+				4E4B3CEF21B03CF000191AF3 /* TestProtocolViewController.swift */,
 				67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */,
 				4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */,
 				4EEDE90A21BEABBC00028C60 /* ChildrenInstructionViewController.swift */,
@@ -161,6 +170,7 @@
 		4EC055F721A724E60016AB0D /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
+				67B58CF223D5F786003EFEE6 /* Coordinators */,
 				4E32DA0621C17EAB00002770 /* Animal_Tones */,
 				4E32DA0521C17EAB00002770 /* Shape_Icons */,
 				4E32DA0721C17EAB00002770 /* Animal_Icons */,
@@ -172,11 +182,20 @@
 				4E4B3C6B21A7264300191AF3 /* Storyboards */,
 				67DCEF2D22F68A8400C3117F /* CaptionText.swift */,
 				4E4B3C9421A757DA00191AF3 /* AppUtililty.swift */,
-				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
 				4EC0560221A724E70016AB0D /* Assets.xcassets */,
 				4EC0560721A724E70016AB0D /* Info.plist */,
 			);
 			path = Audiometry;
+			sourceTree = "<group>";
+		};
+		67B58CF223D5F786003EFEE6 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
+				67B58CF323D5F795003EFEE6 /* Coordinator.swift */,
+				67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		67E329B123CE28880068C2E2 /* Repositories */ = {
@@ -185,6 +204,7 @@
 				67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */,
 				67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */,
 				67E329B723CF5F190068C2E2 /* TestProtocolRepo.swift */,
+				67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -331,13 +351,15 @@
 				67E329B823CF5F190068C2E2 /* TestProtocolRepo.swift in Sources */,
 				4E4B3C7D21A7266000191AF3 /* CalibrationPlayer.swift in Sources */,
 				4EEDE90621BE876E00028C60 /* ChildrenTestViewController.swift in Sources */,
-				4E4B3CF021B03CF000191AF3 /* ProtocolViewController.swift in Sources */,
+				4E4B3CF021B03CF000191AF3 /* TestProtocolViewController.swift in Sources */,
+				67B58CF623D5F7BC003EFEE6 /* Storyboarded.swift in Sources */,
 				4E4B3C8321A7266000191AF3 /* TitleViewController.swift in Sources */,
 				67E329B323CE28AC0068C2E2 /* GlobalSettingRepo.swift in Sources */,
 				67E329B523CE2C6A0068C2E2 /* PatientProfileRepo.swift in Sources */,
 				4E4B3C9521A757DA00191AF3 /* AppUtililty.swift in Sources */,
 				4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */,
 				4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */,
+				67B58CF123D4CDF7003EFEE6 /* CalibrationSettingRepo.swift in Sources */,
 				4EEDE90721BE876E00028C60 /* AdultTestViewController.swift in Sources */,
 				4E4B3C8221A7266000191AF3 /* CalibrationViewController.swift in Sources */,
 				4E4B3C9721A7D32E00191AF3 /* CalibrationUIFactory.swift in Sources */,
@@ -348,7 +370,9 @@
 				4EEDE90B21BEABBC00028C60 /* ChildrenInstructionViewController.swift in Sources */,
 				67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */,
 				4E4B3C9221A745EA00191AF3 /* AudiometryModel.xcdatamodeld in Sources */,
+				67B58CF423D5F795003EFEE6 /* Coordinator.swift in Sources */,
 				4EC055F921A724E60016AB0D /* AppDelegate.swift in Sources */,
+				67B58CF823D5F812003EFEE6 /* MainCoordinator.swift in Sources */,
 				4E4B3C7E21A7266000191AF3 /* TestPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

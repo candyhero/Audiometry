@@ -3,11 +3,14 @@ import UIKit
 import Charts
 import CoreData
 
-class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class ResultViewController: UIViewController, Storyboarded,
+    UITableViewDelegate, UITableViewDataSource  {
     
 //------------------------------------------------------------------------------
 // Local Variables  
 //------------------------------------------------------------------------------
+    weak var coordinator: MainCoordinator?
+    
     private let _managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext
     
