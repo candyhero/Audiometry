@@ -13,14 +13,8 @@ class TitleViewController: UIViewController, Storyboarded {
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        do {
-            _globalSetting = try _globalSettingRepo.fetchGlobalSetting()
-//            try AudioKit.stop()
-        } catch let error as NSError {
-            print("[Error] Could not initialize global setting.")
-            print("\(error), \(error.userInfo)")
-        }
+        print("TitleView loaded!")
+        //            try AudioKit.stop()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,14 +28,12 @@ class TitleViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func prepareTestProtocol(_ sender: UIButton) {
-        // Validator
-        if _globalSetting.calibrationSetting == nil {
+        if coordinator?.getCurrentCalibrationSetting() == nil{
             errorPrompt(
                 errorMsg: "There is no calibration setting selected!",
                 uiCtrl: self)
             return
         }
-        
         coordinator?.showTestProtoclView(sender: sender)
     }
     

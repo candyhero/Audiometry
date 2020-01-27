@@ -28,4 +28,9 @@ class GlobalSettingRepo {
         }
         return setting
     }
+    
+    func update(_ setting: GlobalSetting) throws -> GlobalSetting {
+        try _managedContext.save()
+        return setting
+    }
 }

@@ -16,17 +16,11 @@ class MainCoordinator: Coordinator {
     private let _calibrationCoordinator: CalibrationCoordinator
     
     // MARK:
-    private var _globalSetting: GlobalSetting!
     private let _globalSettingRepo = GlobalSettingRepo()
     
     init(_ navigationController: UINavigationController) {
         self._navigationController = navigationController
         self._calibrationCoordinator = CalibrationCoordinator(_navigationController)
-        do {
-            self._globalSetting = try _globalSettingRepo.fetchGlobalSetting()
-        } catch let error as NSError {
-            print(error)
-        }
     }
     
     func start() {
@@ -37,8 +31,8 @@ class MainCoordinator: Coordinator {
         self._navigationController.popViewController(animated: true)
     }
     
-    func initView(){
-        
+    func getCurrentCalibrationSetting() -> CalibrationSetting! {
+        return _calibrationCoordinator.getCurrentCalibrationSetting() ?? nil
     }
     
     func showTitleView(sender: Any?) {

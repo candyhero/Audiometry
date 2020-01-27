@@ -14,27 +14,20 @@ class CalibrationSettingRepo {
     private let _managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext
     
-    func saveNewCalibrationSetting(_ settingName: String,
-                                   _ valuesArray: [CalibrationSettingValues]
-        ) throws -> CalibrationSetting
-    {
-        let setting = CalibrationSetting(context: _managedContext)
-        setting.name = settingName
-        setting.timestamp = Date()
+    func createNew(_ settingName: String,
+                   _ dict_settingUI: [Int: CalibrationSettingUI]) -> CalibrationSetting {
+        let newSetting = CalibrationSetting(context: _managedContext)
+        newSetting.name = settingName
+        newSetting.timestamp = Date()
         
-        for values in valuesArray {
-//            let values.s
+        for (freq, settingUI) in dict_settingUI {
+            let newValues = CalibrationSettingValues(context: _managedContext)
+            newValues.frequency = Int16(freq)
+            settingUI.extractValuesInto(newValues)
+            newSetting.addToValues(newValues)
         }
-//        globalSetting.calibrationSetting = currentSetting
-//
-//        do{
-//            try managedContext.save()
-//        } catch let error as NSError{
-//            print("Could not save calibration setting.")
-//            print("\(error), \(error.userInfo)")
-//        }
         
-        return setting
+        return newSetting
     }
     
     func fetchAll() throws -> [CalibrationSetting] {
@@ -48,5 +41,9 @@ class CalibrationSettingRepo {
         request.sortDescriptors = [sortByTimestamp]
         
         return try _managedContext.fetch(request)
+    }
+    
+    func delete(_ setting: CalibrationSetting) throws {
+        _managedContext.delete(setting)
     }
 }

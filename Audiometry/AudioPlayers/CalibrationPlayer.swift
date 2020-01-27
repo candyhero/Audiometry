@@ -52,7 +52,7 @@ class CalibrationPlayer {
     }
     
     // Update volume to currently playing frequency tone
-    func updateVolume(_ ui: SettingUI) {
+    func updateVolume(_ ui: CalibrationSettingUI) {
         // skip if not playing currently
         if(!_generator.isStarted) {
             return

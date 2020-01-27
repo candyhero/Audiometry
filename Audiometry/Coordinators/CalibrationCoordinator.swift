@@ -15,10 +15,17 @@ class CalibrationCoordinator: Coordinator {
     var _navigationController: UINavigationController
     
     private var _globalSetting: GlobalSetting!
-    private let calibrationSettingRepo: CalibrationSettingRepo = CalibrationSettingRepo()
+    private let _globalSettingRepo: GlobalSettingRepo = GlobalSettingRepo()
+    private let _calibrationSettingRepo: CalibrationSettingRepo = CalibrationSettingRepo()
     
     init(_ navigationController: UINavigationController) {
-        self._navigationController = navigationController
+        _navigationController = navigationController
+        do {
+            _globalSetting = try _globalSettingRepo.fetchGlobalSetting()
+        } catch let error as NSError{
+            print("Could not fetch calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
     }
     
     // MARK:
@@ -31,25 +38,14 @@ class CalibrationCoordinator: Coordinator {
     }
     
     // MARK:
-    func getCalibrationSetting(){
-        
-    }
-    
-    func saveCalibrationSetting(
-        settingName: String,
-        values: [CalibrationSettingValues]
-    ){
-        do {
-            _globalSetting.calibrationSetting =
-                try calibrationSettingRepo.saveNewCalibrationSetting(settingName, values)
-        } catch let error as NSError {
-            print("\(error), \(error.userInfo)")
-        }
+    func getCurrentCalibrationSetting() -> CalibrationSetting!{
+        print("Loading Calibration Setting")
+        return self._globalSetting.calibrationSetting
     }
     
     func fetchAllCalibrationSettings() -> [CalibrationSetting]{
         do {
-            return try calibrationSettingRepo.fetchAll()
+            return try _calibrationSettingRepo.fetchAll()
         } catch let error as NSError{
             print("Could not fetch calibration setting.")
             print("\(error), \(error.userInfo)")
@@ -57,8 +53,36 @@ class CalibrationCoordinator: Coordinator {
         return [CalibrationSetting]()
     }
     
-    func updateGlobalSetting(_ calibrationSetting: CalibrationSetting) {
+    func saveCalibrationSetting(_ settingName: String,
+                                ui: [Int: CalibrationSettingUI]) -> CalibrationSetting {
+        _globalSetting.calibrationSetting = _calibrationSettingRepo.createNew(settingName, ui)
+        do {
+            _globalSetting = try _globalSettingRepo.update(_globalSetting)
+        } catch let error as NSError {
+            print("Could not create calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
+        return _globalSetting.calibrationSetting!
+    }
+    
+    func updateCalibrationSetting(_ calibrationSetting: CalibrationSetting) {
         self._globalSetting.calibrationSetting = calibrationSetting
-        // save in managed context
+        do{
+            _globalSetting = try _globalSettingRepo.update(_globalSetting)
+        } catch let error as NSError{
+            print("Could not update calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteCalibrationSetting(_ calibrationSetting: CalibrationSetting) {
+        self._globalSetting.calibrationSetting = nil
+        do{
+            try _calibrationSettingRepo.delete(calibrationSetting)
+            _globalSetting = try _globalSettingRepo.update(_globalSetting)
+        } catch let error as NSError{
+            print("Could not delete calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
     }
 }
