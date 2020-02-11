@@ -2,18 +2,14 @@
 import UIKit
 
 class TitleViewController: UIViewController, Storyboarded {
-    weak var coordinator: MainCoordinator?
-    // MARK:
-    private var _globalSetting: GlobalSetting!
     
     // MARK:
-    private let _globalSettingRepo = GlobalSettingRepo()
-    private let _patientProfileRepo = PatientProfileRepo()
+    private let _coordinator = AppDelegate.mainCoordinator
+    private let _patientProfileRepo = PatientProfileRepo.repo
     
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("TitleView loaded!")
         //            try AudioKit.stop()
     }
 
@@ -24,24 +20,22 @@ class TitleViewController: UIViewController, Storyboarded {
     
     // MARK: Controller functions
     @IBAction func showCalibrationView(_ sender: UIButton) {
-        coordinator?.showCalibrationView(sender: sender)
+        _coordinator.showCalibrationView(sender: sender)
     }
     
     @IBAction func prepareTestProtocol(_ sender: UIButton) {
-        if coordinator?.getCurrentCalibrationSetting() == nil{
+        if _coordinator.getCurrentCalibrationSetting() == nil{
             errorPrompt(
                 errorMsg: "There is no calibration setting selected!",
                 uiCtrl: self)
             return
         }
-        coordinator?.showTestProtoclView(sender: sender)
+        _coordinator.showTestProtoclView(sender: sender, isPractice: false)
     }
     
     @IBAction func showResultView(_ sender: UIButton) {
         do {
-            if try _patientProfileRepo.validateAnyPatientProfiles() {
-                performSegue(withIdentifier: "segueResultFromTitle", sender: nil)
-            } else {
+            if try !_patientProfileRepo.validateAnyPatientProfiles(){
                 errorPrompt(
                     errorMsg: "There is no result!",
                     uiCtrl: self)
@@ -50,7 +44,7 @@ class TitleViewController: UIViewController, Storyboarded {
             print("[Error] There is no patient profileg.")
             print("\(error), \(error.userInfo)")
         }
-        coordinator?.showResultView(sender: sender)
+        _coordinator.showResultView(sender: sender)
     }
 }
 

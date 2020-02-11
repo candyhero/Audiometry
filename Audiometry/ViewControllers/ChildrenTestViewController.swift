@@ -1,11 +1,9 @@
 
 import UIKit
 
-class ChildrenTestViewController: UIViewController {
-    
-//------------------------------------------------------------------------------
-// Local Variables
-//------------------------------------------------------------------------------
+class ChildrenTestViewController: UIViewController, Storyboarded {
+    // MARK:
+    weak var coordinator: TestCoordinator?
     private var _testModel = TestModel()
     
     // Used by animator

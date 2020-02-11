@@ -1,11 +1,9 @@
 
 import UIKit
 
-class AdultTestViewController: UIViewController {
-    
-//------------------------------------------------------------------------------
-// Local Variables
-//------------------------------------------------------------------------------
+class AdultTestViewController: UIViewController, Storyboarded {
+    // MARK:
+    weak var coordinator: TestCoordinator?
     private var _testModel = TestModel()
     
     // Used by animator

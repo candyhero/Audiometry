@@ -10,56 +10,41 @@ import UIKit
 
 class MainCoordinator: Coordinator {
     
-    var _childCoordinators = [Coordinator]()
-    var _navigationController: UINavigationController
-    
-    private let _calibrationCoordinator: CalibrationCoordinator
-    
-    // MARK:
-    private let _globalSettingRepo = GlobalSettingRepo()
-    
-    init(_ navigationController: UINavigationController) {
-        self._navigationController = navigationController
-        self._calibrationCoordinator = CalibrationCoordinator(_navigationController)
-    }
+    var _navController: UINavigationController = AppDelegate.navController
     
     func start() {
         showTitleView(sender: nil)
     }
     
     func back() {
-        self._navigationController.popViewController(animated: true)
+        self._navController.popViewController(animated: true)
     }
     
     func getCurrentCalibrationSetting() -> CalibrationSetting! {
-        return _calibrationCoordinator.getCurrentCalibrationSetting() ?? nil
+        return AppDelegate.calibrationCoordinator.getCurrentCalibrationSetting() ?? nil
     }
     
-    func showTitleView(sender: Any?) {
+    func showTitleView(sender: Any? = nil) {
         let vc = TitleViewController.instantiate()
-        vc.coordinator = self
-        self._navigationController.setNavigationBarHidden(true, animated: false)
-        self._navigationController.show(vc, sender: nil)
+        self._navController.setNavigationBarHidden(true, animated: false)
+        self._navController.show(vc, sender: nil)
     }
     
-    func showCalibrationView(sender: Any?) {
+    func showCalibrationView(sender: Any? = nil) {
         let vc = CalibrationViewController.instantiate()
-        vc.coordinator = self._calibrationCoordinator
-        self._navigationController.setNavigationBarHidden(true, animated: false)
-        self._navigationController.show(vc, sender: nil)
+        self._navController.setNavigationBarHidden(true, animated: false)
+        self._navController.show(vc, sender: nil)
     }
     
-    func showTestProtoclView(sender: Any?) {
+    func showTestProtoclView(sender: Any? = nil, isPractice: Bool) {
         let vc = TestProtocolViewController.instantiate()
-        vc.coordinator = self
-        self._navigationController.setNavigationBarHidden(true, animated: false)
-        self._navigationController.show(vc, sender: nil)
+        self._navController.setNavigationBarHidden(true, animated: false)
+        self._navController.show(vc, sender: nil)
     }
     
-    func showResultView(sender: Any?) {
+    func showResultView(sender: Any? = nil) {
         let vc = ResultViewController.instantiate()
-        vc.coordinator = self
-        self._navigationController.setNavigationBarHidden(true, animated: false)
-        self._navigationController.show(vc, sender: nil)
+        self._navController.setNavigationBarHidden(true, animated: false)
+        self._navController.show(vc, sender: nil)
     }
 }

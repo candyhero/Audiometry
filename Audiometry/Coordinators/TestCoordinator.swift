@@ -10,12 +10,10 @@ import UIKit
 
 class TestCoordinator: Coordinator {
     
-    var _childCoordinators = [Coordinator]()
-    var _navigationController: UINavigationController
+    var _navController: UINavigationController = AppDelegate.navController
     
-    
-    init(_ navigationController: UINavigationController) {
-        self._navigationController = navigationController
+    func getTestLanguage() -> String! {
+        return ""
     }
     
     func start() {
@@ -23,6 +21,14 @@ class TestCoordinator: Coordinator {
     }
     
     func back() {
-        self._navigationController.popViewController(animated: true)
+        self._navController.popViewController(animated: true)
+    }
+    
+    func showTestView(sender: Any? = nil, isAdult: Bool) {
+        let vc = isAdult ? AdultTestViewController.instantiate()
+                         : ChildrenTestViewController.instantiate()
+//        vc.coordinator = self
+        self._navController.setNavigationBarHidden(true, animated: false)
+        self._navController.show(vc, sender: nil)
     }
 }

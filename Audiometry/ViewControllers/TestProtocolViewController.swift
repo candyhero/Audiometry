@@ -1,31 +1,17 @@
+
 import UIKit
 
 class TestProtocolViewController: UIViewController, Storyboarded {
-    weak var coordinator: MainCoordinator?
+    
+    // MARK:
+    private let _coordinator = AppDelegate.testProcotolCoordinator
     
     // MARK: Repo
     private let _globalSettingRepo = GlobalSettingRepo()
     private let _patientProfileRepo = PatientProfileRepo()
-    private let _testProtocolRepo = TestProtocolRepo()
     
     // MARK: Local Variables
-    private var _globalSetting: GlobalSetting! = nil
-    private var _testProtocol: TestProtocol! = nil
-    
-    private var _testProtocols: [TestProtocol] = []
-    private var _frequencyBuffer: [Int] = []
-    
     private var _currentPickerIndex: Int = 0;
-    
-    private var _testLanguage: String = "English"
-    
-    // Segue definitions
-    let SEGUE_TITLE = "segueTitle"
-    let SEGUE_PROTOCOL = "segueProtocol"
-    let SEGUE_ADULT_TEST = "segueAdultTest"
-    let SEGUE_CHILDREN_TEST = "segueChildrenTest"
-    let SEGUE_PAUSE = "seguePause"
-    let SEGUE_RESULT = "segueResult"
     
     // MARK: PretestError
     enum PreTestError: Error {
@@ -49,18 +35,12 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         
         setupUI()
-        updateLabel()
-        do {
-            _globalSetting = try _globalSettingRepo.fetchGlobalSetting()
-            self.setTestEarOrder(isLeft: true, isBoth: true, labelText: "L. Ear -> R. Ear")
-            
-            if(_globalSetting.isPractice) {
-                pbAdult.setTitle("Adult Practice", for: .normal)
-                pbChildren.setTitle("Children Practice", for: .normal)
-            }
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
+        clearFreqSeqLabel()
+        lbEarOrder.text = "L. Ear -> R. Ear"
+        _coordinator.setTestEarOrder(isLeft: true, isBoth: true)
+        if _coordinator.isPractice() {
+            pbAdult.setTitle("Adult Practice", for: .normal)
+            pbChildren.setTitle("Children Practice", for: .normal)
         }
     }
     
@@ -88,10 +68,12 @@ class TestProtocolViewController: UIViewController, Storyboarded {
             svFreq.addArrangedSubview(newButton)
         }
     }
-    
-    func updateLabel() {
+    func clearFreqSeqLabel(){
+        updateFreqSeqLabel([])
+    }
+    func updateFreqSeqLabel(_ frequencies: [Int]) {
         var bufferString = String("Test Sequence: ")
-        for freq in _frequencyBuffer {
+        for freq in frequencies {
             if(bufferString.count >= 60) { bufferString.append("\n") }
             bufferString.append(String(freq) + " Hz")
             bufferString.append(" ► ")
@@ -102,62 +84,50 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     
     // MARK: UIButton Actions
     @IBAction func switchToEnglish(_ sender: UIButton) {
-        _testLanguage = "English"
-        lbTestLanguage.text = _testLanguage
+        lbTestLanguage.text = _coordinator.setTestLanguage(langauge: .English)
     }
     
     @IBAction func switchToPortuguese(_ sender: UIButton) {
-        _testLanguage = "Portuguese"
-        lbTestLanguage.text = _testLanguage
+        lbTestLanguage.text = _coordinator.setTestLanguage(langauge: .Portuguese)
     }
     
+    // MARK: Set test order
     @IBAction func setLeftFirst(_ sender: UIButton) {
-        setTestEarOrder(isLeft: false, isBoth: false, labelText: sender.titleLabel?.text)
+        _coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        lbEarOrder.text = sender.titleLabel?.text
     }
     
     @IBAction func setRightFirst(_ sender: UIButton) {
-        setTestEarOrder(isLeft: false, isBoth: false, labelText: sender.titleLabel?.text)
+        _coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        lbEarOrder.text = sender.titleLabel?.text
     }
     
     @IBAction func setLeftOnly(_ sender: UIButton) {
-        setTestEarOrder(isLeft: false, isBoth: false, labelText: sender.titleLabel?.text)
+        _coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        lbEarOrder.text = sender.titleLabel?.text
     }
     
     @IBAction func setRightOnly(_ sender: UIButton) {
-        setTestEarOrder(isLeft: false, isBoth: false, labelText: sender.titleLabel?.text)
+        _coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        lbEarOrder.text = sender.titleLabel?.text
     }
     
-    func setTestEarOrder(isLeft: Bool, isBoth: Bool, labelText: String?) {
-        _globalSetting.isTestingLeft = isLeft
-        _globalSetting.isTestingBoth = isBoth
-        lbEarOrder.text = labelText
-    }
-    
+    // MARK:
     @IBAction func addNewFreq(_ sender: UIButton) {
-        let freqID: Int! = sender.tag
-        if(!_frequencyBuffer.contains(freqID) ) {
-            _frequencyBuffer.append(freqID)
-            updateLabel()
-        }
+        updateFreqSeqLabel(_coordinator.addTestFrequencyValue(sender.tag) )
     }
     
     @IBAction func removeLastFreq(_ sender: UIButton) {
-        if(_frequencyBuffer.count > 0) {
-            _frequencyBuffer.removeLast()
-            updateLabel()
-        }
+        updateFreqSeqLabel(_coordinator.removeLastTestFrequencyValue() )
     }
     
     @IBAction func removeAllFreq(_ sender: UIButton) {
-        if(_frequencyBuffer.count > 0) {
-            _frequencyBuffer.removeAll()
-            updateLabel()
-        }
+        updateFreqSeqLabel(_coordinator.removeAllTestFrequencyValues() )
     }
     
     // MARK: CoreData
     @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
-        if _frequencyBuffer.count == 0 {
+        if _coordinator.getFrequencyBufferCount() == 0 {
             errorPrompt(errorMsg: "There is no test frequency selected", uiCtrl: self)
         } else {
             inputPrompt(promptMsg: "Please Enter Protocol Name:",
@@ -176,54 +146,26 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         //                uiCtrl: self)
         //            return
         //        }
-        do{
-            try _testProtocol = _testProtocolRepo.saveNewTestProtocol(protocolName, _globalSetting)
-        } catch let error as NSError{
-            print("Could not save test protocol.")
-            print("\(error), \(error.userInfo)")
-        }
+        _coordinator.saveAsNewProtocol(protocolName)
     }
     
     @IBAction func loadFreqSeqProtocol(_ sender: UIButton) {
         _currentPickerIndex = 0
-        do{
-            _testProtocols = try _testProtocolRepo.fetchAllTestProtocols()
-            if _testProtocols.count > 0 {
-                pickerPrompt(confirmFunction: loadProtocol,
-                             uiCtrl: self)
-            }
-            else {
-                errorPrompt(errorMsg: "There is no saved protcol!",
-                            uiCtrl: self)
-            }
-        } catch let error as NSError{
-            print("Could not fetch test protocols.")
-            print("\(error), \(error.userInfo)")
+        let protocols = _coordinator.getAllTestProtocols()
+        if protocols.count > 0 {
+            pickerPrompt(confirmFunction: { () in
+                self.updateFreqSeqLabel(self._coordinator.loadProtocol(self._currentPickerIndex))
+            }, uiCtrl: self)
+        } else {
+            errorPrompt(errorMsg: "There is no saved protcol!", uiCtrl: self)
         }
-    }
-    
-    func loadProtocol() {
-        _testProtocol = _testProtocols[_currentPickerIndex]
-        _frequencyBuffer = _testProtocol.frequencySequence ?? []
-        updateLabel()
     }
     
     @IBAction func deleteFreqSeqProtocol(_ sender: UIButton) {
-        
-        // Validate current protocol
-        if(_testProtocol == nil) {
+        if _coordinator.deleteCurrentTestProtocol() {
             errorPrompt(errorMsg: "There is no selected protcol!", uiCtrl: self)
-            return
-        }
-        
-        do {
-            try _testProtocolRepo.deleteTestProtocol(_testProtocol)
-            _testProtocol = nil
-            _frequencyBuffer = []
-            updateLabel()
-        } catch let error as NSError {
-            print("Could not fetch test protocols.")
-            print("\(error), \(error.userInfo)")
+        } else {
+            clearFreqSeqLabel()
         }
     }
     
@@ -252,18 +194,18 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func startAdultTest(_ sender: UIButton) {
-        _globalSetting.isAdult = true
-        startTest()
+        _coordinator.setIsAdult(isAdult: true)
+        promptToStartTest()
     }
     
     @IBAction func startChildrenTest(_ sender: UIButton) {
-        _globalSetting.isAdult = false
-        startTest()
+        _coordinator.setIsAdult(isAdult: false)
+        promptToStartTest()
     }
     
-    func startTest() {
+    func promptToStartTest() {
         // Error, no freq selected
-        if(_frequencyBuffer.count == 0) {
+        if(_coordinator.getFrequencyBufferCount() == 0) {
             errorPrompt(errorMsg: "There is no frequency selected!",
                         uiCtrl: self)
             return
@@ -283,23 +225,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         let confirmActionHandler = { (action: UIAlertAction) in
             if let patientGroup = alertCtrl.textFields?[0].text,
                 let patientName = alertCtrl.textFields?[1].text{
-                
-                let isAdult = self._globalSetting.isAdult
-                
-                do{
-                    guard patientGroup.count > 0 else { throw PreTestError.invalidPaientGroup }
-                    guard patientName.count > 0 else { throw PreTestError.invalidPatentName }
-                    
-                    try self.savePatientProfile(patientGroup, patientName, isAdult)
-                    let segueId = isAdult ? self.SEGUE_ADULT_TEST : self.SEGUE_CHILDREN_TEST
-                    self.performSegue(withIdentifier: segueId, sender: nil)
-                } catch PreTestError.invalidPaientGroup {
-                    errorPrompt(errorMsg: "Patient group cannot be empty!", uiCtrl: self)
-                } catch PreTestError.invalidPatentName {
-                    errorPrompt(errorMsg: "Patient name cannot be empty!", uiCtrl: self)
-                } catch {
-                    print("[Error] Unexpected error: \(error).")
-                }
+                self.startTest(patientGroup, patientName)
             }
         }
         
@@ -310,6 +236,24 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         
         self.present(alertCtrl, animated: true, completion: nil)
     }
+    
+    func startTest(_ patientGroup: String, _ patientName: String) {
+        let isAdult: Bool! = _coordinator.isAdult()
+        
+        do{
+            guard patientGroup.count > 0 else { throw PreTestError.invalidPaientGroup }
+            guard patientName.count > 0 else { throw PreTestError.invalidPatentName }
+            
+            try self.savePatientProfile(patientGroup, patientName, isAdult)
+            self._coordinator.showInstructionView(sender: nil, isAdult: isAdult)
+        } catch PreTestError.invalidPaientGroup {
+            errorPrompt(errorMsg: "Patient group cannot be empty!", uiCtrl: self)
+        } catch PreTestError.invalidPatentName {
+            errorPrompt(errorMsg: "Patient name cannot be empty!", uiCtrl: self)
+        } catch {
+            print("[Error] Unexpected error: \(error).")
+        }
+    }
 }
 
 extension TestProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSource{
@@ -319,13 +263,15 @@ extension TestProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return _testProtocols.count
+        return 0
+//        return _testProtocols.count
     }
     
     func pickerView(_ pickerView: UIPickerView,
                     titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        return _testProtocols[row].name
+        return "Error"
+//        return _testProtocols[row].name
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

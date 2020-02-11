@@ -9,12 +9,11 @@
 import UIKit
 import CoreData
 
-class GlobalSettingRepo {
+class GlobalSettingRepo: IRepository<GlobalSetting> {
     
-    private let _managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
+    static let repo = GlobalSettingRepo()
     
-    func fetchGlobalSetting() throws -> GlobalSetting
+    func fetchOrCreate() throws -> GlobalSetting
     {
         let request:NSFetchRequest<GlobalSetting> =
             GlobalSetting.fetchRequest()
@@ -26,11 +25,6 @@ class GlobalSettingRepo {
             try _managedContext.save()
             return newSetting
         }
-        return setting
-    }
-    
-    func update(_ setting: GlobalSetting) throws -> GlobalSetting {
-        try _managedContext.save()
         return setting
     }
 }

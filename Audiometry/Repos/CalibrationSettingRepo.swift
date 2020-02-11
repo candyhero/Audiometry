@@ -9,10 +9,9 @@
 import UIKit
 import CoreData
 
-class CalibrationSettingRepo {
+class CalibrationSettingRepo: IRepository<CalibrationSetting> {
     
-    private let _managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
+    static let repo = CalibrationSettingRepo()
     
     func createNew(_ settingName: String,
                    _ dict_settingUI: [Int: CalibrationSettingUI]) -> CalibrationSetting {
@@ -30,20 +29,10 @@ class CalibrationSettingRepo {
         return newSetting
     }
     
-    func fetchAll() throws -> [CalibrationSetting] {
-        // fetch all CalibrationSetting
-        let request:NSFetchRequest<CalibrationSetting> =
-            CalibrationSetting.fetchRequest()
-        
+    func fetchAllSorted() throws -> [CalibrationSetting] {
         let sortByTimestamp = NSSortDescriptor(
             key: #keyPath(CalibrationSetting.timestamp),
             ascending: true)
-        request.sortDescriptors = [sortByTimestamp]
-        
-        return try _managedContext.fetch(request)
-    }
-    
-    func delete(_ setting: CalibrationSetting) throws {
-        _managedContext.delete(setting)
+        return try self.fetchAll([sortByTimestamp])
     }
 }

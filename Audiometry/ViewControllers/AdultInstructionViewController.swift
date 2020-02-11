@@ -2,14 +2,11 @@
 import UIKit
 import CoreData
 
-class AdultInstructionViewController: UIViewController {
+class AdultInstructionViewController: UIViewController, Storyboarded {
+    // MARK:
+    weak var coordinator: TestCoordinator?
     
-    private let _managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
-    
-    // All test setup settings
-    private var _globalSetting: GlobalSetting!
-    
+    // MARK:
     @IBOutlet private weak var pbFirstInterval: UIButton!
     @IBOutlet private weak var pbSecondInterval: UIButton!
     
@@ -20,21 +17,7 @@ class AdultInstructionViewController: UIViewController {
     
     @IBOutlet weak var lbCaption: UILabel!
     
-    private func loadGlobalSetting() {
-        // fetch global setting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        request.fetchLimit = 1
-        
-        do {
-            _globalSetting = try _managedContext.fetch(request).first
-            
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
+    // MARK:
     private func loadPortuguse() {
         lbCaption.text = PORT_ADULT_CAPTION_TEXT
         pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
@@ -63,9 +46,7 @@ class AdultInstructionViewController: UIViewController {
         super.viewDidLoad()
         
         DispatchQueue.main.async { [unowned self] in
-            self.loadGlobalSetting()
-            
-            switch self._globalSetting.testLanguage{
+            switch self.coordinator?.getTestLanguage(){
             case "Invalid":
                 print("Invalid language option!!")
                 break

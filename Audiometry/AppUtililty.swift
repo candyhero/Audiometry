@@ -9,6 +9,20 @@
 import Foundation
 import UIKit
 
+enum TestLanguage: Int {
+    case English = 0
+    case Portuguese = 1
+    case Spanish = 2
+    
+    func toString() -> String {
+        switch self {
+            case .English: return "English"
+            case .Portuguese: return "Portuguese"
+            case .Spanish: return "Spanish"
+        }
+    }
+}
+
 // Global Constants
 let ARRAY_DEFAULT_FREQ: [Int] =
     [250, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000]
@@ -78,8 +92,7 @@ func alertPrompt(alertTitle: String,
     let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
         (_) in confirmFunction() }
     
-    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-        (_) in }
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
     
     alertCtrl.addAction(confirmAction)
     alertCtrl.addAction(cancelAction)

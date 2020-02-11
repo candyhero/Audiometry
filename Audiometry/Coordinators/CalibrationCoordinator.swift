@@ -7,21 +7,21 @@
 //
 
 import UIKit
-import CoreData
 
 class CalibrationCoordinator: Coordinator {
     
-    var _childCoordinators = [Coordinator]()
-    var _navigationController: UINavigationController
+    var _navController: UINavigationController = AppDelegate.navController
+    
+    // MARK:
+    private let _globalSettingRepo = GlobalSettingRepo.repo
+    private let _calibrationSettingRepo = CalibrationSettingRepo.repo
     
     private var _globalSetting: GlobalSetting!
-    private let _globalSettingRepo: GlobalSettingRepo = GlobalSettingRepo()
-    private let _calibrationSettingRepo: CalibrationSettingRepo = CalibrationSettingRepo()
     
-    init(_ navigationController: UINavigationController) {
-        _navigationController = navigationController
+    // MARK:
+    init() {
         do {
-            _globalSetting = try _globalSettingRepo.fetchGlobalSetting()
+            _globalSetting = try _globalSettingRepo.fetchOrCreate()
         } catch let error as NSError{
             print("Could not fetch calibration setting.")
             print("\(error), \(error.userInfo)")
@@ -34,7 +34,7 @@ class CalibrationCoordinator: Coordinator {
     }
     
     func back() {
-        self._navigationController.popViewController(animated: true)
+        self._navController.popViewController(animated: true)
     }
     
     // MARK:
@@ -45,7 +45,7 @@ class CalibrationCoordinator: Coordinator {
     
     func fetchAllCalibrationSettings() -> [CalibrationSetting]{
         do {
-            return try _calibrationSettingRepo.fetchAll()
+            return try _calibrationSettingRepo.fetchAllSorted()
         } catch let error as NSError{
             print("Could not fetch calibration setting.")
             print("\(error), \(error.userInfo)")
@@ -57,7 +57,7 @@ class CalibrationCoordinator: Coordinator {
                                 ui: [Int: CalibrationSettingUI]) -> CalibrationSetting {
         _globalSetting.calibrationSetting = _calibrationSettingRepo.createNew(settingName, ui)
         do {
-            _globalSetting = try _globalSettingRepo.update(_globalSetting)
+            try _globalSettingRepo.update()
         } catch let error as NSError {
             print("Could not create calibration setting.")
             print("\(error), \(error.userInfo)")
@@ -68,7 +68,7 @@ class CalibrationCoordinator: Coordinator {
     func updateCalibrationSetting(_ calibrationSetting: CalibrationSetting) {
         self._globalSetting.calibrationSetting = calibrationSetting
         do{
-            _globalSetting = try _globalSettingRepo.update(_globalSetting)
+            try _globalSettingRepo.update()
         } catch let error as NSError{
             print("Could not update calibration setting.")
             print("\(error), \(error.userInfo)")
@@ -79,7 +79,7 @@ class CalibrationCoordinator: Coordinator {
         self._globalSetting.calibrationSetting = nil
         do{
             try _calibrationSettingRepo.delete(calibrationSetting)
-            _globalSetting = try _globalSettingRepo.update(_globalSetting)
+            try _globalSettingRepo.update()
         } catch let error as NSError{
             print("Could not delete calibration setting.")
             print("\(error), \(error.userInfo)")

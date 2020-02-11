@@ -6,10 +6,8 @@ import CoreData
 class ResultViewController: UIViewController, Storyboarded,
     UITableViewDelegate, UITableViewDataSource  {
     
-//------------------------------------------------------------------------------
-// Local Variables  
-//------------------------------------------------------------------------------
-    weak var coordinator: MainCoordinator?
+    // MARK:
+    private let _coordinator = AppDelegate.mainCoordinator
     
     private let _managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext
@@ -36,6 +34,10 @@ class ResultViewController: UIViewController, Storyboarded,
     @IBOutlet weak var pbPrevFreq: UIButton!
     @IBOutlet weak var pbNextFreq: UIButton!
     @IBOutlet weak var pbDeleteCurrentPatient: UIButton!
+    
+    @IBAction func back(_ sender: Any) {
+        _coordinator.back()
+    }
     
     @IBAction func deleteCurrentPatient(_ sender: UIButton) {
 //        print("Count: ", _array_buttons.count)

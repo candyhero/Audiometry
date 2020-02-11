@@ -1,20 +1,20 @@
 
 import UIKit
-import CoreData
 
 class CalibrationViewController: UIViewController, Storyboarded {
 
     // MARK: Properties
-    weak var coordinator: CalibrationCoordinator!
-    private var currentSetting: CalibrationSetting!
-    private var array_settings: [CalibrationSetting] = []
+    private let _coordinator = AppDelegate.calibrationCoordinator
     
-    private var player: CalibrationPlayer!
+    private var _currentSetting: CalibrationSetting!
+    private var _settings: [CalibrationSetting] = []
+    
+    private var _player: CalibrationPlayer!
     private var _currentPickerIndex: Int = 0;
     private var _currentPlayFreq: Int = -1;
     
     // MARK: UI Components
-    private var dict_settingUI: [Int: CalibrationSettingUI] = [:]
+    private var _settingUIs: [Int: CalibrationSettingUI] = [:]
     
     @IBOutlet weak var svFreqLabels: UIStackView!
     @IBOutlet weak var svPlayButtons: UIStackView!
@@ -34,19 +34,19 @@ class CalibrationViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         initUI()
 //        player = CalibrationPlayer()
-        currentSetting = coordinator.getCurrentCalibrationSetting()
-        if(currentSetting == nil){
+        _currentSetting = _coordinator.getCurrentCalibrationSetting()
+        if(_currentSetting == nil){
             lbCurrentSetting.text = "None"
             pbSaveCurrent.isEnabled = false
         } else {
-            lbCurrentSetting.text = currentSetting.name
+            lbCurrentSetting.text = _currentSetting.name
             loadCurrentSettingValues()
             pbSaveCurrent.isEnabled = true
         }
     }
     
     @IBAction func back(_ sender: Any) {
-        coordinator.back()
+        _coordinator.back()
     }
     
     // MARK: Initialize ViewController
@@ -63,7 +63,7 @@ class CalibrationViewController: UIViewController, Storyboarded {
             settingUI.pbPlay.addTarget(self,
                                        action: #selector(toggleSingal(_:)),
                                        for: .touchUpInside)
-            dict_settingUI[freq] = settingUI
+            _settingUIs[freq] = settingUI
             
             // Displaying in subview
             svFreqLabels.addArrangedSubview(settingUI.lbFreq)
@@ -92,53 +92,53 @@ class CalibrationViewController: UIViewController, Storyboarded {
     }
     
     func saveSetting(_ settingName: String) {
-        currentSetting = coordinator.saveCalibrationSetting(settingName, ui: dict_settingUI)
+        _currentSetting = _coordinator.saveCalibrationSetting(settingName, ui: _settingUIs)
         lbCurrentSetting.text = settingName
         pbSaveCurrent.isEnabled = true
         pbDeleteCurrent.isEnabled = true
     }
     
     @IBAction func updateCurrentSetting(_ sender: UIButton) {
-        currentSetting.timestamp = Date()
-        let allValues = currentSetting.getDictionary()
+        _currentSetting.timestamp = Date()
+        let allValues = _currentSetting.getDictionary()
         
-        for (freq, settingUI) in dict_settingUI {
+        for (freq, settingUI) in _settingUIs {
             settingUI.extractValuesInto(allValues[freq]!)
         }
-        coordinator.updateCalibrationSetting(currentSetting)
+        _coordinator.updateCalibrationSetting(_currentSetting)
     }
     
     @IBAction func loadOtherSetting(_ sender: UIButton) {
-        array_settings = coordinator.fetchAllCalibrationSettings()
+        _settings = _coordinator.fetchAllCalibrationSettings()
         
         _currentPickerIndex = 0
         pickerPrompt(confirmFunction: {()->Void in
-            let picked = self.array_settings[self._currentPickerIndex]
-            self.coordinator.updateCalibrationSetting(picked)
-            self.currentSetting = picked
+            let picked = self._settings[self._currentPickerIndex]
+            self._coordinator.updateCalibrationSetting(picked)
+            self._currentSetting = picked
             self.loadCurrentSettingValues()
             
             self.pbSaveCurrent.isEnabled = true
             self.pbDeleteCurrent.isEnabled = true
             
-            print("Done Loading", self.currentSetting.name!)
+            print("Done Loading", self._currentSetting.name!)
         }, uiCtrl: self)
     }
     
     func loadCurrentSettingValues() {
-        lbCurrentSetting.text = currentSetting.name ?? "NULL"
+        lbCurrentSetting.text = _currentSetting.name ?? "NULL"
         
         // Load setting name
-        for settingValues in currentSetting.values ?? [] {
+        for settingValues in _currentSetting.values ?? [] {
             let values = settingValues as! CalibrationSettingValues
-            dict_settingUI[Int(values.frequency)]?.updateDisplayValues(values)
+            _settingUIs[Int(values.frequency)]?.updateDisplayValues(values)
         }
         pbSaveCurrent.isEnabled = true
     }
     
     @IBAction func deleteCurrentSetting(_ sender: UIButton) {
-        coordinator.deleteCalibrationSetting(currentSetting)
-        currentSetting = nil
+        _coordinator.deleteCalibrationSetting(_currentSetting)
+        _currentSetting = nil
         lbCurrentSetting.text = "None"
         
         pbSaveCurrent.isEnabled = false
@@ -147,13 +147,13 @@ class CalibrationViewController: UIViewController, Storyboarded {
     
     // MARK:
     @IBAction func loadDefaultPresentationLv(_ sender: UIButton) {
-        for settingUI in dict_settingUI.values {
+        for settingUI in _settingUIs.values {
             settingUI.tfPresentationLv.text = String(_DB_DEFAULT)
         }
     }
     
     @IBAction func clearAllMeasuredLv(_ sender: UIButton) {
-        for settingUI in dict_settingUI.values {
+        for settingUI in _settingUIs.values {
             settingUI.tfMeasuredLv_L.text = ""
             settingUI.tfMeasuredLv_R.text = ""
         }
@@ -162,31 +162,31 @@ class CalibrationViewController: UIViewController, Storyboarded {
     
     @IBAction func toggleSingal(_ sender: UIButton) {
         // No tone playing at all, simply toggle on
-        if(!player.isStarted()) {
+        if(!_player.isStarted()) {
             _currentPlayFreq = sender.tag
-            dict_settingUI[sender.tag]!.pbPlay.setTitle("On", for: .normal)
-            player.startPlaying()
+            _settingUIs[sender.tag]!.pbPlay.setTitle("On", for: .normal)
+            _player.startPlaying()
             
             // Update freq & vol
-            player.updateFreq(_currentPlayFreq)
-            player.updateVolume(dict_settingUI[sender.tag]!)
+            _player.updateFreq(_currentPlayFreq)
+            _player.updateVolume(_settingUIs[sender.tag]!)
         }
             // Same tone, toggle it off
         else if(_currentPlayFreq == sender.tag) {
-            dict_settingUI[sender.tag]!.pbPlay.setTitle("Off", for: .normal)
+            _settingUIs[sender.tag]!.pbPlay.setTitle("Off", for: .normal)
             _currentPlayFreq = -1
-            player.stopPlaying()
+            _player.stopPlaying()
         }
             // Else tone, switch frequency
         else {
-            dict_settingUI[_currentPlayFreq]!.pbPlay.setTitle("Off", for: .normal)
-            dict_settingUI[sender.tag]!.pbPlay.setTitle("On", for: .normal)
+            _settingUIs[_currentPlayFreq]!.pbPlay.setTitle("Off", for: .normal)
+            _settingUIs[sender.tag]!.pbPlay.setTitle("On", for: .normal)
             
             _currentPlayFreq = sender.tag
             
             // Update freq & vol
-            player.updateFreq(_currentPlayFreq)
-            player.updateVolume(dict_settingUI[sender.tag]!)
+            _player.updateFreq(_currentPlayFreq)
+            _player.updateVolume(_settingUIs[sender.tag]!)
         }
     }
     
@@ -204,12 +204,12 @@ extension CalibrationViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        return array_settings.count
+        return _settings.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        return array_settings[row].name
+        return _settings[row].name
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
