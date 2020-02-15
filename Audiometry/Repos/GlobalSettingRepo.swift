@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class GlobalSettingRepo: IRepository<GlobalSetting> {
+class GlobalSettingRepo: Repository<GlobalSetting> {
     
     static let repo = GlobalSettingRepo()
     

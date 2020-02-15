@@ -9,9 +9,20 @@
 import UIKit
 import CoreData
 
-class PatientProfileRepo: IRepository<PatientProfile> {
+class PatientProfileRepo: Repository<PatientProfile> {
     
     static let repo = PatientProfileRepo()
+
+    func createNewProfile(_ frequencyBuffer: [Int]) -> PatientProfile {
+        let profile = PatientProfile(context: _managedContext)
+        profile.frequencyOrder = frequencyBuffer
+        for frequency in frequencyBuffer {
+            let values = PatientProfileValues(context: _managedContext)
+            values.frequency = Int16(frequency)
+            profile.addToValues(values)
+        }
+        return profile
+    }
     
     func fetchAllSorted() throws -> [PatientProfile] {
         let sortByTimestamp = NSSortDescriptor(

@@ -21,7 +21,15 @@ class MainCoordinator: Coordinator {
     }
     
     func getCurrentCalibrationSetting() -> CalibrationSetting! {
-        return AppDelegate.calibrationCoordinator.getCurrentCalibrationSetting() ?? nil
+        var setting: CalibrationSetting!
+        do {
+            let globalSetting = try GlobalSettingRepo.repo.fetchOrCreate()
+            setting = globalSetting.calibrationSetting
+        } catch let error as NSError{
+            print("Could not fetch calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
+        return setting
     }
     
     func showTitleView(sender: Any? = nil) {
@@ -32,12 +40,14 @@ class MainCoordinator: Coordinator {
     
     func showCalibrationView(sender: Any? = nil) {
         let vc = CalibrationViewController.instantiate()
+        vc.coordinator.start()
         self._navController.setNavigationBarHidden(true, animated: false)
         self._navController.show(vc, sender: nil)
     }
     
     func showTestProtoclView(sender: Any? = nil, isPractice: Bool) {
         let vc = TestProtocolViewController.instantiate()
+        vc.coordinator.start()
         self._navController.setNavigationBarHidden(true, animated: false)
         self._navController.show(vc, sender: nil)
     }

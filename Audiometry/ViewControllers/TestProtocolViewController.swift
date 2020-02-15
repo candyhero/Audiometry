@@ -4,14 +4,10 @@ import UIKit
 class TestProtocolViewController: UIViewController, Storyboarded {
     
     // MARK:
-    private let _coordinator = AppDelegate.testProcotolCoordinator
-    
-    // MARK: Repo
-    private let _globalSettingRepo = GlobalSettingRepo()
-    private let _patientProfileRepo = PatientProfileRepo()
+    let coordinator = AppDelegate.testProcotolCoordinator
     
     // MARK: Local Variables
-    private var _currentPickerIndex: Int = 0;
+    private var _pickerIndex: Int = 0;
     
     // MARK: PretestError
     enum PreTestError: Error {
@@ -21,7 +17,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     }
     
     // MARK: UI Components
-    private var _array_pbFreq = [UIButton]()
+    private var _freqButtons = [UIButton]()
     
     @IBOutlet weak var pbAdult: UIButton!
     @IBOutlet weak var pbChildren: UIButton!
@@ -33,20 +29,21 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     // MARK: Initialize ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupUI()
         clearFreqSeqLabel()
         lbEarOrder.text = "L. Ear -> R. Ear"
-        _coordinator.setTestEarOrder(isLeft: true, isBoth: true)
-        if _coordinator.isPractice() {
+        coordinator.setTestEarOrder(isLeft: true, isBoth: true)
+        coordinator.setTestLanguage(langauge: TestLanguage.English)
+
+        if coordinator.isPractice() {
             pbAdult.setTitle("Adult Practice", for: .normal)
             pbChildren.setTitle("Children Practice", for: .normal)
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func back(_ sender: UIButton) {
+        coordinator.back()
     }
     
     func setupUI() {
@@ -63,8 +60,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
                 frequency: freq,
                 action: #selector(addNewFreq(_:))
             )
-            
-            _array_pbFreq.append(newButton)
+            _freqButtons.append(newButton)
             svFreq.addArrangedSubview(newButton)
         }
     }
@@ -84,50 +80,50 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     
     // MARK: UIButton Actions
     @IBAction func switchToEnglish(_ sender: UIButton) {
-        lbTestLanguage.text = _coordinator.setTestLanguage(langauge: .English)
+        lbTestLanguage.text = coordinator.setTestLanguage(langauge: .English)
     }
     
     @IBAction func switchToPortuguese(_ sender: UIButton) {
-        lbTestLanguage.text = _coordinator.setTestLanguage(langauge: .Portuguese)
+        lbTestLanguage.text = coordinator.setTestLanguage(langauge: .Portuguese)
     }
     
     // MARK: Set test order
     @IBAction func setLeftFirst(_ sender: UIButton) {
-        _coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        coordinator.setTestEarOrder(isLeft: false, isBoth: false)
         lbEarOrder.text = sender.titleLabel?.text
     }
     
     @IBAction func setRightFirst(_ sender: UIButton) {
-        _coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        coordinator.setTestEarOrder(isLeft: false, isBoth: false)
         lbEarOrder.text = sender.titleLabel?.text
     }
     
     @IBAction func setLeftOnly(_ sender: UIButton) {
-        _coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        coordinator.setTestEarOrder(isLeft: false, isBoth: false)
         lbEarOrder.text = sender.titleLabel?.text
     }
     
     @IBAction func setRightOnly(_ sender: UIButton) {
-        _coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        coordinator.setTestEarOrder(isLeft: false, isBoth: false)
         lbEarOrder.text = sender.titleLabel?.text
     }
     
     // MARK:
     @IBAction func addNewFreq(_ sender: UIButton) {
-        updateFreqSeqLabel(_coordinator.addTestFrequencyValue(sender.tag) )
+        updateFreqSeqLabel(coordinator.addTestFrequencyValue(sender.tag) )
     }
     
     @IBAction func removeLastFreq(_ sender: UIButton) {
-        updateFreqSeqLabel(_coordinator.removeLastTestFrequencyValue() )
+        updateFreqSeqLabel(coordinator.removeLastTestFrequencyValue() )
     }
     
     @IBAction func removeAllFreq(_ sender: UIButton) {
-        updateFreqSeqLabel(_coordinator.removeAllTestFrequencyValues() )
+        updateFreqSeqLabel(coordinator.removeAllTestFrequencyValues() )
     }
     
     // MARK: CoreData
     @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
-        if _coordinator.getFrequencyBufferCount() == 0 {
+        if coordinator.getFrequencyBufferCount() == 0 {
             errorPrompt(errorMsg: "There is no test frequency selected", uiCtrl: self)
         } else {
             inputPrompt(promptMsg: "Please Enter Protocol Name:",
@@ -138,76 +134,53 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         }
     }
     
-    func saveProtocol(_ protocolName: String) {
-        // If duplicated name
-        //        if(false) {
-        //            errorPrompt(
-        //                errorMsg: "Protocol name already exists!",
-        //                uiCtrl: self)
-        //            return
-        //        }
-        _coordinator.saveAsNewProtocol(protocolName)
-    }
-    
     @IBAction func loadFreqSeqProtocol(_ sender: UIButton) {
-        _currentPickerIndex = 0
-        let protocols = _coordinator.getAllTestProtocols()
-        if protocols.count > 0 {
-            pickerPrompt(confirmFunction: { () in
-                self.updateFreqSeqLabel(self._coordinator.loadProtocol(self._currentPickerIndex))
-            }, uiCtrl: self)
-        } else {
-            errorPrompt(errorMsg: "There is no saved protcol!", uiCtrl: self)
+        _pickerIndex = 0
+
+        if !coordinator.isAnyTestProtocols() {
+            errorPrompt(errorMsg: "There is no saved protocol!", uiCtrl: self)
         }
+        else {
+            pickerPrompt(confirmFunction: { () in
+                self.updateFreqSeqLabel(
+                        self.coordinator.loadProtocol(self._pickerIndex)
+                )
+            }, uiCtrl: self)
+        }
+    }
+
+    func saveProtocol(_ protocolName: String) {
+        if coordinator.isProtocolNameExisted(protocolName) {
+            errorPrompt(
+                    errorMsg: "Protocol name already exists!",
+                    uiCtrl: self)
+            return
+        }
+        coordinator.saveAsNewProtocol(protocolName)
     }
     
     @IBAction func deleteFreqSeqProtocol(_ sender: UIButton) {
-        if _coordinator.deleteCurrentTestProtocol() {
+        if coordinator.deleteCurrentTestProtocol() {
             errorPrompt(errorMsg: "There is no selected protcol!", uiCtrl: self)
         } else {
             clearFreqSeqLabel()
         }
     }
     
-    func savePatientProfile(_ patientGroup: String,
-                            _ patientName: String,
-                            _ isAdult: Bool) throws {
-        //        // Format date
-        //        let date = NSDate();
-        //        let dateFormatter = DateFormatter()
-        //        dateFormatter.dateStyle = .short
-        //        dateFormatter.timeStyle = .short
-        //
-        //        let localDate = dateFormatter.string(from: date as Date)
-        
-        // Prepare new profile to test
-        //        do{
-        //            let profile = try _patientProfileRepo.save(
-        //                patientName, patientGroup, _frequencyBuffer, _globalSetting)
-        //        } catch let error as NSError{
-        //            print("Could not save test settings to global setting.")
-        //            print("\(error), \(error.userInfo)")
-        //        }
-        
-        // Test Seq saved in main setting
-        // Load & save calibration setting during testing for each frequency
-    }
-    
     @IBAction func startAdultTest(_ sender: UIButton) {
-        _coordinator.setIsAdult(isAdult: true)
+        coordinator.setIsAdult(isAdult: true)
         promptToStartTest()
     }
     
     @IBAction func startChildrenTest(_ sender: UIButton) {
-        _coordinator.setIsAdult(isAdult: false)
+        coordinator.setIsAdult(isAdult: false)
         promptToStartTest()
     }
     
     func promptToStartTest() {
         // Error, no freq selected
-        if(_coordinator.getFrequencyBufferCount() == 0) {
-            errorPrompt(errorMsg: "There is no frequency selected!",
-                        uiCtrl: self)
+        if(coordinator.getFrequencyBufferCount() == 0) {
+            errorPrompt(errorMsg: "There is no frequency selected!", uiCtrl: self)
             return
         }
         
@@ -218,9 +191,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
             preferredStyle: .alert)
         
         alertCtrl.addTextField { (textField) in textField.placeholder = "Patient's Group" }
-        alertCtrl.addTextField { (textField) in
-            textField.placeholder = "Patient's Name, i.e. John Smith 1"
-        }
+        alertCtrl.addTextField { (textField) in textField.placeholder = "Patient's Name, i.e. John Smith 1" }
         
         let confirmActionHandler = { (action: UIAlertAction) in
             if let patientGroup = alertCtrl.textFields?[0].text,
@@ -228,24 +199,22 @@ class TestProtocolViewController: UIViewController, Storyboarded {
                 self.startTest(patientGroup, patientName)
             }
         }
-        
-        alertCtrl.addAction(UIAlertAction(title: "Confirm",
-                                          style: .default,
-                                          handler: confirmActionHandler))
+
+        alertCtrl.addAction(UIAlertAction(title: "Confirm", style: .default, handler: confirmActionHandler))
         alertCtrl.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         self.present(alertCtrl, animated: true, completion: nil)
     }
     
     func startTest(_ patientGroup: String, _ patientName: String) {
-        let isAdult: Bool! = _coordinator.isAdult()
-        
+        let isAdult = coordinator.isAdult()
         do{
             guard patientGroup.count > 0 else { throw PreTestError.invalidPaientGroup }
             guard patientName.count > 0 else { throw PreTestError.invalidPatentName }
-            
-            try self.savePatientProfile(patientGroup, patientName, isAdult)
-            self._coordinator.showInstructionView(sender: nil, isAdult: isAdult)
+
+            coordinator.saveNewPatientProfile(patientGroup, patientName, lbEarOrder.text!)
+            coordinator.updateGlobalSetting()
+            coordinator.showInstructionView(sender: nil, isAdult: isAdult)
         } catch PreTestError.invalidPaientGroup {
             errorPrompt(errorMsg: "Patient group cannot be empty!", uiCtrl: self)
         } catch PreTestError.invalidPatentName {
@@ -253,6 +222,11 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         } catch {
             print("[Error] Unexpected error: \(error).")
         }
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 }
 
@@ -263,18 +237,16 @@ extension TestProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 0
-//        return _testProtocols.count
+        return coordinator.getTestProtocolCount()
     }
     
     func pickerView(_ pickerView: UIPickerView,
                     titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        return "Error"
-//        return _testProtocols[row].name
+        return coordinator.getTestProtocolName(_pickerIndex)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        _currentPickerIndex = row
+        _pickerIndex = row
     }
 }

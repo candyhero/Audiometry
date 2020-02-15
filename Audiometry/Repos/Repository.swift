@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class IRepository<Entity: NSManagedObject> {
+class Repository<Entity: NSManagedObject> {
     
     internal let _managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext

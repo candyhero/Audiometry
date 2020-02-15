@@ -41,7 +41,7 @@
 		67B58CFA23D73833003EFEE6 /* TestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF923D73833003EFEE6 /* TestCoordinator.swift */; };
 		67B58CFC23D748DF003EFEE6 /* CalibrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */; };
 		67B58CFF23D763FF003EFEE6 /* CalibrationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */; };
-		67B58D0123E0FD72003EFEE6 /* IRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58D0023E0FD72003EFEE6 /* IRepository.swift */; };
+		67B58D0123E0FD72003EFEE6 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58D0023E0FD72003EFEE6 /* Repository.swift */; };
 		67B58D0323EF19C2003EFEE6 /* TestProcotolCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58D0223EF19C2003EFEE6 /* TestProcotolCoordinator.swift */; };
 		67DCEF2E22F68A8400C3117F /* CaptionText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DCEF2D22F68A8400C3117F /* CaptionText.swift */; };
 		67E329B323CE28AC0068C2E2 /* GlobalSettingRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */; };
@@ -87,7 +87,7 @@
 		67B58CF923D73833003EFEE6 /* TestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoordinator.swift; sourceTree = "<group>"; };
 		67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationCoordinator.swift; sourceTree = "<group>"; };
 		67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationSetting.swift; sourceTree = "<group>"; };
-		67B58D0023E0FD72003EFEE6 /* IRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRepository.swift; sourceTree = "<group>"; };
+		67B58D0023E0FD72003EFEE6 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		67B58D0223EF19C2003EFEE6 /* TestProcotolCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProcotolCoordinator.swift; sourceTree = "<group>"; };
 		67DCEF2D22F68A8400C3117F /* CaptionText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionText.swift; sourceTree = "<group>"; };
 		67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettingRepo.swift; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 		67E329B123CE28880068C2E2 /* Repos */ = {
 			isa = PBXGroup;
 			children = (
-				67B58D0023E0FD72003EFEE6 /* IRepository.swift */,
+				67B58D0023E0FD72003EFEE6 /* Repository.swift */,
 				67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */,
 				67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */,
 				67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */,
@@ -370,7 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67B58D0123E0FD72003EFEE6 /* IRepository.swift in Sources */,
+				67B58D0123E0FD72003EFEE6 /* Repository.swift in Sources */,
 				4E4B3CF321B0FA3600191AF3 /* TestModel.swift in Sources */,
 				67E329B823CF5F190068C2E2 /* TestProtocolRepo.swift in Sources */,
 				4E4B3C7D21A7266000191AF3 /* CalibrationPlayer.swift in Sources */,

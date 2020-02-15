@@ -9,23 +9,23 @@
 import UIKit
 import CoreData
 
-class CalibrationSettingRepo: IRepository<CalibrationSetting> {
+class CalibrationSettingRepo: Repository<CalibrationSetting> {
     
     static let repo = CalibrationSettingRepo()
-    
+
     func createNew(_ settingName: String,
-                   _ dict_settingUI: [Int: CalibrationSettingUI]) -> CalibrationSetting {
+                   _ settingUIs: [Int: CalibrationSettingUI]) -> CalibrationSetting {
         let newSetting = CalibrationSetting(context: _managedContext)
         newSetting.name = settingName
         newSetting.timestamp = Date()
-        
-        for (freq, settingUI) in dict_settingUI {
+
+        for (freq, ui) in settingUIs {
             let newValues = CalibrationSettingValues(context: _managedContext)
             newValues.frequency = Int16(freq)
-            settingUI.extractValuesInto(newValues)
+            ui.extractValuesInto(newValues)
             newSetting.addToValues(newValues)
         }
-        
+
         return newSetting
     }
     

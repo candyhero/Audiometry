@@ -9,6 +9,6 @@
 import UIKit
 import CoreData
 
-class TestProtocolRepo: IRepository<TestProtocol> {
+class TestProtocolRepo: Repository<TestProtocol> {
     static let repo = TestProtocolRepo()
 }

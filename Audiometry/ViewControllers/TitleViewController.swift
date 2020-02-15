@@ -10,12 +10,6 @@ class TitleViewController: UIViewController, Storyboarded {
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
-        //            try AudioKit.stop()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: Controller functions
@@ -45,6 +39,11 @@ class TitleViewController: UIViewController, Storyboarded {
             print("\(error), \(error.userInfo)")
         }
         _coordinator.showResultView(sender: sender)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 }
 

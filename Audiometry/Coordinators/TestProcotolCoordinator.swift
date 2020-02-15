@@ -13,108 +13,22 @@ class TestProtocolCoordinator: Coordinator {
     var _navController: UINavigationController = AppDelegate.navController
     
     private var _globalSetting: GlobalSetting!
-    private let _globalSettingRepo: GlobalSettingRepo = GlobalSettingRepo()
-    private let _testProtocolRepo = TestProtocolRepo()
+    private let _globalSettingRepo = GlobalSettingRepo.repo
+    private let _testProtocolRepo = TestProtocolRepo.repo
+    private let _patientProfileRepo = PatientProfileRepo.repo
     
-    private var _frequencyBuffer: [Int] = []
-    private var _testProtocol: TestProtocol! = nil
-    private var _testProtocols: [TestProtocol] = []
-    
-    func isPractice() -> Bool {
-        return _globalSetting.isPractice
-    }
-    
-    func isAdult() -> Bool {
-        return _globalSetting.isAdult
-    }
-    
-    func setIsAdult(isAdult: Bool) -> Bool {
-        _globalSetting.isAdult = isAdult
-        return _globalSetting.isAdult
-    }
-    func setTestLanguage(langauge: TestLanguage) -> String {
-        _globalSetting.testLanguage = langauge.toString()
-        return _globalSetting.testLanguage!
-    }
-    
-    func setTestEarOrder(isLeft: Bool, isBoth: Bool) {
-        _globalSetting.isTestingLeft = isLeft
-        _globalSetting.isTestingBoth = isBoth
-    }
-    
-    func getAllTestProtocols() -> [TestProtocol]{
-        do {
-            return try _testProtocolRepo.fetchAll()
-        } catch let error as NSError{
-            print("Could not fetch protocls.")
-            print("\(error), \(error.userInfo)")
-        }
-        return []
-    }
-    func saveAsNewProtocol(_ protocolName: String) {
-        do{
-            let newProtocol = try _testProtocolRepo.create()
-            newProtocol.timestamp = Date()
-            newProtocol.frequencySequence = _globalSetting.testFrequencySequence
-            newProtocol.isTestLeftFirst = _globalSetting.isTestingLeft
-            newProtocol.isTestBoth = _globalSetting.isTestingBoth
-            try _testProtocolRepo.update()
-            
-            _testProtocol = newProtocol
-        } catch let error as NSError{
-            print("Could not save test protocol.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    func deleteCurrentTestProtocol() -> Bool!{
-        // Validate current protocol
-        if(_testProtocol == nil) { return false }
-        
-        do {
-            try _testProtocolRepo.delete(_testProtocol)
-            _testProtocol = nil
-            _frequencyBuffer = []
-            return true
-        } catch let error as NSError {
-            print("Could not fetch test protocols.")
-            print("\(error), \(error.userInfo)")
-            return false
-        }
-    }
-    
-    func loadProtocol(_ index: Int) -> [Int]{
-        _testProtocol = _testProtocols[index]
-        _frequencyBuffer = _testProtocol.frequencySequence ?? []
-        return _frequencyBuffer
-    }
-    
-    func getFrequencyBufferCount() -> Int{
-        return _frequencyBuffer.count
-    }
-    
-    func addTestFrequencyValue(_ frequency: Int) -> [Int]{
-        if(!_frequencyBuffer.contains(frequency) ) {
-            _frequencyBuffer.append(frequency)
-        }
-        return _frequencyBuffer
-    }
-    
-    func removeLastTestFrequencyValue() -> [Int]{
-        if(_frequencyBuffer.count > 0) {
-            _frequencyBuffer.removeLast()
-        }
-        return _frequencyBuffer
-    }
-    
-    func removeAllTestFrequencyValues() -> [Int]{
-        if(_frequencyBuffer.count > 0) {
-            _frequencyBuffer.removeAll()
-        }
-        return _frequencyBuffer
-    }
+    private var _frequencyBuffer: [Int]!
+    private var _testProtocol: TestProtocol!
+    private var _testProtocols: [TestProtocol]!
     
     func start() {
-        return
+        do {
+            _globalSetting = try _globalSettingRepo.fetchOrCreate()
+            _frequencyBuffer = []
+        } catch let error as NSError{
+            print("Could not fetch calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
     }
     
     func back() {
@@ -127,5 +41,152 @@ class TestProtocolCoordinator: Coordinator {
 //        vc.coordinator = self
         self._navController.setNavigationBarHidden(true, animated: false)
         self._navController.show(vc, sender: nil)
+    }
+
+    func isPractice() -> Bool {
+        return _globalSetting.isPractice
+    }
+
+    func isAdult() -> Bool {
+        return _globalSetting.isAdult
+    }
+
+    func setIsAdult(isAdult: Bool) {
+        _globalSetting.isAdult = isAdult
+    }
+    func setTestLanguage(langauge: TestLanguage) -> String {
+        _globalSetting.testLanguage = langauge.toString()
+        return _globalSetting.testLanguage!
+    }
+
+    func setTestEarOrder(isLeft: Bool, isBoth: Bool) {
+        _globalSetting.isTestingLeft = isLeft
+        _globalSetting.isTestingBoth = isBoth
+    }
+
+    func getFrequencyBufferCount() -> Int{
+        return _frequencyBuffer.count
+    }
+
+    func addTestFrequencyValue(_ frequency: Int) -> [Int]{
+        if(!_frequencyBuffer.contains(frequency) ) {
+            _frequencyBuffer.append(frequency)
+        }
+        return _frequencyBuffer
+    }
+
+    func removeLastTestFrequencyValue() -> [Int]{
+        if(_frequencyBuffer.count > 0) {
+            _frequencyBuffer.removeLast()
+        }
+        return _frequencyBuffer
+    }
+
+    func removeAllTestFrequencyValues() -> [Int]{
+        if(_frequencyBuffer.count > 0) {
+            _frequencyBuffer.removeAll()
+        }
+        return _frequencyBuffer
+    }
+
+    func getTestProtocolCount() -> Int {
+        return _testProtocols.count
+    }
+
+    func getTestProtocolName(_ pickerIndex: Int) -> String {
+        return _testProtocols[pickerIndex].name!
+    }
+
+    func fetchAllTestProtocols(){
+        do {
+            _testProtocols = try _testProtocolRepo.fetchAll()
+        } catch let error as NSError{
+            print("Could not fetch protocls.")
+            print("\(error), \(error.userInfo)")
+        }
+    }
+
+    func isAnyTestProtocols() -> Bool {
+        fetchAllTestProtocols()
+        return _testProtocols.isNotEmpty
+    }
+
+    func loadProtocol(_ pickerIndex: Int) -> [Int]{
+        _testProtocol = _testProtocols[pickerIndex]
+        _frequencyBuffer = _testProtocol.frequencySequence ?? []
+        return _frequencyBuffer
+    }
+
+    func isProtocolNameExisted(_ protocolName: String) -> Bool{
+        return _testProtocols.map{$0.name}.contains(protocolName)
+    }
+
+    func saveAsNewProtocol(_ protocolName: String){
+        do{
+            let newProtocol = try _testProtocolRepo.create()
+            newProtocol.timestamp = Date()
+            newProtocol.frequencySequence = _globalSetting.testFrequencySequence
+            newProtocol.isTestLeftFirst = _globalSetting.isTestingLeft
+            newProtocol.isTestBoth = _globalSetting.isTestingBoth
+            try _testProtocolRepo.update()
+
+            _testProtocol = newProtocol
+        } catch let error as NSError{
+            print("Could not save test protocol.")
+            print("\(error), \(error.userInfo)")
+        }
+    }
+    func deleteCurrentTestProtocol() -> Bool!{
+        // Validate current protocol
+        if(_testProtocol == nil) { return false }
+
+        do {
+            try _testProtocolRepo.delete(_testProtocol)
+            _testProtocol = nil
+            _frequencyBuffer = []
+            return true
+        } catch let error as NSError {
+            print("Could not fetch test protocols.")
+            print("\(error), \(error.userInfo)")
+            return false
+        }
+    }
+
+    func saveNewPatientProfile(_ patientGroup: String, _ patientName: String, _ earOrder: String){
+
+        // Format date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+
+        let localDate = dateFormatter.string(from: NSDate() as Date)
+
+        do{
+            let profile = _patientProfileRepo.createNewProfile(_frequencyBuffer)
+            profile.group = patientGroup
+            profile.name = patientName
+
+            profile.isAdult = _globalSetting.isAdult
+            profile.isPractice = _globalSetting.isPractice
+
+            profile.earOrder = ""
+
+            profile.timestamp = NSDate() as Date
+            profile.durationSeconds = 0
+
+            try _patientProfileRepo.update()
+        } catch let error as NSError{
+            print("Could not save test settings to global setting.")
+            print("\(error), \(error.userInfo)")
+        }
+    }
+
+    func updateGlobalSetting(){
+        _globalSetting.testFrequencySequence = _frequencyBuffer
+        _globalSetting.currentTestCount = 0
+        _globalSetting.totalTestCount = _globalSetting.isTestingBoth
+                ? Int16(_frequencyBuffer.count * 2)
+                : Int16(_frequencyBuffer.count)
+        print(_globalSetting)
     }
 }

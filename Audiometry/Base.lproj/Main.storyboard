@@ -132,6 +132,9 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <action selector="back:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="bjU-Te-V7I"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gc3-JO-0I7">
                                 <rect key="frame" x="236.5" y="518" width="639" height="38"/>
