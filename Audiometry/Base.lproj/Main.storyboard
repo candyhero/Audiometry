@@ -34,7 +34,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Start"/>
                                         <connections>
-                                            <action selector="prepareTestProtocol:" destination="cTp-f6-a1r" eventType="touchUpInside" id="1xa-eS-dGI"/>
+                                            <action selector="prepareTest:" destination="cTp-f6-a1r" eventType="touchUpInside" id="SJC-Bg-FNS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c5c-0e-X0P">
@@ -47,7 +47,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Practice"/>
                                         <connections>
-                                            <action selector="prepareTestProtocol:" destination="cTp-f6-a1r" eventType="touchUpInside" id="Lue-di-6RC"/>
+                                            <action selector="preparePractice:" destination="cTp-f6-a1r" eventType="touchUpInside" id="mjo-2L-CS1"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dab-8t-SDg">

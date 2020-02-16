@@ -43,7 +43,7 @@ extension TestPlayer {
         
         // volume in absolute dB to be converted to amplitude
         // 1.0 amplitude <-> 0 absoulte dB
-        let ampDB: Double! = dB - _DB_SYSTEM_MAX
+        let ampDB: Double! = dB - TEST_MAX_DB
         
         let amp: Double! = pow(10.0, ampDB / 20.0)
         

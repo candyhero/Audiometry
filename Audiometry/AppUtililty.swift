@@ -10,12 +10,14 @@ import Foundation
 import UIKit
 
 enum TestLanguage: Int {
+    case Invalid = -1
     case English = 0
     case Portuguese = 1
     case Spanish = 2
     
     func toString() -> String {
         switch self {
+            case .Invalid: return "Invalid"
             case .English: return "English"
             case .Portuguese: return "Portuguese"
             case .Spanish: return "Spanish"
@@ -24,7 +26,7 @@ enum TestLanguage: Int {
 }
 
 // Global Constants
-let ARRAY_DEFAULT_FREQ: [Int] =
+let DEFAULT_FREQUENCIES: [Int] =
     [250, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000]
 //    [250.0, 500.0, 750.0, 1000.0, 1500.0, 2000.0, 3000.0, 4000.0, 6000.0, 8000.0]
 
@@ -37,12 +39,12 @@ let Z_FACTORS: [Int:Double] =
      8000 : 23.0 ]
 
 // Calibration Setting Constants
-let _DB_SYSTEM_MAX: Int! = 105 // At volume amplitude = 1.0
-let _DB_SYSTEM_MIN: Int! = 0 // At volume amplitude = 0.0
-let _DB_DEFAULT: Int! = 70
+let TEST_MAX_DB: Int! = 105 // At volume amplitude = 1.0
+let TEST_MIN_DB: Int! = 0 // At volume amplitude = 0.0
+let DEFAULT_PLAYER_DB: Int! = 70
 
-let _RAMP_TIME: Double! = 0.1
-let _RAMP_TIMESTEP: Double! = 0.01
+let RAMP_TIME: Double! = 0.1
+let RAMP_TIMESTEP: Double! = 0.01
 
 // Main Test Constants
 
@@ -195,20 +197,20 @@ func exportAllPatientsInRows(_ array_patients:[PatientProfile])->String{
     csvText.append("Frequency Test Order,")
     
     csvText.append("LSpam,")
-    for FREQ in ARRAY_DEFAULT_FREQ{
+    for FREQ in DEFAULT_FREQUENCIES{
         csvText.append("\(FREQ),")
     }
     csvText.append("RSpam,")
-    for FREQ in ARRAY_DEFAULT_FREQ{
+    for FREQ in DEFAULT_FREQUENCIES{
         csvText.append("\(FREQ),")
     }
     
     csvText.append("Result (L),")
-    for FREQ in ARRAY_DEFAULT_FREQ{
+    for FREQ in DEFAULT_FREQUENCIES{
         csvText.append("\(FREQ),")
     }
     csvText.append("Result (R),")
-    for FREQ in ARRAY_DEFAULT_FREQ{
+    for FREQ in DEFAULT_FREQUENCIES{
         csvText.append("\(FREQ),")
     }
     
@@ -262,21 +264,21 @@ fileprivate func extractPatientValues(_ patientProfile: PatientProfile) -> Strin
     
     // Left Ear Spam Count
     csvText.append( ",")
-    for FREQ in ARRAY_DEFAULT_FREQ{
+    for FREQ in DEFAULT_FREQUENCIES{
         let spamCount_L = dict_spamCount_L[FREQ, default:0]
         csvText.append((spamCount_L > 0) ? "\(spamCount_L)," : " ,")
     }
     
     // Left Ear Spam Count
     csvText.append( ",")
-    for FREQ in ARRAY_DEFAULT_FREQ{
+    for FREQ in DEFAULT_FREQUENCIES{
         let spamCount_R = dict_spamCount_R[FREQ, default:0]
         csvText.append((spamCount_R > 0) ? "\(spamCount_R)," : " ,")
     }
     
     // Left Ear Frequency Thresholds
     csvText.append( ",")
-    for FREQ in ARRAY_DEFAULT_FREQ{
+    for FREQ in DEFAULT_FREQUENCIES{
         let threshold_L = dict_threshold_L[FREQ, default:0]
         switch threshold_L{
         case 0:
@@ -292,7 +294,7 @@ fileprivate func extractPatientValues(_ patientProfile: PatientProfile) -> Strin
     
     // Right Ear Frequency Thresholds
     csvText.append( ",")
-    for FREQ in ARRAY_DEFAULT_FREQ{
+    for FREQ in DEFAULT_FREQUENCIES{
         let threshold_R = dict_threshold_R[FREQ, default:0]
         switch threshold_R{
         case 0:

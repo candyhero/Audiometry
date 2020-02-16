@@ -10,9 +10,10 @@ import UIKit
 import CoreData
 
 class GlobalSettingRepo: Repository<GlobalSetting> {
-    
+    // MARK:
     static let repo = GlobalSettingRepo()
-    
+
+    // MARK:
     func fetchOrCreate() throws -> GlobalSetting
     {
         let request:NSFetchRequest<GlobalSetting> =

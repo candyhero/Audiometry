@@ -2,7 +2,6 @@
 import UIKit
 
 class TestProtocolViewController: UIViewController, Storyboarded {
-    
     // MARK:
     let coordinator = AppDelegate.testProcotolCoordinator
     
@@ -34,7 +33,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         clearFreqSeqLabel()
         lbEarOrder.text = "L. Ear -> R. Ear"
         coordinator.setTestEarOrder(isLeft: true, isBoth: true)
-        coordinator.setTestLanguage(langauge: TestLanguage.English)
+        coordinator.setTestLanguage(language: TestLanguage.English)
 
         if coordinator.isPractice() {
             pbAdult.setTitle("Adult Practice", for: .normal)
@@ -55,7 +54,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         lbFreqSeq.textAlignment = .center
         lbFreqSeq.numberOfLines = 0
         
-        for freq in ARRAY_DEFAULT_FREQ {
+        for freq in DEFAULT_FREQUENCIES {
             let newButton = ProtocolUIFactory.GetNewFrequencyButton(frequency: freq)
             newButton.addTarget(self, action: #selector(addNewFreq(_:)), for: .touchUpInside)
 
@@ -80,11 +79,11 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     
     // MARK: UIButton Actions
     @IBAction func switchToEnglish(_ sender: UIButton) {
-        lbTestLanguage.text = coordinator.setTestLanguage(langauge: .English)
+        lbTestLanguage.text = coordinator.setTestLanguage(language: .English)
     }
     
     @IBAction func switchToPortuguese(_ sender: UIButton) {
-        lbTestLanguage.text = coordinator.setTestLanguage(langauge: .Portuguese)
+        lbTestLanguage.text = coordinator.setTestLanguage(language: .Portuguese)
     }
     
     // MARK: Set test order

@@ -9,15 +9,22 @@
 import UIKit
 
 class TestCoordinator: Coordinator {
-    
+    // MARK:
     var _navController: UINavigationController = AppDelegate.navController
-    
-    func getTestLanguage() -> String! {
-        return ""
-    }
+
+    private let _globalSettingRepo = GlobalSettingRepo.repo
+
+    // MARK:
+    private var _player: CalibrationPlayer!
+    private var _globalSetting: GlobalSetting!
     
     func start() {
-        return
+        do {
+            _globalSetting = try _globalSettingRepo.fetchOrCreate()
+        } catch let error as NSError{
+            print("Could not fetch calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
     }
     
     func back() {
@@ -27,8 +34,13 @@ class TestCoordinator: Coordinator {
     func showTestView(sender: Any? = nil, isAdult: Bool) {
         let vc = isAdult ? AdultTestViewController.instantiate()
                          : ChildrenTestViewController.instantiate()
-//        vc.coordinator = self
         self._navController.setNavigationBarHidden(true, animated: false)
         self._navController.show(vc, sender: nil)
+    }
+
+    // MARK:
+    func getTestLanguage() -> String{
+        let testLanguage = TestLanguage(rawValue: Int(_globalSetting?.testLanguageCode ?? -1)) ?? TestLanguage.Invalid
+        return testLanguage.toString()
     }
 }

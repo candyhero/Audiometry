@@ -3,7 +3,8 @@ import UIKit
 
 class AdultTestViewController: UIViewController, Storyboarded {
     // MARK:
-    weak var coordinator: TestCoordinator?
+    let coordinator = AppDelegate.testCoordinator
+
     private var _testModel = TestModel()
     
     // Used by animator

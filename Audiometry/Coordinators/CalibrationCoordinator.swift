@@ -9,17 +9,18 @@
 import UIKit
 
 class CalibrationCoordinator: Coordinator {
-    
-    var _navController: UINavigationController = AppDelegate.navController
-    private var _player: CalibrationPlayer = CalibrationPlayer()
-    
     // MARK:
+    var _navController: UINavigationController = AppDelegate.navController
+
     private let _globalSettingRepo = GlobalSettingRepo.repo
     private let _calibrationSettingRepo = CalibrationSettingRepo.repo
-    
+
+    // MARK:
+    private var _player: CalibrationPlayer = CalibrationPlayer()
+
     private var _globalSetting: GlobalSetting!
     private var _settings: [CalibrationSetting]!
-    
+
     // MARK:
     func start() {
         do {

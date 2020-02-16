@@ -4,7 +4,7 @@ import CoreData
 
 class AdultInstructionViewController: UIViewController, Storyboarded {
     // MARK:
-    weak var coordinator: TestCoordinator?
+    let coordinator = AppDelegate.testCoordinator
     
     // MARK:
     @IBOutlet private weak var pbFirstInterval: UIButton!
@@ -16,7 +16,27 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
     @IBOutlet weak var pbRepeat: UIButton!
     
     @IBOutlet weak var lbCaption: UILabel!
-    
+
+    // MARK:
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        DispatchQueue.main.async { [unowned self] in
+            switch self.coordinator.getTestLanguage(){
+            case "Invalid":
+                print("Invalid language option!!")
+                break
+            case "Portuguese":
+                print("Loading Portugese...")
+                self.loadPortuguse()
+            default:
+                self.pbNoSound.setBackgroundImage(UIImage(named: "Shape_Icons/no_sound"), for: .normal)
+                break
+            }
+            self.loadButtonUI()
+        }
+    }
+
     // MARK:
     private func loadPortuguse() {
         lbCaption.text = PORT_ADULT_CAPTION_TEXT
@@ -40,25 +60,6 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
         self.pbFirstInterval.adjustsImageWhenHighlighted = false
         self.pbSecondInterval.adjustsImageWhenHighlighted = false
         self.pbNoSound.adjustsImageWhenHighlighted = false
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        DispatchQueue.main.async { [unowned self] in
-            switch self.coordinator?.getTestLanguage(){
-            case "Invalid":
-                print("Invalid language option!!")
-                break
-            case "Portuguese":
-                print("Loading Portugese...")
-                self.loadPortuguse()
-            default:
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Shape_Icons/no_sound"), for: .normal)
-                break
-            }
-            self.loadButtonUI()
-        }
     }
     
     override var prefersStatusBarHidden: Bool {

@@ -10,9 +10,10 @@ import UIKit
 import CoreData
 
 class PatientProfileRepo: Repository<PatientProfile> {
-    
+    // MARK:
     static let repo = PatientProfileRepo()
 
+    // MARK:
     func createNewProfile(_ frequencyBuffer: [Int]) -> PatientProfile {
         let profile = PatientProfile(context: _managedContext)
         profile.frequencyOrder = frequencyBuffer

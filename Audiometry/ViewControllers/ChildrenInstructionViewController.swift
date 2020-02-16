@@ -4,7 +4,7 @@ import CoreData
 
 class ChildrenInstructionViewController: UIViewController, Storyboarded {
     // MARK:
-    weak var coordinator: TestCoordinator?
+    let coordinator = AppDelegate.testCoordinator
 
     // MARK:
     @IBOutlet private weak var pbFirstInterval: UIButton!
@@ -47,7 +47,7 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         
         DispatchQueue.main.async { [unowned self] in
-            switch self.coordinator?.getTestLanguage(){
+            switch self.coordinator.getTestLanguage(){
             case "Invalid":
                 print("Invalid language option!!")
                 break

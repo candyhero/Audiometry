@@ -2,7 +2,6 @@
 import UIKit
 
 class TitleViewController: UIViewController, Storyboarded {
-    
     // MARK:
     private let _coordinator = AppDelegate.mainCoordinator
     private let _patientProfileRepo = PatientProfileRepo.repo
@@ -17,14 +16,24 @@ class TitleViewController: UIViewController, Storyboarded {
         _coordinator.showCalibrationView(sender: sender)
     }
     
-    @IBAction func prepareTestProtocol(_ sender: UIButton) {
+    @IBAction func prepareTest(_ sender: UIButton) {
         if _coordinator.getCurrentCalibrationSetting() == nil{
             errorPrompt(
                 errorMsg: "There is no calibration setting selected!",
                 uiCtrl: self)
             return
         }
-        _coordinator.showTestProtoclView(sender: sender, isPractice: false)
+        _coordinator.showTestProtocolView(sender: sender, isPractice: false)
+    }
+    
+    @IBAction func preparePractice(_ sender: UIButton) {
+        if _coordinator.getCurrentCalibrationSetting() == nil{
+            errorPrompt(
+                errorMsg: "There is no calibration setting selected!",
+                uiCtrl: self)
+            return
+        }
+        _coordinator.showTestProtocolView(sender: sender, isPractice: true)
     }
     
     @IBAction func showResultView(_ sender: UIButton) {

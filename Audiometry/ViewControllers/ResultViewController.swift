@@ -5,7 +5,6 @@ import CoreData
 
 class ResultViewController: UIViewController, Storyboarded,
     UITableViewDelegate, UITableViewDataSource  {
-    
     // MARK:
     private let _coordinator = AppDelegate.mainCoordinator
     
@@ -212,10 +211,10 @@ class ResultViewController: UIViewController, Storyboarded,
     
     fileprivate func updateCharts(_ values: PatientProfileValues) {
         // Set y-axis
-        let max_L = (values.results_L ?? []).max() ?? _DB_SYSTEM_MAX
-        let max_R = (values.results_R ?? []).max() ?? _DB_SYSTEM_MAX
-        let min_L = (values.results_L ?? []).min() ?? _DB_SYSTEM_MIN
-        let min_R = (values.results_R ?? []).min() ?? _DB_SYSTEM_MIN
+        let max_L = (values.results_L ?? []).max() ?? TEST_MAX_DB
+        let max_R = (values.results_R ?? []).max() ?? TEST_MAX_DB
+        let min_L = (values.results_L ?? []).min() ?? TEST_MIN_DB
+        let min_R = (values.results_R ?? []).min() ?? TEST_MIN_DB
         
         let leftAxis_L = chartView_L.getAxis(YAxis.AxisDependency.left)
         let leftAxis_R = chartView_R.getAxis(YAxis.AxisDependency.left)

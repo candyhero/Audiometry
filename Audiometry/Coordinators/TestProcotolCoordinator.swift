@@ -9,14 +9,15 @@
 import UIKit
 
 class TestProtocolCoordinator: Coordinator {
-    
+    // MARK:
     var _navController: UINavigationController = AppDelegate.navController
-    
-    private var _globalSetting: GlobalSetting!
+
     private let _globalSettingRepo = GlobalSettingRepo.repo
     private let _testProtocolRepo = TestProtocolRepo.repo
     private let _patientProfileRepo = PatientProfileRepo.repo
-    
+
+    // MARK:
+    private var _globalSetting: GlobalSetting!
     private var _frequencyBuffer: [Int]!
     private var _testProtocol: TestProtocol!
     private var _testProtocols: [TestProtocol]!
@@ -38,7 +39,6 @@ class TestProtocolCoordinator: Coordinator {
     func showInstructionView(sender: Any? = nil, isAdult: Bool) {
         let vc = isAdult ? AdultInstructionViewController.instantiate()
             : ChildrenInstructionViewController.instantiate()
-//        vc.coordinator = self
         self._navController.setNavigationBarHidden(true, animated: false)
         self._navController.show(vc, sender: nil)
     }
@@ -54,9 +54,10 @@ class TestProtocolCoordinator: Coordinator {
     func setIsAdult(isAdult: Bool) {
         _globalSetting.isAdult = isAdult
     }
-    func setTestLanguage(langauge: TestLanguage) -> String {
-        _globalSetting.testLanguage = langauge.toString()
-        return _globalSetting.testLanguage!
+
+    func setTestLanguage(language: TestLanguage) -> String{
+        _globalSetting.testLanguageCode = Int16(language.rawValue)
+        return language.toString()
     }
 
     func setTestEarOrder(isLeft: Bool, isBoth: Bool) {

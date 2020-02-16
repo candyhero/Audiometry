@@ -10,9 +10,10 @@ import UIKit
 import CoreData
 
 class CalibrationSettingRepo: Repository<CalibrationSetting> {
-    
+    // MARK:
     static let repo = CalibrationSettingRepo()
 
+    // MARK:
     func createNew(_ settingName: String,
                    _ settingUIs: [Int: CalibrationSettingUI]) -> CalibrationSetting {
         let newSetting = CalibrationSetting(context: _managedContext)

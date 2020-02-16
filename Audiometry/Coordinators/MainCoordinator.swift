@@ -9,9 +9,9 @@
 import UIKit
 
 class MainCoordinator: Coordinator {
-    
+    // MARK:
     var _navController: UINavigationController = AppDelegate.navController
-    
+
     func start() {
         showTitleView(sender: nil)
     }
@@ -45,7 +45,7 @@ class MainCoordinator: Coordinator {
         self._navController.show(vc, sender: nil)
     }
     
-    func showTestProtoclView(sender: Any? = nil, isPractice: Bool) {
+    func showTestProtocolView(sender: Any? = nil, isPractice: Bool) {
         let vc = TestProtocolViewController.instantiate()
         vc.coordinator.start()
         self._navController.setNavigationBarHidden(true, animated: false)
