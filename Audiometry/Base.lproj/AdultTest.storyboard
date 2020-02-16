@@ -20,7 +20,7 @@
         <!--Adult Test View Controller-->
         <scene sceneID="jA6-ao-Rbd">
             <objects>
-                <viewController id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdultInstruction" id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DIX-OQ-mz8"/>
                         <viewControllerLayoutGuide type="bottom" id="VwC-He-InT"/>
@@ -223,7 +223,7 @@
         <!--Adult Instruction View Controller-->
         <scene sceneID="rjg-Ks-cq9">
             <objects>
-                <viewController storyboardIdentifier="AdultInstructionView" id="H19-23-Hv8" customClass="AdultInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdultInstructionViewController" id="H19-23-Hv8" customClass="AdultInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X8z-cw-Fej"/>
                         <viewControllerLayoutGuide type="bottom" id="gpb-8g-Tlx"/>
@@ -266,6 +266,9 @@
                                     <constraint firstAttribute="height" constant="30" id="hXc-iQ-oea"/>
                                 </constraints>
                                 <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <action selector="back:" destination="H19-23-Hv8" eventType="touchUpInside" id="hs6-0q-Kvz"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3JU-sZ-hLL">
                                 <rect key="frame" x="1031" y="884" width="315" height="120"/>
@@ -298,9 +301,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                 <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <state key="normal" title="Start Testing!"/>
-                                <connections>
-                                    <segue destination="Xos-0w-K0n" kind="show" id="N3n-S4-2S0"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5SV-3M-pbc">
                                 <rect key="frame" x="1031" y="354.5" width="315" height="315"/>
@@ -362,6 +362,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="N3n-S4-2S0"/>
+        <segue reference="yI6-FT-bkZ"/>
     </inferredMetricsTieBreakers>
 </document>

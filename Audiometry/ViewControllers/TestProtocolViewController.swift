@@ -211,7 +211,6 @@ class TestProtocolViewController: UIViewController, Storyboarded {
             guard patientName.count > 0 else { throw PreTestError.invalidPatentName }
 
             coordinator.saveNewPatientProfile(patientGroup, patientName, lbEarOrder.text!)
-            coordinator.updateGlobalSetting()
             coordinator.showInstructionView(sender: nil, isAdult: isAdult)
         } catch PreTestError.invalidPaientGroup {
             errorPrompt(errorMsg: "Patient group cannot be empty!", uiCtrl: self)

@@ -373,8 +373,6 @@
                         <outlet property="lbFreqSeq" destination="yXe-Pb-BHe" id="QKO-bx-ebP"/>
                         <outlet property="lbTestLanguage" destination="hLr-he-GrK" id="6FS-mj-X2m"/>
                         <outlet property="svFreq" destination="efm-Xe-VU2" id="TW3-Qt-eeH"/>
-                        <segue destination="gpp-Oc-hEO" kind="showDetail" identifier="segueAdultTest" id="hfc-YE-1Ho"/>
-                        <segue destination="hc1-yJ-Pc0" kind="showDetail" identifier="segueChildrenTest" id="S5N-7u-244"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0v-ao-aih" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -775,19 +773,19 @@
             </objects>
             <point key="canvasLocation" x="-478.05755395683457" y="120.86330935251799"/>
         </scene>
-        <!--AdultInstructionView-->
+        <!--AdultInstructionViewController-->
         <scene sceneID="OTy-KX-eOT">
             <objects>
-                <viewControllerPlaceholder storyboardName="AdultTest" referencedIdentifier="AdultInstructionView" id="gpp-Oc-hEO" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5t6-Wf-erF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="AdultTest" referencedIdentifier="AdultInstructionViewController" id="gpp-Oc-hEO" sceneMemberID="viewController"/>
             </objects>
             <point key="canvasLocation" x="632" y="-716"/>
         </scene>
-        <!--ChildrenInstructionView-->
+        <!--ChildrenInstructionViewController-->
         <scene sceneID="GIN-nv-edI">
             <objects>
-                <viewControllerPlaceholder storyboardName="ChildrenTest" referencedIdentifier="ChildrenInstructionView" id="hc1-yJ-Pc0" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zla-gN-iEw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="ChildrenTest" referencedIdentifier="ChildrenInstructionViewController" id="hc1-yJ-Pc0" sceneMemberID="viewController"/>
             </objects>
             <point key="canvasLocation" x="632" y="-560"/>
         </scene>

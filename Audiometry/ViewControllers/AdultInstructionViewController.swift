@@ -37,6 +37,10 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
         }
     }
 
+    @IBAction func back(_ sender: UIButton) {
+        coordinator.back()
+    }
+    
     // MARK:
     private func loadPortuguse() {
         lbCaption.text = PORT_ADULT_CAPTION_TEXT

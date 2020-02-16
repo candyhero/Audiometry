@@ -37,8 +37,9 @@ class TestProtocolCoordinator: Coordinator {
     }
     
     func showInstructionView(sender: Any? = nil, isAdult: Bool) {
-        let vc = isAdult ? AdultInstructionViewController.instantiate()
-            : ChildrenInstructionViewController.instantiate()
+        let vc = isAdult
+                ? AdultInstructionViewController.instantiate("AdultTest")
+                : ChildrenInstructionViewController.instantiate("ChildrenTest")
         self._navController.setNavigationBarHidden(true, animated: false)
         self._navController.show(vc, sender: nil)
     }
@@ -102,7 +103,7 @@ class TestProtocolCoordinator: Coordinator {
         do {
             _testProtocols = try _testProtocolRepo.fetchAll()
         } catch let error as NSError{
-            print("Could not fetch protocls.")
+            print("Could not fetch protocols.")
             print("\(error), \(error.userInfo)")
         }
     }
@@ -154,40 +155,38 @@ class TestProtocolCoordinator: Coordinator {
     }
 
     func saveNewPatientProfile(_ patientGroup: String, _ patientName: String, _ earOrder: String){
-
         // Format date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .short
-
-        let localDate = dateFormatter.string(from: NSDate() as Date)
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = .short
+//        dateFormatter.timeStyle = .short
+//
+//        let localDate = dateFormatter.string(from: NSDate() as Date)
 
         do{
-            let profile = _patientProfileRepo.createNewProfile(_frequencyBuffer)
+            let profile = try _patientProfileRepo.create()
             profile.group = patientGroup
             profile.name = patientName
 
+            profile.earOrder = earOrder
             profile.isAdult = _globalSetting.isAdult
             profile.isPractice = _globalSetting.isPractice
 
-            profile.earOrder = ""
-
             profile.timestamp = NSDate() as Date
             profile.durationSeconds = 0
+            profile.frequencyOrder = _frequencyBuffer
 
-            try _patientProfileRepo.update()
+            _globalSetting.patientProfile = profile
+            _globalSetting.testFrequencySequence = _frequencyBuffer
+            _globalSetting.currentTestCount = 0
+            _globalSetting.totalTestCount = _globalSetting.isTestingBoth
+                    ? Int16(_frequencyBuffer.count * 2)
+                    : Int16(_frequencyBuffer.count)
+            print(_globalSetting)
+
+            try _globalSettingRepo.update()
         } catch let error as NSError{
             print("Could not save test settings to global setting.")
             print("\(error), \(error.userInfo)")
         }
-    }
-
-    func updateGlobalSetting(){
-        _globalSetting.testFrequencySequence = _frequencyBuffer
-        _globalSetting.currentTestCount = 0
-        _globalSetting.totalTestCount = _globalSetting.isTestingBoth
-                ? Int16(_frequencyBuffer.count * 2)
-                : Int16(_frequencyBuffer.count)
-        print(_globalSetting)
     }
 }

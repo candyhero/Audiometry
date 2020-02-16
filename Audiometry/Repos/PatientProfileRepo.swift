@@ -34,6 +34,12 @@ class PatientProfileRepo: Repository<PatientProfile> {
     
     // MARK: validate functions
     func validateAnyPatientProfiles() throws -> Bool {
-        return (try self.fetchAll().count > 0)
+        var profiles = try self.fetchAll()
+
+        for emptyProfile in profiles.filter({$0.values?.count == 0}){
+            _managedContext.delete(emptyProfile)
+        }
+        profiles.removeAll(where: {$0.values?.count == 0})
+        return profiles.isNotEmpty
     }
 }

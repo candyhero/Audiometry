@@ -32,8 +32,9 @@ class TestCoordinator: Coordinator {
     }
     
     func showTestView(sender: Any? = nil, isAdult: Bool) {
-        let vc = isAdult ? AdultTestViewController.instantiate()
-                         : ChildrenTestViewController.instantiate()
+        let vc = isAdult
+                ? AdultTestViewController.instantiate("AdultTest")
+                : ChildrenTestViewController.instantiate("ChildrenTest")
         self._navController.setNavigationBarHidden(true, animated: false)
         self._navController.show(vc, sender: nil)
     }
