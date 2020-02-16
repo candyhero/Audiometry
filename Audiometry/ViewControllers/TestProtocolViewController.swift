@@ -56,14 +56,14 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         lbFreqSeq.numberOfLines = 0
         
         for freq in ARRAY_DEFAULT_FREQ {
-            let newButton = ProtocolUIFactory.GetNewFrequencyButton(
-                frequency: freq,
-                action: #selector(addNewFreq(_:))
-            )
+            let newButton = ProtocolUIFactory.GetNewFrequencyButton(frequency: freq)
+            newButton.addTarget(self, action: #selector(addNewFreq(_:)), for: .touchUpInside)
+
             _freqButtons.append(newButton)
             svFreq.addArrangedSubview(newButton)
         }
     }
+
     func clearFreqSeqLabel(){
         updateFreqSeqLabel([])
     }
@@ -107,7 +107,6 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         coordinator.setTestEarOrder(isLeft: false, isBoth: false)
         lbEarOrder.text = sender.titleLabel?.text
     }
-    
     // MARK:
     @IBAction func addNewFreq(_ sender: UIButton) {
         updateFreqSeqLabel(coordinator.addTestFrequencyValue(sender.tag) )
