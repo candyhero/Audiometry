@@ -14,7 +14,33 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
     @IBOutlet private weak var pbRepeat: UIButton!
     @IBOutlet private weak var pbStart: UIButton!
     @IBOutlet weak var lbCaption: UILabel!
-    
+
+    // MARK:
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        DispatchQueue.main.async { [unowned self] in
+            switch self.coordinator.getTestLanguage(){
+            case "Invalid":
+                print("Invalid language option!!")
+                break
+            case "Portuguese":
+                print("Loading Portugese...")
+                self.loadPortuguse()
+                self.pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
+            default:
+                self.pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
+                break
+            }
+            self.loadButtonUI()
+        }
+    }
+
+    @IBAction func back(_ sender: UIButton) {
+        coordinator.back()
+    }
+
+    // MARK:
     private func loadPortuguse() {
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: "Animal_Icons/emoji")
@@ -41,26 +67,6 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
         self.pbFirstInterval.adjustsImageWhenHighlighted = false
         self.pbSecondInterval.adjustsImageWhenHighlighted = false
         self.pbNoSound.adjustsImageWhenHighlighted = false
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        DispatchQueue.main.async { [unowned self] in
-            switch self.coordinator.getTestLanguage(){
-            case "Invalid":
-                print("Invalid language option!!")
-                break
-            case "Portuguese":
-                print("Loading Portugese...")
-                self.loadPortuguse()
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
-            default:
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
-                break
-            }
-            self.loadButtonUI()
-        }
     }
     
     override var prefersStatusBarHidden: Bool {

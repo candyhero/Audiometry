@@ -10,7 +10,7 @@ import UIKit
 
 class TestProtocolCoordinator: Coordinator {
     // MARK:
-    var _navController: UINavigationController = AppDelegate.navController
+    var _navController = AppDelegate.navController
 
     private let _globalSettingRepo = GlobalSettingRepo.repo
     private let _testProtocolRepo = TestProtocolRepo.repo
@@ -33,15 +33,15 @@ class TestProtocolCoordinator: Coordinator {
     }
     
     func back() {
-        self._navController.popViewController(animated: true)
+        _navController.popViewController(animated: true)
     }
     
     func showInstructionView(sender: Any? = nil, isAdult: Bool) {
         let vc = isAdult
                 ? AdultInstructionViewController.instantiate("AdultTest")
                 : ChildrenInstructionViewController.instantiate("ChildrenTest")
-        self._navController.setNavigationBarHidden(true, animated: false)
-        self._navController.show(vc, sender: nil)
+        _navController.setNavigationBarHidden(true, animated: false)
+        _navController.show(vc, sender: nil)
     }
 
     func isPractice() -> Bool {

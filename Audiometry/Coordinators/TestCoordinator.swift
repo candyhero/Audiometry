@@ -10,7 +10,7 @@ import UIKit
 
 class TestCoordinator: Coordinator {
     // MARK:
-    var _navController: UINavigationController = AppDelegate.navController
+    var _navController = AppDelegate.navController
 
     private let _globalSettingRepo = GlobalSettingRepo.repo
 
@@ -28,15 +28,16 @@ class TestCoordinator: Coordinator {
     }
     
     func back() {
-        self._navController.popViewController(animated: true)
+        AppDelegate.mainCoordinator.showTitleView()
     }
     
     func showTestView(sender: Any? = nil, isAdult: Bool) {
         let vc = isAdult
                 ? AdultTestViewController.instantiate("AdultTest")
                 : ChildrenTestViewController.instantiate("ChildrenTest")
-        self._navController.setNavigationBarHidden(true, animated: false)
-        self._navController.show(vc, sender: nil)
+        _navController.setNavigationBarHidden(true, animated: false)
+        _navController.showDetailViewController(vc, sender: nil)
+
     }
 
     // MARK:

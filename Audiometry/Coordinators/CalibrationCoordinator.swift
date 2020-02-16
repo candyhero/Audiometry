@@ -10,7 +10,7 @@ import UIKit
 
 class CalibrationCoordinator: Coordinator {
     // MARK:
-    var _navController: UINavigationController = AppDelegate.navController
+    var _navController = AppDelegate.navController
 
     private let _globalSettingRepo = GlobalSettingRepo.repo
     private let _calibrationSettingRepo = CalibrationSettingRepo.repo
@@ -36,7 +36,7 @@ class CalibrationCoordinator: Coordinator {
         if(_player.isStarted()) {
             _player.stopPlaying()
         }
-        self._navController.popViewController(animated: true)
+        _navController.popViewController(animated: true)
 
     }
 

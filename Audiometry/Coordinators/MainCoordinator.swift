@@ -10,14 +10,14 @@ import UIKit
 
 class MainCoordinator: Coordinator {
     // MARK:
-    var _navController: UINavigationController = AppDelegate.navController
+    var _navController = AppDelegate.navController
 
     func start() {
         showTitleView(sender: nil)
     }
-    
+
     func back() {
-        self._navController.popViewController(animated: true)
+        _navController.popViewController(animated: true)
     }
     
     func getCurrentCalibrationSetting() -> CalibrationSetting! {
@@ -34,27 +34,27 @@ class MainCoordinator: Coordinator {
     
     func showTitleView(sender: Any? = nil) {
         let vc = TitleViewController.instantiate("Main")
-        self._navController.setNavigationBarHidden(true, animated: false)
-        self._navController.show(vc, sender: nil)
+        _navController.setNavigationBarHidden(true, animated: false)
+        _navController.show(vc, sender: nil)
     }
     
     func showCalibrationView(sender: Any? = nil) {
         let vc = CalibrationViewController.instantiate("Main")
         vc.coordinator.start()
-        self._navController.setNavigationBarHidden(true, animated: false)
-        self._navController.show(vc, sender: nil)
+        _navController.setNavigationBarHidden(true, animated: false)
+        _navController.show(vc, sender: nil)
     }
     
     func showTestProtocolView(sender: Any? = nil, isPractice: Bool) {
         let vc = TestProtocolViewController.instantiate("Main")
         vc.coordinator.start()
-        self._navController.setNavigationBarHidden(true, animated: false)
-        self._navController.show(vc, sender: nil)
+        _navController.setNavigationBarHidden(true, animated: false)
+        _navController.show(vc, sender: nil)
     }
     
     func showResultView(sender: Any? = nil) {
         let vc = ResultViewController.instantiate("Main")
-        self._navController.setNavigationBarHidden(true, animated: false)
-        self._navController.show(vc, sender: nil)
+        _navController.setNavigationBarHidden(true, animated: false)
+        _navController.show(vc, sender: nil)
     }
 }
