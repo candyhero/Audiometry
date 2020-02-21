@@ -182,6 +182,7 @@
 		4EC055F721A724E60016AB0D /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
+				67C88C9924004CC40000F6E7 /* Assets */,
 				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
 				67C88C3B2400498F0000F6E7 /* AppConstants.swift */,
 				4E4B3C9421A757DA00191AF3 /* AppUtililty.swift */,
@@ -194,9 +195,6 @@
 				67E329B623CE30C10068C2E2 /* UI */,
 				4E4B3C6B21A7264300191AF3 /* Storyboards */,
 				4E4B3C7021A7266000191AF3 /* AudioPlayers */,
-				4E32DA0621C17EAB00002770 /* Animal_Tones */,
-				4E32DA0521C17EAB00002770 /* Shape_Icons */,
-				4E32DA0721C17EAB00002770 /* Animal_Icons */,
 				4EC0560221A724E70016AB0D /* Assets.xcassets */,
 				4EC0560721A724E70016AB0D /* Info.plist */,
 			);
@@ -221,6 +219,16 @@
 				67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		67C88C9924004CC40000F6E7 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4E32DA0621C17EAB00002770 /* Animal_Tones */,
+				4E32DA0521C17EAB00002770 /* Shape_Icons */,
+				4E32DA0721C17EAB00002770 /* Animal_Icons */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		67E329B123CE28880068C2E2 /* Repos */ = {
