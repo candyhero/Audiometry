@@ -36,6 +36,7 @@ class TitleViewController: UIViewController, Storyboarded {
         do {
             if try !_patientProfileRepo.validateAnyPatientProfiles(){
                 errorPrompt(errorMsg: "There is no result!")
+                return
             }
         } catch let error as NSError {
             print("[Error] There is no patient profileg.")

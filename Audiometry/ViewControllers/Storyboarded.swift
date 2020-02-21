@@ -12,6 +12,16 @@ protocol Storyboarded {
     static func instantiate(_ sb: AppStoryboards) -> Self
 }
 
+enum AppStoryboards : String {
+    case Main = "Main"
+    case AdultTest = "AdultTest"
+    case ChildrenTest = "ChildrenTest"
+    
+    var instance: UIStoryboard {
+        return UIStoryboard(name: self.rawValue, bundle: nil)
+    }
+}
+
 extension Storyboarded where Self: UIViewController {
     static func instantiate(_ sb: AppStoryboards) -> Self {
         // this pulls out "MyApp.MyViewController"
@@ -26,7 +36,8 @@ extension Storyboarded where Self: UIViewController {
         // instantiate a view controller with that identifier, and force cast as the type that was requested
         return storyboard.instantiateViewController(withIdentifier: className) as! Self
     }
-
+    
+    // MARK:
     func errorPrompt(errorMsg: String) {
         let alertCtrl = UIAlertController(title: "Error", message: errorMsg, preferredStyle: .alert)
 
@@ -88,15 +99,5 @@ extension Storyboarded where Self: UIViewController {
         alertCtrl.addAction(cancelAction)
 
         self.present(alertCtrl, animated: true, completion: nil)
-    }
-}
-
-enum AppStoryboards : String {
-    case Main = "Main"
-    case AdultTest = "AdultTest"
-    case ChildrenTest = "ChildrenTest"
-
-    var instance: UIStoryboard {
-        return UIStoryboard(name: self.rawValue, bundle: nil)
     }
 }
