@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum TestLanguage: Int {
     case Invalid = -1
