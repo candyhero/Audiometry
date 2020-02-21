@@ -29,7 +29,7 @@ class ChildrenTestViewController: UIViewController, Storyboarded {
 //------------------------------------------------------------------------------
     private func loadButtonUI() {
         let freq: Int = _testModel.getNewTestFreq()
-        let imgDir = "Animal_Icons/"+String(freq)+"Hz"
+        let imgDir = "\(SHAPE_ICON_PATH)/\(freq)Hz"
         let img = UIImage(named:imgDir)?.withRenderingMode(.alwaysOriginal)
         
         print(freq, imgDir)
@@ -112,8 +112,7 @@ class ChildrenTestViewController: UIViewController, Storyboarded {
             _testModel.increaseSpamCount()
             
             errorPrompt(
-                errorMsg: "Please ask for re-instrcution.",
-                uiCtrl: self)
+                errorMsg: "Please ask for re-instrcution.")
         }
         
 //        print("Button Spam Count: ", buttonCounter)
@@ -251,7 +250,7 @@ class ChildrenTestViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         
         // Set UI
-        pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
+        pbNoSound.setBackgroundImage(UIImage(named: "\(SHAPE_ICON_PATH)/no_sound"), for: .normal)
         pbNoSound.adjustsImageWhenHighlighted = false
         
         switch _testModel.getTestLauguage() {
@@ -262,10 +261,10 @@ class ChildrenTestViewController: UIViewController, Storyboarded {
             print("Loading Portugese...")
             pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
             pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
-            pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
+            pbNoSound.setBackgroundImage(UIImage(named: "\(SHAPE_ICON_PATH)/no_sound_Port"), for: .normal)
             break
         default:
-            pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
+            pbNoSound.setBackgroundImage(UIImage(named: "\(SHAPE_ICON_PATH)/no_sound"), for: .normal)
             break
         }
         

@@ -30,7 +30,8 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
                 print("Loading Portugese...")
                 self.loadPortuguse()
             default:
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Shape_Icons/no_sound"), for: .normal)
+                let background = UIImage(named: "\(SHAPE_ICON_PATH)/no_sound")  
+                self.pbNoSound.setBackgroundImage(background, for: .normal)
                 break
             }
             self.loadButtonUI()
@@ -44,7 +45,7 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
     // MARK:
     private func loadPortuguse() {
         lbCaption.text = PORT_ADULT_CAPTION_TEXT
-        pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
+        pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
         pbNoSound.setTitle("", for: .normal)
         pbStart.setTitle(PORT_START_TEXT, for: .normal)
         pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
@@ -52,7 +53,8 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
     }
     
     private func loadButtonUI() {
-        let pbImgDir = "Shape_Icons/500Hz"
+        let pbImgDir = "\(SHAPE_ICON_PATH)/500Hz"
+        print(pbImgDir)
         let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
         
         self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit

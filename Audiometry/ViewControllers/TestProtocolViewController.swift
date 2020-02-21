@@ -122,13 +122,12 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     // MARK: CoreData
     @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
         if coordinator.getFrequencyBufferCount() == 0 {
-            errorPrompt(errorMsg: "There is no test frequency selected", uiCtrl: self)
+            errorPrompt(errorMsg: "There is no test frequency selected")
         } else {
             inputPrompt(promptMsg: "Please Enter Protocol Name:",
                         errorMsg: "Protocol name cannot be empty!",
                         fieldMsg: "",
-                        confirmFunction: saveProtocol,
-                        uiCtrl: self)
+                        confirmFunction: saveProtocol)
         }
     }
     
@@ -136,22 +135,20 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         _pickerIndex = 0
 
         if !coordinator.isAnyTestProtocols() {
-            errorPrompt(errorMsg: "There is no saved protocol!", uiCtrl: self)
+            errorPrompt(errorMsg: "There is no saved protocol!")
         }
         else {
             pickerPrompt(confirmFunction: { () in
                 self.updateFreqSeqLabel(
                         self.coordinator.loadProtocol(self._pickerIndex)
                 )
-            }, uiCtrl: self)
+            })
         }
     }
 
     func saveProtocol(_ protocolName: String) {
         if coordinator.isProtocolNameExisted(protocolName) {
-            errorPrompt(
-                    errorMsg: "Protocol name already exists!",
-                    uiCtrl: self)
+            errorPrompt(errorMsg: "Protocol name already exists!")
             return
         }
         coordinator.saveAsNewProtocol(protocolName)
@@ -159,7 +156,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     
     @IBAction func deleteFreqSeqProtocol(_ sender: UIButton) {
         if coordinator.deleteCurrentTestProtocol() {
-            errorPrompt(errorMsg: "There is no selected protcol!", uiCtrl: self)
+            errorPrompt(errorMsg: "There is no selected protcol!")
         } else {
             clearFreqSeqLabel()
         }
@@ -178,7 +175,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     func promptToStartTest() {
         // Error, no freq selected
         if(coordinator.getFrequencyBufferCount() == 0) {
-            errorPrompt(errorMsg: "There is no frequency selected!", uiCtrl: self)
+            errorPrompt(errorMsg: "There is no frequency selected!")
             return
         }
         
@@ -213,9 +210,9 @@ class TestProtocolViewController: UIViewController, Storyboarded {
             coordinator.saveNewPatientProfile(patientGroup, patientName, lbEarOrder.text!)
             coordinator.showInstructionView(sender: nil, isAdult: isAdult)
         } catch PreTestError.invalidPaientGroup {
-            errorPrompt(errorMsg: "Patient group cannot be empty!", uiCtrl: self)
+            errorPrompt(errorMsg: "Patient group cannot be empty!")
         } catch PreTestError.invalidPatentName {
-            errorPrompt(errorMsg: "Patient name cannot be empty!", uiCtrl: self)
+            errorPrompt(errorMsg: "Patient name cannot be empty!")
         } catch {
             print("[Error] Unexpected error: \(error).")
         }

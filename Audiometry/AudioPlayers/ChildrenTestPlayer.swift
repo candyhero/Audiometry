@@ -36,7 +36,7 @@ class ChildrenTestPlayer : TestPlayer {
         rightCorrFactor = 0.0
         
         do {
-            file = try AKAudioFile(readFileName: "Animal_Tones/250Hz.wav")
+            file = try AKAudioFile(readFileName: "\(ANIMAL_TONE_PATH)/250Hz.wav")
             isStarted = true
         } catch {
             print(error)
@@ -56,7 +56,7 @@ class ChildrenTestPlayer : TestPlayer {
     func updateFreq (_ newFreq: Int!) {
         do {
             zFactor = Z_FACTORS[newFreq] ?? 0.0
-            let file = try AKAudioFile(readFileName: "Animal_Tones/"+String(newFreq)+"Hz.wav")
+            let file = try AKAudioFile(readFileName: "\(ANIMAL_TONE_PATH)/\(newFreq)Hz.wav")
             player.load(audioFile: file)
             player.endTime = PULSE_TIME_CHILDREN * 2
         } catch {

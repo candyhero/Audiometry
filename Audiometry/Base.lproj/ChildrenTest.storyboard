@@ -13,7 +13,7 @@
         <!--Children Test View Controller-->
         <scene sceneID="QVS-mb-LPB">
             <objects>
-                <viewController id="rqA-y9-Rxr" customClass="ChildrenTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChildrenTestViewController" id="rqA-y9-Rxr" customClass="ChildrenTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="04J-ds-2E9"/>
                         <viewControllerLayoutGuide type="bottom" id="e3Z-ae-l6w"/>
@@ -143,7 +143,6 @@
                         <outlet property="pbRepeat" destination="lHW-Ue-LL4" id="qKd-hG-VIW"/>
                         <outlet property="pbSecondInterval" destination="lgb-LX-Ddq" id="kpc-Jf-UuA"/>
                         <outlet property="svIcons" destination="Qrf-f3-cWA" id="yNa-L0-In9"/>
-                        <segue destination="4xs-O5-bdk" kind="show" identifier="segueSwitchEar" id="2bL-Pn-Pg0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UpN-4c-t75" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -181,9 +180,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" title="Continue After Switching the Earphone"/>
-                                        <connections>
-                                            <segue destination="rqA-y9-Rxr" kind="show" id="dML-5R-KJR"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -209,7 +205,7 @@
         <!--Children Instruction View Controller-->
         <scene sceneID="U25-yc-cpo">
             <objects>
-                <viewController storyboardIdentifier="ChildrenInstructionView" id="fuW-Nb-Tgi" customClass="ChildrenInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChildrenInstructionViewController" id="fuW-Nb-Tgi" customClass="ChildrenInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3ps-zf-mYD"/>
                         <viewControllerLayoutGuide type="bottom" id="3gq-iC-jDC"/>
@@ -255,9 +251,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                 <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <state key="normal" title="Start Testing!"/>
-                                <connections>
-                                    <segue destination="rqA-y9-Rxr" kind="show" id="6KL-Kd-kyS"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56B-kK-FHh">
                                 <rect key="frame" x="1031" y="354.5" width="315" height="315"/>
@@ -333,7 +326,4 @@
             <point key="canvasLocation" x="-422.10834553440702" y="286.5234375"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="dML-5R-KJR"/>
-    </inferredMetricsTieBreakers>
 </document>

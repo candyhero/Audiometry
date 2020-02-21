@@ -81,8 +81,7 @@ class CalibrationViewController: UIViewController, Storyboarded {
         inputPrompt(promptMsg: "Please enter setting name:",
                     errorMsg: "Setting name cannot be empty!",
                     fieldMsg: "i.e. iPad1-EP1",
-                    confirmFunction: saveSetting,
-                    uiCtrl: self)
+                    confirmFunction: saveSetting)
     }
     
     func saveSetting(_ settingName: String) {
@@ -100,13 +99,13 @@ class CalibrationViewController: UIViewController, Storyboarded {
         _pickerIndex = 0
         coordinator.fetchAllCalibrationSettings()
 
-        pickerPrompt(confirmFunction: {()->Void in
+        pickerPrompt(confirmFunction: { ()->Void in
             let picked = self.coordinator.setCalibrationSettingByPicker(self._pickerIndex)
             self.loadCurrentSettingValues(picked!)
             
             self.pbSaveCurrent.isEnabled = true
             self.pbDeleteCurrent.isEnabled = true
-        }, uiCtrl: self)
+        })
     }
     
     func loadCurrentSettingValues(_ setting: CalibrationSetting) {

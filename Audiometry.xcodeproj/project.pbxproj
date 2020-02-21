@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0DFA9E80DF2176D7579F4F4C /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */; };
-		4E32DA0821C17EAC00002770 /* Shape_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 4E32DA0521C17EAB00002770 /* Shape_Icons */; };
-		4E32DA0921C17EAC00002770 /* Animal_Tones in Resources */ = {isa = PBXBuildFile; fileRef = 4E32DA0621C17EAB00002770 /* Animal_Tones */; };
-		4E32DA0A21C17EAC00002770 /* Animal_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 4E32DA0721C17EAB00002770 /* Animal_Icons */; };
 		4E4B3C7D21A7266000191AF3 /* CalibrationPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3C7121A7266000191AF3 /* CalibrationPlayer.swift */; };
 		4E4B3C7E21A7266000191AF3 /* TestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3C7221A7266000191AF3 /* TestPlayer.swift */; };
 		4E4B3C8221A7266000191AF3 /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */; };
@@ -33,6 +30,7 @@
 		4EEDE90E21BFB04600028C60 /* ChildrenTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EEDE90C21BFB04600028C60 /* ChildrenTest.storyboard */; };
 		4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */; };
 		4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */; };
+		6794A4FF2400541600489C64 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 6794A4FE2400541600489C64 /* Assets */; };
 		67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */; };
 		67B58CF123D4CDF7003EFEE6 /* CalibrationSettingRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */; };
 		67B58CF423D5F795003EFEE6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF323D5F795003EFEE6 /* Coordinator.swift */; };
@@ -53,9 +51,6 @@
 
 /* Begin PBXFileReference section */
 		1C9CAD001E93C5B039521F51 /* Pods-Audiometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.release.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.release.xcconfig"; sourceTree = "<group>"; };
-		4E32DA0521C17EAB00002770 /* Shape_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shape_Icons; sourceTree = "<group>"; };
-		4E32DA0621C17EAB00002770 /* Animal_Tones */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Tones; sourceTree = "<group>"; };
-		4E32DA0721C17EAB00002770 /* Animal_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Icons; sourceTree = "<group>"; };
 		4E4B3C7121A7266000191AF3 /* CalibrationPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationPlayer.swift; sourceTree = "<group>"; };
 		4E4B3C7221A7266000191AF3 /* TestPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPlayer.swift; sourceTree = "<group>"; };
 		4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +75,7 @@
 		4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTestPlayer.swift; sourceTree = "<group>"; };
 		4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultTestPlayer.swift; sourceTree = "<group>"; };
 		6703415723512E4E00ABFB89 /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6794A4FE2400541600489C64 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
 		67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
 		67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationSettingRepo.swift; sourceTree = "<group>"; };
 		67B58CF323D5F795003EFEE6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -182,7 +178,7 @@
 		4EC055F721A724E60016AB0D /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
-				67C88C9924004CC40000F6E7 /* Assets */,
+				6794A4FE2400541600489C64 /* Assets */,
 				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
 				67C88C3B2400498F0000F6E7 /* AppConstants.swift */,
 				4E4B3C9421A757DA00191AF3 /* AppUtililty.swift */,
@@ -219,16 +215,6 @@
 				67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */,
 			);
 			path = Entities;
-			sourceTree = "<group>";
-		};
-		67C88C9924004CC40000F6E7 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				4E32DA0621C17EAB00002770 /* Animal_Tones */,
-				4E32DA0521C17EAB00002770 /* Shape_Icons */,
-				4E32DA0721C17EAB00002770 /* Animal_Icons */,
-			);
-			path = Assets;
 			sourceTree = "<group>";
 		};
 		67E329B123CE28880068C2E2 /* Repos */ = {
@@ -322,11 +308,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EC0560621A724E70016AB0D /* LaunchScreen.storyboard in Resources */,
-				4E32DA0A21C17EAC00002770 /* Animal_Icons in Resources */,
-				4E32DA0821C17EAC00002770 /* Shape_Icons in Resources */,
+				6794A4FF2400541600489C64 /* Assets in Resources */,
 				4EC0560321A724E70016AB0D /* Assets.xcassets in Resources */,
 				4E4B3C8E21A7267100191AF3 /* Main.storyboard in Resources */,
-				4E32DA0921C17EAC00002770 /* Animal_Tones in Resources */,
 				4E4B3CA521A9A30900191AF3 /* AdultTest.storyboard in Resources */,
 				4EEDE90E21BFB04600028C60 /* ChildrenTest.storyboard in Resources */,
 			);

@@ -25,6 +25,10 @@ enum TestLanguage: Int {
     }
 }
 
+let SHAPE_ICON_PATH = "Assets/Shape_Icons"
+let ANIMAL_ICON_PATH = "Assets/Animal_Icons"
+let ANIMAL_TONE_PATH = "Assets/Animal_Tones"
+
 // Global Constants
 let DEFAULT_FREQUENCIES: [Int] =
     [250, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000]

@@ -27,9 +27,9 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
             case "Portuguese":
                 print("Loading Portugese...")
                 self.loadPortuguse()
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
+                self.pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
             default:
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
+                self.pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound"), for: .normal)
                 break
             }
             self.loadButtonUI()
@@ -43,7 +43,7 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
     // MARK:
     private func loadPortuguse() {
         let attachment:NSTextAttachment = NSTextAttachment()
-        attachment.image = UIImage(named: "Animal_Icons/emoji")
+        attachment.image = UIImage(named: "\(ANIMAL_ICON_PATH)/emoji")
         
         var caption:NSMutableAttributedString =
             NSMutableAttributedString(string: PORT_CHILDREN_CAPTION_TEXT)
@@ -55,7 +55,7 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
     }
     
     private func loadButtonUI() {
-        let pbImgDir = "Animal_Icons/500Hz"
+        let pbImgDir = "\(ANIMAL_ICON_PATH)/500Hz"
         let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
         
         self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit

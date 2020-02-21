@@ -18,9 +18,7 @@ class TitleViewController: UIViewController, Storyboarded {
     
     @IBAction func prepareTest(_ sender: UIButton) {
         if _coordinator.getCurrentCalibrationSetting() == nil{
-            errorPrompt(
-                errorMsg: "There is no calibration setting selected!",
-                uiCtrl: self)
+            errorPrompt(errorMsg: "There is no calibration setting selected!")
             return
         }
         _coordinator.showTestProtocolView(sender: sender, isPractice: false)
@@ -28,9 +26,7 @@ class TitleViewController: UIViewController, Storyboarded {
     
     @IBAction func preparePractice(_ sender: UIButton) {
         if _coordinator.getCurrentCalibrationSetting() == nil{
-            errorPrompt(
-                errorMsg: "There is no calibration setting selected!",
-                uiCtrl: self)
+            errorPrompt(errorMsg: "There is no calibration setting selected!")
             return
         }
         _coordinator.showTestProtocolView(sender: sender, isPractice: true)
@@ -39,9 +35,7 @@ class TitleViewController: UIViewController, Storyboarded {
     @IBAction func showResultView(_ sender: UIButton) {
         do {
             if try !_patientProfileRepo.validateAnyPatientProfiles(){
-                errorPrompt(
-                    errorMsg: "There is no result!",
-                    uiCtrl: self)
+                errorPrompt(errorMsg: "There is no result!")
             }
         } catch let error as NSError {
             print("[Error] There is no patient profileg.")

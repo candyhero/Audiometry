@@ -584,7 +584,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3s-cI-oCg" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-478" y="-1380"/>
+            <point key="canvasLocation" x="-478" y="110"/>
         </scene>
         <!--Result View Controller-->
         <scene sceneID="8mt-vM-H3Y">
@@ -771,21 +771,21 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lzF-mF-AqB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-478.05755395683457" y="120.86330935251799"/>
+            <point key="canvasLocation" x="207" y="109"/>
         </scene>
         <!--AdultInstructionViewController-->
         <scene sceneID="OTy-KX-eOT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5t6-Wf-erF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="AdultTest" referencedIdentifier="AdultInstructionViewController" id="gpp-Oc-hEO" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5t6-Wf-erF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="632" y="-716"/>
         </scene>
         <!--ChildrenInstructionViewController-->
         <scene sceneID="GIN-nv-edI">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zla-gN-iEw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="ChildrenTest" referencedIdentifier="ChildrenInstructionViewController" id="hc1-yJ-Pc0" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zla-gN-iEw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="632" y="-560"/>
         </scene>

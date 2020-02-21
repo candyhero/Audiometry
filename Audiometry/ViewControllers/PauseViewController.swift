@@ -44,7 +44,7 @@ class PauseViewController: UIViewController {
 //        else{
 //            lbCaption.text = ""
 //
-//            let imgDir = "Shape_Icons/1000Hz"
+//            let imgDir = "\(SHAPE_ICON_PATH)/1000Hz"
 //            let img = UIImage(named:imgDir)?.withRenderingMode(.alwaysOriginal)
 //            pbContinue.imageView?.contentMode = .center
 //

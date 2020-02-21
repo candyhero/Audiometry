@@ -45,10 +45,7 @@ class ResultViewController: UIViewController, Storyboarded,
 //        }
         let alertMsg = "Are you sure to delete \"" + (_currentPatient?.name)! + "\" ?"
         
-        alertPrompt(alertTitle: "Delete patient profile",
-                    alertMsg: alertMsg,
-                    confirmFunction: deletePatient,
-                    uiCtrl: self)
+        alertPrompt(alertTitle: "Delete patient profile", alertMsg: alertMsg, confirmFunction: deletePatient)
     }
     
     @IBAction func exportAllPatients(_ sender: UIButton) {
