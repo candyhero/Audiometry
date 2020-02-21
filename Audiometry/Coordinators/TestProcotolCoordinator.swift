@@ -38,8 +38,8 @@ class TestProtocolCoordinator: Coordinator {
     
     func showInstructionView(sender: Any? = nil, isAdult: Bool) {
         let vc = isAdult
-                ? AdultInstructionViewController.instantiate("AdultTest")
-                : ChildrenInstructionViewController.instantiate("ChildrenTest")
+                ? AdultInstructionViewController.instantiate(AppStoryboards.AdultTest)
+                : ChildrenInstructionViewController.instantiate(AppStoryboards.ChildrenTest)
         _navController.setNavigationBarHidden(true, animated: false)
         _navController.show(vc, sender: nil)
     }

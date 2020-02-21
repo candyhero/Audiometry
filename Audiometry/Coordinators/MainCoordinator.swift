@@ -33,27 +33,27 @@ class MainCoordinator: Coordinator {
     }
     
     func showTitleView(sender: Any? = nil) {
-        let vc = TitleViewController.instantiate("Main")
+        let vc = TitleViewController.instantiate(AppStoryboards.Main)
         _navController.setNavigationBarHidden(true, animated: false)
         _navController.show(vc, sender: nil)
     }
-    
+
     func showCalibrationView(sender: Any? = nil) {
-        let vc = CalibrationViewController.instantiate("Main")
+        let vc = CalibrationViewController.instantiate(AppStoryboards.Main)
         vc.coordinator.start()
         _navController.setNavigationBarHidden(true, animated: false)
         _navController.show(vc, sender: nil)
     }
-    
+
     func showTestProtocolView(sender: Any? = nil, isPractice: Bool) {
-        let vc = TestProtocolViewController.instantiate("Main")
+        let vc = TestProtocolViewController.instantiate(AppStoryboards.Main)
         vc.coordinator.start()
         _navController.setNavigationBarHidden(true, animated: false)
         _navController.show(vc, sender: nil)
     }
-    
+
     func showResultView(sender: Any? = nil) {
-        let vc = ResultViewController.instantiate("Main")
+        let vc = ResultViewController.instantiate(AppStoryboards.Main)
         _navController.setNavigationBarHidden(true, animated: false)
         _navController.show(vc, sender: nil)
     }
