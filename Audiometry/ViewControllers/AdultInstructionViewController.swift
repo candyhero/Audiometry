@@ -27,8 +27,8 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
                 print("Invalid language option!!")
                 break
             case "Portuguese":
-                print("Loading Portugese...")
-                self.loadPortuguse()
+                print("Loading Portuguese...")
+                self.loadPortuguese()
             default:
                 let background = UIImage(named: "\(SHAPE_ICON_PATH)/no_sound")  
                 self.pbNoSound.setBackgroundImage(background, for: .normal)
@@ -43,7 +43,7 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
     }
     
     // MARK:
-    private func loadPortuguse() {
+    private func loadPortuguese() {
         lbCaption.text = PORT_ADULT_CAPTION_TEXT
         pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
         pbNoSound.setTitle("", for: .normal)

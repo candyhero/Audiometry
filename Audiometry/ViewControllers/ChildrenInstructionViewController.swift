@@ -25,8 +25,8 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
                 print("Invalid language option!!")
                 break
             case "Portuguese":
-                print("Loading Portugese...")
-                self.loadPortuguse()
+                print("Loading Portuguese...")
+                self.loadPortuguese()
                 self.pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
             default:
                 self.pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound"), for: .normal)
@@ -41,7 +41,7 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
     }
 
     // MARK:
-    private func loadPortuguse() {
+    private func loadPortuguese() {
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: "\(ANIMAL_ICON_PATH)/emoji")
         

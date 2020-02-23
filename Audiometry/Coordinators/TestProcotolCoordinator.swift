@@ -40,6 +40,7 @@ class TestProtocolCoordinator: Coordinator {
         let vc = isAdult
                 ? AdultInstructionViewController.instantiate(AppStoryboards.AdultTest)
                 : ChildrenInstructionViewController.instantiate(AppStoryboards.ChildrenTest)
+        AppDelegate.testCoordinator.start()
         _navController.setNavigationBarHidden(true, animated: false)
         _navController.show(vc, sender: nil)
     }

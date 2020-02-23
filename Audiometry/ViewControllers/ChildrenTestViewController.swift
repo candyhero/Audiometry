@@ -258,7 +258,7 @@ class ChildrenTestViewController: UIViewController, Storyboarded {
             print("Invalid language option!!")
             break
         case "Portuguese":
-            print("Loading Portugese...")
+            print("Loading Portuguese...")
             pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
             pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
             pbNoSound.setBackgroundImage(UIImage(named: "\(SHAPE_ICON_PATH)/no_sound_Port"), for: .normal)
