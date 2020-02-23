@@ -208,10 +208,10 @@ class ResultViewController: UIViewController, Storyboarded,
     
     fileprivate func updateCharts(_ values: PatientProfileValues) {
         // Set y-axis
-        let max_L = (values.results_L ?? []).max() ?? TEST_MAX_DB
-        let max_R = (values.results_R ?? []).max() ?? TEST_MAX_DB
-        let min_L = (values.results_L ?? []).min() ?? TEST_MIN_DB
-        let min_R = (values.results_R ?? []).min() ?? TEST_MIN_DB
+        let max_L = (values.results_L ?? []).max() ?? SYSTEM_MAX_DB
+        let max_R = (values.results_R ?? []).max() ?? SYSTEM_MAX_DB
+        let min_L = (values.results_L ?? []).min() ?? SYSTEM_MIN_DB
+        let min_R = (values.results_R ?? []).min() ?? SYSTEM_MIN_DB
         
         let leftAxis_L = chartView_L.getAxis(YAxis.AxisDependency.left)
         let leftAxis_R = chartView_R.getAxis(YAxis.AxisDependency.left)

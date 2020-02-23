@@ -32,20 +32,20 @@ func exportAllPatientsInRows(_ array_patients:[PatientProfile])->String{
     csvText.append("Frequency Test Order,")
     
     csvText.append("LSpam,")
-    for FREQ in DEFAULT_FREQUENCIES{
+    for FREQ in DEFAULT_FREQ{
         csvText.append("\(FREQ),")
     }
     csvText.append("RSpam,")
-    for FREQ in DEFAULT_FREQUENCIES{
+    for FREQ in DEFAULT_FREQ{
         csvText.append("\(FREQ),")
     }
     
     csvText.append("Result (L),")
-    for FREQ in DEFAULT_FREQUENCIES{
+    for FREQ in DEFAULT_FREQ{
         csvText.append("\(FREQ),")
     }
     csvText.append("Result (R),")
-    for FREQ in DEFAULT_FREQUENCIES{
+    for FREQ in DEFAULT_FREQ{
         csvText.append("\(FREQ),")
     }
     
@@ -101,21 +101,21 @@ fileprivate func extractPatientValues(_ patientProfile: PatientProfile) -> Strin
     
     // Left Ear Spam Count
     csvText.append( ",")
-    for FREQ in DEFAULT_FREQUENCIES{
+    for FREQ in DEFAULT_FREQ{
         let spamCount_L = dict_spamCount_L[FREQ, default:0]
         csvText.append((spamCount_L > 0) ? "\(spamCount_L)," : " ,")
     }
     
     // Left Ear Spam Count
     csvText.append( ",")
-    for FREQ in DEFAULT_FREQUENCIES{
+    for FREQ in DEFAULT_FREQ{
         let spamCount_R = dict_spamCount_R[FREQ, default:0]
         csvText.append((spamCount_R > 0) ? "\(spamCount_R)," : " ,")
     }
     
     // Left Ear Frequency Thresholds
     csvText.append( ",")
-    for FREQ in DEFAULT_FREQUENCIES{
+    for FREQ in DEFAULT_FREQ{
         let threshold_L = dict_threshold_L[FREQ, default:0]
         switch threshold_L{
         case 0:
@@ -131,7 +131,7 @@ fileprivate func extractPatientValues(_ patientProfile: PatientProfile) -> Strin
     
     // Right Ear Frequency Thresholds
     csvText.append( ",")
-    for FREQ in DEFAULT_FREQUENCIES{
+    for FREQ in DEFAULT_FREQ{
         let threshold_R = dict_threshold_R[FREQ, default:0]
         switch threshold_R{
         case 0:

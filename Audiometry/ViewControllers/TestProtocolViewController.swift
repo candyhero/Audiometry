@@ -54,7 +54,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         lbFreqSeq.textAlignment = .center
         lbFreqSeq.numberOfLines = 0
         
-        for freq in DEFAULT_FREQUENCIES {
+        for freq in DEFAULT_FREQ {
             let newButton = ProtocolUIFactory.GetNewFrequencyButton(frequency: freq)
             newButton.addTarget(self, action: #selector(addNewFreq(_:)), for: .touchUpInside)
 

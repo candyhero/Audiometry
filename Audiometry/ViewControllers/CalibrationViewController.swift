@@ -52,7 +52,7 @@ class CalibrationViewController: UIViewController, Storyboarded {
         setupStackview(svMeasuredLv_L)
         setupStackview(svMeasuredLv_R)
         
-        for freq in DEFAULT_FREQUENCIES {
+        for freq in DEFAULT_FREQ {
             let settingUI = CalibrationSettingUI(freq)
             settingUI.pbPlay.addTarget(self,
                                        action: #selector(toggleSingal(_:)),
@@ -129,7 +129,7 @@ class CalibrationViewController: UIViewController, Storyboarded {
     // MARK:
     @IBAction func loadDefaultPresentationLv(_ sender: UIButton) {
         for settingUI in _settingUIs.values {
-            settingUI.tfPresentationLv.text = String(DEFAULT_PLAYER_DB)
+            settingUI.tfPresentationLv.text = String(DEFAULT_CALIBRATION_PLAYER_DB)
         }
     }
     

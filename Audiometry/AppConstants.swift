@@ -30,7 +30,7 @@ let ANIMAL_ICON_PATH = "Assets/Animal_Icons"
 let ANIMAL_TONE_PATH = "Assets/Animal_Tones"
 
 // Global Constants
-let DEFAULT_FREQUENCIES: [Int] =
+let DEFAULT_FREQ: [Int] =
     [250, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000]
 //    [250.0, 500.0, 750.0, 1000.0, 1500.0, 2000.0, 3000.0, 4000.0, 6000.0, 8000.0]
 
@@ -43,9 +43,14 @@ let Z_FACTORS: [Int:Double] =
       8000 : 23.0 ]
 
 // Calibration Setting Constants
-let TEST_MAX_DB: Int! = 105 // At volume amplitude = 1.0
-let TEST_MIN_DB: Int! = 0 // At volume amplitude = 0.0
-let DEFAULT_PLAYER_DB: Int! = 70
+let SYSTEM_MAX_DB: Int! = 105 // At volume amplitude = 1.0
+let SYSTEM_MIN_DB: Int! = 0 // At volume amplitude = 0.0
+let DEFAULT_CALIBRATION_PLAYER_DB: Int! = 70
+
+let TEST_DEFAULT_DB = 50
+let TEST_MAX_DB = 100
+let TEST_MIN_DB_ADULT = 15
+let TEST_MIN_DB_CHILDREN = 15
 
 let RAMP_TIME: Double! = 0.1
 let RAMP_TIMESTEP: Double! = 0.01
