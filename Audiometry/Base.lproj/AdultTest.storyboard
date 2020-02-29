@@ -143,11 +143,11 @@
                     <connections>
                         <outlet property="lbInstruction" destination="yRV-Wa-CQF" id="SZX-Gg-4mj"/>
                         <outlet property="lbProgress" destination="UDg-n5-yK3" id="2rb-WA-hn0"/>
-                        <outlet property="pbFirstInterval" destination="5eT-zC-Hxs" id="p8s-Ae-X1k"/>
+                        <outlet property="pbFirst" destination="5eT-zC-Hxs" id="p8s-Ae-X1k"/>
                         <outlet property="pbNoSound" destination="Bpw-UR-4Wm" id="yzq-5B-rVf"/>
                         <outlet property="pbPause" destination="1EF-nR-31E" id="Myd-fk-bql"/>
                         <outlet property="pbRepeat" destination="1bH-v6-7C1" id="6c1-zI-Wev"/>
-                        <outlet property="pbSecondInterval" destination="qMI-ZF-NxX" id="b2J-jM-3pD"/>
+                        <outlet property="pbSecond" destination="qMI-ZF-NxX" id="b2J-jM-3pD"/>
                         <outlet property="svIcons" destination="YIq-yB-AZP" id="atM-bc-2Wo"/>
                     </connections>
                 </viewController>

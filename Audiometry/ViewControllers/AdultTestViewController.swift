@@ -4,20 +4,18 @@ import UIKit
 class AdultTestViewController: UIViewController, Storyboarded {
     // MARK:
     let coordinator = AppDelegate.testCoordinator
-
-    private var _testModel = TestModel()
     
     // Used by animator
     private var timer, firstTimer, secondTimer: Timer?
     private var pulseCounter: Int!
     
     private var buttonCounter: Int!
-    private var pbLastClicked: UIButton!
+    private var lastClicked: Int!
     
     @IBOutlet private weak var svIcons: UIStackView!
     
-    @IBOutlet private weak var pbFirstInterval: UIButton!
-    @IBOutlet private weak var pbSecondInterval: UIButton!
+    @IBOutlet private weak var pbFirst: UIButton!
+    @IBOutlet private weak var pbSecond: UIButton!
     @IBOutlet private weak var pbNoSound: UIButton!
     
     @IBOutlet private weak var pbRepeat: UIButton!
@@ -26,25 +24,11 @@ class AdultTestViewController: UIViewController, Storyboarded {
     @IBOutlet weak var lbInstruction: UILabel!
     @IBOutlet weak var lbProgress: UILabel!
     
-//------------------------------------------------------------------------------
-// Initialize View
-//------------------------------------------------------------------------------
-    private func loadPortuguese() {
-        lbInstruction.text = PORT_ADULT_INSTRCUTION_TEXT
-        pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
-        pbNoSound.setTitle("", for: .normal)
-        pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
-        pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
-    }
-    
+    // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set UI
-        pbNoSound.setBackgroundImage(UIImage(named: "\(SHAPE_ICON_PATH)/no_sound"), for: .normal)
-        pbNoSound.adjustsImageWhenHighlighted = false
-        
-        switch _testModel.getTestLauguage() {
+        switch coordinator.getTestLanguage() {
         case "Invalid":
             print("Invalid language option!!")
             break
@@ -55,9 +39,24 @@ class AdultTestViewController: UIViewController, Storyboarded {
         default:
             break
         }
+
+        // Set UI
+        pbNoSound.setBackgroundImage(UIImage(named: "\(SHAPE_ICON_PATH)/no_sound"), for: .normal)
+        pbNoSound.adjustsImageWhenHighlighted = false
+        pbNoSound.tag = 0
+        pbFirst.tag = 1
+        pbSecond.tag = 2
         
         toggleButtons(toggle: false)
         testNewFreq()
+    }
+
+    private func loadPortuguese() {
+        lbInstruction.text = PORT_ADULT_INSTRCUTION_TEXT
+        pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
+        pbNoSound.setTitle("", for: .normal)
+        pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
+        pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -66,23 +65,6 @@ class AdultTestViewController: UIViewController, Storyboarded {
 //------------------------------------------------------------------------------
 // Main Flow
 //------------------------------------------------------------------------------
-    private func loadButtonUI() {
-        let freq: Int = _testModel.getNewTestFreq()
-        let imgDir = "\(SHAPE_ICON_PATH)/\(freq)Hz"
-        let img = UIImage(named:imgDir)?.withRenderingMode(.alwaysOriginal)
-
-        print(freq, imgDir)
-
-        self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
-        self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
-
-        self.pbFirstInterval.setImage(img, for: .normal)
-        self.pbSecondInterval.setImage(img, for: .normal)
-
-        self.pbFirstInterval.adjustsImageWhenHighlighted = false
-        self.pbSecondInterval.adjustsImageWhenHighlighted = false
-    }
-
     private func testNewFreq() {
         pulseCounter = 0
         buttonCounter = 0
@@ -98,96 +80,52 @@ class AdultTestViewController: UIViewController, Storyboarded {
 
         // run test
         pulseToggle(isPlaying: true)
-        timer = Timer.scheduledTimer(timeInterval: 1.0,
+        timer = Timer.scheduledTimer(
+                timeInterval: 1.0,
                 target: self,
                 selector: #selector(testNextDB),
                 userInfo: nil,
-                repeats: false)
+                repeats: false
+        )
+    }
+
+    private func loadButtonUI() {
+        let freq: Int = coordinator.getTestFreq()
+        let imgDir = "\(SHAPE_ICON_PATH)/\(freq)Hz"
+        if let img = UIImage(named: imgDir)?.withRenderingMode(.alwaysOriginal) {
+            self.pbFirst.imageView?.contentMode = .scaleAspectFit
+            self.pbSecond.imageView?.contentMode = .scaleAspectFit
+
+            self.pbFirst.setImage(img, for: .normal)
+            self.pbSecond.setImage(img, for: .normal)
+
+            self.pbFirst.adjustsImageWhenHighlighted = false
+            self.pbSecond.adjustsImageWhenHighlighted = false
+        }
+        print(freq, imgDir)
     }
 
     @objc func testNextDB() {
         DispatchQueue.main.async { [unowned self] in
-            self._testModel.playSignalCase()
+            self.coordinator.playSignalCase()
             self.pulseAnimation(0)
         }
     }
 
-//------------------------------------------------------------------------------
-// UI Functions
-//------------------------------------------------------------------------------
-    @IBAction private func repeatPlaying(_ sender: UIButton) {
-        pulseToggle(isPlaying: true)
-        pulseAnimation(0)
-        _testModel.replaySignalCase()
-    }
-
-    @IBAction private func pausePlaying(_ sender: UIButton) {
-        toggleButtons(toggle: false)
-        pulseToggle(isPlaying: false)
-
-        firstTimer?.invalidate()
-        secondTimer?.invalidate()
-        timer?.invalidate()
-        pulseCounter = 0
-        _testModel.pausePlaying()
-    }
-
-//------------------------------------------------------------------------------
-// Test Functions
-//------------------------------------------------------------------------------
+    // Test
     @IBAction private func checkResponse(_ sender: UIButton) {
         pausePlaying(sender)
-
-        //Check if same button 5 times in a row
-        if(sender == pbLastClicked ?? nil) {
-            buttonCounter += 1
-        }
-        else {
-            buttonCounter = 0
-        }
-
-        if(buttonCounter >= 4) {
-            buttonCounter = 0
-            _testModel.increaseSpamCount()
-
-            errorPrompt(
-                    errorMsg: "Please ask for re-instrcution.")
-        }
-
-//        print("Button Spam Count: ", buttonCounter)
-        pbLastClicked = sender
-
-        // DispatchQueue default **
-        // Compare test blah
-        let currentPlaycase: Int! = _testModel.getCurrentPlayCase()
-
-        // determine next volume level
-        var isThresholdFound: Bool!
-
-        switch currentPlaycase {
-        case 0: // Slient interval
-            isThresholdFound = _testModel.checkNoSound(sender == pbNoSound)
-            break
-        case 1: // First interval
-            isThresholdFound = _testModel.checkThreshold(sender == pbFirstInterval)
-            break
-        case 2: // Second interval
-            isThresholdFound = _testModel.checkThreshold(sender == pbSecondInterval)
-            break
-        default:
-            break
-        }
-
-        if(isThresholdFound) { // Done for this freq
-//            print("Next Freq: ", _testModel.getNewTestFreq())
-            if(_testModel.getNewTestFreq() < 0) {
+        checkSpam(sender)
+        let freq = coordinator.getTestFreq()
+        let isThresholdFound = coordinator.checkResponse(sender.tag)
+        if isThresholdFound! { // Done for this freq
+//            print("Next Freq: ", coordinator.getNewTestFreq())
+            if(freq < 0) {
                 print("Switching to the other ear")
-                _testModel.terminatePlayer()
-                performSegue(withIdentifier: "segueSwitchEar", sender: nil)
-            } else if(_testModel.getNewTestFreq() == 0) {
+                coordinator.showPauseView()
+            } else if(freq == 0) {
                 // Already tested both ears
-                _testModel.terminatePlayer()
-                performSegue(withIdentifier: "segueResult", sender: nil)
+                coordinator.showPauseView()
             } else {
                 testNewFreq()
             }
@@ -203,14 +141,41 @@ class AdultTestViewController: UIViewController, Storyboarded {
                 repeats: false)
     }
 
-//------------------------------------------------------------------------------
-// Animation Functions
-//------------------------------------------------------------------------------
+    private func checkSpam(_ sender: UIButton) { //Check if same button 5 times in a row
+        buttonCounter = (sender.tag == lastClicked ?? nil) ? buttonCounter + 1 : 0
+        if(buttonCounter >= 4) {
+            buttonCounter = 0
+            coordinator.increaseSpamCount()
+            errorPrompt(errorMsg: "Please ask for re-instrcution.")
+        }
+//        print("Button Spam Count: ", buttonCounter)
+        lastClicked = sender.tag
+    }
+
+    // MARK: UI Functions
+    @IBAction private func repeatPlaying(_ sender: UIButton) {
+        pulseToggle(isPlaying: true)
+        pulseAnimation(0)
+        coordinator.replaySignalCase()
+    }
+
+    @IBAction private func pausePlaying(_ sender: UIButton) {
+        toggleButtons(toggle: false)
+        pulseToggle(isPlaying: false)
+
+        firstTimer?.invalidate()
+        secondTimer?.invalidate()
+        timer?.invalidate()
+        pulseCounter = 0
+        coordinator.pausePlaying()
+    }
+
+    // MARK: Animations
     private func toggleButtons(toggle: Bool!) {
         pbNoSound.isEnabled = toggle
         pbNoSound.isHighlighted = !toggle
-        pbFirstInterval.isEnabled = toggle
-        pbSecondInterval.isEnabled = toggle
+        pbFirst.isEnabled = toggle
+        pbSecond.isEnabled = toggle
     }
 
     private func pulseToggle(isPlaying: Bool!) {
@@ -247,15 +212,15 @@ class AdultTestViewController: UIViewController, Storyboarded {
     }
 
     @objc private func pulseFirstInterval() {
-        pbFirstInterval.isEnabled = true
+        pbFirst.isEnabled = true
         pulseCounter = NUM_OF_PULSE_ADULT
-        pulseInterval(pbFirstInterval)
+        pulseInterval(pbFirst)
     }
 
     @objc private func pulseSecondInterval() {
-        pbSecondInterval.isEnabled = true
+        pbSecond.isEnabled = true
         pulseCounter = NUM_OF_PULSE_ADULT
-        pulseInterval(pbSecondInterval)
+        pulseInterval(pbSecond)
     }
 
     @objc private func pulseInterval(_ pbInterval: UIButton) {

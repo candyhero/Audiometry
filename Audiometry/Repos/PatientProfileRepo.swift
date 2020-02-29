@@ -12,7 +12,6 @@ import CoreData
 class PatientProfileRepo: Repository<PatientProfile> {
     // MARK:
     static let repo = PatientProfileRepo()
-
     // MARK:
     func createNewProfile(_ frequencyBuffer: [Int]) -> PatientProfile {
         let profile = PatientProfile(context: _managedContext)
@@ -23,6 +22,10 @@ class PatientProfileRepo: Repository<PatientProfile> {
             profile.addToValues(values)
         }
         return profile
+    }
+
+    func createValues() -> PatientProfileValues{
+        return PatientProfileValues(context: _managedContext)
     }
     
     func fetchAllSorted() throws -> [PatientProfile] {
