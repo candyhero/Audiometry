@@ -9,10 +9,9 @@ class TitleViewController: UIViewController, Storyboarded {
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Load Title")
     }
 
-
-    
     // MARK: Controller functions
     @IBAction func showCalibrationView(_ sender: UIButton) {
         _coordinator.showCalibrationView(sender: sender)

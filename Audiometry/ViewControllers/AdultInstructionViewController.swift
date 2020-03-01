@@ -7,13 +7,13 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
     let coordinator = AppDelegate.testCoordinator
     
     // MARK:
-    @IBOutlet private weak var pbFirstInterval: UIButton!
-    @IBOutlet private weak var pbSecondInterval: UIButton!
-    
+    @IBOutlet private weak var pbFirst: UIButton!
+    @IBOutlet private weak var pbSecond: UIButton!
     @IBOutlet private weak var pbNoSound: UIButton!
-    @IBOutlet weak var pbStart: UIButton!
-    @IBOutlet weak var pbPause: UIButton!
-    @IBOutlet weak var pbRepeat: UIButton!
+
+    @IBOutlet private weak var pbStart: UIButton!
+    @IBOutlet private weak var pbPause: UIButton!
+    @IBOutlet private weak var pbRepeat: UIButton!
     
     @IBOutlet weak var lbCaption: UILabel!
 
@@ -22,7 +22,10 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
 
         DispatchQueue.main.async { [unowned self] in
-            switch self.coordinator.getTestLanguage(){
+            self.loadButtonUI()
+        }
+        
+        switch coordinator.getTestLanguage(){
             case "Invalid":
                 print("Invalid language option!!")
                 break
@@ -30,14 +33,16 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
                 print("Loading Portuguese...")
                 self.loadPortuguese()
             default:
-                let background = UIImage(named: "\(SHAPE_ICON_PATH)/no_sound")  
+                let background = UIImage(named: "\(SHAPE_ICON_PATH)/no_sound")
                 self.pbNoSound.setBackgroundImage(background, for: .normal)
                 break
-            }
-            self.loadButtonUI()
         }
     }
-
+    
+    @IBAction func startTest(_ sender: UIButton) {
+        coordinator.showTestView(isAdult: true)
+    }
+    
     @IBAction func back(_ sender: UIButton) {
         coordinator.back()
     }
@@ -57,14 +62,14 @@ class AdultInstructionViewController: UIViewController, Storyboarded {
         print(pbImgDir)
         let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
         
-        self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
-        self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
+        self.pbFirst.imageView?.contentMode = .scaleAspectFit
+        self.pbSecond.imageView?.contentMode = .scaleAspectFit
         
-        self.pbFirstInterval.setImage(pbImg, for: .normal)
-        self.pbSecondInterval.setImage(pbImg, for: .normal)
+        self.pbFirst.setImage(pbImg, for: .normal)
+        self.pbSecond.setImage(pbImg, for: .normal)
         
-        self.pbFirstInterval.adjustsImageWhenHighlighted = false
-        self.pbSecondInterval.adjustsImageWhenHighlighted = false
+        self.pbFirst.adjustsImageWhenHighlighted = false
+        self.pbSecond.adjustsImageWhenHighlighted = false
         self.pbNoSound.adjustsImageWhenHighlighted = false
     }
     

@@ -128,7 +128,7 @@ class TestProtocolCoordinator: Coordinator {
         do{
             let newProtocol = try _testProtocolRepo.create()
             newProtocol.timestamp = Date()
-            newProtocol.frequencySequence = _globalSetting.testFrequencySequence
+            newProtocol.frequencySequence = _frequencyBuffer
             newProtocol.isTestLeftFirst = _globalSetting.isTestingLeft
             newProtocol.isTestBoth = _globalSetting.isTestingBoth
             try _testProtocolRepo.update()
@@ -177,11 +177,6 @@ class TestProtocolCoordinator: Coordinator {
             profile.frequencyOrder = _frequencyBuffer
 
             _globalSetting.patientProfile = profile
-//            _globalSetting.testFrequencySequence = _frequencyBuffer
-//            _globalSetting.currentTestCount = 0
-//            _globalSetting.totalTestCount = _globalSetting.isTestingBoth
-//                    ? Int16(_frequencyBuffer.count * 2)
-//                    : Int16(_frequencyBuffer.count)
             print(_globalSetting)
 
             try _globalSettingRepo.update()

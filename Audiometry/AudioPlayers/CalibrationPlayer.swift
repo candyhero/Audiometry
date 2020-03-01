@@ -15,6 +15,12 @@ class CalibrationPlayer {
     private var _generator: AKOperationGenerator! = nil
     
     init() {
+        do {
+            try AudioKit.stop()
+        } catch {
+            print(error)
+        }
+
         // _generator to be configured by setting _generator.parameters
         _generator = AKOperationGenerator(channelCount: 2) {
             parameters in

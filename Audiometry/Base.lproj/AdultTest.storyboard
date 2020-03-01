@@ -12,7 +12,7 @@
         <!--Adult Test View Controller-->
         <scene sceneID="jA6-ao-Rbd">
             <objects>
-                <viewController storyboardIdentifier="AdultInstruction" id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdultTestViewController" id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DIX-OQ-mz8"/>
                         <viewControllerLayoutGuide type="bottom" id="VwC-He-InT"/>
@@ -58,6 +58,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Uk-Sk-nqx">
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <action selector="back:" destination="Xos-0w-K0n" eventType="touchUpInside" id="X0z-4S-F0O"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bpw-UR-4Wm">
                                 <rect key="frame" x="1031" y="354.5" width="315" height="315"/>
@@ -288,6 +291,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                 <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <state key="normal" title="Start Testing!"/>
+                                <connections>
+                                    <action selector="startTest:" destination="H19-23-Hv8" eventType="touchUpInside" id="wM3-uo-6dl"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5SV-3M-pbc">
                                 <rect key="frame" x="1031" y="354.5" width="315" height="315"/>
@@ -335,11 +341,11 @@
                     </view>
                     <connections>
                         <outlet property="lbCaption" destination="Ulh-08-mvM" id="4IR-QQ-woP"/>
-                        <outlet property="pbFirstInterval" destination="hFa-b0-Uqe" id="3VY-jZ-ZXu"/>
+                        <outlet property="pbFirst" destination="hFa-b0-Uqe" id="3VY-jZ-ZXu"/>
                         <outlet property="pbNoSound" destination="5SV-3M-pbc" id="fyk-Mi-H6o"/>
                         <outlet property="pbPause" destination="3JU-sZ-hLL" id="LAa-LT-f21"/>
                         <outlet property="pbRepeat" destination="b8i-ED-zDi" id="wra-cj-ImW"/>
-                        <outlet property="pbSecondInterval" destination="x90-gC-any" id="DcQ-04-3ah"/>
+                        <outlet property="pbSecond" destination="x90-gC-any" id="DcQ-04-3ah"/>
                         <outlet property="pbStart" destination="lbz-0r-a2i" id="rk8-94-haj"/>
                     </connections>
                 </viewController>

@@ -20,14 +20,13 @@ class TestCoordinator: Coordinator {
     private var _patientProfileValues: [Int: PatientProfileValues]!
     private var _calibrationSettingValues: [Int: CalibrationSettingValues]!
 
-    private var _isPractice: Bool!
-    private var _isAdult: Bool!
-
     private var _MAX_DB, _MIN_DB: [Int: Int]!
     private var _testPlayer: TestPlayer!
 
     // MARK: will get updated
     private var _testFreqSequence: [Int]!
+    private var _currentTestCount: Int!
+    private var _totalTestCount: Int!
 
     // MARK: Test settings for current round
     private var _currentFreq: Int!
@@ -37,10 +36,10 @@ class TestCoordinator: Coordinator {
 
     private var _startTime, _endTime: Date!
 
-    private var _results: [Int]!
-    private var _responses: [Int]!
-    private var _cases: [PlayCase]!
-    private var _hasBeenAscendingCorrect: [Int: Bool]!
+    private var _results = [Int]()
+    private var _responses = [Int]()
+    private var _cases = [PlayCase]()
+    private var _hasBeenAscendingCorrect = [Int: Bool]()
 
     private var _spamCounter: Int = 0
     private var _maxDBTrials: Int = 0
@@ -63,9 +62,25 @@ class TestCoordinator: Coordinator {
         _navController.showDetailViewController(vc, sender: nil)
 
     }
+    
     func showPauseView(sender: Any? = nil) {
     }
+    
     func showResultView(sender: Any? = nil) {
+    }
+
+    // MARK: Getters
+    func getTestLanguage() -> String {
+        let testLanguage = TestLanguage(rawValue: Int(_globalSetting?.testLanguageCode ?? -1)) ?? TestLanguage.Invalid
+        return testLanguage.toString()
+    }
+
+    func getTestFreq() -> Int { return _currentFreq }
+    func getCurrentProgress() -> Int { return Int(_currentTestCount * 100 / _totalTestCount) }
+
+    func increaseSpamCount() {
+        _spamCounter += 1
+        print(_spamCounter)
     }
 
     func start() {
@@ -74,33 +89,51 @@ class TestCoordinator: Coordinator {
         setupForNextFreq()
     }
 
+    func back() {
+        let vc = TitleViewController.instantiate(AppStoryboards.Main)
+        _navController.setNavigationBarHidden(true, animated: false)
+        _navController.showDetailViewController(vc, sender: nil)
+        print("WTF??? CANT GO BACK")
+    }
+
+//    func terminatePlayer() {
+//        _testPlayer.terminate()
+//    }
+
     private func loadTestSetting() {
         do {
             _globalSetting = try _globalSettingRepo.fetchOrCreate()
-            _isAdult = _globalSetting?.isAdult
-            _isPractice = _globalSetting?.isPractice
+            let isAdult = _globalSetting.isAdult
+            let isTestingBoth = _globalSetting.isTestingBoth
 
-            if let values = _globalSetting.calibrationSetting?.values as? [CalibrationSettingValues] {
-                _calibrationSettingValues = Dictionary(uniqueKeysWithValues: values.map{(Int($0.frequency), $0)})
+            if let calibrationSetting = _globalSetting.calibrationSetting {
+                _calibrationSettingValues = calibrationSetting.getDictionary()
             }
+            
+            if let profile = _globalSetting.patientProfile {
+                _testFreqSequence = profile.frequencyOrder
+                _totalTestCount = _testFreqSequence.count * (isTestingBoth ? 2 : 1)
+                _currentTestCount = 0
+            }
+            
             _patientProfileValues = [Int: PatientProfileValues]()
 
+            _MAX_DB = Dictionary(uniqueKeysWithValues: DEFAULT_FREQ.map{ (freq) in
+                let q = Double(TEST_MAX_DB) - (Z_FACTORS[freq] ?? 0.0)
+                return (freq, isAdult ? TEST_MAX_DB : Int((q/5).rounded(.down)) * 5)
+            })
+            _MIN_DB = Dictionary(uniqueKeysWithValues: DEFAULT_FREQ.map{ (freq) in
+                (freq, isAdult ? TEST_MIN_DB_ADULT : TEST_MIN_DB_CHILDREN)
+            })
+
         } catch let error as NSError{
-            print("Could not fetch calibration setting.")
+            print("Could not fetch any setting.")
             print("\(error), \(error.userInfo)")
         }
-
-        _MAX_DB = Dictionary(uniqueKeysWithValues: DEFAULT_FREQ.map{ (freq) in
-            let q = Double(TEST_MAX_DB) - (Z_FACTORS[freq] ?? 0.0)
-            return (freq, _isAdult ? TEST_MAX_DB : Int((q/5).rounded(.down)) * 5)
-        })
-        _MIN_DB = Dictionary(uniqueKeysWithValues: DEFAULT_FREQ.map{ (freq) in
-            return (freq, _isAdult ? TEST_MIN_DB_ADULT : TEST_MIN_DB_CHILDREN)}
-        )
     }
 
     private func setupPlayer() {
-        if (_isAdult) {
+        if (_globalSetting.isAdult) {
             _testPlayer = AdultTestPlayer()
         } else {
             _testPlayer = ChildrenTestPlayer()
@@ -115,9 +148,9 @@ class TestCoordinator: Coordinator {
 
         _startTime = Date()
 
-        _results = []
-        _responses = []
-        _cases = []
+        _results.removeAll()
+        _responses.removeAll()
+        _cases.removeAll()
         _hasBeenAscendingCorrect.removeAll()
 
         _maxDBTrials = 0
@@ -131,39 +164,16 @@ class TestCoordinator: Coordinator {
             let correctionFactor_R: Double = values.expectedLv - values.measuredLv_R
             _testPlayer.updateFreq(Int(values.frequency))
             _testPlayer.updateCorrectionFactors(correctionFactor_L, correctionFactor_R)
+            _testPlayer.updateVolume(Double(_currentDB), _globalSetting.isTestingLeft)
         }
+        testNextVolume()
     }
-
-    func back() {
-        AppDelegate.mainCoordinator.showTitleView()
-    }
-
-    // MARK: Getters
-    func getTestLanguage() -> String{
-        let testLanguage = TestLanguage(rawValue: Int(_globalSetting?.testLanguageCode ?? -1)) ?? TestLanguage.Invalid
-        return testLanguage.toString()
-    }
-
-    func getTestFreq() -> Int{ return _currentFreq }
-
-    func increaseSpamCount() {
-        _spamCounter += 1
-        print(_spamCounter)
-    }
-
-//    func terminatePlayer() {
-//        _testPlayer.terminate()
-//    }
-
-    // MARK: Play logics
-    func playSignalCase() {
+    private func testNextVolume(){
         // Set init volume & random play case
-        _testPlayer.updateVolume(Double(_currentDB), _globalSetting.isTestingLeft)
-
         _currentPlayCase = randomizePlayCase()
 
         // Second trial in practice needs to be no sound
-        if(_isPractice && _results.count == 1) {
+        if(_globalSetting.isPractice && _results.count == 1) {
             _currentPlayCase = .NoSound
         }
         else {
@@ -184,18 +194,19 @@ class TestCoordinator: Coordinator {
                 _currentPlayCase = randomizePlayCase()
             }
         }
-
         print("Playcase: ", _currentPlayCase)
-        replaySignalCase()
     }
 
     private func randomizePlayCase() -> PlayCase {
         let preCheck = _results.isNotEmpty && _cases.last != .NoSound && _currentDB != _MAX_DB[_currentFreq]
-        let randomInt = _isPractice ? Int.random(in:0 ..< 8) : Int.random(in:0 ..< 12)
+        let randomInt = _globalSetting.isPractice ? Int.random(in:0 ..< 8) : Int.random(in:0 ..< 12)
         return (preCheck && randomInt < 2) ? .NoSound : (randomInt % 2 == 0 ? .First : .Second)
     }
 
-    func replaySignalCase() {
+    // MARK: Play logics
+    func pauseAudio() { _testPlayer.stop() }
+
+    func playAudio() {
         print("Current dB Lv: ", _currentDB)
         switch _currentPlayCase ?? .Error {
             case .NoSound:
@@ -212,8 +223,6 @@ class TestCoordinator: Coordinator {
                 break
         }
     }
-
-    func pausePlaying() { _testPlayer.stop() }
 
     // MARK: Checking Test progress
     func checkResponse(_ buttonTag: Int) -> Bool! {
@@ -305,10 +314,14 @@ class TestCoordinator: Coordinator {
         nextDB = min(nextDB, MAX_DB!)
         nextDB = max(nextDB, MIN_DB!)
         _currentDB = nextDB
+        _testPlayer.updateVolume(Double(_currentDB), _globalSetting.isTestingLeft)
+
+        testNextVolume()
         return false
     }
 
     private func endTest(_ thresholdDB: Int!) {
+        _currentTestCount += 1
         _endTime = Date()
 
         // Setup patient profile values for CoreData
@@ -341,14 +354,13 @@ class TestCoordinator: Coordinator {
         _patientProfileValues[_currentFreq] = newValues
 
         do{
-            _globalSetting.patientProfile?.addToValues(newValues)
-            _globalSetting.patientProfile?.endTime = _endTime
-
-            if let timestamp = _globalSetting.patientProfile?.timestamp {
-                _globalSetting.patientProfile?.durationSeconds =
-                        Int16(_endTime.timeIntervalSince(timestamp))
+            if let profile = _globalSetting.patientProfile,
+               let timestamp = profile.timestamp {
+                profile.addToValues(newValues)
+                profile.endTime = _endTime
+                profile.durationSeconds = Int16(_endTime.timeIntervalSince(timestamp))
+                try _globalSettingRepo.update()
             }
-            try _globalSettingRepo.update()
         } catch let error as NSError{
             print("Could not save test results.")
             print("\(error), \(error.userInfo)")

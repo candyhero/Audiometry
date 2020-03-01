@@ -11,9 +11,9 @@ import AudioKit
 
 protocol TestPlayer {
     // correction factors in dB
-    var leftCorrFactor: Double!  { get set }
-    var rightCorrFactor: Double!  { get set }
-    var isStarted: Bool! { get set }
+    var _leftCorrFactor: Double!  { get set }
+    var _rightCorrFactor: Double!  { get set }
+    var _isStarted: Bool! { get set }
     
     init()
     
@@ -32,8 +32,8 @@ protocol TestPlayer {
 extension TestPlayer {
     mutating func updateCorrectionFactors(_ left: Double!, _ right: Double!) {
         
-        leftCorrFactor = left
-        rightCorrFactor = right
+        _leftCorrFactor = left
+        _rightCorrFactor = right
         
         print("L.Vol.: ", left, "; R.Vol.: ", right)
     }
@@ -52,7 +52,7 @@ extension TestPlayer {
     
     mutating func terminate() {
         do {
-            isStarted = false
+            _isStarted = false
             try AudioKit.stop()
         } catch {
             print(error)

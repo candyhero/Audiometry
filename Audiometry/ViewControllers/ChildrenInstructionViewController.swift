@@ -7,10 +7,10 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
     let coordinator = AppDelegate.testCoordinator
 
     // MARK:
-    @IBOutlet private weak var pbFirstInterval: UIButton!
-    @IBOutlet private weak var pbSecondInterval: UIButton!
-    
+    @IBOutlet private weak var pbFirst: UIButton!
+    @IBOutlet private weak var pbSecond: UIButton!
     @IBOutlet private weak var pbNoSound: UIButton!
+
     @IBOutlet private weak var pbRepeat: UIButton!
     @IBOutlet private weak var pbStart: UIButton!
     @IBOutlet weak var lbCaption: UILabel!
@@ -20,20 +20,25 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
 
         DispatchQueue.main.async { [unowned self] in
-            switch self.coordinator.getTestLanguage(){
-            case "Invalid":
-                print("Invalid language option!!")
-                break
-            case "Portuguese":
-                print("Loading Portuguese...")
-                self.loadPortuguese()
-                self.pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
-            default:
-                self.pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound"), for: .normal)
-                break
-            }
             self.loadButtonUI()
         }
+        
+        switch self.coordinator.getTestLanguage(){
+        case "Invalid":
+            print("Invalid language option!!")
+            break
+        case "Portuguese":
+            print("Loading Portuguese...")
+            self.loadPortuguese()
+            self.pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
+        default:
+            self.pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound"), for: .normal)
+            break
+        }
+    }
+    
+    @IBAction func startTest(_ sender: UIButton) {
+        coordinator.showTestView(isAdult: true)
     }
 
     @IBAction func back(_ sender: UIButton) {
@@ -45,8 +50,7 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: "\(ANIMAL_ICON_PATH)/emoji")
         
-        var caption:NSMutableAttributedString =
-            NSMutableAttributedString(string: PORT_CHILDREN_CAPTION_TEXT)
+        let caption:NSMutableAttributedString = NSMutableAttributedString(string: PORT_CHILDREN_CAPTION_TEXT)
         caption.append(NSAttributedString(attachment: attachment))
         lbCaption.attributedText = caption
         
@@ -58,14 +62,14 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
         let pbImgDir = "\(ANIMAL_ICON_PATH)/500Hz"
         let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
         
-        self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
-        self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
+        self.pbFirst.imageView?.contentMode = .scaleAspectFit
+        self.pbSecond.imageView?.contentMode = .scaleAspectFit
         
-        self.pbFirstInterval.setImage(pbImg, for: .normal)
-        self.pbSecondInterval.setImage(pbImg, for: .normal)
+        self.pbFirst.setImage(pbImg, for: .normal)
+        self.pbSecond.setImage(pbImg, for: .normal)
         
-        self.pbFirstInterval.adjustsImageWhenHighlighted = false
-        self.pbSecondInterval.adjustsImageWhenHighlighted = false
+        self.pbFirst.adjustsImageWhenHighlighted = false
+        self.pbSecond.adjustsImageWhenHighlighted = false
         self.pbNoSound.adjustsImageWhenHighlighted = false
     }
     

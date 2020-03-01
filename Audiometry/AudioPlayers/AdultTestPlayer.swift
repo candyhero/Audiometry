@@ -10,20 +10,24 @@ import Foundation
 import AudioKit
 
 class AdultTestPlayer : TestPlayer {
-    var generator: AKOperationGenerator!
-    
-    var startTimer: Timer?
-    var stopTimer: Timer?
-    
-    var isStarted: Bool!
-    var leftCorrFactor: Double!
-    var rightCorrFactor: Double!
+    private var _generator: AKOperationGenerator!
+
+    private var _startTimer, _stopTimer: Timer?
+
+    internal var _isStarted: Bool!
+    internal var _leftCorrFactor, _rightCorrFactor: Double!
     
     required init() {
-        leftCorrFactor = 0.0
-        rightCorrFactor = 0.0
+        do {
+            try AudioKit.stop()
+        } catch {
+            print(error)
+        }
+
+        _leftCorrFactor = 0.0
+        _rightCorrFactor = 0.0
         
-        generator = AKOperationGenerator(channelCount: 2) { parameters in
+        _generator = AKOperationGenerator(channelCount: 2) { parameters in
             
             let leftSine = AKOperation.sineWave(frequency: parameters[0],
                                                 amplitude: parameters[1])
@@ -47,10 +51,10 @@ class AdultTestPlayer : TestPlayer {
             return [leftOutput, rightOutput]
         }
         
-        AudioKit.output = generator
+        AudioKit.output = _generator
         
         do {
-            isStarted = true
+            _isStarted = true
             try AudioKit.start()
         } catch {
             print(error)
@@ -58,31 +62,31 @@ class AdultTestPlayer : TestPlayer {
     }
     
     func updateFreq (_ newFreq: Int!) {
-        generator.parameters[0] = Double(newFreq)
-        generator.parameters[1] = 0
-        generator.parameters[2] = 0
+        _generator.parameters[0] = Double(newFreq)
+        _generator.parameters[1] = 0
+        _generator.parameters[2] = 0
     }
     
     func updateVolume(_ newExpectedVol: Double!, _ isLeft: Bool!) {
         // Set left & right volume
         if(isLeft) {
-            generator.parameters[1] = dbToAmp(newExpectedVol + leftCorrFactor)
+            _generator.parameters[1] = dbToAmp(newExpectedVol + _leftCorrFactor)
         } else {
-            generator.parameters[2] = dbToAmp(newExpectedVol + rightCorrFactor)
+            _generator.parameters[2] = dbToAmp(newExpectedVol + _rightCorrFactor)
         }
         
-        print(generator.parameters[1], generator.parameters[2])
+        print(_generator.parameters[1], _generator.parameters[2])
     }
     
     func playFirstInterval() {
-        startTimer = Timer.scheduledTimer(
+        _startTimer = Timer.scheduledTimer(
             timeInterval: 0.0,
             target: self,
             selector: #selector(start),
             userInfo: nil,
             repeats: false)
         
-        stopTimer = Timer.scheduledTimer(
+        _stopTimer = Timer.scheduledTimer(
             timeInterval: PULSE_TIME_ADULT*NUM_OF_PULSE_ADULT-PLAYER_STOP_DELAY,
             target: self,
             selector: #selector(stop),
@@ -92,14 +96,14 @@ class AdultTestPlayer : TestPlayer {
     
     func playSecondInterval() {
         let delay: Double! = PULSE_TIME_ADULT*Double(NUM_OF_PULSE_ADULT)+PLAY_GAP_TIME
-        startTimer = Timer.scheduledTimer(
+        _startTimer = Timer.scheduledTimer(
             timeInterval: delay,
             target: self,
             selector: #selector(start),
             userInfo: nil,
             repeats: false)
         
-        stopTimer = Timer.scheduledTimer(
+        _stopTimer = Timer.scheduledTimer(
             timeInterval: delay+PULSE_TIME_ADULT*NUM_OF_PULSE_ADULT-PLAYER_STOP_DELAY,
             target: self,
             selector: #selector(stop),
@@ -108,14 +112,14 @@ class AdultTestPlayer : TestPlayer {
     }
     
     @objc internal func start() {
-        if(!isStarted) {return}
-        self.generator.restart()
+        if(!_isStarted) {return}
+        self._generator.restart()
     }
     
     @objc func stop() {
-        startTimer?.invalidate()
-        stopTimer?.invalidate()
-        self.generator.stop()
+        _startTimer?.invalidate()
+        _stopTimer?.invalidate()
+        self._generator.stop()
     }
 }
 

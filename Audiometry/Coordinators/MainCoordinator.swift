@@ -21,15 +21,25 @@ class MainCoordinator: Coordinator {
     }
     
     func getCurrentCalibrationSetting() -> CalibrationSetting! {
-        var setting: CalibrationSetting!
         do {
             let globalSetting = try GlobalSettingRepo.repo.fetchOrCreate()
-            setting = globalSetting.calibrationSetting
+            return globalSetting.calibrationSetting
         } catch let error as NSError{
             print("Could not fetch calibration setting.")
             print("\(error), \(error.userInfo)")
         }
-        return setting
+        return nil
+    }
+    
+    func setIsPractice(_ isPractice: Bool) {
+        do {
+            let globalSetting = try GlobalSettingRepo.repo.fetchOrCreate()
+            globalSetting.isPractice = isPractice
+            try GlobalSettingRepo.repo.update()
+        } catch let error as NSError{
+            print("Could not fetch calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
     }
     
     func showTitleView(sender: Any? = nil) {
@@ -46,6 +56,8 @@ class MainCoordinator: Coordinator {
     }
 
     func showTestProtocolView(sender: Any? = nil, isPractice: Bool) {
+        setIsPractice(isPractice)
+        
         let vc = TestProtocolViewController.instantiate(AppStoryboards.Main)
         vc.coordinator.start()
         _navController.setNavigationBarHidden(true, animated: false)

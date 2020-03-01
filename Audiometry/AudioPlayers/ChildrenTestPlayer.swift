@@ -16,28 +16,29 @@ class ChildrenTestPlayer : TestPlayer {
     var player: AKPlayer!
     var adsr: AKAmplitudeEnvelope!
     var delay: AKDelay!
+
+    var startTimer, startTimer2, stopTimer: Timer?
     
-    
-    var startTimer: Timer?
-    var startTimer2: Timer?
-    var stopTimer: Timer?
-    
-    var isStarted: Bool!
-    var leftCorrFactor: Double!
-    var rightCorrFactor: Double!
+    var _isStarted: Bool!
+    var _leftCorrFactor, _rightCorrFactor: Double!
     
     var zFactor: Double!
     var currentVol: Double!
     var isLeft: Bool!
     
     required init() {
+        do {
+            try AudioKit.stop()
+        } catch {
+            print(error)
+        }
         
-        leftCorrFactor = 0.0
-        rightCorrFactor = 0.0
+        _leftCorrFactor = 0.0
+        _rightCorrFactor = 0.0
         
         do {
             file = try AKAudioFile(readFileName: "\(ANIMAL_TONE_PATH)/250Hz.wav")
-            isStarted = true
+            _isStarted = true
         } catch {
             print(error)
             return
@@ -56,7 +57,7 @@ class ChildrenTestPlayer : TestPlayer {
     func updateFreq (_ newFreq: Int!) {
         do {
             zFactor = Z_FACTORS[newFreq] ?? 0.0
-            let file = try AKAudioFile(readFileName: "\(ANIMAL_TONE_PATH)/\(newFreq)Hz.wav")
+            let file = try AKAudioFile(readFileName: "\(ANIMAL_TONE_PATH)/\(String(describing: newFreq))Hz.wav")
             player.load(audioFile: file)
             player.endTime = PULSE_TIME_CHILDREN * 2
         } catch {
@@ -99,11 +100,11 @@ class ChildrenTestPlayer : TestPlayer {
     }
     
     @objc internal func start() {
-        if(!isStarted) {return}
+        if(!_isStarted) {return}
         
         self.player.volume = 0
         self.player.play()
-        let corrFactor: Double! = isLeft ? leftCorrFactor : rightCorrFactor
+        let corrFactor: Double! = isLeft ? _leftCorrFactor : _rightCorrFactor
         let playingLevel: Double! = self.currentVol + corrFactor + zFactor
         print("Playing Actual: ", playingLevel)
         for i in stride(from: 0, through: 1, by: 0.1) {
