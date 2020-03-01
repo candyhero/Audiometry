@@ -54,7 +54,7 @@ class ChildrenTestViewController: UIViewController, TestViewController, Storyboa
 
     // MARK: UI Functions
     @IBAction func back(_ sender: UIButton) {
-        coordinator.back()
+        coordinator.backToTitle()
     }
 
     @IBAction private func checkResponse(_ sender: UIButton) {

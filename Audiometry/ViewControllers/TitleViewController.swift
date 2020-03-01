@@ -9,7 +9,6 @@ class TitleViewController: UIViewController, Storyboarded {
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Load Title")
     }
 
     // MARK: Controller functions

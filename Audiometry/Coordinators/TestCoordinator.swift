@@ -59,7 +59,7 @@ class TestCoordinator: Coordinator {
                 ? AdultTestViewController.instantiate(AppStoryboards.AdultTest)
                 : ChildrenTestViewController.instantiate(AppStoryboards.ChildrenTest)
         _navController.setNavigationBarHidden(true, animated: false)
-        _navController.showDetailViewController(vc, sender: nil)
+        _navController.show(vc, sender: nil)
 
     }
     
@@ -90,10 +90,11 @@ class TestCoordinator: Coordinator {
     }
 
     func back() {
-        let vc = TitleViewController.instantiate(AppStoryboards.Main)
-        _navController.setNavigationBarHidden(true, animated: false)
-        _navController.showDetailViewController(vc, sender: nil)
-        print("WTF??? CANT GO BACK")
+        _navController.popViewController(animated: true)
+    }
+
+    func backToTitle(){
+        _navController.popToRootViewController(animated: true)
     }
 
 //    func terminatePlayer() {

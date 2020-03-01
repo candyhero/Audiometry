@@ -36,9 +36,7 @@ class CalibrationCoordinator: Coordinator {
         if(_player.isStarted()) {
             _player.stopPlaying()
         }
-//        _navController.popViewController(animated: true)
-        print("WTF")
-        AppDelegate.mainCoordinator.showTitleView()
+        _navController.popViewController(animated: true)
     }
 
     // MARK:
