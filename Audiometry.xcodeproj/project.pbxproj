@@ -91,6 +91,7 @@
 		67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientProfileRepo.swift; sourceTree = "<group>"; };
 		67E329B723CF5F190068C2E2 /* TestProtocolRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolRepo.swift; sourceTree = "<group>"; };
 		67E329B923CF661E0068C2E2 /* ProtocolUIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolUIFactory.swift; sourceTree = "<group>"; };
+		67F4916C240EBAEF00AC891E /* TestPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = TestPlayground.playground; path = ../../../../Desktop/TestPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audiometry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFE8D055F906C3049CD786A8 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 		D0F8DDA4E615FBA4FEA62638 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +179,7 @@
 		4EC055F721A724E60016AB0D /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
+				67F4916C240EBAEF00AC891E /* TestPlayground.playground */,
 				6794A4FE2400541600489C64 /* Assets */,
 				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
 				67C88C3B2400498F0000F6E7 /* AppConstants.swift */,

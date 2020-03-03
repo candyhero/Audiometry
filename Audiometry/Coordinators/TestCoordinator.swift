@@ -250,6 +250,7 @@ class TestCoordinator: Coordinator {
 
         _noSoundCount += 1
         if(isCorrect) { _noSoundCorrect += 1 }
+        testNextVolume()
         return false
     }
 

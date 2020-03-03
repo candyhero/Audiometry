@@ -7,7 +7,7 @@ protocol TestViewController: UIViewController, Storyboarded {
 
     // Used by animator
     var imgDir: String {get set}
-    var nosoundTimer: Timer? { get set}
+    var timer: Timer? { get set}
     var firstTimer: Timer? { get set}
     var secondTimer: Timer? { get set}
 
@@ -56,7 +56,6 @@ extension TestViewController {
 
         lbProgress.text = "Test Progress: \(coordinator.getCurrentProgress())%"
         spamButtonCounter = 0
-        play()
     }
 
     // Test
@@ -79,7 +78,6 @@ extension TestViewController {
             }
             return
         }
-        play()
     }
 
     internal func checkSpam(_ senderTag: Int) { //Check if same button 5 times in a row
@@ -94,27 +92,16 @@ extension TestViewController {
     }
 
     // MARK: UI Functions
-    internal func play() {
-        DispatchQueue.main.async { [unowned self] in
-            self.pulseAnimation(delay: 0.0)
-        }
-        pulseToggle(isPlaying: true)
-
-        DispatchQueue.main.async { [unowned self] in
-            self.coordinator.playAudio()
-        }
-    }
-
     internal func pause() {
         toggleButtons(toggle: false)
         pulseToggle(isPlaying: false)
-
+        
         firstTimer?.invalidate()
         secondTimer?.invalidate()
-        nosoundTimer?.invalidate()
+        timer?.invalidate()
         coordinator.pauseAudio()
     }
-
+    
     // MARK: Animations
     internal func toggleButtons(toggle: Bool!) {
         pbNoSound.isEnabled = toggle
@@ -122,58 +109,57 @@ extension TestViewController {
         pbFirst.isEnabled = toggle
         pbSecond.isEnabled = toggle
     }
-
+    
     internal func pulseToggle(isPlaying: Bool!) {
         pbPause.isHidden = !isPlaying
         pbRepeat.isHidden = isPlaying
     }
 
-    internal func pulseAnimation(delay: Double) {
-        // Play pulse Animation by number of times
-        let firstDuration = PULSE_TIME_ADULT * Double(NUM_OF_PULSE_ADULT) + PLAY_GAP_TIME
-        let totalDuration = PULSE_TIME_ADULT * Double(NUM_OF_PULSE_ADULT * 2) + PLAY_GAP_TIME
+    internal func play(isAdult: Bool) {
+        let pulseCount: Int! = isAdult ? NUM_OF_PULSE_ADULT : NUM_OF_PULSE_CHILDREN
+        let pulseTime: Double! = isAdult ? PULSE_TIME_ADULT : PULSE_TIME_CHILDREN
 
-        firstTimer =  Timer.scheduledTimer(withTimeInterval: delay , repeats: false){ _ in
+        let firstDuration = PLAY_GAP_TIME + pulseTime * Double(pulseCount)
+        let totalDuration = PLAY_GAP_TIME + pulseTime * Double(pulseCount * 2)
+
+        firstTimer = Timer.scheduledTimer(withTimeInterval: 0, repeats: false){ _ in
             self.pbFirst.isEnabled = true
-            self.pulseInterval(self.pbFirst)
+            self.pulseInterval(self.pbFirst, NUM_OF_PULSE_ADULT)
         }
-        secondTimer = Timer.scheduledTimer(withTimeInterval: delay + firstDuration, repeats: false){ _ in
+
+        secondTimer = Timer.scheduledTimer(withTimeInterval: firstDuration, repeats: false){ _ in
             self.pbSecond.isEnabled = true
-            self.pulseInterval(self.pbSecond)
+            self.pulseInterval(self.pbSecond, NUM_OF_PULSE_ADULT)
         }
-        nosoundTimer = Timer.scheduledTimer(withTimeInterval: delay + totalDuration, repeats: false) { _ in
+
+        timer = Timer.scheduledTimer(withTimeInterval: totalDuration, repeats: false){ _ in
             self.pbNoSound.isEnabled = true
             self.pulseToggle(isPlaying: false)
         }
+        DispatchQueue.main.async(){
+            self.coordinator.playAudio()
+        }
     }
 
-    private func pulseInterval(_ pbInterval: UIButton) {
-//        pulseCounter = isAdult ? NUM_OF_PULSE_ADULT : NUM_OF_PULSE_CHILDREN
-//        if(pulseCounter == 0) {return}
-//        pulseCounter -= 1
-//
-//        let pulseTimer = Timer.scheduledTimer(withTimeInterval: 0, repeats: true){ _ in
-//        }
-
-    }
-
-    private func shrinkInterval(_ pbInterval: UIButton){
-        UIView.animate(
-                withDuration: PULSE_TIME_ADULT / 2,
+    internal func pulseInterval(_ pbInterval: UIButton, _ counter: Int) {
+        if(counter == 0) { return }
+        UIView.animate(withDuration: PULSE_TIME_ADULT / 2,
                 delay: 0,
                 options: .allowUserInteraction,
-                animations: { pbInterval.transform = CGAffineTransform(scaleX: ANIMATE_SCALE, y: ANIMATE_SCALE) },
-                completion: {_ in self.restoreInterval(pbInterval)}
+                animations: {
+                    pbInterval.transform = CGAffineTransform(
+                            scaleX: ANIMATE_SCALE, y: ANIMATE_SCALE)},
+                completion: {_ in self.restoreInterval(pbInterval, counter)}
         )
     }
 
-    internal func restoreInterval(_ pbInterval: UIButton) {
-        UIView.animate(
-            withDuration: PULSE_TIME_ADULT / 2,
-            delay: 0,
-            options: .allowUserInteraction,
-            animations: { pbInterval.transform = CGAffineTransform.identity},
-            completion: {_ in self.pulseInterval(pbInterval)}
+    internal func restoreInterval(_ pbInterval: UIButton, _ counter: Int) {
+        UIView.animate(withDuration: PULSE_TIME_ADULT / 2,
+                delay: 0,
+                options: .allowUserInteraction,
+                animations: {
+                    pbInterval.transform = CGAffineTransform.identity},
+                completion: {_ in self.pulseInterval(pbInterval, counter-1)}
         )
     }
 }

@@ -7,7 +7,7 @@ class AdultTestViewController: UIViewController, TestViewController {
     
     // Used by animator
     internal var imgDir: String = SHAPE_ICON_PATH
-    internal var nosoundTimer, firstTimer, secondTimer: Timer?
+    internal var timer, firstTimer, secondTimer: Timer?
     internal var pulseCounter: Int!
 
     internal var spamButtonCounter: Int!
@@ -48,6 +48,7 @@ class AdultTestViewController: UIViewController, TestViewController {
         }
         setupButtonUI()
         testNewFreq()
+        play(isAdult: true)
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -61,10 +62,11 @@ class AdultTestViewController: UIViewController, TestViewController {
 
     @IBAction private func checkResponse(_ sender: UIButton) {
         checkResponse(sender.tag)
+        play(isAdult: true)
     }
 
     @IBAction private func repeatPlaying(_ sender: UIButton) {
-        play()
+        play(isAdult: true)
     }
 
     @IBAction private func pausePlaying(_ sender: UIButton) {

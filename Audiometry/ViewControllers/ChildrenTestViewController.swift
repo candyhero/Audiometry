@@ -7,7 +7,7 @@ class ChildrenTestViewController: UIViewController, TestViewController, Storyboa
     
     // Used by animator
     internal var imgDir: String = ANIMAL_ICON_PATH
-    internal var nosoundTimer, firstTimer, secondTimer: Timer?
+    internal var timer, firstTimer, secondTimer: Timer?
     internal var pulseCounter: Int!
 
     internal var spamButtonCounter: Int!
@@ -46,6 +46,7 @@ class ChildrenTestViewController: UIViewController, TestViewController, Storyboa
         }
         setupButtonUI()
         testNewFreq()
+        play(isAdult: false)
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -59,10 +60,11 @@ class ChildrenTestViewController: UIViewController, TestViewController, Storyboa
 
     @IBAction private func checkResponse(_ sender: UIButton) {
         checkResponse(sender.tag)
+        play(isAdult: false)
     }
 
     @IBAction private func repeatPlaying(_ sender: UIButton) {
-        play()
+        play(isAdult: false)
     }
 
     @IBAction private func pausePlaying(_ sender: UIButton) {

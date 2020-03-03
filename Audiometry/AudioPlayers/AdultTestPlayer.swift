@@ -56,6 +56,11 @@ class AdultTestPlayer : TestPlayer {
         do {
             _isStarted = true
             try AudioKit.start()
+            // Initialize / warm up player to eliminate the "first time click sound"
+            // Don't remove
+            updateFreq(Int(1))
+            start()
+            stop()
         } catch {
             print(error)
         }
@@ -87,7 +92,7 @@ class AdultTestPlayer : TestPlayer {
             repeats: false)
         
         _stopTimer = Timer.scheduledTimer(
-            timeInterval: PULSE_TIME_ADULT*NUM_OF_PULSE_ADULT-PLAYER_STOP_DELAY,
+            timeInterval: PULSE_TIME_ADULT * NUM_OF_PULSE_ADULT - PLAYER_STOP_DELAY,
             target: self,
             selector: #selector(stop),
             userInfo: nil,
@@ -95,7 +100,7 @@ class AdultTestPlayer : TestPlayer {
     }
     
     func playSecondInterval() {
-        let delay: Double! = PULSE_TIME_ADULT*Double(NUM_OF_PULSE_ADULT)+PLAY_GAP_TIME
+        let delay: Double! = PULSE_TIME_ADULT * Double(NUM_OF_PULSE_ADULT) + PLAY_GAP_TIME
         _startTimer = Timer.scheduledTimer(
             timeInterval: delay,
             target: self,
