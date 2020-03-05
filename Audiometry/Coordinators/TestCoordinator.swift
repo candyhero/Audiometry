@@ -60,10 +60,12 @@ class TestCoordinator: Coordinator {
                 : ChildrenTestViewController.instantiate(AppStoryboards.ChildrenTest)
         _navController.setNavigationBarHidden(true, animated: false)
         _navController.show(vc, sender: nil)
-
     }
     
-    func showPauseView(sender: Any? = nil) {
+    func showPauseView(sender: Any? = nil, isAdult: Bool) {
+        let vc = PauseViewController.instantiate(isAdult ? AppStoryboards.AdultTest : AppStoryboards.ChildrenTest)
+        _navController.setNavigationBarHidden(true, animated: false)
+        _navController.show(vc, sender: nil)
     }
     
     func showResultView(sender: Any? = nil) {
@@ -77,7 +79,13 @@ class TestCoordinator: Coordinator {
 
     func getTestFreq() -> Int { return _currentFreq }
     func getCurrentProgress() -> Int { return Int(_currentTestCount * 100 / _totalTestCount) }
-
+    func isPaused() -> Bool {
+        return _currentTestCount * 2 == _totalTestCount
+                && _currentTestCount == _globalSetting?.patientProfile?.frequencyOrder?.count
+    }
+    func isStopped() -> Bool {
+        return _currentTestCount == _totalTestCount
+    }
     func increaseSpamCount() {
         _spamCounter += 1
         print(_spamCounter)
@@ -188,11 +196,13 @@ class TestCoordinator: Coordinator {
                 _currentPlayCase = randomizePlayCase()
             }
 
-            if(_cases.last == _currentPlayCase && _cases.last == _cases[_responses.count-2])
+            if(_cases.count >= 2)
             {
-                //print("After redrawal: ",    _currentPlayCase)
-                //print("Redraw Again")
-                _currentPlayCase = randomizePlayCase()
+                if(_cases.last == _cases[_cases.count - 2] && _cases.last == _currentPlayCase){
+                    //print("After redrawal: ",    _currentPlayCase)
+                    //print("Redraw Again")
+                    _currentPlayCase = randomizePlayCase()
+                }
             }
         }
         print("Playcase: ", _currentPlayCase)
@@ -269,6 +279,7 @@ class TestCoordinator: Coordinator {
 
         // check if 0 db
         if(_currentDB == MIN_DB) {
+            print("Type: Min; ", isCorrect, lastDB, lastPlayCase)
             if (isCorrect && (lastDB == MIN_DB) && lastPlayCase != .NoSound) {
                 endTest(MIN_DB)
                 return true
@@ -361,26 +372,24 @@ class TestCoordinator: Coordinator {
                 profile.addToValues(newValues)
                 profile.endTime = _endTime
                 profile.durationSeconds = Int16(_endTime.timeIntervalSince(timestamp))
+
+                if(_testFreqSequence.count > 0) {
+                    setupForNextFreq()
+                } else if _globalSetting.isTestingBoth {
+                    _globalSetting.isTestingBoth = false
+                    _globalSetting.isTestingLeft = !(_globalSetting.isTestingLeft)
+                    profile.earOrder = _globalSetting.isTestingLeft ? "RL" : "LR"
+                    _testFreqSequence = profile.frequencyOrder
+                    setupForNextFreq()
+                }
                 try _globalSettingRepo.update()
             }
         } catch let error as NSError{
             print("Could not save test results.")
             print("\(error), \(error.userInfo)")
         }
-
-        if(_testFreqSequence.count > 0) {
-            setupForNextFreq()
-        } else {
-            if(_globalSetting.isTestingBoth) {
-                _currentFreq = -1
-                _globalSetting.isTestingBoth = false
-                _globalSetting.isTestingLeft = !(_globalSetting.isTestingLeft)
-                _globalSetting.patientProfile?.earOrder = _globalSetting.isTestingLeft ? "RL" : "LR"
-//                print(_globalSetting.patientProfile?.earOrder)
-            } else {
-                _currentFreq = 0
-            }
-        }
-//        print("Test Count: ", _globalSetting.patientProfile?.values?.count)
+        print("Global Setting: ", _globalSetting)
+        print("Test Count: ", _globalSetting.patientProfile?.values?.count)
+        print("")
     }
 }

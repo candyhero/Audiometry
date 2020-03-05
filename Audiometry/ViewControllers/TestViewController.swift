@@ -59,25 +59,24 @@ extension TestViewController {
     }
 
     // Test
-    internal func checkResponse(_ senderTag: Int) {
+    internal func checkResponse(_ senderTag: Int, isAdult: Bool) {
         pause()
         checkSpam(senderTag)
-        let isThresholdFound = coordinator.checkResponse(senderTag)!
-        let freq = coordinator.getTestFreq()
-
-        if isThresholdFound { // Done for this freq
+        if coordinator.checkResponse(senderTag) { // Done for this freq
 //            print("Next Freq: ", coordinator.getNewTestFreq())
-            if(freq < 0) {
+            if(coordinator.isPaused()) {
                 print("Switching to the other ear")
-                coordinator.showPauseView()
-            } else if(freq == 0) {
+                coordinator.showPauseView(isAdult: isAdult)
+                return
+            } else if(coordinator.isStopped()) {
                 // Already tested both ears
-                coordinator.showPauseView()
+                coordinator.showResultView()
+                return
             } else {
                 testNewFreq()
             }
-            return
         }
+        play(isAdult: isAdult)
     }
 
     internal func checkSpam(_ senderTag: Int) { //Check if same button 5 times in a row
@@ -116,6 +115,9 @@ extension TestViewController {
     }
 
     internal func play(isAdult: Bool) {
+        print("Hi WTF? Play??")
+        pulseToggle(isPlaying: true)
+        
         let pulseCount: Int! = isAdult ? NUM_OF_PULSE_ADULT : NUM_OF_PULSE_CHILDREN
         let pulseTime: Double! = isAdult ? PULSE_TIME_ADULT : PULSE_TIME_CHILDREN
 

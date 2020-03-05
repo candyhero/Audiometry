@@ -116,7 +116,7 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <action selector="back:" destination="rqA-y9-Rxr" eventType="touchUpInside" id="OBt-zx-nUC"/>
+                                    <action selector="backToTitle:" destination="rqA-y9-Rxr" eventType="touchUpInside" id="OBt-zx-nUC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -155,7 +155,7 @@
         <!--Pause View Controller-->
         <scene sceneID="TEh-PU-mFX">
             <objects>
-                <viewController id="4xs-O5-bdk" customClass="PauseViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PauseViewController" id="4xs-O5-bdk" customClass="PauseViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZnU-fZ-k9e"/>
                         <viewControllerLayoutGuide type="bottom" id="cgv-7r-b6Z"/>
@@ -167,6 +167,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bgb-fT-YWn">
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <action selector="backToTitle:" destination="4xs-O5-bdk" eventType="touchUpInside" id="5uh-2y-Jkp"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="quV-DB-wKK">
                                 <rect key="frame" x="268" y="440.5" width="830" height="143.5"/>
@@ -183,6 +186,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" title="Continue After Switching the Earphone"/>
+                                        <connections>
+                                            <action selector="continueToTest:" destination="4xs-O5-bdk" eventType="touchUpInside" id="zSF-N4-sZA"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>

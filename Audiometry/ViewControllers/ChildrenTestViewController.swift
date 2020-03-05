@@ -54,13 +54,12 @@ class ChildrenTestViewController: UIViewController, TestViewController, Storyboa
     }
 
     // MARK: UI Functions
-    @IBAction func back(_ sender: UIButton) {
+    @IBAction func backToTitle(_ sender: UIButton) {
         coordinator.backToTitle()
     }
 
     @IBAction private func checkResponse(_ sender: UIButton) {
-        checkResponse(sender.tag)
-        play(isAdult: false)
+        checkResponse(sender.tag, isAdult: false)
     }
 
     @IBAction private func repeatPlaying(_ sender: UIButton) {

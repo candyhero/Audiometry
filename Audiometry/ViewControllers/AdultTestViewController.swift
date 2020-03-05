@@ -51,18 +51,22 @@ class AdultTestViewController: UIViewController, TestViewController {
         play(isAdult: true)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewDidLoad()
+    }
+
     override var prefersStatusBarHidden: Bool {
         return false
     }
 
     // MARK: UI Functions
-    @IBAction func back(_ sender: UIButton) {
+    @IBAction func backToTitle(_ sender: UIButton) {
         coordinator.backToTitle()
     }
 
     @IBAction private func checkResponse(_ sender: UIButton) {
-        checkResponse(sender.tag)
-        play(isAdult: true)
+        checkResponse(sender.tag, isAdult: true)
     }
 
     @IBAction private func repeatPlaying(_ sender: UIButton) {
