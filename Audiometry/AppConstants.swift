@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 enum TestLanguage: Int {
-    case Invalid = -1
-    case English = 0
-    case Portuguese = 1
-    case Spanish = 2
+    case Invalid = 0
+    case English = 1
+    case Portuguese = 2
+    case Spanish = 3
     
     func toString() -> String {
         switch self {

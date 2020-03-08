@@ -33,8 +33,7 @@ class TestProtocolViewController: UIViewController, Storyboarded {
         clearFreqSeqLabel()
         lbEarOrder.text = "L. Ear -> R. Ear"
         coordinator.setTestEarOrder(isLeft: true, isBoth: true)
-        coordinator.setTestLanguage(language: TestLanguage.English)
-
+        lbTestLanguage.text = coordinator.getTestLanguage().toString()
         if coordinator.isPractice() {
             pbAdult.setTitle("Adult Practice", for: .normal)
             pbChildren.setTitle("Children Practice", for: .normal)
@@ -79,11 +78,11 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     
     // MARK: UIButton Actions
     @IBAction func switchToEnglish(_ sender: UIButton) {
-        lbTestLanguage.text = coordinator.setTestLanguage(language: .English)
+        lbTestLanguage.text = coordinator.setTestLanguage(language: .English).toString()
     }
     
     @IBAction func switchToPortuguese(_ sender: UIButton) {
-        lbTestLanguage.text = coordinator.setTestLanguage(language: .Portuguese)
+        lbTestLanguage.text = coordinator.setTestLanguage(language: .Portuguese).toString()
     }
     
     // MARK: Set test order

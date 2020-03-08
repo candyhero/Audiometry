@@ -74,7 +74,7 @@ class TestCoordinator: Coordinator {
 
     // MARK: Getters
     func getTestLanguage() -> String {
-        let testLanguage = TestLanguage(rawValue: Int(_globalSetting?.testLanguageCode ?? -1)) ?? TestLanguage.Invalid
+        let testLanguage = TestLanguage(rawValue: Int(_globalSetting?.testLanguageCode ?? 0)) ?? TestLanguage.Invalid
         return testLanguage.toString()
     }
 

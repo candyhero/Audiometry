@@ -57,9 +57,13 @@ class TestProtocolCoordinator: Coordinator {
         _globalSetting.isAdult = isAdult
     }
 
-    func setTestLanguage(language: TestLanguage) -> String{
+    func getTestLanguage() -> TestLanguage {
+        return TestLanguage(rawValue: Int(_globalSetting?.testLanguageCode ?? 0)) ?? TestLanguage.Invalid
+    }
+
+    func setTestLanguage(language: TestLanguage) -> TestLanguage {
         _globalSetting.testLanguageCode = Int16(language.rawValue)
-        return language.toString()
+        return language
     }
 
     func setTestEarOrder(isLeft: Bool, isBoth: Bool) {

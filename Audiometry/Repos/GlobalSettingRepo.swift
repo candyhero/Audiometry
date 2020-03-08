@@ -23,6 +23,9 @@ class GlobalSettingRepo: Repository<GlobalSetting> {
         guard let setting = try _managedContext.fetch(request).first
         else {
             let newSetting = GlobalSetting(context: _managedContext)
+            newSetting.testLanguageCode = Int16(TestLanguage.English.rawValue)
+            newSetting.isTestingLeft = true
+            newSetting.isTestingBoth = true
             try _managedContext.save()
             return newSetting
         }
