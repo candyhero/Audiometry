@@ -3,26 +3,16 @@ import UIKit
 import Charts
 import CoreData
 
-class ResultViewController: UIViewController, Storyboarded,
-    UITableViewDelegate, UITableViewDataSource  {
+class ResultViewController: UIViewController, Storyboarded, UITableViewDelegate, UITableViewDataSource  {
     // MARK:
-    private let _coordinator = AppDelegate.mainCoordinator
-    
-    private let _managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
-    
-    private var _globalSetting: GlobalSetting!
-    private var _currentPatient: PatientProfile!
-    
-    private var _array_patients: [PatientProfile] = []
+    let coordinator = AppDelegate.resultCoordinator
+
     private var _array_freqSeq: [Int] = []
     private var _array_buttons: [UIButton] = []
     
     private var _patientSectionRows: [Int] = [] // section, row
-    
-//------------------------------------------------------------------------------
-// UI Components
-//------------------------------------------------------------------------------
+
+    // MARK:
     @IBOutlet weak var lbFreq: UILabel!
     
     @IBOutlet weak var tbPatients: UITableView!
@@ -33,9 +23,23 @@ class ResultViewController: UIViewController, Storyboarded,
     @IBOutlet weak var pbPrevFreq: UIButton!
     @IBOutlet weak var pbNextFreq: UIButton!
     @IBOutlet weak var pbDeleteCurrentPatient: UIButton!
-    
+
+    // MARK:
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        pbDeleteCurrentPatient.isEnabled = false
+        // Load result
+        let patients = coordinator.getAllPatientProfiles()
+        for patientProfile in patients {
+            _patientSectionRows.append(0)
+        }
+        _patientSectionRows[0] = coordinator.getPatientProfileValues(0).count
+    }
+
     @IBAction func back(_ sender: Any) {
-        _coordinator.back()
+        coordinator.back()
     }
     
     @IBAction func deleteCurrentPatient(_ sender: UIButton) {
@@ -43,63 +47,33 @@ class ResultViewController: UIViewController, Storyboarded,
 //        for button in _array_buttons{
 //            print(button.tag)
 //        }
-        let alertMsg = "Are you sure to delete \"" + (_currentPatient?.name)! + "\" ?"
-        
-        alertPrompt(alertTitle: "Delete patient profile", alertMsg: alertMsg, confirmFunction: deletePatient)
+        let alertMsg = "Are you sure to delete?"
     }
     
     @IBAction func exportAllPatients(_ sender: UIButton) {
-        // if no patient data
-        if(_array_patients.count == 0) {
-            return
-        }
-        
-        do {
-            let csvText = Audiometry.exportAllPatientsInRows(_array_patients)
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-            
-            let fileName = "AudiometryPatientExport_\(dateFormatter.string(from: Date())).csv"
-            print("FileName: \(fileName)")
-            
-            let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-            
-            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
-            
-            let activityVC = UIActivityViewController(activityItems: [path!], applicationActivities: [])
-            
-            present(activityVC, animated: true, completion: nil)
-            
-            if let popOver = activityVC.popoverPresentationController {
-                popOver.sourceView = self.view
-            }
-            
-        } catch {
-            
-            print("Failed to create file")
-            print("\(error)")
+        let csvPath = coordinator.exportAllPatients()
+        let activityVC = UIActivityViewController(activityItems: [csvPath], applicationActivities: [])
+        present(activityVC, animated: true, completion: nil)
+
+        if let popOver = activityVC.popoverPresentationController {
+            popOver.sourceView = self.view
         }
     }
-//------------------------------------------------------------------------------
-// TableView Functions
-//------------------------------------------------------------------------------
+
+    // Table View
     func numberOfSections(in tableView: UITableView) -> Int {
-        
-        return _array_patients.count
+        return coordinator.getAllPatientProfiles().count
     }
     
-    func tableView(_ tableView: UITableView,
-                   viewForHeaderInSection section: Int) -> UIView? {
-        
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let button = UIButton(type: .system)
-        
         button.backgroundColor = UIColor.darkGray
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self,
                          action: #selector(handleExpandClose),
                          for: .touchUpInside)
         
-        let patient = _array_patients[section]
+        let patient = coordinator.getAllPatientProfiles()[section]
         let title = "[\(patient.group ?? "NO_GROUP")] \(patient.name ?? "NO_NAME")"
             + "\(patient.isAdult ? "(Adult)":"(Child)")"
             + "\(patient.isPractice ? "[Practice]" : "")"
@@ -108,29 +82,24 @@ class ResultViewController: UIViewController, Storyboarded,
         button.tag = section
         
         _array_buttons.append(button)
-        // add button to array_buttons
         return button
     }
     
     @objc func handleExpandClose(button: UIButton!) {
-        
-        _currentPatient = _array_patients[button.tag]
-        
-        let values = getSortedValues(_currentPatient)
+        let allValues = coordinator.getPatientProfileValues(button.tag)
         var array_indexPath = [IndexPath]()
         
-        for freqIndex in values.indices {
+        for freqIndex in allValues.indices {
             let indexPath = IndexPath(row: freqIndex, section: button.tag)
             array_indexPath.append(indexPath)
         }
         
         if(_patientSectionRows[button.tag] > 0) {
-            
             _patientSectionRows[button.tag] = 0
             tbPatients.deleteRows(at: array_indexPath, with: .fade)
         }
         else {
-            _patientSectionRows[button.tag] = values.count
+            _patientSectionRows[button.tag] = allValues.count
             tbPatients.insertRows(at: array_indexPath, with: .fade)
         }
     }
@@ -145,28 +114,18 @@ class ResultViewController: UIViewController, Storyboarded,
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Retrieve patient brief info
-        _currentPatient = _array_patients[indexPath.section]
-        let values = getSortedValues(_currentPatient)[indexPath.row]
-        
-        print(_currentPatient)
+        let values = coordinator.getPatientProfileValues(indexPath.section)[indexPath.row]
 
-        // Configure table cell style
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         
-        let label_L = (values.threshold_L >= 0) ?
-            String(values.threshold_L): "NR"
-        
-        let label_R = (values.threshold_R >= 0) ?
-            String(values.threshold_R): "NR"
+        let label_L = (values.threshold_L >= 0) ? String(values.threshold_L): "NR"
+        let label_R = (values.threshold_R >= 0) ? String(values.threshold_R): "NR"
         
         cell.textLabel?.text = "\(String(values.frequency)) Hz ; "
             + "dB Threshold: (L) \(label_L) (R) \(label_R) ; "
             + "Reliability:"
-            + " (L) \(String(values.no_sound_correct_L))"
-            + "/\(String(values.no_sound_count_L))"
-            + " (R) \(String(values.no_sound_correct_R))"
-            + "/\(String(values.no_sound_count_R))"
+            + " (L) \(String(values.no_sound_correct_L))/\(String(values.no_sound_count_L))"
+            + " (R) \(String(values.no_sound_correct_R))/\(String(values.no_sound_count_R))"
         
         cell.textLabel?.font = cell.textLabel?.font.withSize(14)
         cell.textLabel?.textAlignment = .center;
@@ -179,34 +138,12 @@ class ResultViewController: UIViewController, Storyboarded,
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        _currentPatient = _array_patients[indexPath.section]
-        let values = getSortedValues(_currentPatient)
-        updateGraph(values[indexPath.row])
+        let values = coordinator.getPatientProfileValues(indexPath.section)[indexPath.row]
+        updateGraph(values)
     }
     
-//------------------------------------------------------------------------------
-// CoreData functions
-//------------------------------------------------------------------------------
-    func deletePatient() {
-        let indexPath = tbPatients.indexPathForSelectedRow
-        
-        if(indexPath?.section == nil) {
-            return
-        }
-        
-        let patient = _array_patients[indexPath!.section]
-        _managedContext.delete(patient)
-        _array_patients.remove(at: indexPath!.section)
-        
-        _patientSectionRows.remove(at: indexPath!.section)
-        tbPatients.deleteSections(IndexSet([indexPath!.section]), with: .fade)
-        
-        //update button tags
-        //for button in
-    }
-    
-    fileprivate func updateCharts(_ values: PatientProfileValues) {
+    // Mark: Charts
+    func updateCharts(_ values: PatientProfileValues) {
         // Set y-axis
         let max_L = (values.results_L ?? []).max() ?? SYSTEM_MAX_DB
         let max_R = (values.results_R ?? []).max() ?? SYSTEM_MAX_DB
@@ -230,10 +167,8 @@ class ResultViewController: UIViewController, Storyboarded,
         chartView_L.drawGridBackgroundEnabled = true
         chartView_R.drawGridBackgroundEnabled = true
         
-        chartView_L.gridBackgroundColor =
-            NSUIColor(red: 0.5, green: 0.8, blue: 0.95, alpha: 0.6)
-        chartView_R.gridBackgroundColor =
-            NSUIColor(red: 1.0, green: 0.6, blue: 0.6, alpha: 0.6)
+        chartView_L.gridBackgroundColor = NSUIColor(red: 0.5, green: 0.8, blue: 0.95, alpha: 0.6)
+        chartView_R.gridBackgroundColor = NSUIColor(red: 1.0, green: 0.6, blue: 0.6, alpha: 0.6)
         
         chartView_L.legend.font = NSUIFont.systemFont(ofSize: 16.0)
         chartView_R.legend.font = NSUIFont.systemFont(ofSize: 16.0)
@@ -243,19 +178,14 @@ class ResultViewController: UIViewController, Storyboarded,
     func updateGraph(_ values: PatientProfileValues) {
         
         // Load dB and result lists
-        let label_L = (values.threshold_L >= 0) ?
-            String(values.threshold_L): "NR"
-        
-        let label_R = (values.threshold_R >= 0) ?
-            String(values.threshold_R): "NR"
+        let label_L = (values.threshold_L >= 0) ? String(values.threshold_L): "NR"
+        let label_R = (values.threshold_R >= 0) ? String(values.threshold_R): "NR"
         
         lbFreq.text = "\(String(values.frequency)) Hz ; "
             + "dB Threshold: (L) \(label_L) (R) \(label_R) ; "
             + "Reliability:"
-            + " (L) \(String(values.no_sound_correct_L))"
-            + "/\(String(values.no_sound_count_L))"
-            + " (R) \(String(values.no_sound_correct_R))"
-            + "/\(String(values.no_sound_count_R))"
+            + " (L) \(String(values.no_sound_correct_L))/\(String(values.no_sound_count_L))"
+            + " (R) \(String(values.no_sound_correct_R))/\(String(values.no_sound_count_R))"
         
         var lineChartEntry_L  = [ChartDataEntry]()
         var lineChartEntry_R  = [ChartDataEntry]()
@@ -272,16 +202,13 @@ class ResultViewController: UIViewController, Storyboarded,
             i+=1
         }
         
-        let line_L = LineChartDataSet(entries: lineChartEntry_L,
-                                     label: "Presentation Lv. (Left) in dB")
-        let line_R = LineChartDataSet(entries: lineChartEntry_R,
-                                     label: "Presentation Lv. (Right) in dB")
+        let line_L = LineChartDataSet(entries: lineChartEntry_L, label: "Presentation Lv. (Left) in dB")
+        let line_R = LineChartDataSet(entries: lineChartEntry_R, label: "Presentation Lv. (Right) in dB")
         
         line_L.colors=[NSUIColor.blue]
         line_R.colors=[NSUIColor.red]
-        if(values.responses_L?.count ?? 0 > 0) {
-            line_L.circleColors = []
-        }
+
+        if(values.responses_L?.count ?? 0 > 0) { line_L.circleColors = [] }
         for response in values.responses_L ?? [] {
             if(response > 0) {
                 line_L.circleColors.append(NSUIColor.green)
@@ -296,9 +223,8 @@ class ResultViewController: UIViewController, Storyboarded,
                 print("Response Error: ", response)
             }
         }
-        if(values.responses_R?.count ?? 0 > 0) {
-            line_R.circleColors = []
-        }
+
+        if(values.responses_R?.count ?? 0 > 0) { line_R.circleColors = [] }
         for response in values.responses_R ?? [] {
             if(response > 0) {
                 line_R.circleColors.append(NSUIColor.green)
@@ -313,8 +239,7 @@ class ResultViewController: UIViewController, Storyboarded,
                 print("Response Error: ", response)
             }
         }
-        
-        //
+
         let data_L = LineChartData()
         let data_R = LineChartData()
         
@@ -328,56 +253,6 @@ class ResultViewController: UIViewController, Storyboarded,
         chartView_R.data = data_R
         
         updateCharts(values)
-    }
-    
-    func fetchAllPatientProfiles() {
-        // fetch all PatientProfiles
-        let patientRequest:NSFetchRequest<PatientProfile> =
-            PatientProfile.fetchRequest()
-        let sortByTimestamp = NSSortDescriptor(
-            key: #keyPath(PatientProfile.timestamp),
-            ascending: false)
-        patientRequest.sortDescriptors = [sortByTimestamp]
-        
-        do {
-            _array_patients = try _managedContext.fetch(patientRequest)
-        } catch let error as NSError{
-            print("Could not fetch calibration setting.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
-    func initSettings() {
-        // fetch global setting
-        let settingRequest:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        settingRequest.fetchLimit = 1
-        
-        do {
-            _globalSetting = try _managedContext.fetch(settingRequest).first
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
-        }
-        
-        fetchAllPatientProfiles()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        pbDeleteCurrentPatient.isEnabled = false
-        // Load result
-        initSettings()
-        let mostRecentPatient = _array_patients.first!
-        
-        for patientProfile in _array_patients {
-            _patientSectionRows.append(0)
-        }
-        
-        let mostRecentValues = getSortedValues(mostRecentPatient)
-        print(mostRecentPatient)
-        _patientSectionRows[0] = mostRecentValues.count
     }
     
     override func didReceiveMemoryWarning() {

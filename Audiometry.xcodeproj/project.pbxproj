@@ -46,6 +46,7 @@
 		67E329B523CE2C6A0068C2E2 /* PatientProfileRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */; };
 		67E329B823CF5F190068C2E2 /* TestProtocolRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B723CF5F190068C2E2 /* TestProtocolRepo.swift */; };
 		67E329BA23CF661E0068C2E2 /* ProtocolUIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B923CF661E0068C2E2 /* ProtocolUIFactory.swift */; };
+		D0F8D3AB212F9A5C83F86A02 /* ResultCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */; };
 		D0F8D6346B13044ECCAFB8FC /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F8DDA4E615FBA4FEA62638 /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 		67F4916C240EBAEF00AC891E /* TestPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = TestPlayground.playground; path = ../../../../Desktop/TestPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audiometry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFE8D055F906C3049CD786A8 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
+		D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultCoordinator.swift; sourceTree = "<group>"; };
 		D0F8DDA4E615FBA4FEA62638 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,6 +209,7 @@
 				67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */,
 				67B58D0223EF19C2003EFEE6 /* TestProcotolCoordinator.swift */,
 				67B58CF923D73833003EFEE6 /* TestCoordinator.swift */,
+				D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				67B58CF823D5F812003EFEE6 /* MainCoordinator.swift in Sources */,
 				4E4B3C7E21A7266000191AF3 /* TestPlayer.swift in Sources */,
 				D0F8D6346B13044ECCAFB8FC /* TestViewController.swift in Sources */,
+				D0F8D3AB212F9A5C83F86A02 /* ResultCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

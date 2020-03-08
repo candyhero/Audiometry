@@ -38,7 +38,7 @@ class ChildrenInstructionViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func startTest(_ sender: UIButton) {
-        coordinator.showTestView(isAdult: true)
+        coordinator.showTestView(isAdult: false)
     }
 
     @IBAction func back(_ sender: UIButton) {

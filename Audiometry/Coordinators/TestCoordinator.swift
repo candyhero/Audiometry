@@ -69,6 +69,7 @@ class TestCoordinator: Coordinator {
     }
     
     func showResultView(sender: Any? = nil) {
+        AppDelegate.mainCoordinator.showResultView()
     }
 
     // MARK: Getters
@@ -240,17 +241,13 @@ class TestCoordinator: Coordinator {
         switch _currentPlayCase ?? .Error {
             case .NoSound:
                 return checkNoSound(buttonTag == 0)
-                break
             case .First:
                 return checkThreshold(buttonTag == 1)
-                break
             case .Second:
                 return checkThreshold(buttonTag == 2)
-                break
             default: // Should never be this case
                 print("Playcase ERROR!!!")
                 return false
-                break
         }
     }
     private func checkNoSound(_ isCorrect: Bool!) -> Bool!{
@@ -279,7 +276,6 @@ class TestCoordinator: Coordinator {
 
         // check if 0 db
         if(_currentDB == MIN_DB) {
-            print("Type: Min; ", isCorrect, lastDB, lastPlayCase)
             if (isCorrect && (lastDB == MIN_DB) && lastPlayCase != .NoSound) {
                 endTest(MIN_DB)
                 return true
@@ -388,8 +384,5 @@ class TestCoordinator: Coordinator {
             print("Could not save test results.")
             print("\(error), \(error.userInfo)")
         }
-        print("Global Setting: ", _globalSetting)
-        print("Test Count: ", _globalSetting.patientProfile?.values?.count)
-        print("")
     }
 }

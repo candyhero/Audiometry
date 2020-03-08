@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static let calibrationCoordinator = CalibrationCoordinator()
     static let testProcotolCoordinator = TestProtocolCoordinator()
     static let testCoordinator = TestCoordinator()
+    static let resultCoordinator = ResultCoordinator()
     
     var window: UIWindow?
 

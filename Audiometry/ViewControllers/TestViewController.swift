@@ -84,7 +84,9 @@ extension TestViewController {
         if(spamButtonCounter >= 4) {
             spamButtonCounter = 0
             coordinator.increaseSpamCount()
-            errorPrompt(errorMsg: "Please ask for re-instrcution.")
+            DispatchQueue.main.async {
+                self.errorPrompt(errorMsg: "Please ask for re-instrcution.")
+            }
         }
 //        print("Button Spam Count: ", spamButtonCounter)
         lastClicked = senderTag
@@ -115,7 +117,6 @@ extension TestViewController {
     }
 
     internal func play(isAdult: Bool) {
-        print("Hi WTF? Play??")
         pulseToggle(isPlaying: true)
         
         let pulseCount: Int! = isAdult ? NUM_OF_PULSE_ADULT : NUM_OF_PULSE_CHILDREN
@@ -126,12 +127,12 @@ extension TestViewController {
 
         firstTimer = Timer.scheduledTimer(withTimeInterval: 0, repeats: false){ _ in
             self.pbFirst.isEnabled = true
-            self.pulseInterval(self.pbFirst, NUM_OF_PULSE_ADULT)
+            self.pulseInterval(self.pbFirst, pulseTime, pulseCount)
         }
 
         secondTimer = Timer.scheduledTimer(withTimeInterval: firstDuration, repeats: false){ _ in
             self.pbSecond.isEnabled = true
-            self.pulseInterval(self.pbSecond, NUM_OF_PULSE_ADULT)
+            self.pulseInterval(self.pbSecond, pulseTime, pulseCount)
         }
 
         timer = Timer.scheduledTimer(withTimeInterval: totalDuration, repeats: false){ _ in
@@ -143,25 +144,23 @@ extension TestViewController {
         }
     }
 
-    internal func pulseInterval(_ pbInterval: UIButton, _ counter: Int) {
+    internal func pulseInterval(_ pbInterval: UIButton, _ pulseTime: Double, _ counter: Int) {
         if(counter == 0) { return }
-        UIView.animate(withDuration: PULSE_TIME_ADULT / 2,
+        UIView.animate(withDuration: pulseTime / 2,
                 delay: 0,
                 options: .allowUserInteraction,
-                animations: {
-                    pbInterval.transform = CGAffineTransform(
-                            scaleX: ANIMATE_SCALE, y: ANIMATE_SCALE)},
-                completion: {_ in self.restoreInterval(pbInterval, counter)}
+                animations: {pbInterval.transform =
+                    CGAffineTransform(scaleX: ANIMATE_SCALE, y: ANIMATE_SCALE) },
+                completion: {_ in self.restoreInterval(pbInterval, pulseTime, counter)}
         )
     }
 
-    internal func restoreInterval(_ pbInterval: UIButton, _ counter: Int) {
-        UIView.animate(withDuration: PULSE_TIME_ADULT / 2,
+    internal func restoreInterval(_ pbInterval: UIButton, _ pulseTime: Double, _ counter: Int) {
+        UIView.animate(withDuration: pulseTime / 2,
                 delay: 0,
                 options: .allowUserInteraction,
-                animations: {
-                    pbInterval.transform = CGAffineTransform.identity},
-                completion: {_ in self.pulseInterval(pbInterval, counter-1)}
+                animations: { pbInterval.transform = CGAffineTransform.identity},
+                completion: {_ in self.pulseInterval(pbInterval, pulseTime, counter-1)}
         )
     }
 }

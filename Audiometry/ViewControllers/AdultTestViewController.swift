@@ -28,32 +28,29 @@ class AdultTestViewController: UIViewController, TestViewController {
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
-        toggleButtons(toggle: false)
-
-        // Set UI
         switch coordinator.getTestLanguage() {
-            case "Invalid":
-                print("Invalid language option!!")
-                break
-            case "Portuguese":
-                print("Loading Portuguese...")
-                lbInstruction.text = PORT_ADULT_INSTRCUTION_TEXT
-                pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
-                pbNoSound.setTitle("", for: .normal)
-                pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
-                pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
-                break
-            default:
-                break
+        case "Invalid":
+            print("Invalid language option!!")
+            break
+        case "Portuguese":
+            print("Loading Portuguese...")
+            lbInstruction.text = PORT_ADULT_INSTRCUTION_TEXT
+            pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
+            pbNoSound.setTitle("", for: .normal)
+            pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
+            pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
+            break
+        default:
+            break
         }
         setupButtonUI()
-        testNewFreq()
-        play(isAdult: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewDidLoad()
+        toggleButtons(toggle: false)
+        testNewFreq()
+        play(isAdult: true)
     }
 
     override var prefersStatusBarHidden: Bool {

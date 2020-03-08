@@ -27,9 +27,6 @@ class ChildrenTestViewController: UIViewController, TestViewController, Storyboa
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
-        toggleButtons(toggle: false)
-
-        // Set UI
         switch coordinator.getTestLanguage() {
             case "Invalid":
                 print("Invalid language option!!")
@@ -45,6 +42,11 @@ class ChildrenTestViewController: UIViewController, TestViewController, Storyboa
                 break
         }
         setupButtonUI()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        toggleButtons(toggle: false)
         testNewFreq()
         play(isAdult: false)
     }

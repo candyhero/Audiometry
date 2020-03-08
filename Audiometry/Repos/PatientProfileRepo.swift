@@ -32,12 +32,12 @@ class PatientProfileRepo: Repository<PatientProfile> {
         let sortByTimestamp = NSSortDescriptor(
             key: #keyPath(PatientProfile.timestamp),
             ascending: false)
-        return try self.fetchAll([sortByTimestamp])
+        return try fetchAll([sortByTimestamp])
     }
     
     // MARK: validate functions
     func validateAnyPatientProfiles() throws -> Bool {
-        var profiles = try self.fetchAll()
+        var profiles = try fetchAll()
 
         for emptyProfile in profiles.filter({$0.values?.count == 0}){
             _managedContext.delete(emptyProfile)

@@ -20,28 +20,6 @@ class MainCoordinator: Coordinator {
         _navController.popViewController(animated: true)
     }
     
-    func getCurrentCalibrationSetting() -> CalibrationSetting! {
-        do {
-            let globalSetting = try GlobalSettingRepo.repo.fetchOrCreate()
-            return globalSetting.calibrationSetting
-        } catch let error as NSError{
-            print("Could not fetch calibration setting.")
-            print("\(error), \(error.userInfo)")
-        }
-        return nil
-    }
-    
-    func setIsPractice(_ isPractice: Bool) {
-        do {
-            let globalSetting = try GlobalSettingRepo.repo.fetchOrCreate()
-            globalSetting.isPractice = isPractice
-            try GlobalSettingRepo.repo.update()
-        } catch let error as NSError{
-            print("Could not fetch calibration setting.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
     func showTitleView(sender: Any? = nil) {
         let vc = TitleViewController.instantiate(AppStoryboards.Main)
         _navController.setNavigationBarHidden(true, animated: false)
@@ -66,7 +44,30 @@ class MainCoordinator: Coordinator {
 
     func showResultView(sender: Any? = nil) {
         let vc = ResultViewController.instantiate(AppStoryboards.Main)
+        vc.coordinator.start()
         _navController.setNavigationBarHidden(true, animated: false)
         _navController.show(vc, sender: nil)
+    }
+
+    func getCurrentCalibrationSetting() -> CalibrationSetting! {
+        do {
+            let globalSetting = try GlobalSettingRepo.repo.fetchOrCreate()
+            return globalSetting.calibrationSetting
+        } catch let error as NSError{
+            print("Could not fetch calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
+        return nil
+    }
+
+    func setIsPractice(_ isPractice: Bool) {
+        do {
+            let globalSetting = try GlobalSettingRepo.repo.fetchOrCreate()
+            globalSetting.isPractice = isPractice
+            try GlobalSettingRepo.repo.update()
+        } catch let error as NSError{
+            print("Could not fetch calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
     }
 }
