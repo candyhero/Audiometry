@@ -176,6 +176,7 @@ class TestCoordinator: Coordinator {
             _testPlayer.updateCorrectionFactors(correctionFactor_L, correctionFactor_R)
             _testPlayer.updateVolume(Double(_currentDB), _globalSetting.isTestingLeft)
         }
+        print(_globalSetting)
         testNextVolume()
     }
     private func testNextVolume(){

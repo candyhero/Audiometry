@@ -87,17 +87,17 @@ class TestProtocolViewController: UIViewController, Storyboarded {
     
     // MARK: Set test order
     @IBAction func setLeftFirst(_ sender: UIButton) {
-        coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        coordinator.setTestEarOrder(isLeft: true, isBoth: true)
         lbEarOrder.text = sender.titleLabel?.text
     }
     
     @IBAction func setRightFirst(_ sender: UIButton) {
-        coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        coordinator.setTestEarOrder(isLeft: false, isBoth: true)
         lbEarOrder.text = sender.titleLabel?.text
     }
     
     @IBAction func setLeftOnly(_ sender: UIButton) {
-        coordinator.setTestEarOrder(isLeft: false, isBoth: false)
+        coordinator.setTestEarOrder(isLeft: true, isBoth: false)
         lbEarOrder.text = sender.titleLabel?.text
     }
     

@@ -10,13 +10,12 @@ import Foundation
 import AudioKit
 
 class AdultTestPlayer : TestPlayer {
-    private var _generator: AKOperationGenerator!
+    internal var _leftCorrFactor, _rightCorrFactor: Double!
 
+    private var _generator: AKOperationGenerator!
     private var _startTimer, _stopTimer: Timer?
 
-    internal var _isStarted: Bool!
-    internal var _leftCorrFactor, _rightCorrFactor: Double!
-    
+
     required init() {
         do {
             try AudioKit.stop()
@@ -54,7 +53,6 @@ class AdultTestPlayer : TestPlayer {
         AudioKit.output = _generator
         
         do {
-            _isStarted = true
             try AudioKit.start()
             // Initialize / warm up player to eliminate the "first time click sound"
             // Don't remove
@@ -79,52 +77,35 @@ class AdultTestPlayer : TestPlayer {
         } else {
             _generator.parameters[2] = dbToAmp(newExpectedVol + _rightCorrFactor)
         }
-        
         print(_generator.parameters[1], _generator.parameters[2])
     }
-    
+
     func playFirstInterval() {
-        _startTimer = Timer.scheduledTimer(
-            timeInterval: 0.0,
-            target: self,
-            selector: #selector(start),
-            userInfo: nil,
-            repeats: false)
-        
-        _stopTimer = Timer.scheduledTimer(
-            timeInterval: PULSE_TIME_ADULT * NUM_OF_PULSE_ADULT - PLAYER_STOP_DELAY,
-            target: self,
-            selector: #selector(stop),
-            userInfo: nil,
-            repeats: false)
+        playInterval(delay: 0.0)
     }
-    
+
     func playSecondInterval() {
-        let delay: Double! = PULSE_TIME_ADULT * Double(NUM_OF_PULSE_ADULT) + PLAY_GAP_TIME
-        _startTimer = Timer.scheduledTimer(
-            timeInterval: delay,
-            target: self,
-            selector: #selector(start),
-            userInfo: nil,
-            repeats: false)
-        
-        _stopTimer = Timer.scheduledTimer(
-            timeInterval: delay+PULSE_TIME_ADULT*NUM_OF_PULSE_ADULT-PLAYER_STOP_DELAY,
-            target: self,
-            selector: #selector(stop),
-            userInfo: nil,
-            repeats: false)
+        playInterval(delay: PULSE_TIME_ADULT * Double(NUM_OF_PULSE_ADULT) + PLAY_GAP_TIME)
+    }
+
+    private func playInterval(delay: Double){
+        _startTimer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false){ _ in
+            self.start()
+        }
+        let duration = PULSE_TIME_ADULT * Double(NUM_OF_PULSE_ADULT) - PLAYER_STOP_DELAY
+        _stopTimer = Timer.scheduledTimer(withTimeInterval: delay + duration, repeats: false){ _ in
+            self.stop()
+        }
     }
     
-    @objc internal func start() {
-        if(!_isStarted) {return}
-        self._generator.restart()
+    internal func start() {
+        _generator.restart()
     }
-    
-    @objc func stop() {
+
+    internal func stop() {
         _startTimer?.invalidate()
         _stopTimer?.invalidate()
-        self._generator.stop()
+        _generator.stop()
     }
 }
 
