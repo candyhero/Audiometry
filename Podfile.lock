@@ -1,11 +1,11 @@
 PODS:
-  - AudioKit/Core (4.8)
+  - AudioKit/Core (4.9.4)
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
   - Charts/Core (3.4.0)
 
 DEPENDENCIES:
-  - AudioKit/Core (= 4.8)
+  - AudioKit/Core (>= 4.9)
   - Charts (>= 3.4.0)
 
 SPEC REPOS:
@@ -14,9 +14,9 @@ SPEC REPOS:
     - Charts
 
 SPEC CHECKSUMS:
-  AudioKit: 04ecf14d5ca795b16fc92c76fc84e2421ade7df0
+  AudioKit: 2ad2c0c546f53134967e4a381dfd8691b7674093
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
 
-PODFILE CHECKSUM: c0b8bf58128f20531a1af042298b80039813f848
+PODFILE CHECKSUM: 015dd0ba8d9bc12dfe80765e874a448304922a99
 
 COCOAPODS: 1.8.4

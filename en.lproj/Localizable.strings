@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  Audiometry
+
+  Created by Xavier Chan on 15/3/20.
+  Copyright © 2020 TriCounty. All rights reserved.
+*/
+
+"Start" = "Start Testing!";
+"Pause" = "Pause";
+"Repeat" = "Repeat";
+"Silence" = "Silence";
+
+"Adult_Caption" = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound";
+
+"Adult_Instruction" = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound";
+
+"Children_Caption" = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound";

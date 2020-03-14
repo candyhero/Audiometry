@@ -162,11 +162,6 @@ class CalibrationViewController: UIViewController, Storyboarded {
 
         _playingFrequency = newFreq
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }
 
 extension CalibrationViewController: UIPickerViewDelegate, UIPickerViewDataSource{

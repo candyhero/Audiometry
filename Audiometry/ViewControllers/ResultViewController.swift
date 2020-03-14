@@ -47,12 +47,12 @@ class ResultViewController: UIViewController, Storyboarded, UITableViewDelegate,
 //        for button in _array_buttons{
 //            print(button.tag)
 //        }
-        let alertMsg = "Are you sure to delete?"
+//        let alertMsg = "Are you sure to delete?"
     }
     
     @IBAction func exportAllPatients(_ sender: UIButton) {
         let csvPath = coordinator.exportAllPatients()
-        let activityVC = UIActivityViewController(activityItems: [csvPath], applicationActivities: [])
+        let activityVC = UIActivityViewController(activityItems: [csvPath!], applicationActivities: [])
         present(activityVC, animated: true, completion: nil)
 
         if let popOver = activityVC.popoverPresentationController {
@@ -253,10 +253,5 @@ class ResultViewController: UIViewController, Storyboarded, UITableViewDelegate,
         chartView_R.data = data_R
         
         updateCharts(values)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }

@@ -1,0 +1,141 @@
+
+/* Class = "UIButton"; normalTitle = "Adult Test"; ObjectID = "03K-L4-Adi"; */
+"03K-L4-Adi.normalTitle" = "Adult Test";
+
+/* Class = "UIButton"; normalTitle = "R. Ear Only"; ObjectID = "28e-V9-IOP"; */
+"28e-V9-IOP.normalTitle" = "R. Ear Only";
+
+/* Class = "UIButton"; normalTitle = "Load Default P. Level"; ObjectID = "2dj-8b-wbX"; */
+"2dj-8b-wbX.normalTitle" = "Load Default P. Level";
+
+/* Class = "UIButton"; normalTitle = "Clear All"; ObjectID = "6dE-Y5-4Uz"; */
+"6dE-Y5-4Uz.normalTitle" = "Clear All";
+
+/* Class = "UILabel"; text = "None"; ObjectID = "6vb-TR-fTk"; */
+"6vb-TR-fTk.text" = "None";
+
+/* Class = "UIButton"; normalTitle = "R. Ear -> L. Ear"; ObjectID = "7f1-Gd-dqN"; */
+"7f1-Gd-dqN.normalTitle" = "R. Ear -> L. Ear";
+
+/* Class = "UIButton"; normalTitle = "Switch to Portuguese"; ObjectID = "86d-1f-LOL"; */
+"86d-1f-LOL.normalTitle" = "Switch to Portuguese";
+
+/* Class = "UIButton"; normalTitle = "Delete Current Patient Profile"; ObjectID = "AMi-gT-TtR"; */
+"AMi-gT-TtR.normalTitle" = "Delete Current Patient Profile";
+
+/* Class = "UIButton"; normalTitle = "Save Protocol"; ObjectID = "APH-kS-42d"; */
+"APH-kS-42d.normalTitle" = "Save Protocol";
+
+/* Class = "UILabel"; text = "Right Measured Level for 70 dB HL (dB SPL) "; ObjectID = "Cdx-yj-0c1"; */
+"Cdx-yj-0c1.text" = "Right Measured Level for 70 dB HL (dB SPL) ";
+
+/* Class = "UIButton"; normalTitle = "Remove Last"; ObjectID = "DOx-bp-4vZ"; */
+"DOx-bp-4vZ.normalTitle" = "Remove Last";
+
+/* Class = "UIButton"; normalTitle = "Save as New"; ObjectID = "Daj-K0-8w2"; */
+"Daj-K0-8w2.normalTitle" = "Save as New";
+
+/* Class = "UIButton"; normalTitle = "L. Ear Only"; ObjectID = "Iml-Go-6KU"; */
+"Iml-Go-6KU.normalTitle" = "L. Ear Only";
+
+/* Class = "UILabel"; text = "Presentation Level (dBHL)"; ObjectID = "JcR-5J-V6V"; */
+"JcR-5J-V6V.text" = "Presentation Level (dBHL)";
+
+/* Class = "UIButton"; normalTitle = "View Results"; ObjectID = "MVY-zw-dkX"; */
+"MVY-zw-dkX.normalTitle" = "View Results";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "Nwa-Vk-mtq"; */
+"Nwa-Vk-mtq.normalTitle" = "Start";
+
+/* Class = "UILabel"; text = "None"; ObjectID = "Ogj-UP-BQ9"; */
+"Ogj-UP-BQ9.text" = "None";
+
+/* Class = "UIButton"; normalTitle = "Export All Patient Data"; ObjectID = "Or7-3X-nAq"; */
+"Or7-3X-nAq.normalTitle" = "Export All Patient Data";
+
+/* Class = "UIButton"; normalTitle = "Return to Title"; ObjectID = "Oyg-8O-FTI"; */
+"Oyg-8O-FTI.normalTitle" = "Return to Title";
+
+/* Class = "UIButton"; normalTitle = "Next Freq >"; ObjectID = "PTf-x0-oPl"; */
+"PTf-x0-oPl.normalTitle" = "Next Freq >";
+
+/* Class = "UILabel"; text = "L. Ear -> R. Ear"; ObjectID = "Pqh-ee-VOG"; */
+"Pqh-ee-VOG.text" = "L. Ear -> R. Ear";
+
+/* Class = "UIButton"; normalTitle = "Delete Current"; ObjectID = "TOr-ti-8Lg"; */
+"TOr-ti-8Lg.normalTitle" = "Delete Current";
+
+/* Class = "UIButton"; normalTitle = "L. Ear -> R. Ear"; ObjectID = "Uy1-L9-U7i"; */
+"Uy1-L9-U7i.normalTitle" = "L. Ear -> R. Ear";
+
+/* Class = "UIButton"; normalTitle = "Save to Current"; ObjectID = "Vyf-ZB-897"; */
+"Vyf-ZB-897.normalTitle" = "Save to Current";
+
+/* Class = "UIButton"; normalTitle = "Delete Current Protocol"; ObjectID = "XyG-KZ-zIi"; */
+"XyG-KZ-zIi.normalTitle" = "Delete Current Protocol";
+
+/* Class = "UILabel"; text = "Current Frequency: "; ObjectID = "YLa-7U-M23"; */
+"YLa-7U-M23.text" = "Current Frequency: ";
+
+/* Class = "UIButton"; normalTitle = "Return to Title"; ObjectID = "aWs-cg-CKn"; */
+"aWs-cg-CKn.normalTitle" = "Return to Title";
+
+/* Class = "UILabel"; text = "L./R. Ear Order: "; ObjectID = "bes-qV-dyO"; */
+"bes-qV-dyO.text" = "L./R. Ear Order: ";
+
+/* Class = "UIButton"; normalTitle = "Load Other"; ObjectID = "brL-Tu-SGg"; */
+"brL-Tu-SGg.normalTitle" = "Load Other";
+
+/* Class = "UIButton"; normalTitle = "Practice"; ObjectID = "c5c-0e-X0P"; */
+"c5c-0e-X0P.normalTitle" = "Practice";
+
+/* Class = "UIButton"; normalTitle = "Load Protocol"; ObjectID = "cPP-AS-nnX"; */
+"cPP-AS-nnX.normalTitle" = "Load Protocol";
+
+/* Class = "UILabel"; text = "Test Language: "; ObjectID = "dSl-b0-lsX"; */
+"dSl-b0-lsX.text" = "Test Language: ";
+
+/* Class = "UIButton"; normalTitle = "Calibration"; ObjectID = "dab-8t-SDg"; */
+"dab-8t-SDg.normalTitle" = "Calibration";
+
+/* Class = "UIButton"; normalTitle = "< Prev Freq"; ObjectID = "h9I-h5-UhI"; */
+"h9I-h5-UhI.normalTitle" = "< Prev Freq";
+
+/* Class = "UILabel"; text = "English"; ObjectID = "hLr-he-GrK"; */
+"hLr-he-GrK.text" = "English";
+
+/* Class = "UIButton"; normalTitle = "Switch to English"; ObjectID = "hn2-KQ-QRZ"; */
+"hn2-KQ-QRZ.normalTitle" = "Switch to English";
+
+/* Class = "UILabel"; text = "Left Measured Level for 70 dB HL (dB SPL) "; ObjectID = "it7-U2-QAP"; */
+"it7-U2-QAP.text" = "Left Measured Level for 70 dB HL (dB SPL) ";
+
+/* Class = "UIButton"; normalTitle = "Return to Title"; ObjectID = "juH-90-9kH"; */
+"juH-90-9kH.normalTitle" = "Return to Title";
+
+/* Class = "UILabel"; text = "Audiometry"; ObjectID = "lJh-zi-akX"; */
+"lJh-zi-akX.text" = "Audiometry";
+
+/* Class = "UIButton"; normalTitle = "Set Volume"; ObjectID = "ojX-cv-moG"; */
+"ojX-cv-moG.normalTitle" = "Set Volume";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "pPr-YM-uC0"; */
+"pPr-YM-uC0.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Load Other"; ObjectID = "tdo-CP-2eF"; */
+"tdo-CP-2eF.normalTitle" = "Load Other";
+
+/* Class = "UIButton"; normalTitle = "Save as New"; ObjectID = "vjE-ls-Sm6"; */
+"vjE-ls-Sm6.normalTitle" = "Save as New";
+
+/* Class = "UILabel"; text = "Current Setting: "; ObjectID = "wXn-bU-4Xg"; */
+"wXn-bU-4Xg.text" = "Current Setting: ";
+
+/* Class = "UIButton"; normalTitle = "Children Test"; ObjectID = "wsK-vU-YA1"; */
+"wsK-vU-YA1.normalTitle" = "Children Test";
+
+/* Class = "UILabel"; text = "Expected Sound Pressure Level for 70 dB HL (dB SPL)"; ObjectID = "z6t-7y-nrQ"; */
+"z6t-7y-nrQ.text" = "Expected Sound Pressure Level for 70 dB HL (dB SPL)";
+
+/* Class = "UIButton"; normalTitle = "Clear Measured Level"; ObjectID = "zdz-fs-qGN"; */
+"zdz-fs-qGN.normalTitle" = "Clear Measured Level";

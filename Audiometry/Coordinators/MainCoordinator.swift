@@ -20,6 +20,12 @@ class MainCoordinator: Coordinator {
         _navController.popViewController(animated: true)
     }
     
+    func showLanguageView(sender: Any? = nil) {
+        let vc = LanguageViewController.instantiate(AppStoryboards.Main)
+        _navController.setNavigationBarHidden(true, animated: false)
+        _navController.show(vc, sender: nil)
+    }
+    
     func showTitleView(sender: Any? = nil) {
         let vc = TitleViewController.instantiate(AppStoryboards.Main)
         _navController.setNavigationBarHidden(true, animated: false)
