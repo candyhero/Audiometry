@@ -11,12 +11,27 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    static let navController = UINavigationController()
+    
+    static let mainCoordinator = MainCoordinator()
+    static let calibrationCoordinator = CalibrationCoordinator()
+    static let testProcotolCoordinator = TestProtocolCoordinator()
+    static let testCoordinator = TestCoordinator()
+    static let resultCoordinator = ResultCoordinator()
+    
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // tell the coordinator to take over control
+        AppDelegate.mainCoordinator.start()
+        
+        // create a basic UIWindow and activate it
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = AppDelegate.navController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 

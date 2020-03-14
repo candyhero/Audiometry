@@ -2,42 +2,55 @@
 import UIKit
 import CoreData
 
-class AdultInstructionViewController: UIViewController {
+class AdultInstructionViewController: UIViewController, Storyboarded {
+    // MARK:
+    let coordinator = AppDelegate.testCoordinator
     
-    private let _managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
-    
-    // All test setup settings
-    private var _globalSetting: GlobalSetting!
-    
-    @IBOutlet private weak var pbFirstInterval: UIButton!
-    @IBOutlet private weak var pbSecondInterval: UIButton!
-    
+    // MARK:
+    @IBOutlet private weak var pbFirst: UIButton!
+    @IBOutlet private weak var pbSecond: UIButton!
     @IBOutlet private weak var pbNoSound: UIButton!
-    @IBOutlet weak var pbStart: UIButton!
-    @IBOutlet weak var pbPause: UIButton!
-    @IBOutlet weak var pbRepeat: UIButton!
+
+    @IBOutlet private weak var pbStart: UIButton!
+    @IBOutlet private weak var pbPause: UIButton!
+    @IBOutlet private weak var pbRepeat: UIButton!
     
     @IBOutlet weak var lbCaption: UILabel!
-    
-    private func loadGlobalSetting() {
-        // fetch global setting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        request.fetchLimit = 1
+
+    // MARK:
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        DispatchQueue.main.async { [unowned self] in
+            self.loadButtonUI()
+        }
         
-        do {
-            _globalSetting = try _managedContext.fetch(request).first
-            
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
+        switch coordinator.getTestLanguage(){
+            case "Invalid":
+                print("Invalid language option!!")
+                break
+            case "Portuguese":
+                print("Loading Portuguese...")
+                self.loadPortuguese()
+            default:
+                let background = UIImage(named: "\(SHAPE_ICON_PATH)/no_sound")
+                self.pbNoSound.setBackgroundImage(background, for: .normal)
+                break
         }
     }
     
-    private func loadPortuguse(){
+    @IBAction func startTest(_ sender: UIButton) {
+        coordinator.showTestView(isAdult: true)
+    }
+    
+    @IBAction func back(_ sender: UIButton) {
+        coordinator.back()
+    }
+    
+    // MARK:
+    private func loadPortuguese() {
         lbCaption.text = PORT_ADULT_CAPTION_TEXT
-        pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
+        pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
         pbNoSound.setTitle("", for: .normal)
         pbStart.setTitle(PORT_START_TEXT, for: .normal)
         pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
@@ -45,39 +58,19 @@ class AdultInstructionViewController: UIViewController {
     }
     
     private func loadButtonUI() {
-        let pbImgDir = "Shape_Icons/500Hz"
+        let pbImgDir = "\(SHAPE_ICON_PATH)/500Hz"
+        print(pbImgDir)
         let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
         
-        self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
-        self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
+        self.pbFirst.imageView?.contentMode = .scaleAspectFit
+        self.pbSecond.imageView?.contentMode = .scaleAspectFit
         
-        self.pbFirstInterval.setImage(pbImg, for: .normal)
-        self.pbSecondInterval.setImage(pbImg, for: .normal)
+        self.pbFirst.setImage(pbImg, for: .normal)
+        self.pbSecond.setImage(pbImg, for: .normal)
         
-        self.pbFirstInterval.adjustsImageWhenHighlighted = false
-        self.pbSecondInterval.adjustsImageWhenHighlighted = false
+        self.pbFirst.adjustsImageWhenHighlighted = false
+        self.pbSecond.adjustsImageWhenHighlighted = false
         self.pbNoSound.adjustsImageWhenHighlighted = false
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        DispatchQueue.main.async { [unowned self] in
-            self.loadGlobalSetting()
-            
-            switch self._globalSetting.testLanguage{
-            case "Invalid":
-                print("Invalid language option!!")
-                break
-            case "Portuguese":
-                print("Loading Portugese...")
-                self.loadPortuguse()
-            default:
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Shape_Icons/no_sound"), for: .normal)
-                break
-            }
-            self.loadButtonUI()
-        }
     }
     
     override var prefersStatusBarHidden: Bool {

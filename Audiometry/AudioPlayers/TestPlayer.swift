@@ -11,9 +11,8 @@ import AudioKit
 
 protocol TestPlayer {
     // correction factors in dB
-    var leftCorrFactor: Double!  { get set }
-    var rightCorrFactor: Double!  { get set }
-    var isStarted: Bool! { get set }
+    var _leftCorrFactor: Double!  { get set }
+    var _rightCorrFactor: Double!  { get set }
     
     init()
     
@@ -32,8 +31,8 @@ protocol TestPlayer {
 extension TestPlayer {
     mutating func updateCorrectionFactors(_ left: Double!, _ right: Double!) {
         
-        leftCorrFactor = left
-        rightCorrFactor = right
+        _leftCorrFactor = left
+        _rightCorrFactor = right
         
         print("L.Vol.: ", left, "; R.Vol.: ", right)
     }
@@ -43,7 +42,7 @@ extension TestPlayer {
         
         // volume in absolute dB to be converted to amplitude
         // 1.0 amplitude <-> 0 absoulte dB
-        let ampDB: Double! = dB - _DB_SYSTEM_MAX
+        let ampDB: Double! = dB - SYSTEM_MAX_DB
         
         let amp: Double! = pow(10.0, ampDB / 20.0)
         
@@ -52,7 +51,6 @@ extension TestPlayer {
     
     mutating func terminate() {
         do {
-            isStarted = false
             try AudioKit.stop()
         } catch {
             print(error)

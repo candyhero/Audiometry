@@ -10,41 +10,38 @@ import Foundation
 import AudioKit
 
 class ChildrenTestPlayer : TestPlayer {
-    
-//    var player: AKPlayer = AKPlayer()
-    var file: AKAudioFile!
-    var player: AKPlayer!
-    var adsr: AKAmplitudeEnvelope!
-    var delay: AKDelay!
-    
-    
-    var startTimer: Timer?
-    var startTimer2: Timer?
-    var stopTimer: Timer?
-    
-    var isStarted: Bool!
-    var leftCorrFactor: Double!
-    var rightCorrFactor: Double!
-    
-    var zFactor: Double!
-    var currentVol: Double!
-    var isLeft: Bool!
+    internal var _leftCorrFactor, _rightCorrFactor: Double!
+
+    private var _file: AKAudioFile!
+    private var _player: AKPlayer!
+    private var _adsrEnvelope: AKAmplitudeEnvelope!
+    private var _delay: AKDelay!
+
+    private var _zFactor: Double!
+    private var _currentVolume: Double!
+    private var _isLeft: Bool!
+
+    private var startTimer, startTimer2, stopTimer: Timer?
     
     required init() {
+        do {
+            try AudioKit.stop()
+        } catch {
+            print(error)
+        }
         
-        leftCorrFactor = 0.0
-        rightCorrFactor = 0.0
+        _leftCorrFactor = 0.0
+        _rightCorrFactor = 0.0
         
         do {
-            file = try AKAudioFile(readFileName: "Animal_Tones/250Hz.wav")
-            isStarted = true
+            _file = try AKAudioFile(readFileName: "\(ANIMAL_TONE_PATH)/250Hz.wav")
         } catch {
             print(error)
             return
         }
         
-        player = AKPlayer(audioFile: file)
-        AudioKit.output = player
+        _player = AKPlayer(audioFile: _file)
+        AudioKit.output = _player
         
         do {
             try AudioKit.start()
@@ -55,79 +52,69 @@ class ChildrenTestPlayer : TestPlayer {
     
     func updateFreq (_ newFreq: Int!) {
         do {
-            zFactor = Z_FACTORS[newFreq] ?? 0.0
-            let file = try AKAudioFile(readFileName: "Animal_Tones/"+String(newFreq)+"Hz.wav")
-            player.load(audioFile: file)
-            player.endTime = PULSE_TIME_CHILDREN * 2
+            _zFactor = Z_FACTORS[newFreq] ?? 0.0
+            let path = "\(ANIMAL_TONE_PATH)/\(newFreq!)Hz.wav"
+            let file = try AKAudioFile(readFileName: path)
+            _player.load(audioFile: file)
+            _player.endTime = PULSE_TIME_CHILDREN * 2
         } catch {
             print(error)
         }
     }
     
     func updateVolume(_ newExpectedVol: Double!, _ isLeft: Bool!) {
-        self.currentVol = newExpectedVol
-        self.isLeft = isLeft
-        player.pan = isLeft ? -1 : 1
+        _currentVolume = newExpectedVol
+        _isLeft = isLeft
+        _player.pan = isLeft ? -1 : 1
+        print(isLeft, _player.pan)
     }
-    
+
     func playFirstInterval() {
-        startTimer = Timer.scheduledTimer(timeInterval: 0.0,
-                                          target: self,
-                                          selector: #selector(start),
-                                          userInfo: nil,
-                                          repeats: false)
-        
-        startTimer2 = Timer.scheduledTimer(timeInterval: PULSE_TIME_CHILDREN,
-                                           target: self,
-                                           selector: #selector(start),
-                                           userInfo: nil,
-                                           repeats: false)
+        playInterval(delay: 0.0)
     }
+
     func playSecondInterval() {
-        let delay: Double! = PULSE_TIME_CHILDREN*Double(NUM_OF_PULSE_CHILDREN)+PLAY_GAP_TIME
-        startTimer = Timer.scheduledTimer(timeInterval: delay,
-                                          target: self,
-                                          selector: #selector(start),
-                                          userInfo: nil,
-                                          repeats: false)
-        
-        startTimer2 = Timer.scheduledTimer(timeInterval: delay+PULSE_TIME_CHILDREN,
-                                           target: self,
-                                           selector: #selector(start),
-                                           userInfo: nil,
-                                           repeats: false)
+        playInterval(delay: PULSE_TIME_CHILDREN * Double(NUM_OF_PULSE_CHILDREN) + PLAY_GAP_TIME)
     }
-    
-    @objc internal func start() {
-        if(!isStarted) {return}
-        
-        self.player.volume = 0
-        self.player.play()
-        let corrFactor: Double! = isLeft ? leftCorrFactor : rightCorrFactor
-        let playingLevel: Double! = self.currentVol + corrFactor + zFactor
-        print("Playing Actual: ", playingLevel)
-        for i in stride(from: 0, through: 1, by: 0.1){
-            // Attacking/Ramping up
-            DispatchQueue.main.asyncAfter(
-                deadline: .now() + i * ATTACK_TIME, execute:
-                {
-                    self.player.volume = self.dbToAmp(playingLevel * i)
-            })
-            // Decaying/Ramping down
-            let t = PULSE_TIME_CHILDREN - (1-i) * RELEASE_TIME
-            DispatchQueue.main.asyncAfter(
-                deadline: .now() + t, execute:
-                {
-                    self.player.volume = self.dbToAmp(playingLevel * (1-i))
-            })
+
+    private func playInterval(delay: Double){
+        startTimer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false){ _ in
+            self.start()
+        }
+        startTimer2 = Timer.scheduledTimer(withTimeInterval: delay + PULSE_TIME_CHILDREN + 0.01, repeats: false){ _ in
+            self.start()
         }
     }
-    
-    @objc func stop() {
+
+    internal func start() {
+        print()
+        _player.volume = 0
+        _player.play()
+        let corrFactor: Double! = _isLeft ? _leftCorrFactor : _rightCorrFactor
+        let playingLevel: Double! = _currentVolume + corrFactor + _zFactor
+        let timeNow = DispatchTime.now()
+
+        print("Playing Actual: ", playingLevel)
+        for i in stride(from: 0, through: 1, by: 0.1) {
+            // Attacking/Ramping up
+            DispatchQueue.main.asyncAfter(deadline: timeNow + i * ATTACK_TIME){
+                self._player.volume = self.dbToAmp(playingLevel * i)
+            }
+
+            // Decaying/Ramping down
+            let t = PULSE_TIME_CHILDREN - (1-i) * RELEASE_TIME
+
+            DispatchQueue.main.asyncAfter(deadline: timeNow + t){
+                self._player.volume = self.dbToAmp(playingLevel * (1-i))
+            }
+        }
+    }
+
+    internal func stop() {
         startTimer?.invalidate()
         startTimer2?.invalidate()
         stopTimer?.invalidate()
-        self.player.stop()
+        self._player.stop()
     }
 }
 

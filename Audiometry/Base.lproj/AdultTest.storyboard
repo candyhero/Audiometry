@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="H19-23-Hv8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="H19-23-Hv8">
     <device id="ipad12_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ResultView-->
-        <scene sceneID="Qeg-Ex-Blt">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="ResultView" id="ufk-kP-x9q" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WVv-Vt-hPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="251" y="-117"/>
-        </scene>
         <!--Adult Test View Controller-->
         <scene sceneID="jA6-ao-Rbd">
             <objects>
-                <viewController id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdultTestViewController" id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DIX-OQ-mz8"/>
                         <viewControllerLayoutGuide type="bottom" id="VwC-He-InT"/>
@@ -67,7 +59,7 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="1SS-Hc-TLl" kind="showDetail" id="zC6-iA-2Wg"/>
+                                    <action selector="backToTitle:" destination="Xos-0w-K0n" eventType="touchUpInside" id="X0z-4S-F0O"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bpw-UR-4Wm">
@@ -154,14 +146,12 @@
                     <connections>
                         <outlet property="lbInstruction" destination="yRV-Wa-CQF" id="SZX-Gg-4mj"/>
                         <outlet property="lbProgress" destination="UDg-n5-yK3" id="2rb-WA-hn0"/>
-                        <outlet property="pbFirstInterval" destination="5eT-zC-Hxs" id="p8s-Ae-X1k"/>
+                        <outlet property="pbFirst" destination="5eT-zC-Hxs" id="p8s-Ae-X1k"/>
                         <outlet property="pbNoSound" destination="Bpw-UR-4Wm" id="yzq-5B-rVf"/>
                         <outlet property="pbPause" destination="1EF-nR-31E" id="Myd-fk-bql"/>
                         <outlet property="pbRepeat" destination="1bH-v6-7C1" id="6c1-zI-Wev"/>
-                        <outlet property="pbSecondInterval" destination="qMI-ZF-NxX" id="b2J-jM-3pD"/>
+                        <outlet property="pbSecond" destination="qMI-ZF-NxX" id="b2J-jM-3pD"/>
                         <outlet property="svIcons" destination="YIq-yB-AZP" id="atM-bc-2Wo"/>
-                        <segue destination="eEg-l9-aEs" kind="show" identifier="segueSwitchEar" id="yI6-FT-bkZ"/>
-                        <segue destination="ufk-kP-x9q" kind="showDetail" identifier="segueResult" id="swA-rV-Jlk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KuR-MS-Dtq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -171,7 +161,7 @@
         <!--Pause View Controller-->
         <scene sceneID="Pic-34-55A">
             <objects>
-                <viewController id="eEg-l9-aEs" customClass="PauseViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PauseViewController" id="eEg-l9-aEs" customClass="PauseViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ra8-Zp-pXY"/>
                         <viewControllerLayoutGuide type="bottom" id="TiW-v8-wmN"/>
@@ -184,7 +174,7 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="1SS-Hc-TLl" kind="showDetail" id="oPb-8s-FZZ"/>
+                                    <action selector="backToTitle:" destination="eEg-l9-aEs" eventType="touchUpInside" id="LeR-Ic-fpm"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GmR-MD-8t1">
@@ -203,7 +193,7 @@
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" title="Continue After Switching the Earphone"/>
                                         <connections>
-                                            <segue destination="Xos-0w-K0n" kind="show" id="QZl-a3-Dzc"/>
+                                            <action selector="continueToTest:" destination="eEg-l9-aEs" eventType="touchUpInside" id="GuE-Zh-kMm"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -229,7 +219,7 @@
         <!--Adult Instruction View Controller-->
         <scene sceneID="rjg-Ks-cq9">
             <objects>
-                <viewController storyboardIdentifier="AdultInstructionView" id="H19-23-Hv8" customClass="AdultInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdultInstructionViewController" id="H19-23-Hv8" customClass="AdultInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X8z-cw-Fej"/>
                         <viewControllerLayoutGuide type="bottom" id="gpb-8g-Tlx"/>
@@ -273,7 +263,7 @@
                                 </constraints>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="1SS-Hc-TLl" kind="showDetail" id="QnM-NE-8XN"/>
+                                    <action selector="back:" destination="H19-23-Hv8" eventType="touchUpInside" id="hs6-0q-Kvz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3JU-sZ-hLL">
@@ -308,7 +298,7 @@
                                 <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <state key="normal" title="Start Testing!"/>
                                 <connections>
-                                    <segue destination="Xos-0w-K0n" kind="show" id="N3n-S4-2S0"/>
+                                    <action selector="startTest:" destination="H19-23-Hv8" eventType="touchUpInside" id="wM3-uo-6dl"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5SV-3M-pbc">
@@ -357,11 +347,11 @@
                     </view>
                     <connections>
                         <outlet property="lbCaption" destination="Ulh-08-mvM" id="4IR-QQ-woP"/>
-                        <outlet property="pbFirstInterval" destination="hFa-b0-Uqe" id="3VY-jZ-ZXu"/>
+                        <outlet property="pbFirst" destination="hFa-b0-Uqe" id="3VY-jZ-ZXu"/>
                         <outlet property="pbNoSound" destination="5SV-3M-pbc" id="fyk-Mi-H6o"/>
                         <outlet property="pbPause" destination="3JU-sZ-hLL" id="LAa-LT-f21"/>
                         <outlet property="pbRepeat" destination="b8i-ED-zDi" id="wra-cj-ImW"/>
-                        <outlet property="pbSecondInterval" destination="x90-gC-any" id="DcQ-04-3ah"/>
+                        <outlet property="pbSecond" destination="x90-gC-any" id="DcQ-04-3ah"/>
                         <outlet property="pbStart" destination="lbz-0r-a2i" id="rk8-94-haj"/>
                     </connections>
                 </viewController>
@@ -369,17 +359,5 @@
             </objects>
             <point key="canvasLocation" x="-422.10834553440702" y="286.5234375"/>
         </scene>
-        <!--TitleView-->
-        <scene sceneID="lxq-RT-Vbn">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="TitleView" id="1SS-Hc-TLl" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tog-8X-Bck" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="250" y="687"/>
-        </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="zC6-iA-2Wg"/>
-        <segue reference="N3n-S4-2S0"/>
-    </inferredMetricsTieBreakers>
 </document>

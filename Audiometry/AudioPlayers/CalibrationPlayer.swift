@@ -14,7 +14,13 @@ class CalibrationPlayer {
     
     private var _generator: AKOperationGenerator! = nil
     
-    init(){
+    init() {
+        do {
+            try AudioKit.stop()
+        } catch {
+            print(error)
+        }
+
         // _generator to be configured by setting _generator.parameters
         _generator = AKOperationGenerator(channelCount: 2) {
             parameters in
@@ -39,22 +45,22 @@ class CalibrationPlayer {
         return _generator.isStarted
     }
     
-    func startPlaying(){
+    func startPlaying() {
         _generator.start()
     }
     
-    func stopPlaying(){
+    func stopPlaying() {
         _generator.stop()
     }
     
-    func updateFreq(_ freq: Int){
+    func updateFreq(_ freq: Int) {
         _generator.parameters[0] = Double(freq)
     }
     
     // Update volume to currently playing frequency tone
-    func updateVolume(_ ui: SettingUI){
+    func updateVolume(_ ui: CalibrationSettingUI) {
         // skip if not playing currently
-        if(!_generator.isStarted){
+        if(!_generator.isStarted) {
             return
         }
         
@@ -68,9 +74,9 @@ class CalibrationPlayer {
         let leftCorrectionFactor = expectedLv - leftMeasuredLv
         let rightCorrectionFactor = expectedLv - rightMeasuredLv
         
-        for i in stride(from: 0.0, through: 1.0, by: _RAMP_TIMESTEP){
+        for i in stride(from: 0.0, through: 1.0, by: RAMP_TIMESTEP) {
             DispatchQueue.main.asyncAfter(
-                deadline: .now() + i * _RAMP_TIME, execute:
+                deadline: .now() + i * RAMP_TIME, execute:
                 {
                     self._generator.parameters[1] = self.dbToAmp(
                         (presentationLv + leftCorrectionFactor) * i)
@@ -85,7 +91,7 @@ class CalibrationPlayer {
         
         // volume in absolute dB to be converted to amplitude
         // 1.0 amplitude <-> 0 absoulte dB
-        let ampDB: Double = dB - _DB_SYSTEM_MAX
+        let ampDB: Double = dB - SYSTEM_MAX_DB
         
         let amp: Double = pow(10.0, ampDB / 20.0)
         

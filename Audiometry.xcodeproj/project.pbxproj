@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E32DA0821C17EAC00002770 /* Shape_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 4E32DA0521C17EAB00002770 /* Shape_Icons */; };
-		4E32DA0921C17EAC00002770 /* Animal_Tones in Resources */ = {isa = PBXBuildFile; fileRef = 4E32DA0621C17EAB00002770 /* Animal_Tones */; };
-		4E32DA0A21C17EAC00002770 /* Animal_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 4E32DA0721C17EAB00002770 /* Animal_Icons */; };
+		0DFA9E80DF2176D7579F4F4C /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */; };
 		4E4B3C7D21A7266000191AF3 /* CalibrationPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3C7121A7266000191AF3 /* CalibrationPlayer.swift */; };
 		4E4B3C7E21A7266000191AF3 /* TestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3C7221A7266000191AF3 /* TestPlayer.swift */; };
 		4E4B3C8221A7266000191AF3 /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */; };
@@ -20,8 +18,7 @@
 		4E4B3C9721A7D32E00191AF3 /* CalibrationUIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3C9621A7D32E00191AF3 /* CalibrationUIFactory.swift */; };
 		4E4B3CA521A9A30900191AF3 /* AdultTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E4B3CA221A9A30900191AF3 /* AdultTest.storyboard */; };
 		4E4B3CED21A9B3FC00191AF3 /* AdultInstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CEA21A9B3FC00191AF3 /* AdultInstructionViewController.swift */; };
-		4E4B3CF021B03CF000191AF3 /* ProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CEF21B03CF000191AF3 /* ProtocolViewController.swift */; };
-		4E4B3CF321B0FA3600191AF3 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CF121B0FA3500191AF3 /* TestModel.swift */; };
+		4E4B3CF021B03CF000191AF3 /* TestProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CEF21B03CF000191AF3 /* TestProtocolViewController.swift */; };
 		4E4B3CF621B1988000191AF3 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4B3CF521B1988000191AF3 /* ResultViewController.swift */; };
 		4EC055F921A724E60016AB0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC055F821A724E60016AB0D /* AppDelegate.swift */; };
 		4EC0560321A724E70016AB0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EC0560221A724E70016AB0D /* Assets.xcassets */; };
@@ -32,17 +29,29 @@
 		4EEDE90E21BFB04600028C60 /* ChildrenTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EEDE90C21BFB04600028C60 /* ChildrenTest.storyboard */; };
 		4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */; };
 		4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */; };
-		6724711722451F320019BB8B /* PracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6724711622451F320019BB8B /* PracticeViewController.swift */; };
+		6794A4FF2400541600489C64 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 6794A4FE2400541600489C64 /* Assets */; };
 		67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */; };
+		67B58CF123D4CDF7003EFEE6 /* CalibrationSettingRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */; };
+		67B58CF423D5F795003EFEE6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF323D5F795003EFEE6 /* Coordinator.swift */; };
+		67B58CF623D5F7BC003EFEE6 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */; };
+		67B58CF823D5F812003EFEE6 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */; };
+		67B58CFA23D73833003EFEE6 /* TestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF923D73833003EFEE6 /* TestCoordinator.swift */; };
+		67B58CFC23D748DF003EFEE6 /* CalibrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */; };
+		67B58CFF23D763FF003EFEE6 /* CalibrationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */; };
+		67B58D0123E0FD72003EFEE6 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58D0023E0FD72003EFEE6 /* Repository.swift */; };
+		67B58D0323EF19C2003EFEE6 /* TestProcotolCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58D0223EF19C2003EFEE6 /* TestProcotolCoordinator.swift */; };
+		67C88C3C2400498F0000F6E7 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C88C3B2400498F0000F6E7 /* AppConstants.swift */; };
 		67DCEF2E22F68A8400C3117F /* CaptionText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DCEF2D22F68A8400C3117F /* CaptionText.swift */; };
-		DFB5839F2D0852BF2E70694E /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA9281A44F4747B4223B59A /* Pods_Audiometry.framework */; };
+		67E329B323CE28AC0068C2E2 /* GlobalSettingRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */; };
+		67E329B523CE2C6A0068C2E2 /* PatientProfileRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */; };
+		67E329B823CF5F190068C2E2 /* TestProtocolRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B723CF5F190068C2E2 /* TestProtocolRepo.swift */; };
+		67E329BA23CF661E0068C2E2 /* ProtocolUIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E329B923CF661E0068C2E2 /* ProtocolUIFactory.swift */; };
+		D0F8D3AB212F9A5C83F86A02 /* ResultCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */; };
+		D0F8D6346B13044ECCAFB8FC /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F8DDA4E615FBA4FEA62638 /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		47AC43770DC4F76FAC3883E4 /* Pods-Audiometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.release.xcconfig"; sourceTree = "<group>"; };
-		4E32DA0521C17EAB00002770 /* Shape_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shape_Icons; sourceTree = "<group>"; };
-		4E32DA0621C17EAB00002770 /* Animal_Tones */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Tones; sourceTree = "<group>"; };
-		4E32DA0721C17EAB00002770 /* Animal_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Icons; sourceTree = "<group>"; };
+		1C9CAD001E93C5B039521F51 /* Pods-Audiometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.release.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.release.xcconfig"; sourceTree = "<group>"; };
 		4E4B3C7121A7266000191AF3 /* CalibrationPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationPlayer.swift; sourceTree = "<group>"; };
 		4E4B3C7221A7266000191AF3 /* TestPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPlayer.swift; sourceTree = "<group>"; };
 		4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
@@ -53,10 +62,8 @@
 		4E4B3C9621A7D32E00191AF3 /* CalibrationUIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationUIFactory.swift; sourceTree = "<group>"; };
 		4E4B3CA321A9A30900191AF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AdultTest.storyboard; sourceTree = "<group>"; };
 		4E4B3CEA21A9B3FC00191AF3 /* AdultInstructionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdultInstructionViewController.swift; sourceTree = "<group>"; };
-		4E4B3CEF21B03CF000191AF3 /* ProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolViewController.swift; sourceTree = "<group>"; };
-		4E4B3CF121B0FA3500191AF3 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
+		4E4B3CEF21B03CF000191AF3 /* TestProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestProtocolViewController.swift; sourceTree = "<group>"; };
 		4E4B3CF521B1988000191AF3 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
-		4EC055F521A724E60016AB0D /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EC055F821A724E60016AB0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EC0560221A724E70016AB0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4EC0560521A724E70016AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,13 +74,29 @@
 		4EEDE90D21BFB04600028C60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ChildrenTest.storyboard; sourceTree = "<group>"; };
 		4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTestPlayer.swift; sourceTree = "<group>"; };
 		4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultTestPlayer.swift; sourceTree = "<group>"; };
-		5AA9281A44F4747B4223B59A /* Pods_Audiometry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audiometry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6724711622451F320019BB8B /* PracticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeViewController.swift; sourceTree = "<group>"; };
+		6703415723512E4E00ABFB89 /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6794A4FE2400541600489C64 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
 		67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
+		67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationSettingRepo.swift; sourceTree = "<group>"; };
+		67B58CF323D5F795003EFEE6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		67B58CF923D73833003EFEE6 /* TestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoordinator.swift; sourceTree = "<group>"; };
+		67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationCoordinator.swift; sourceTree = "<group>"; };
+		67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationSetting.swift; sourceTree = "<group>"; };
+		67B58D0023E0FD72003EFEE6 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		67B58D0223EF19C2003EFEE6 /* TestProcotolCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProcotolCoordinator.swift; sourceTree = "<group>"; };
+		67C88C3B2400498F0000F6E7 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		67DCEF2D22F68A8400C3117F /* CaptionText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionText.swift; sourceTree = "<group>"; };
-		7D1C47F07515E0B86F9DF089 /* Pods-AudiometryKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryKids.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids.release.xcconfig"; sourceTree = "<group>"; };
-		85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
-		F0915E4BDAAAB3A042149B05 /* Pods-AudiometryKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryKids.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids.debug.xcconfig"; sourceTree = "<group>"; };
+		67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettingRepo.swift; sourceTree = "<group>"; };
+		67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientProfileRepo.swift; sourceTree = "<group>"; };
+		67E329B723CF5F190068C2E2 /* TestProtocolRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolRepo.swift; sourceTree = "<group>"; };
+		67E329B923CF661E0068C2E2 /* ProtocolUIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolUIFactory.swift; sourceTree = "<group>"; };
+		67F4916C240EBAEF00AC891E /* TestPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = TestPlayground.playground; path = ../../../../Desktop/TestPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audiometry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFE8D055F906C3049CD786A8 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
+		D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultCoordinator.swift; sourceTree = "<group>"; };
+		D0F8DDA4E615FBA4FEA62638 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,22 +104,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFB5839F2D0852BF2E70694E /* Pods_Audiometry.framework in Frameworks */,
+				0DFA9E80DF2176D7579F4F4C /* Pods_Audiometry.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		30F3E21CF4D8BF0C82C8272F /* Pods */ = {
+		1973150BF9644E63FB60AE81 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F0915E4BDAAAB3A042149B05 /* Pods-AudiometryKids.debug.xcconfig */,
-				7D1C47F07515E0B86F9DF089 /* Pods-AudiometryKids.release.xcconfig */,
-				85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */,
-				47AC43770DC4F76FAC3883E4 /* Pods-Audiometry.release.xcconfig */,
+				AFE8D055F906C3049CD786A8 /* Pods-Audiometry.debug.xcconfig */,
+				1C9CAD001E93C5B039521F51 /* Pods-Audiometry.release.xcconfig */,
 			);
-			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		4E4B3C6B21A7264300191AF3 /* Storyboards */ = {
@@ -124,18 +145,17 @@
 		4E4B3C7721A7266000191AF3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */,
 				4E4B3C7921A7266000191AF3 /* TitleViewController.swift */,
-				67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */,
-				4E4B3C9621A7D32E00191AF3 /* CalibrationUIFactory.swift */,
 				4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */,
-				4E4B3CEF21B03CF000191AF3 /* ProtocolViewController.swift */,
-				6724711622451F320019BB8B /* PracticeViewController.swift */,
+				4E4B3CEF21B03CF000191AF3 /* TestProtocolViewController.swift */,
+				67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */,
 				4EEDE90A21BEABBC00028C60 /* ChildrenInstructionViewController.swift */,
 				4EEDE90421BE876E00028C60 /* ChildrenTestViewController.swift */,
 				4E4B3CEA21A9B3FC00191AF3 /* AdultInstructionViewController.swift */,
 				4EEDE90521BE876E00028C60 /* AdultTestViewController.swift */,
-				4E4B3CF121B0FA3500191AF3 /* TestModel.swift */,
 				4E4B3CF521B1988000191AF3 /* ResultViewController.swift */,
+				D0F8DDA4E615FBA4FEA62638 /* TestViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -152,43 +172,81 @@
 			isa = PBXGroup;
 			children = (
 				4EC055F721A724E60016AB0D /* Audiometry */,
-				4EC055F621A724E60016AB0D /* Products */,
-				30F3E21CF4D8BF0C82C8272F /* Pods */,
-				B719595A35975C73C45D2886 /* Frameworks */,
+				1973150BF9644E63FB60AE81 /* Pods */,
+				B4A70806EF3F3D522B8F549B /* Frameworks */,
+				6703415723512E4E00ABFB89 /* Audiometry.app */,
 			);
-			sourceTree = "<group>";
-		};
-		4EC055F621A724E60016AB0D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4EC055F521A724E60016AB0D /* Audiometry.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		4EC055F721A724E60016AB0D /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
-				4E32DA0721C17EAB00002770 /* Animal_Icons */,
-				4E32DA0621C17EAB00002770 /* Animal_Tones */,
-				4E32DA0521C17EAB00002770 /* Shape_Icons */,
-				4E4B3C9321A752CB00191AF3 /* DataModels */,
-				4E4B3C7021A7266000191AF3 /* AudioPlayers */,
-				4E4B3C7721A7266000191AF3 /* ViewControllers */,
-				4E4B3C6B21A7264300191AF3 /* Storyboards */,
-				67DCEF2D22F68A8400C3117F /* CaptionText.swift */,
-				4E4B3C9421A757DA00191AF3 /* AppUtililty.swift */,
+				67F4916C240EBAEF00AC891E /* TestPlayground.playground */,
+				6794A4FE2400541600489C64 /* Assets */,
 				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
+				67C88C3B2400498F0000F6E7 /* AppConstants.swift */,
+				4E4B3C9421A757DA00191AF3 /* AppUtililty.swift */,
+				67DCEF2D22F68A8400C3117F /* CaptionText.swift */,
+				67B58CF223D5F786003EFEE6 /* Coordinators */,
+				4E4B3C9321A752CB00191AF3 /* DataModels */,
+				67E329B123CE28880068C2E2 /* Repos */,
+				67B58CFD23D763EE003EFEE6 /* Entities */,
+				4E4B3C7721A7266000191AF3 /* ViewControllers */,
+				67E329B623CE30C10068C2E2 /* UI */,
+				4E4B3C6B21A7264300191AF3 /* Storyboards */,
+				4E4B3C7021A7266000191AF3 /* AudioPlayers */,
 				4EC0560221A724E70016AB0D /* Assets.xcassets */,
 				4EC0560721A724E70016AB0D /* Info.plist */,
 			);
 			path = Audiometry;
 			sourceTree = "<group>";
 		};
-		B719595A35975C73C45D2886 /* Frameworks */ = {
+		67B58CF223D5F786003EFEE6 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				5AA9281A44F4747B4223B59A /* Pods_Audiometry.framework */,
+				67B58CF323D5F795003EFEE6 /* Coordinator.swift */,
+				67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */,
+				67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */,
+				67B58D0223EF19C2003EFEE6 /* TestProcotolCoordinator.swift */,
+				67B58CF923D73833003EFEE6 /* TestCoordinator.swift */,
+				D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		67B58CFD23D763EE003EFEE6 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				67B58CFE23D763FF003EFEE6 /* CalibrationSetting.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		67E329B123CE28880068C2E2 /* Repos */ = {
+			isa = PBXGroup;
+			children = (
+				67B58D0023E0FD72003EFEE6 /* Repository.swift */,
+				67E329B223CE28AC0068C2E2 /* GlobalSettingRepo.swift */,
+				67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */,
+				67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */,
+				67E329B723CF5F190068C2E2 /* TestProtocolRepo.swift */,
+			);
+			path = Repos;
+			sourceTree = "<group>";
+		};
+		67E329B623CE30C10068C2E2 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4E4B3C9621A7D32E00191AF3 /* CalibrationUIFactory.swift */,
+				67E329B923CF661E0068C2E2 /* ProtocolUIFactory.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		B4A70806EF3F3D522B8F549B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -212,7 +270,7 @@
 			);
 			name = Audiometry;
 			productName = AudiometryKids;
-			productReference = 4EC055F521A724E60016AB0D /* Audiometry.app */;
+			productReference = 6703415723512E4E00ABFB89 /* Audiometry.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -240,7 +298,7 @@
 				Base,
 			);
 			mainGroup = 4EC055EC21A724E60016AB0D;
-			productRefGroup = 4EC055F621A724E60016AB0D /* Products */;
+			productRefGroup = 4EC055EC21A724E60016AB0D;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -255,11 +313,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EC0560621A724E70016AB0D /* LaunchScreen.storyboard in Resources */,
-				4E32DA0A21C17EAC00002770 /* Animal_Icons in Resources */,
-				4E32DA0821C17EAC00002770 /* Shape_Icons in Resources */,
+				6794A4FF2400541600489C64 /* Assets in Resources */,
 				4EC0560321A724E70016AB0D /* Assets.xcassets in Resources */,
 				4E4B3C8E21A7267100191AF3 /* Main.storyboard in Resources */,
-				4E32DA0921C17EAC00002770 /* Animal_Tones in Resources */,
 				4E4B3CA521A9A30900191AF3 /* AdultTest.storyboard in Resources */,
 				4EEDE90E21BFB04600028C60 /* ChildrenTest.storyboard in Resources */,
 			);
@@ -296,20 +352,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Audiometry/Pods-Audiometry-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -319,26 +370,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E4B3CF321B0FA3600191AF3 /* TestModel.swift in Sources */,
+				67B58D0123E0FD72003EFEE6 /* Repository.swift in Sources */,
+				67E329B823CF5F190068C2E2 /* TestProtocolRepo.swift in Sources */,
 				4E4B3C7D21A7266000191AF3 /* CalibrationPlayer.swift in Sources */,
 				4EEDE90621BE876E00028C60 /* ChildrenTestViewController.swift in Sources */,
-				6724711722451F320019BB8B /* PracticeViewController.swift in Sources */,
-				4E4B3CF021B03CF000191AF3 /* ProtocolViewController.swift in Sources */,
+				67B58CFC23D748DF003EFEE6 /* CalibrationCoordinator.swift in Sources */,
+				4E4B3CF021B03CF000191AF3 /* TestProtocolViewController.swift in Sources */,
+				67B58CF623D5F7BC003EFEE6 /* Storyboarded.swift in Sources */,
 				4E4B3C8321A7266000191AF3 /* TitleViewController.swift in Sources */,
+				67E329B323CE28AC0068C2E2 /* GlobalSettingRepo.swift in Sources */,
+				67B58CFA23D73833003EFEE6 /* TestCoordinator.swift in Sources */,
+				67E329B523CE2C6A0068C2E2 /* PatientProfileRepo.swift in Sources */,
 				4E4B3C9521A757DA00191AF3 /* AppUtililty.swift in Sources */,
 				4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */,
+				67B58D0323EF19C2003EFEE6 /* TestProcotolCoordinator.swift in Sources */,
 				4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */,
+				67B58CF123D4CDF7003EFEE6 /* CalibrationSettingRepo.swift in Sources */,
 				4EEDE90721BE876E00028C60 /* AdultTestViewController.swift in Sources */,
 				4E4B3C8221A7266000191AF3 /* CalibrationViewController.swift in Sources */,
 				4E4B3C9721A7D32E00191AF3 /* CalibrationUIFactory.swift in Sources */,
 				67DCEF2E22F68A8400C3117F /* CaptionText.swift in Sources */,
+				67E329BA23CF661E0068C2E2 /* ProtocolUIFactory.swift in Sources */,
 				4E4B3CF621B1988000191AF3 /* ResultViewController.swift in Sources */,
 				4E4B3CED21A9B3FC00191AF3 /* AdultInstructionViewController.swift in Sources */,
 				4EEDE90B21BEABBC00028C60 /* ChildrenInstructionViewController.swift in Sources */,
+				67C88C3C2400498F0000F6E7 /* AppConstants.swift in Sources */,
+				67B58CFF23D763FF003EFEE6 /* CalibrationSetting.swift in Sources */,
 				67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */,
 				4E4B3C9221A745EA00191AF3 /* AudiometryModel.xcdatamodeld in Sources */,
+				67B58CF423D5F795003EFEE6 /* Coordinator.swift in Sources */,
 				4EC055F921A724E60016AB0D /* AppDelegate.swift in Sources */,
+				67B58CF823D5F812003EFEE6 /* MainCoordinator.swift in Sources */,
 				4E4B3C7E21A7266000191AF3 /* TestPlayer.swift in Sources */,
+				D0F8D6346B13044ECCAFB8FC /* TestViewController.swift in Sources */,
+				D0F8D3AB212F9A5C83F86A02 /* ResultCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,10 +563,11 @@
 		};
 		4EC0560B21A724E70016AB0D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85F8B3D476F68D310C73BBC2 /* Pods-Audiometry.debug.xcconfig */;
+			baseConfigurationReference = AFE8D055F906C3049CD786A8 /* Pods-Audiometry.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S8QF6QA72P;
 				INFOPLIST_FILE = Audiometry/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -513,6 +579,7 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TriCounty.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -522,10 +589,11 @@
 		};
 		4EC0560C21A724E70016AB0D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47AC43770DC4F76FAC3883E4 /* Pods-Audiometry.release.xcconfig */;
+			baseConfigurationReference = 1C9CAD001E93C5B039521F51 /* Pods-Audiometry.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S8QF6QA72P;
 				INFOPLIST_FILE = Audiometry/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -537,6 +605,7 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TriCounty.Audiometry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

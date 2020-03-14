@@ -10,53 +10,26 @@ import Foundation
 import CoreData
 import UIKit
 
-class PauseViewController: UIViewController {
-    
-    private let managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
-    
-    private var globalSetting: GlobalSetting! = nil
-    
+class PauseViewController: UIViewController, Storyboarded {
+
+    var coordinator: TestCoordinator! = AppDelegate.testCoordinator
+
     @IBOutlet weak var lbCaption: UILabel!
     @IBOutlet weak var pbContinue: UIButton!
     
-    func initCaption(){
-        // fetch global setting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        request.fetchLimit = 1
-        
-        do {
-            globalSetting = try managedContext.fetch(request).first
-            
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         lbCaption.text = "Great job! Half way done!"
         pbContinue.setTitle("Continue", for: .normal)
-        
-//        if((globalSetting.patientProfile?.isAdult)!){
-//            lbCaption.text = "Great job! Half way done!"
-//            pbContinue.setTitle("Continue", for: .normal)
-//        }
-//        else{
-//            lbCaption.text = ""
-//
-//            let imgDir = "Shape_Icons/1000Hz"
-//            let img = UIImage(named:imgDir)?.withRenderingMode(.alwaysOriginal)
-//            pbContinue.imageView?.contentMode = .center
-//
-//            pbContinue.setTitle("Continue", for: .normal)
-//            pbContinue.setImage(img, for: .normal)
-//            pbContinue.adjustsImageWhenHighlighted = false
-//        }
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        initCaption()
+    
+    @IBAction func backToTitle(_ sender: UIButton) {
+        coordinator.backToTitle()
+    }
+    
+    @IBAction func continueToTest(_ sender: UIButton) {
+        coordinator.back()
     }
     
     override func didReceiveMemoryWarning() {

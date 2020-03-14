@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cTp-f6-a1r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cTp-f6-a1r">
     <device id="ipad10_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Title View Controller-->
         <scene sceneID="cf7-WR-69U">
             <objects>
-                <viewController storyboardIdentifier="TitleView" id="cTp-f6-a1r" customClass="TitleViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TitleViewController" id="cTp-f6-a1r" customClass="TitleViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4Ud-yW-L2I"/>
                         <viewControllerLayoutGuide type="bottom" id="qea-bF-98W"/>
@@ -34,7 +34,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Start"/>
                                         <connections>
-                                            <action selector="startTesting:" destination="cTp-f6-a1r" eventType="touchUpInside" id="1xa-eS-dGI"/>
+                                            <action selector="prepareTest:" destination="cTp-f6-a1r" eventType="touchUpInside" id="SJC-Bg-FNS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c5c-0e-X0P">
@@ -47,8 +47,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Practice"/>
                                         <connections>
-                                            <action selector="startTesting:" destination="cTp-f6-a1r" eventType="touchUpInside" id="Lue-di-6RC"/>
-                                            <segue destination="98J-wo-Ehx" kind="show" id="KCN-nr-J9z"/>
+                                            <action selector="preparePractice:" destination="cTp-f6-a1r" eventType="touchUpInside" id="mjo-2L-CS1"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dab-8t-SDg">
@@ -61,7 +60,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Calibration"/>
                                         <connections>
-                                            <segue destination="WbP-fl-Brp" kind="showDetail" id="rys-ao-c2H"/>
+                                            <action selector="showCalibrationView:" destination="cTp-f6-a1r" eventType="touchUpInside" id="5PG-xk-PxS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MVY-zw-dkX">
@@ -74,7 +73,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="View Results"/>
                                         <connections>
-                                            <action selector="viewResults:" destination="cTp-f6-a1r" eventType="touchUpInside" id="qns-26-MK9"/>
+                                            <action selector="showResultView:" destination="cTp-f6-a1r" eventType="touchUpInside" id="qns-26-MK9"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -97,19 +96,15 @@
                             <constraint firstItem="lJh-zi-akX" firstAttribute="centerX" secondItem="wbj-he-gXG" secondAttribute="centerX" id="lbe-3C-HW9"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="Y3r-HM-Rvd" kind="show" identifier="segueProtocolFromTitle" id="94T-w3-BCe"/>
-                        <segue destination="iwX-Tf-HtX" kind="show" identifier="segueResultFromTitle" id="Fsl-Dc-Egp"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YUe-jA-rry" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-477" y="-622"/>
         </scene>
-        <!--Protocol View Controller-->
+        <!--Test Protocol View Controller-->
         <scene sceneID="yy7-68-HY3">
             <objects>
-                <viewController storyboardIdentifier="ProtocolView" id="Y3r-HM-Rvd" customClass="ProtocolViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TestProtocolViewController" id="Y3r-HM-Rvd" customClass="TestProtocolViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rYx-y9-afQ"/>
                         <viewControllerLayoutGuide type="bottom" id="nLG-lN-eKU"/>
@@ -138,7 +133,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="5hk-Ic-nXm"/>
+                                    <action selector="back:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="bjU-Te-V7I"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gc3-JO-0I7">
@@ -378,18 +373,16 @@
                         <outlet property="lbFreqSeq" destination="yXe-Pb-BHe" id="QKO-bx-ebP"/>
                         <outlet property="lbTestLanguage" destination="hLr-he-GrK" id="6FS-mj-X2m"/>
                         <outlet property="svFreq" destination="efm-Xe-VU2" id="TW3-Qt-eeH"/>
-                        <segue destination="gpp-Oc-hEO" kind="showDetail" identifier="segueAdultTest" id="hfc-YE-1Ho"/>
-                        <segue destination="hc1-yJ-Pc0" kind="showDetail" identifier="segueChildrenTest" id="S5N-7u-244"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0v-ao-aih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="219" y="121"/>
+            <point key="canvasLocation" x="207" y="-622"/>
         </scene>
         <!--Calibration View Controller-->
         <scene sceneID="BnQ-jU-Usx">
             <objects>
-                <viewController storyboardIdentifier="CalibrationView" id="WbP-fl-Brp" customClass="CalibrationViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CalibrationViewController" id="WbP-fl-Brp" customClass="CalibrationViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DPu-xT-Zy9"/>
                         <viewControllerLayoutGuide type="bottom" id="dqe-qX-nyP"/>
@@ -402,7 +395,7 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="cTp-f6-a1r" kind="showDetail" id="uKx-ej-dTy"/>
+                                    <action selector="back:" destination="WbP-fl-Brp" eventType="touchUpInside" id="Ndc-BH-5du"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bY2-0E-pNT" userLabel="Sv Main">
@@ -591,12 +584,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3s-cI-oCg" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-478" y="-1380"/>
+            <point key="canvasLocation" x="-478" y="110"/>
         </scene>
         <!--Result View Controller-->
         <scene sceneID="8mt-vM-H3Y">
             <objects>
-                <viewController storyboardIdentifier="ResultView" id="iwX-Tf-HtX" customClass="ResultViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ResultViewController" id="iwX-Tf-HtX" customClass="ResultViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hQQ-Jt-xOf"/>
                         <viewControllerLayoutGuide type="bottom" id="IBh-WK-85D"/>
@@ -609,7 +602,7 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="0wf-rk-Jqg"/>
+                                    <action selector="back:" destination="iwX-Tf-HtX" eventType="touchUpInside" id="sWg-rS-c7N"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FcF-v1-OIM">
@@ -778,310 +771,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lzF-mF-AqB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-478.05755395683457" y="120.86330935251799"/>
+            <point key="canvasLocation" x="207" y="109"/>
         </scene>
-        <!--AdultInstructionView-->
+        <!--AdultInstructionViewController-->
         <scene sceneID="OTy-KX-eOT">
             <objects>
-                <viewControllerPlaceholder storyboardName="AdultTest" referencedIdentifier="AdultInstructionView" id="gpp-Oc-hEO" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="AdultTest" referencedIdentifier="AdultInstructionViewController" id="gpp-Oc-hEO" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5t6-Wf-erF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="632" y="-716"/>
         </scene>
-        <!--ChildrenInstructionView-->
+        <!--ChildrenInstructionViewController-->
         <scene sceneID="GIN-nv-edI">
             <objects>
-                <viewControllerPlaceholder storyboardName="ChildrenTest" referencedIdentifier="ChildrenInstructionView" id="hc1-yJ-Pc0" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="ChildrenTest" referencedIdentifier="ChildrenInstructionViewController" id="hc1-yJ-Pc0" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zla-gN-iEw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="632" y="-560"/>
         </scene>
-        <!--Practice View Controller-->
-        <scene sceneID="hzR-55-l6Y">
-            <objects>
-                <viewController storyboardIdentifier="PracticeView" id="98J-wo-Ehx" customClass="PracticeViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="BjP-JV-uJa"/>
-                        <viewControllerLayoutGuide type="bottom" id="gI3-jY-cOw"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="CuI-aH-5KU">
-                        <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYk-N7-JGD" userLabel="svFreq">
-                                <rect key="frame" x="20" y="137" width="1072" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="pNA-J9-KoS"/>
-                                </constraints>
-                            </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1e-XD-qPD">
-                                <rect key="frame" x="40" y="297" width="1032" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="70l-80-I0D"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Tk-GJ-NMu">
-                                <rect key="frame" x="20" y="20" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="MLj-qe-4GS"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="cyU-I1-gfR">
-                                <rect key="frame" x="236.5" y="518" width="639" height="38"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P9n-2A-p8O">
-                                        <rect key="frame" x="0.0" y="0.0" width="115" height="38"/>
-                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="L. Ear Only">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setLeftOnly:" destination="98J-wo-Ehx" eventType="touchUpInside" id="g61-1g-fOD"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANH-RC-xts">
-                                        <rect key="frame" x="155" y="0.0" width="116" height="38"/>
-                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="R. Ear Only">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setRightOnly:" destination="98J-wo-Ehx" eventType="touchUpInside" id="L93-ng-A3T"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rDn-Yr-3d1">
-                                        <rect key="frame" x="311" y="0.0" width="144" height="38"/>
-                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="L. Ear -&gt; R. Ear">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setLeftFirst:" destination="98J-wo-Ehx" eventType="touchUpInside" id="5ZN-KW-zTB"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hg5-Kx-tso">
-                                        <rect key="frame" x="495" y="0.0" width="144" height="38"/>
-                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="R. Ear -&gt; L. Ear">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setRightFirst:" destination="98J-wo-Ehx" eventType="touchUpInside" id="NvI-R6-cdk"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Lvq-YS-6zy">
-                                <rect key="frame" x="87.5" y="596" width="937" height="38"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oEk-sV-op6">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="38"/>
-                                        <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Remove Last">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="removeLastFreq:" destination="98J-wo-Ehx" eventType="touchUpInside" id="Vlb-hS-Ofx"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAT-c4-A3Q">
-                                        <rect key="frame" x="188" y="0.0" width="97" height="38"/>
-                                        <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Clear All">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="removeAllFreq:" destination="98J-wo-Ehx" eventType="touchUpInside" id="7um-O6-ePX"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eiy-ar-roW">
-                                        <rect key="frame" x="345" y="0.0" width="135" height="38"/>
-                                        <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Save Protocol">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="saveFreqSeqProtocol:" destination="98J-wo-Ehx" eventType="touchUpInside" id="v23-pd-0nb"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CUy-kJ-jFp">
-                                        <rect key="frame" x="540" y="0.0" width="135" height="38"/>
-                                        <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Load Protocol">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="loadFreqSeqProtocol:" destination="98J-wo-Ehx" eventType="touchUpInside" id="CYF-tW-ara"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3DV-uX-8wg">
-                                        <rect key="frame" x="735" y="0.0" width="202" height="38"/>
-                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Delete Current Protocol">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="deleteFreqSeqProtocol:" destination="98J-wo-Ehx" eventType="touchUpInside" id="Xis-OW-1ay"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="sQk-or-VBM">
-                                <rect key="frame" x="255.5" y="674" width="601" height="80"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Iby-Xa-uhZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="187" height="80"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Crf-U6-QDs">
-                                                <rect key="frame" x="0.0" y="0.0" width="187" height="38"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                                <state key="normal" title="Switch to English">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="switchToEnglish:" destination="98J-wo-Ehx" eventType="touchUpInside" id="HPU-pW-xHG"/>
-                                                    <action selector="switchToEnglish:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="MXG-YP-hsl"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WjI-Xj-8BK">
-                                                <rect key="frame" x="0.0" y="46" width="187" height="34"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                                <state key="normal" title="Switch to Portuguese">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="switchToPortuguese:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="0D8-cl-eEs"/>
-                                                    <action selector="switchToPortuguese:" destination="98J-wo-Ehx" eventType="touchUpInside" id="NsH-Xv-q55"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hix-7W-wqb">
-                                        <rect key="frame" x="247" y="0.0" width="136" height="80"/>
-                                        <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Adult Practice">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="startAdultTest:" destination="98J-wo-Ehx" eventType="touchUpInside" id="54T-aM-6n2"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUs-sl-vXO">
-                                        <rect key="frame" x="443" y="0.0" width="158" height="80"/>
-                                        <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Children Practice">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="startChildrenTest:" destination="98J-wo-Ehx" eventType="touchUpInside" id="huB-iR-xEw"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="qFP-vb-ATi"/>
-                                </constraints>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ihm-i3-nZM">
-                                <rect key="frame" x="437.5" y="477.5" width="237" height="20.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L./R. Ear Order: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcv-Ui-oEN">
-                                        <rect key="frame" x="0.0" y="0.0" width="122" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L. Ear -&gt; R. Ear" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="07S-Gd-5fi">
-                                        <rect key="frame" x="122" y="0.0" width="115" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7TE-tq-3w5">
-                                <rect key="frame" x="467.5" y="774" width="177" height="20.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Language: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y99-DQ-Q6g">
-                                        <rect key="frame" x="0.0" y="0.0" width="121.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWC-5o-kmf">
-                                        <rect key="frame" x="121.5" y="0.0" width="55.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Lvq-YS-6zy" firstAttribute="centerX" secondItem="CuI-aH-5KU" secondAttribute="centerX" id="1jk-OK-EzG"/>
-                            <constraint firstItem="cyU-I1-gfR" firstAttribute="centerX" secondItem="CuI-aH-5KU" secondAttribute="centerX" id="3D2-zT-T6x"/>
-                            <constraint firstItem="sQk-or-VBM" firstAttribute="centerX" secondItem="CuI-aH-5KU" secondAttribute="centerX" id="6SH-cK-yLJ"/>
-                            <constraint firstItem="NYk-N7-JGD" firstAttribute="centerY" secondItem="CuI-aH-5KU" secondAttribute="centerY" constant="-240" id="8tN-AG-1ms"/>
-                            <constraint firstItem="Lvq-YS-6zy" firstAttribute="top" secondItem="cyU-I1-gfR" secondAttribute="bottom" constant="40" id="CrQ-AQ-xdT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="V1e-XD-qPD" secondAttribute="trailing" constant="20" id="Euf-ws-gEh"/>
-                            <constraint firstItem="gI3-jY-cOw" firstAttribute="top" secondItem="sQk-or-VBM" secondAttribute="bottom" constant="80" id="HlH-Aq-sOC"/>
-                            <constraint firstItem="7TE-tq-3w5" firstAttribute="centerX" secondItem="CuI-aH-5KU" secondAttribute="centerX" id="Iru-7n-DbS"/>
-                            <constraint firstItem="7TE-tq-3w5" firstAttribute="top" secondItem="sQk-or-VBM" secondAttribute="bottom" constant="20" id="N2K-4U-ugK"/>
-                            <constraint firstItem="NYk-N7-JGD" firstAttribute="leading" secondItem="CuI-aH-5KU" secondAttribute="leadingMargin" id="UX5-K4-OFI"/>
-                            <constraint firstItem="V1e-XD-qPD" firstAttribute="leading" secondItem="CuI-aH-5KU" secondAttribute="leadingMargin" constant="20" id="ZP2-ky-N2a"/>
-                            <constraint firstItem="V1e-XD-qPD" firstAttribute="top" secondItem="NYk-N7-JGD" secondAttribute="bottom" constant="80" id="aQn-4i-uhi"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="NYk-N7-JGD" secondAttribute="trailing" id="bkT-Hg-o0T"/>
-                            <constraint firstItem="Ihm-i3-nZM" firstAttribute="centerX" secondItem="CuI-aH-5KU" secondAttribute="centerX" id="cCN-dv-jwX"/>
-                            <constraint firstItem="sQk-or-VBM" firstAttribute="top" secondItem="Lvq-YS-6zy" secondAttribute="bottom" constant="40" id="fIP-wr-eed"/>
-                            <constraint firstItem="cyU-I1-gfR" firstAttribute="top" secondItem="Ihm-i3-nZM" secondAttribute="bottom" constant="20" id="vww-H0-ng6"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="lbEarOrder" destination="07S-Gd-5fi" id="slk-dY-acf"/>
-                        <outlet property="lbFreqSeq" destination="V1e-XD-qPD" id="Daq-lc-hF7"/>
-                        <outlet property="lbTestLanguage" destination="gWC-5o-kmf" id="eSN-DA-yoZ"/>
-                        <outlet property="svFreq" destination="NYk-N7-JGD" id="mg0-AZ-Fie"/>
-                        <segue destination="gpp-Oc-hEO" kind="showDetail" identifier="segueAdultPractice" id="Xp3-la-tot"/>
-                        <segue destination="hc1-yJ-Pc0" kind="showDetail" identifier="segueChildrenPractice" id="soV-Dc-qAS"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fhD-73-yHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="219" y="-1381"/>
-        </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="soV-Dc-qAS"/>
-        <segue reference="Xp3-la-tot"/>
-        <segue reference="0wf-rk-Jqg"/>
-    </inferredMetricsTieBreakers>
 </document>
