@@ -8,6 +8,7 @@ class TitleViewController: UIViewController, Storyboarded {
     
     // MARK:
     override func viewDidLoad() {
+        print(String(describing: Self.self))
         super.viewDidLoad()
     }
 

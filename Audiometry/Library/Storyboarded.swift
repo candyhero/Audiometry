@@ -18,26 +18,25 @@ enum AppStoryboards : String {
     case ChildrenTest = "ChildrenTest"
     
     var instance: UIStoryboard {
-        return UIStoryboard(name: self.rawValue, bundle: nil)
+        return UIStoryboard(name: self.rawValue, bundle: Bundle.main)
     }
 }
 
+protocol StoryboardInitializable {
+    static var storyboardIdentifier: String { get }
+}
+
 extension Storyboarded where Self: UIViewController {
-    static func instantiate(_ sb: AppStoryboards) -> Self {
-        // this pulls out "MyApp.MyViewController"
-        let fullName = NSStringFromClass(self)
-
-        // this splits by the dot and uses everything after, giving "MyViewController"
-        let className = fullName.components(separatedBy: ".")[1]
-
-        // load our storyboard
-        let storyboard = sb.instance
-
-        // instantiate a view controller with that identifier, and force cast as the type that was requested
-        return storyboard.instantiateViewController(withIdentifier: className) as! Self
+    static var storyboardIdentifier: String {
+        return String(describing: Self.self)
     }
     
-    // MARK:
+    static func instantiate(_ sb: AppStoryboards) -> Self {
+        // instantiate a view controller with that identifier, and force cast as the type that was requested
+        return sb.instance.instantiateViewController(withIdentifier: storyboardIdentifier) as! Self
+    }
+    
+    // MARK: helper methods
     func errorPrompt(errorMsg: String) {
         let alertCtrl = UIAlertController(title: "Error", message: errorMsg, preferredStyle: .alert)
 

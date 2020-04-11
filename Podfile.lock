@@ -3,20 +3,24 @@ PODS:
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
   - Charts/Core (3.4.0)
+  - RxSwift (5.1.1)
 
 DEPENDENCIES:
   - AudioKit/Core (>= 4.9)
   - Charts (>= 3.4.0)
+  - RxSwift (>= 5.1.0)
 
 SPEC REPOS:
   trunk:
     - AudioKit
     - Charts
+    - RxSwift
 
 SPEC CHECKSUMS:
   AudioKit: 2ad2c0c546f53134967e4a381dfd8691b7674093
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
-PODFILE CHECKSUM: 015dd0ba8d9bc12dfe80765e874a448304922a99
+PODFILE CHECKSUM: 7e474e9e45fcb0d5dc52cd3bf7ef5f49ff6f53f4
 
 COCOAPODS: 1.8.4

@@ -25,9 +25,9 @@ enum TestLanguage: Int {
     }
 }
 
-let SHAPE_ICON_PATH = "Assets/Shape_Icons"
-let ANIMAL_ICON_PATH = "Assets/Animal_Icons"
-let ANIMAL_TONE_PATH = "Assets/Animal_Tones"
+let SHAPE_ICON_PATH = "Resources/Shape_Icons"
+let ANIMAL_ICON_PATH = "Resources/Animal_Icons"
+let ANIMAL_TONE_PATH = "Resources/Animal_Tones"
 
 // Global Constants
 let DEFAULT_FREQ: [Int] =
