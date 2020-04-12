@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,22 +16,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static let navController = UINavigationController()
     
     static let mainCoordinator = MainCoordinator()
-    static let calibrationCoordinator = CalibrationCoordinator()
     static let testProcotolCoordinator = TestProtocolCoordinator()
     static let testCoordinator = TestCoordinator()
     static let resultCoordinator = ResultCoordinator()
     
     var window: UIWindow?
-
+    private var appCoordinator: AppCoordinator!
+    private let disposeBag = DisposeBag()
+    
+    // Mark: - Override
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // tell the coordinator to take over control
-        AppDelegate.mainCoordinator.start()
+//        // tell the coordinator to take over control
+//        AppDelegate.mainCoordinator.start()
+//
+//        // create a basic UIWindow and activate it
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.rootViewController = AppDelegate.navController
+//        window?.makeKeyAndVisible()
         
-        // create a basic UIWindow and activate it
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = AppDelegate.navController
-        window?.makeKeyAndVisible()
+        window = UIWindow()
+        appCoordinator = AppCoordinator(window: window!)
+        appCoordinator.start()
+            .subscribe()
+            .disposed(by: disposeBag)
+            //        window?.rootViewController = AppDelegate.navController
+            //        window?.makeKeyAndVisible()
         
         return true
     }

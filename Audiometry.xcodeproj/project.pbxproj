@@ -28,6 +28,11 @@
 		4EEDE90E21BFB04600028C60 /* ChildrenTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EEDE90C21BFB04600028C60 /* ChildrenTest.storyboard */; };
 		4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */; };
 		4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */; };
+		671C05DD2442ECD500EFD142 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671C05DC2442ECD500EFD142 /* BaseCoordinator.swift */; };
+		671C05DF2442F56100EFD142 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671C05DE2442F56100EFD142 /* AppCoordinator.swift */; };
+		671C05E12442FA1400EFD142 /* TitleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671C05E02442FA1400EFD142 /* TitleCoordinator.swift */; };
+		671C05E32442FACE00EFD142 /* TitleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671C05E22442FACE00EFD142 /* TitleViewModel.swift */; };
+		671C05E624430D0C00EFD142 /* CalibrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671C05E524430D0C00EFD142 /* CalibrationViewModel.swift */; };
 		676C55692442161100595F03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 676C55412442161100595F03 /* Assets.xcassets */; };
 		676C5587244218FB00595F03 /* Animal_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 676C5584244218FB00595F03 /* Animal_Icons */; };
 		676C5588244218FB00595F03 /* Shape_Icons in Resources */ = {isa = PBXBuildFile; fileRef = 676C5585244218FB00595F03 /* Shape_Icons */; };
@@ -75,6 +80,11 @@
 		4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTestPlayer.swift; sourceTree = "<group>"; };
 		4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultTestPlayer.swift; sourceTree = "<group>"; };
 		6703415723512E4E00ABFB89 /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		671C05DC2442ECD500EFD142 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		671C05DE2442F56100EFD142 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		671C05E02442FA1400EFD142 /* TitleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCoordinator.swift; sourceTree = "<group>"; };
+		671C05E22442FACE00EFD142 /* TitleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleViewModel.swift; sourceTree = "<group>"; };
+		671C05E524430D0C00EFD142 /* CalibrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationViewModel.swift; sourceTree = "<group>"; };
 		676C55412442161100595F03 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		676C5584244218FB00595F03 /* Animal_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Animal_Icons; sourceTree = "<group>"; };
 		676C5585244218FB00595F03 /* Shape_Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shape_Icons; sourceTree = "<group>"; };
@@ -149,7 +159,6 @@
 		4E4B3C7721A7266000191AF3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */,
 				4E4B3CEF21B03CF000191AF3 /* TestProtocolViewController.swift */,
 				67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */,
 				4EEDE90A21BEABBC00028C60 /* ChildrenInstructionViewController.swift */,
@@ -198,10 +207,21 @@
 			path = Audiometry;
 			sourceTree = "<group>";
 		};
+		671C05E4244303A700EFD142 /* Calibration */ = {
+			isa = PBXGroup;
+			children = (
+				4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */,
+				671C05E524430D0C00EFD142 /* CalibrationViewModel.swift */,
+				67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */,
+			);
+			path = Calibration;
+			sourceTree = "<group>";
+		};
 		676C55232442122200595F03 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
+				671C05DE2442F56100EFD142 /* AppCoordinator.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -209,6 +229,7 @@
 		676C55242442124400595F03 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				671C05E4244303A700EFD142 /* Calibration */,
 				676C55282442158200595F03 /* Title */,
 			);
 			path = Classes;
@@ -218,7 +239,9 @@
 			isa = PBXGroup;
 			children = (
 				67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */,
+				671C05DC2442ECD500EFD142 /* BaseCoordinator.swift */,
 				67B58CF323D5F795003EFEE6 /* Coordinator.swift */,
+				67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */,
 				67C88C3B2400498F0000F6E7 /* AppConstants.swift */,
 				4E4B3C9421A757DA00191AF3 /* AppUtililty.swift */,
 				67DCEF2D22F68A8400C3117F /* CaptionText.swift */,
@@ -240,7 +263,9 @@
 		676C55282442158200595F03 /* Title */ = {
 			isa = PBXGroup;
 			children = (
+				671C05E22442FACE00EFD142 /* TitleViewModel.swift */,
 				4E4B3C7921A7266000191AF3 /* TitleViewController.swift */,
+				671C05E02442FA1400EFD142 /* TitleCoordinator.swift */,
 			);
 			path = Title;
 			sourceTree = "<group>";
@@ -259,8 +284,6 @@
 		67B58CF223D5F786003EFEE6 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */,
-				67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */,
 				67B58D0223EF19C2003EFEE6 /* TestProcotolCoordinator.swift */,
 				67B58CF923D73833003EFEE6 /* TestCoordinator.swift */,
 				D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */,
@@ -434,18 +457,23 @@
 				67B58D0323EF19C2003EFEE6 /* TestProcotolCoordinator.swift in Sources */,
 				4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */,
 				67B58CF123D4CDF7003EFEE6 /* CalibrationSettingRepo.swift in Sources */,
+				671C05E12442FA1400EFD142 /* TitleCoordinator.swift in Sources */,
 				4EEDE90721BE876E00028C60 /* AdultTestViewController.swift in Sources */,
 				4E4B3C8221A7266000191AF3 /* CalibrationViewController.swift in Sources */,
 				4E4B3C9721A7D32E00191AF3 /* CalibrationUIFactory.swift in Sources */,
 				67DCEF2E22F68A8400C3117F /* CaptionText.swift in Sources */,
+				671C05E624430D0C00EFD142 /* CalibrationViewModel.swift in Sources */,
 				67E329BA23CF661E0068C2E2 /* ProtocolUIFactory.swift in Sources */,
 				4E4B3CF621B1988000191AF3 /* ResultViewController.swift in Sources */,
 				4E4B3CED21A9B3FC00191AF3 /* AdultInstructionViewController.swift in Sources */,
 				4EEDE90B21BEABBC00028C60 /* ChildrenInstructionViewController.swift in Sources */,
+				671C05DF2442F56100EFD142 /* AppCoordinator.swift in Sources */,
 				67C88C3C2400498F0000F6E7 /* AppConstants.swift in Sources */,
+				671C05DD2442ECD500EFD142 /* BaseCoordinator.swift in Sources */,
 				67B58CFF23D763FF003EFEE6 /* CalibrationSetting.swift in Sources */,
 				67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */,
 				4E4B3C9221A745EA00191AF3 /* AudiometryModel.xcdatamodeld in Sources */,
+				671C05E32442FACE00EFD142 /* TitleViewModel.swift in Sources */,
 				67B58CF423D5F795003EFEE6 /* Coordinator.swift in Sources */,
 				4EC055F921A724E60016AB0D /* AppDelegate.swift in Sources */,
 				67B58CF823D5F812003EFEE6 /* MainCoordinator.swift in Sources */,

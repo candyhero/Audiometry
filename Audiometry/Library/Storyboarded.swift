@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol Storyboarded {
-    static func instantiate(_ sb: AppStoryboards) -> Self
-}
-
 enum AppStoryboards : String {
     case Main = "Main"
     case AdultTest = "AdultTest"
@@ -22,18 +18,19 @@ enum AppStoryboards : String {
     }
 }
 
-protocol StoryboardInitializable {
+protocol Storyboarded {
     static var storyboardIdentifier: String { get }
+    static func instantiate(_ sb: AppStoryboards) -> Self
 }
-
 extension Storyboarded where Self: UIViewController {
     static var storyboardIdentifier: String {
         return String(describing: Self.self)
     }
     
     static func instantiate(_ sb: AppStoryboards) -> Self {
-        // instantiate a view controller with that identifier, and force cast as the type that was requested
-        return sb.instance.instantiateViewController(withIdentifier: storyboardIdentifier) as! Self
+        /// instantiate a view controller with that identifier, and force cast as the type that was requested
+        let storyboard = sb.instance
+        return storyboard.instantiateViewController(withIdentifier: storyboardIdentifier) as! Self
     }
     
     // MARK: helper methods

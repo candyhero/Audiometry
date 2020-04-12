@@ -3,24 +3,34 @@ PODS:
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
   - Charts/Core (3.4.0)
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
   - RxSwift (5.1.1)
 
 DEPENDENCIES:
   - AudioKit/Core (>= 4.9)
   - Charts (>= 3.4.0)
+  - RxCocoa (>= 5.1.0)
   - RxSwift (>= 5.1.0)
 
 SPEC REPOS:
   trunk:
     - AudioKit
     - Charts
+    - RxCocoa
+    - RxRelay
     - RxSwift
 
 SPEC CHECKSUMS:
   AudioKit: 2ad2c0c546f53134967e4a381dfd8691b7674093
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
-PODFILE CHECKSUM: 7e474e9e45fcb0d5dc52cd3bf7ef5f49ff6f53f4
+PODFILE CHECKSUM: 4d93d4366f04bb2567ef5a70957b8287b9704763
 
 COCOAPODS: 1.8.4

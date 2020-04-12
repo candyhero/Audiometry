@@ -28,7 +28,6 @@ class MainCoordinator: Coordinator {
 
     func showCalibrationView(sender: Any? = nil) {
         let vc = CalibrationViewController.instantiate(AppStoryboards.Main)
-        vc.coordinator.start()
         _navController.setNavigationBarHidden(true, animated: false)
         _navController.show(vc, sender: nil)
     }
