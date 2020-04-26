@@ -16,9 +16,15 @@ class TitleCoordinator: BaseCoordinator<Void> {
         let viewModel = TitleViewModel()
         viewController.viewModel = viewModel
         
-        viewModel.showCalibration
+        viewModel.showCalibrationView
             .subscribe(onNext: {
                 [weak self] in self?.showCalibrationView(on: viewController)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.showResultView
+            .subscribe(onNext: {
+                [weak self] in self?.showResultView(on: viewController)
             })
             .disposed(by: disposeBag)
         
@@ -30,5 +36,11 @@ class TitleCoordinator: BaseCoordinator<Void> {
         print("Show calibration view")
         let calibrationCoordinator = CalibrationCoordinator(nav: navigationController)
         return coordinate(to: calibrationCoordinator)
+    }
+    
+    private func showResultView(on rootViewController: UIViewController) -> Observable<Void> {
+        print("Show result view")
+        let resultCoordinator = ResultCoordinator(nav: navigationController)
+        return coordinate(to: resultCoordinator)
     }
 }

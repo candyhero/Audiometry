@@ -12,14 +12,27 @@ import RxSwift
 class TitleViewModel {
     
     // MARK: - Inputs
-    let clickCalibration: AnyObserver<Void>
+//    let onClickTest: AnyObserver<Void>
+//    let onClickPractice: AnyObserver<Void>
+    let onClickCalibration: AnyObserver<Void>
+    let onClickResult: AnyObserver<Void>
     
     // MARK: - Outputs
-    let showCalibration: Observable<Void>
+    let showCalibrationView: Observable<Void>
+    let showResultView: Observable<Void>
+    
+    let showAlertMessage: Observable<String>
     
     init(){
-        let _clickCalibration = PublishSubject<Void>()
-        self.clickCalibration = _clickCalibration.asObserver()
-        self.showCalibration = _clickCalibration.asObservable()
+        let _onClickCalibration = PublishSubject<Void>()
+        self.onClickCalibration = _onClickCalibration.asObserver()
+        self.showCalibrationView = _onClickCalibration.asObservable()
+        
+        let _onClickResult = PublishSubject<Void>()
+        self.onClickResult = _onClickResult.asObserver()
+        self.showResultView = _onClickResult.asObservable()
+        
+        let _showAlertMessage = PublishSubject<String>()
+        self.showAlertMessage = _showAlertMessage.asObservable()
     }
 }

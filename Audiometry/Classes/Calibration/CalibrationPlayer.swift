@@ -1,12 +1,11 @@
 //
-//  CalibrationModel.swift
+//  CalibrationPlayer.swift
 //  Audiometry
 //
 //  Created by Xavier Chan on 2/20/18.
 //  Copyright © 2018 Xavier Chan. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import AudioKit
 
@@ -100,4 +99,3 @@ class CalibrationPlayer {
     }
     
 }
-

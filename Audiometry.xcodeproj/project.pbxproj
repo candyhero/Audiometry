@@ -148,7 +148,6 @@
 		4E4B3C7021A7266000191AF3 /* AudioPlayers */ = {
 			isa = PBXGroup;
 			children = (
-				4E4B3C7121A7266000191AF3 /* CalibrationPlayer.swift */,
 				4E4B3C7221A7266000191AF3 /* TestPlayer.swift */,
 				4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */,
 				4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */,
@@ -165,7 +164,6 @@
 				4EEDE90421BE876E00028C60 /* ChildrenTestViewController.swift */,
 				4E4B3CEA21A9B3FC00191AF3 /* AdultInstructionViewController.swift */,
 				4EEDE90521BE876E00028C60 /* AdultTestViewController.swift */,
-				4E4B3CF521B1988000191AF3 /* ResultViewController.swift */,
 				D0F8DDA4E615FBA4FEA62638 /* TestViewController.swift */,
 			);
 			path = ViewControllers;
@@ -210,6 +208,8 @@
 		671C05E4244303A700EFD142 /* Calibration */ = {
 			isa = PBXGroup;
 			children = (
+				4E4B3C7121A7266000191AF3 /* CalibrationPlayer.swift */,
+				4E4B3C9621A7D32E00191AF3 /* CalibrationUIFactory.swift */,
 				4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */,
 				671C05E524430D0C00EFD142 /* CalibrationViewModel.swift */,
 				67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */,
@@ -229,6 +229,7 @@
 		676C55242442124400595F03 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6777F8D52454B17800575877 /* Result */,
 				671C05E4244303A700EFD142 /* Calibration */,
 				676C55282442158200595F03 /* Title */,
 			);
@@ -281,12 +282,20 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		6777F8D52454B17800575877 /* Result */ = {
+			isa = PBXGroup;
+			children = (
+				4E4B3CF521B1988000191AF3 /* ResultViewController.swift */,
+				D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */,
+			);
+			path = Result;
+			sourceTree = "<group>";
+		};
 		67B58CF223D5F786003EFEE6 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
 				67B58D0223EF19C2003EFEE6 /* TestProcotolCoordinator.swift */,
 				67B58CF923D73833003EFEE6 /* TestCoordinator.swift */,
-				D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -306,7 +315,6 @@
 		67E329B623CE30C10068C2E2 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				4E4B3C9621A7D32E00191AF3 /* CalibrationUIFactory.swift */,
 				67E329B923CF661E0068C2E2 /* ProtocolUIFactory.swift */,
 			);
 			path = UI;

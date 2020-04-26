@@ -42,10 +42,10 @@ class MainCoordinator: Coordinator {
     }
 
     func showResultView(sender: Any? = nil) {
-        let vc = ResultViewController.instantiate(AppStoryboards.Main)
-        vc.coordinator.start()
-        _navController.setNavigationBarHidden(true, animated: false)
-        _navController.show(vc, sender: nil)
+//        let vc = ResultViewController.instantiate(AppStoryboards.Main)
+//        vc.coordinator.start()
+//        _navController.setNavigationBarHidden(true, animated: false)
+//        _navController.show(vc, sender: nil)
     }
 
     func getCurrentCalibrationSetting() -> CalibrationSetting! {

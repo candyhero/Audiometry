@@ -8,69 +8,44 @@ class TitleViewController: UIViewController, Storyboarded {
     var viewModel: TitleViewModel!
     private let disposeBag = DisposeBag()
     
-    @IBOutlet weak var pbStart: UIButton!
-    @IBOutlet weak var pbPractice: UIButton!
-    @IBOutlet weak var pbCalibration: UIButton!
-    @IBOutlet weak var pbResult: UIButton!
+    @IBOutlet private weak var testButton: UIButton!
+    @IBOutlet private weak var practiceButton: UIButton!
+    @IBOutlet private weak var calibrationButton: UIButton!
+    @IBOutlet private weak var resultButton: UIButton!
     
     override func viewDidLoad() {
         setupBindings()
         super.viewDidLoad()
     }
-
     
     private func setupBindings() {
-        pbCalibration.rx.tap
-            .bind(to: viewModel.clickCalibration)
+
+        // Input
+//        // How to error prompt from view model
+//        errorPrompt(errorMsg: "There is no calibration setting selected!")
+//
+//        testButton.rx.tap
+//            .bind(to: nil)
+//            .disposed(by: disposeBag)
+//
+//        practiceButton.rx.tap
+//            .bind(to: nil)
+//            .disposed(by: disposeBag)
+        
+        calibrationButton.rx.tap
+            .bind(to: viewModel.onClickCalibration)
+            .disposed(by: disposeBag)
+        
+        resultButton.rx.tap
+            .bind(to: viewModel.onClickResult)
+            .disposed(by: disposeBag)
+        
+        // Output
+        viewModel.showAlertMessage
+            .subscribe(onNext: { [weak self] in
+                self?.errorPrompt(errorMsg: $0)
+            })
             .disposed(by: disposeBag)
     }
-//    // MARK:
-//    private let _coordinator = AppDelegate.mainCoordinator
-//    private let _patientProfileRepo = PatientProfileRepo.repo
-//
-//    // MARK:
-//    override func viewDidLoad() {
-//        print(String(describing: Self.self))
-//        super.viewDidLoad()
-//    }
-//
-//    // MARK: Controller functions
-//    @IBAction func showCalibrationView(_ sender: UIButton) {
-//        _coordinator.showCalibrationView(sender: sender)
-//    }
-//
-//    @IBAction func prepareTest(_ sender: UIButton) {
-//        if _coordinator.getCurrentCalibrationSetting() == nil{
-//            errorPrompt(errorMsg: "There is no calibration setting selected!")
-//            return
-//        }
-//        _coordinator.showTestProtocolView(sender: sender, isPractice: false)
-//    }
-//
-//    @IBAction func preparePractice(_ sender: UIButton) {
-//        if _coordinator.getCurrentCalibrationSetting() == nil{
-//            errorPrompt(errorMsg: "There is no calibration setting selected!")
-//            return
-//        }
-//        _coordinator.showTestProtocolView(sender: sender, isPractice: true)
-//    }
-//
-//    @IBAction func showResultView(_ sender: UIButton) {
-//        do {
-//            if try !_patientProfileRepo.validateAnyPatientProfiles(){
-//                errorPrompt(errorMsg: "There is no result!")
-//                return
-//            }
-//        } catch let error as NSError {
-//            print("[Error] There is no patient profileg.")
-//            print("\(error), \(error.userInfo)")
-//        }
-//        _coordinator.showResultView(sender: sender)
-//    }
-//
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
 }
 
