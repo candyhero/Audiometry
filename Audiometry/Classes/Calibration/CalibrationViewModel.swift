@@ -16,8 +16,6 @@ class CalibrationViewModel {
     
     let togglePlayer: Observable<Void>
     
-    let player = CalibrationPlayer()
-    
     // MARK: - Outputs
     
     init(){

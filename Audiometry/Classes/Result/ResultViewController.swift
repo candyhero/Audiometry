@@ -4,7 +4,7 @@ import Charts
 import RxSwift
 import RxCocoa
 
-class ResultViewController: UIViewController, Storyboarded {
+class ResultViewController: UIViewController, Storyboardable {
     // MARK: Properties
     var viewModel: CalibrationViewModel!
     private let disposeBag = DisposeBag()

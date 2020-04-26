@@ -3,7 +3,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class TitleViewController: UIViewController, Storyboarded {
+class TitleViewController: UIViewController, Storyboardable {
     // MARK: Properties
     var viewModel: TitleViewModel!
     private let disposeBag = DisposeBag()

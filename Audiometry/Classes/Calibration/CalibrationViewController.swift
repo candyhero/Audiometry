@@ -3,7 +3,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CalibrationViewController: UIViewController, Storyboarded {
+class CalibrationViewController: UIViewController, Storyboardable {
     // MARK: Properties
     var viewModel: CalibrationViewModel!
     private let disposeBag = DisposeBag()

@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cTp-f6-a1r">
     <device id="ipad10_5" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -83,10 +82,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="pbCalibration" destination="dab-8t-SDg" id="AeW-x1-ocr"/>
-                        <outlet property="pbPractice" destination="c5c-0e-X0P" id="JrC-tj-lji"/>
-                        <outlet property="pbResult" destination="MVY-zw-dkX" id="bZC-NY-uZ4"/>
-                        <outlet property="pbStart" destination="Nwa-Vk-mtq" id="o6g-Fb-3bK"/>
+                        <outlet property="calibrationButton" destination="dab-8t-SDg" id="BvR-XQ-y2b"/>
+                        <outlet property="practiceButton" destination="c5c-0e-X0P" id="hFd-H4-9sy"/>
+                        <outlet property="resultButton" destination="MVY-zw-dkX" id="le3-xO-DWw"/>
+                        <outlet property="testButton" destination="Nwa-Vk-mtq" id="a1s-fD-xio"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YUe-jA-rry" userLabel="First Responder" sceneMemberID="firstResponder"/>
