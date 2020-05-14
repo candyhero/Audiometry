@@ -8,10 +8,15 @@ import RxSwift
 
 class ResultCoordinator: BaseCoordinator<Void> {
     
+    /// Utility `DisposeBag` used by the subclasses.
+    var navigationController: UINavigationController!
+    
+    init(navController: UINavigationController) {
+        navigationController = navController
+    }
+    
     override func start() -> Observable<Void> {
         let viewController = ResultViewController.instantiate(AppStoryboards.Main)
-        let viewModel = CalibrationViewModel()
-        viewController.viewModel = viewModel
         
         navigationController.pushViewController(viewController, animated: true)
         return Observable.never()

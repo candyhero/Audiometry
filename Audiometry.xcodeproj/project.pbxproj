@@ -55,6 +55,8 @@
 /* Begin PBXFileReference section */
 		0A03CE53FAA705338FC8F883 /* Pods_Audiometry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audiometry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B49D91BBA03E6F2174F468E /* Pods-Audiometry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.release.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.release.xcconfig"; sourceTree = "<group>"; };
+		67302815246DA8B20017BF2A /* AudiometryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudiometryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		67302816246DA8B20017BF2A /* AudiometryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudiometryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6765D3E224561278004A1C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ChildrenTest.storyboard; sourceTree = "<group>"; };
 		6765D3E424561278004A1C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6765D3E624561278004A1C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -83,8 +85,6 @@
 		67A3F9422455FD2400798427 /* AudiometryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudiometryUITests.swift; sourceTree = "<group>"; };
 		67A3F9442455FD2400798427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67BB30CB2456140600D3ACCC /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		67BB30CE2456145B00D3ACCC /* AudiometryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = AudiometryTests.xctest; path = "/Users/whchan/Documents/Swift/Audiometry_Clean/build/Debug-iphoneos/AudiometryTests.xctest"; sourceTree = "<absolute>"; };
-		67BB30CF2456145B00D3ACCC /* AudiometryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = AudiometryUITests.xctest; path = "/Users/whchan/Documents/Swift/Audiometry_Clean/build/Debug-iphoneos/AudiometryUITests.xctest"; sourceTree = "<absolute>"; };
 		67BB30D12456150200D3ACCC /* CalibrationSettingModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CalibrationSettingModel.xcdatamodel; sourceTree = "<group>"; };
 		E38F37834E4DF5F00E4DCFF0 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,11 +171,11 @@
 		6765D40224561321004A1C46 /* Calibration */ = {
 			isa = PBXGroup;
 			children = (
+				6765D40624561321004A1C46 /* CalibrationCoordinator.swift */,
 				6765D40324561321004A1C46 /* CalibrationViewController.swift */,
 				6765D40424561321004A1C46 /* CalibrationViewModel.swift */,
-				6765D40524561321004A1C46 /* CalibrationPlayer.swift */,
-				6765D40624561321004A1C46 /* CalibrationCoordinator.swift */,
 				6765D40724561321004A1C46 /* CalibrationUIFactory.swift */,
+				6765D40524561321004A1C46 /* CalibrationPlayer.swift */,
 			);
 			path = Calibration;
 			sourceTree = "<group>";
@@ -189,6 +189,8 @@
 				DF250D9121E6546A6A3B97F5 /* Pods */,
 				A9F86865630727D7F94694AC /* Frameworks */,
 				67BB30CB2456140600D3ACCC /* Audiometry.app */,
+				67302815246DA8B20017BF2A /* AudiometryTests.xctest */,
+				67302816246DA8B20017BF2A /* AudiometryUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -281,7 +283,7 @@
 			);
 			name = AudiometryTests;
 			productName = AudiometryTests;
-			productReference = 67BB30CE2456145B00D3ACCC /* AudiometryTests.xctest */;
+			productReference = 67302815246DA8B20017BF2A /* AudiometryTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		67A3F93D2455FD2400798427 /* AudiometryUITests */ = {
@@ -299,7 +301,7 @@
 			);
 			name = AudiometryUITests;
 			productName = AudiometryUITests;
-			productReference = 67BB30CF2456145B00D3ACCC /* AudiometryUITests.xctest */;
+			productReference = 67302816246DA8B20017BF2A /* AudiometryUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */

@@ -4,14 +4,13 @@ import RxSwift
 import RxCocoa
 
 class CalibrationViewController: UIViewController, Storyboardable {
-    // MARK: Properties
-    var viewModel: CalibrationViewModel!
-    private let disposeBag = DisposeBag()
-
-    private var _pickerIndex: Int = 0;
-    private var _playingFrequency: Int = -1;
-    
     // MARK: UI Components
+    @IBOutlet weak var returnButton: UIButton!
+    
+    @IBOutlet weak var pbSaveCurrent: UIButton!
+    @IBOutlet weak var pbLoadOther: UIButton!
+    @IBOutlet weak var pbDeleteCurrent: UIButton!
+    
     private var _settingUIs: [Int: CalibrationSettingUI] = [:]
     
     @IBOutlet weak var svFreqLabels: UIStackView!
@@ -22,17 +21,26 @@ class CalibrationViewController: UIViewController, Storyboardable {
     @IBOutlet weak var svMeasuredLv_L: UIStackView!
     @IBOutlet weak var svMeasuredLv_R: UIStackView!
     
-    @IBOutlet var pbSaveCurrent: UIButton!
-    @IBOutlet var pbLoadOther: UIButton!
-    @IBOutlet var pbDeleteCurrent: UIButton!
+    @IBOutlet weak var lbCurrentSetting: UILabel!
     
-    @IBOutlet var lbCurrentSetting: UILabel!
+    // MARK: Properties
+    private var _pickerIndex: Int = 0;
+    private var _playingFrequency: Int = -1;
     
+    private var viewModel: CalibrationViewPresentable!
+    var viewModelBuilder: CalibrationViewModel.ViewModelBuilder!
+    
+    // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
         initUI()
         lbCurrentSetting.text = "None"
         pbSaveCurrent.isEnabled = false
+        
+        viewModel = viewModelBuilder((
+            onClickReturn: returnButton.rx.tap.asSignal(),
+            ()
+        ))
         
 //        let currentSetting = coordinator.getCalibrationSetting()
 //        if(currentSetting == nil){

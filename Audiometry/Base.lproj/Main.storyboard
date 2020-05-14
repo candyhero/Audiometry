@@ -123,9 +123,6 @@
                                 <rect key="frame" x="20" y="20" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <action selector="back:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="bjU-Te-V7I"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gc3-JO-0I7">
                                 <rect key="frame" x="236.5" y="518" width="639" height="38"/>
@@ -385,9 +382,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juH-90-9kH">
                                 <rect key="frame" x="20" y="0.0" width="98" height="30"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <action selector="back:" destination="WbP-fl-Brp" eventType="touchUpInside" id="Ndc-BH-5du"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bY2-0E-pNT" userLabel="Sv Main">
                                 <rect key="frame" x="40" y="80" width="1032" height="400"/>
@@ -565,6 +559,7 @@
                         <outlet property="pbDeleteCurrent" destination="TOr-ti-8Lg" id="Vl4-zP-lEc"/>
                         <outlet property="pbLoadOther" destination="tdo-CP-2eF" id="sZI-Lw-grc"/>
                         <outlet property="pbSaveCurrent" destination="Vyf-ZB-897" id="Wp5-6h-hy7"/>
+                        <outlet property="returnButton" destination="juH-90-9kH" id="4cO-Sm-vaQ"/>
                         <outlet property="svExpectedLv" destination="a95-q2-nm7" id="YE8-z8-05x"/>
                         <outlet property="svFreqLabels" destination="Bl5-ur-epE" id="4p9-2O-vX8"/>
                         <outlet property="svMeasuredLv_L" destination="V2v-PV-u6a" id="kpu-E4-Yc1"/>
@@ -592,9 +587,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWs-cg-CKn">
                                 <rect key="frame" x="20" y="0.0" width="98" height="30"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <action selector="back:" destination="iwX-Tf-HtX" eventType="touchUpInside" id="sWg-rS-c7N"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FcF-v1-OIM">
                                 <rect key="frame" x="459.5" y="60" width="193.5" height="20.5"/>

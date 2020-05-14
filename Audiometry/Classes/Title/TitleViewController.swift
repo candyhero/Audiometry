@@ -4,48 +4,26 @@ import RxSwift
 import RxCocoa
 
 class TitleViewController: UIViewController, Storyboardable {
-    // MARK: Properties
-    var viewModel: TitleViewModel!
-    private let disposeBag = DisposeBag()
-    
+    // MARK: UI Components
     @IBOutlet private weak var testButton: UIButton!
     @IBOutlet private weak var practiceButton: UIButton!
     @IBOutlet private weak var calibrationButton: UIButton!
     @IBOutlet private weak var resultButton: UIButton!
     
-    override func viewDidLoad() {
-        setupBindings()
-        super.viewDidLoad()
-    }
+    // MARK: Properties
+    private var viewModel: TitleViewPresentable!
+    var viewModelBuilder: TitleViewPresentable.ViewModelBuilder!
     
-    private func setupBindings() {
-
-        // Input
-//        // How to error prompt from view model
-//        errorPrompt(errorMsg: "There is no calibration setting selected!")
-//
-//        testButton.rx.tap
-//            .bind(to: nil)
-//            .disposed(by: disposeBag)
-//
-//        practiceButton.rx.tap
-//            .bind(to: nil)
-//            .disposed(by: disposeBag)
+    // MARK:
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        calibrationButton.rx.tap
-            .bind(to: viewModel.onClickCalibration)
-            .disposed(by: disposeBag)
-        
-        resultButton.rx.tap
-            .bind(to: viewModel.onClickResult)
-            .disposed(by: disposeBag)
-        
-        // Output
-        viewModel.showAlertMessage
-            .subscribe(onNext: { [weak self] in
-                self?.errorPrompt(errorMsg: $0)
-            })
-            .disposed(by: disposeBag)
+        viewModel = viewModelBuilder((
+            onClickTest: testButton.rx.tap.asSignal(),
+            onClickPractice: practiceButton.rx.tap.asSignal(),
+            onClickCalibration: calibrationButton.rx.tap.asSignal(),
+            onClickResult: resultButton.rx.tap.asSignal()
+        ))
     }
 }
 

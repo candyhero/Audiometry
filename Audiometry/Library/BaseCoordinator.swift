@@ -15,15 +15,6 @@ class BaseCoordinator<ResultType> {
     /// Typealias which will allows to access a ResultType of the Coordainator by `CoordinatorName.CoordinationResult`.
     typealias CoordinationResult = ResultType
 
-    /// Utility `DisposeBag` used by the subclasses.
-    internal let disposeBag = DisposeBag()
-    
-    internal var navigationController: UINavigationController!
-    
-    init(nav: UINavigationController) {
-        navigationController = nav
-    }
-
     /// Unique identifier.
     private let identifier = UUID()
 

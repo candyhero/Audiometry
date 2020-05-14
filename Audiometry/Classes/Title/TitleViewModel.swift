@@ -8,31 +8,56 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
-class TitleViewModel {
-    
+protocol TitleViewPresentable {
     // MARK: - Inputs
-//    let onClickTest: AnyObserver<Void>
-//    let onClickPractice: AnyObserver<Void>
-    let onClickCalibration: AnyObserver<Void>
-    let onClickResult: AnyObserver<Void>
+    typealias Input = (
+        onClickTest: Signal<Void>,
+        onClickPractice: Signal<Void>,
+        onClickCalibration: Signal<Void>,
+        onClickResult: Signal<Void>
+    )
     
     // MARK: - Outputs
-    let showCalibrationView: Observable<Void>
-    let showResultView: Observable<Void>
+    typealias Output = (
+//        alertMessage: Observable<String>
+    )
     
-    let showAlertMessage: Observable<String>
+    typealias ViewModelBuilder = (TitleViewPresentable.Input) -> TitleViewPresentable
+      
+    var input: TitleViewPresentable.Input { get }
+    var output: TitleViewPresentable.Output { get }
+}
+
+class TitleViewModel: TitleViewPresentable {
+    var input: TitleViewPresentable.Input
+    var output: TitleViewPresentable.Output
     
-    init(){
-        let _onClickCalibration = PublishSubject<Void>()
-        self.onClickCalibration = _onClickCalibration.asObserver()
-        self.showCalibrationView = _onClickCalibration.asObservable()
-        
-        let _onClickResult = PublishSubject<Void>()
-        self.onClickResult = _onClickResult.asObserver()
-        self.showResultView = _onClickResult.asObservable()
-        
-        let _showAlertMessage = PublishSubject<String>()
-        self.showAlertMessage = _showAlertMessage.asObservable()
+    // MARK: - Routings used by coordinator
+    typealias Routing = (
+        showTest: Signal<Void>,
+        showPractice: Signal<Void>,
+        showCalibration: Signal<Void>,
+        showResult: Signal<Void>
+    )
+    
+    lazy var router: Routing = (
+        showTest: input.onClickTest,
+        showPractice: input.onClickPractice,
+        showCalibration: input.onClickCalibration,
+        showResult: input.onClickResult
+    )
+    
+    init(input: TitleViewPresentable.Input){
+        self.input = input
+        self.output = TitleViewModel.output(input: input)
+    }
+}
+
+private extension TitleViewModel {
+    // MARK: - Return output to view here, e.g. alert message
+    static func output(input: TitleViewPresentable.Input) -> TitleViewPresentable.Output {
+        return ()
     }
 }

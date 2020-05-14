@@ -12,10 +12,13 @@ import RxSwift
 class AppCoordinator: BaseCoordinator<Void> {
 
     private let window: UIWindow
-
+    
+    /// Utility `DisposeBag` used by the subclasses.
+    let disposeBag = DisposeBag()
+    var navigationController = UINavigationController()
+    
     init(window: UIWindow) {
         self.window = window
-        super.init(nav: UINavigationController())
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
@@ -24,7 +27,7 @@ class AppCoordinator: BaseCoordinator<Void> {
     }
 
     override func start() -> Observable<Void> {
-        let titleCoordinator = TitleCoordinator(nav: navigationController)
+        let titleCoordinator = TitleCoordinator(navController: navigationController)
         return coordinate(to: titleCoordinator)
     }
 }

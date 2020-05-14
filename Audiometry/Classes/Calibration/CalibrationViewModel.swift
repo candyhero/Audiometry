@@ -6,24 +6,52 @@
 //  Copyright © 2020 TriCounty. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import RxSwift
+import RxCocoa
 
-class CalibrationViewModel {
-    
+protocol CalibrationViewPresentable {
     // MARK: - Inputs
-    let onClickToggle: AnyObserver<CalibrationSettingValues>
-    
-    let togglePlayer: Observable<Void>
+    typealias Input = (
+        onClickReturn: Signal<Void>,
+        ()
+    )
     
     // MARK: - Outputs
-    
-    init(){
-        let _onClickToggle = PublishSubject<CalibrationSettingValues>()
-        self.onClickToggle = _onClickToggle.asObserver()
+    typealias Output = (
         
-        // Can just toggle player here, dont put into coordinator
-        self.togglePlayer = _onClickToggle.asObservable()
-            .map{ $0 }
+    )
+    
+    typealias ViewModelBuilder = (CalibrationViewPresentable.Input) -> CalibrationViewPresentable
+    
+    var input: CalibrationViewPresentable.Input { get }
+    var output: CalibrationViewPresentable.Output { get }
+}
+
+class CalibrationViewModel: CalibrationViewPresentable {
+    var input: CalibrationViewPresentable.Input
+    var output: CalibrationViewPresentable.Output
+    
+    typealias Routing = (
+        showTitle: Signal<Void>,
+        ()
+    )
+    
+    lazy var router: Routing = (
+        showTitle: input.onClickReturn,
+        ()
+    )
+    
+    init(input: CalibrationViewPresentable.Input){
+        self.input = input
+        self.output = CalibrationViewModel.output(input: input)
+    }
+}
+
+private extension CalibrationViewModel {
+    // MARK: - Return output to view here, e.g. alert message
+    static func output(input: CalibrationViewPresentable.Input) ->
+        CalibrationViewPresentable.Output {
+        return ()
     }
 }

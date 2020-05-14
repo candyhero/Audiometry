@@ -22,6 +22,7 @@ protocol Storyboardable {
     static var storyboardIdentifier: String { get }
     static func instantiate(_ sb: AppStoryboards) -> Self
 }
+
 extension Storyboardable where Self: UIViewController {
     static var storyboardIdentifier: String {
         return String(describing: Self.self)
@@ -32,8 +33,10 @@ extension Storyboardable where Self: UIViewController {
         let storyboard = sb.instance
         return storyboard.instantiateViewController(withIdentifier: storyboardIdentifier) as! Self
     }
-    
-    // MARK: helper methods
+}
+
+// MARK: helper methods
+extension Storyboardable where Self: UIViewController  {
     func errorPrompt(errorMsg: String) {
         let alertCtrl = UIAlertController(title: "Error", message: errorMsg, preferredStyle: .alert)
 
