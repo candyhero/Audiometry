@@ -119,9 +119,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oyg-8O-FTI">
-                                <rect key="frame" x="20" y="20" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oyg-8O-FTI">
+                                <rect key="frame" x="20" y="0.0" width="98" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gc3-JO-0I7">
@@ -339,6 +338,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="CfS-KY-79T" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="FRe-gn-eo3"/>
+                            <constraint firstItem="Oyg-8O-FTI" firstAttribute="leading" secondItem="6lX-Zg-kVC" secondAttribute="leadingMargin" id="KfU-lA-4td"/>
                             <constraint firstItem="yXe-Pb-BHe" firstAttribute="top" secondItem="efm-Xe-VU2" secondAttribute="bottom" constant="80" id="NN0-cj-6Jw"/>
                             <constraint firstItem="CfS-KY-79T" firstAttribute="top" secondItem="gc3-JO-0I7" secondAttribute="bottom" constant="40" id="PEi-h5-vN6"/>
                             <constraint firstItem="9qR-ss-rRh" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="PXg-Uj-hsO"/>
@@ -347,7 +347,9 @@
                             <constraint firstItem="gc3-JO-0I7" firstAttribute="top" secondItem="cr8-wm-dBM" secondAttribute="bottom" constant="20" id="Y7J-fb-raE"/>
                             <constraint firstItem="ulS-fe-rEE" firstAttribute="top" secondItem="9qR-ss-rRh" secondAttribute="bottom" constant="20" id="ahG-Fx-whP"/>
                             <constraint firstItem="ulS-fe-rEE" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="bPa-10-9VX"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Oyg-8O-FTI" secondAttribute="trailing" constant="20" symbolic="YES" id="eKv-7F-YNR"/>
                             <constraint firstItem="nLG-lN-eKU" firstAttribute="top" secondItem="9qR-ss-rRh" secondAttribute="bottom" constant="80" id="eyl-6G-GI4"/>
+                            <constraint firstItem="Oyg-8O-FTI" firstAttribute="top" secondItem="rYx-y9-afQ" secondAttribute="bottom" id="iSs-PR-WCd"/>
                             <constraint firstItem="cr8-wm-dBM" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="ifv-BY-5GB"/>
                             <constraint firstItem="efm-Xe-VU2" firstAttribute="centerY" secondItem="6lX-Zg-kVC" secondAttribute="centerY" constant="-240" id="iih-aU-EoI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="efm-Xe-VU2" secondAttribute="trailing" id="jSa-im-FlY"/>
@@ -451,9 +453,6 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" title="Load Default P. Level"/>
-                                        <connections>
-                                            <action selector="loadDefaultPresentationLv:" destination="WbP-fl-Brp" eventType="touchUpInside" id="20E-F1-wkl"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdz-fs-qGN">
                                         <rect key="frame" x="540" y="0.0" width="214" height="42"/>
@@ -462,9 +461,6 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" title="Clear Measured Level"/>
-                                        <connections>
-                                            <action selector="clearAllMeasuredLv:" destination="WbP-fl-Brp" eventType="touchUpInside" id="jRE-gu-SlD"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -496,9 +492,6 @@
                                         <state key="normal" title="Save as New">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="saveAsNewSetting:" destination="WbP-fl-Brp" eventType="touchUpInside" id="k94-is-FmC"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vyf-ZB-897">
                                         <rect key="frame" x="208" y="0.0" width="147" height="38"/>
@@ -507,9 +500,6 @@
                                         <state key="normal" title="Save to Current">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="updateCurrentSetting:" destination="WbP-fl-Brp" eventType="touchUpInside" id="eoh-XD-38I"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tdo-CP-2eF">
                                         <rect key="frame" x="435" y="0.0" width="117" height="38"/>
@@ -519,9 +509,6 @@
                                         <state key="normal" title="Load Other">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="loadOtherSetting:" destination="WbP-fl-Brp" eventType="touchUpInside" id="QwY-GL-DMC"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TOr-ti-8Lg">
                                         <rect key="frame" x="632" y="0.0" width="141" height="38"/>
@@ -531,9 +518,6 @@
                                         <state key="normal" title="Delete Current">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="deleteCurrentSetting:" destination="WbP-fl-Brp" eventType="touchUpInside" id="EEL-e2-QvZ"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -552,20 +536,24 @@
                             <constraint firstItem="bY2-0E-pNT" firstAttribute="leading" secondItem="pXv-SH-4Bd" secondAttribute="leadingMargin" constant="20" id="SyS-Cv-HXq"/>
                             <constraint firstItem="bY2-0E-pNT" firstAttribute="centerX" secondItem="pXv-SH-4Bd" secondAttribute="centerX" id="aQj-Zz-Sww"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bY2-0E-pNT" secondAttribute="trailing" constant="20" id="jU9-TD-0V3"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="juH-90-9kH" secondAttribute="trailing" constant="20" symbolic="YES" id="jop-Aj-e4k"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="lbCurrentSetting" destination="Ogj-UP-BQ9" id="ALy-D8-nh0"/>
-                        <outlet property="pbDeleteCurrent" destination="TOr-ti-8Lg" id="Vl4-zP-lEc"/>
-                        <outlet property="pbLoadOther" destination="tdo-CP-2eF" id="sZI-Lw-grc"/>
-                        <outlet property="pbSaveCurrent" destination="Vyf-ZB-897" id="Wp5-6h-hy7"/>
+                        <outlet property="clearMeasuredLevelButton" destination="zdz-fs-qGN" id="7N5-ny-VvW"/>
+                        <outlet property="currentSettingLabel" destination="Ogj-UP-BQ9" id="ALy-D8-nh0"/>
+                        <outlet property="deleteCurrentButton" destination="TOr-ti-8Lg" id="yB3-fD-PDD"/>
+                        <outlet property="expectedLevelStackView" destination="a95-q2-nm7" id="YE8-z8-05x"/>
+                        <outlet property="frequencyStackView" destination="Bl5-ur-epE" id="4p9-2O-vX8"/>
+                        <outlet property="leftMesauredLevelStackView" destination="V2v-PV-u6a" id="kpu-E4-Yc1"/>
+                        <outlet property="loadOtherButton" destination="tdo-CP-2eF" id="ECM-00-dOi"/>
+                        <outlet property="playButtonStackView" destination="bVE-Fh-YCH" id="48A-Re-Gkh"/>
+                        <outlet property="presentationLevelStackView" destination="he6-tg-0tr" id="1Oi-Yt-P8N"/>
                         <outlet property="returnButton" destination="juH-90-9kH" id="4cO-Sm-vaQ"/>
-                        <outlet property="svExpectedLv" destination="a95-q2-nm7" id="YE8-z8-05x"/>
-                        <outlet property="svFreqLabels" destination="Bl5-ur-epE" id="4p9-2O-vX8"/>
-                        <outlet property="svMeasuredLv_L" destination="V2v-PV-u6a" id="kpu-E4-Yc1"/>
-                        <outlet property="svMeasuredLv_R" destination="DMk-zW-P9p" id="pfH-Nz-EPx"/>
-                        <outlet property="svPlayButtons" destination="bVE-Fh-YCH" id="48A-Re-Gkh"/>
-                        <outlet property="svPresentationLv" destination="he6-tg-0tr" id="1Oi-Yt-P8N"/>
+                        <outlet property="rightMeasuredLevelStackView" destination="DMk-zW-P9p" id="pfH-Nz-EPx"/>
+                        <outlet property="saveAsNewButton" destination="Daj-K0-8w2" id="2f1-be-TXJ"/>
+                        <outlet property="saveCurrentButton" destination="Vyf-ZB-897" id="1em-tt-CA3"/>
+                        <outlet property="setVolumeButton" destination="ojX-cv-moG" id="Be0-GK-axi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3s-cI-oCg" sceneMemberID="firstResponder"/>
@@ -584,7 +572,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWs-cg-CKn">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWs-cg-CKn">
                                 <rect key="frame" x="20" y="0.0" width="98" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                             </button>
@@ -731,14 +719,15 @@
                             <constraint firstItem="IBh-WK-85D" firstAttribute="top" secondItem="V4i-TZ-x9r" secondAttribute="bottom" constant="20" id="He8-Dt-5y9"/>
                             <constraint firstItem="IgY-oA-yKG" firstAttribute="top" secondItem="bOe-Np-62j" secondAttribute="bottom" constant="40" id="KBf-EX-rtz"/>
                             <constraint firstItem="bOe-Np-62j" firstAttribute="centerX" secondItem="9It-ec-IkN" secondAttribute="centerX" id="N5Y-sr-szr"/>
+                            <constraint firstItem="aWs-cg-CKn" firstAttribute="top" secondItem="9It-ec-IkN" secondAttribute="topMargin" id="R6O-0F-Eu9"/>
                             <constraint firstItem="FcF-v1-OIM" firstAttribute="centerX" secondItem="9It-ec-IkN" secondAttribute="centerX" id="UCu-p3-fRI"/>
+                            <constraint firstItem="aWs-cg-CKn" firstAttribute="leading" secondItem="V4i-TZ-x9r" secondAttribute="leading" id="aBS-lu-kah"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bOe-Np-62j" secondAttribute="trailing" constant="20" id="aVh-br-Awo"/>
-                            <constraint firstItem="aWs-cg-CKn" firstAttribute="leading" secondItem="9It-ec-IkN" secondAttribute="leadingMargin" id="fEB-X9-3i3"/>
                             <constraint firstItem="V4i-TZ-x9r" firstAttribute="top" secondItem="bOe-Np-62j" secondAttribute="bottom" constant="40" id="fdr-RH-sJ2"/>
                             <constraint firstItem="bOe-Np-62j" firstAttribute="top" secondItem="FcF-v1-OIM" secondAttribute="bottom" constant="20" id="gRv-aU-DdV"/>
                             <constraint firstAttribute="bottom" secondItem="IgY-oA-yKG" secondAttribute="bottom" constant="20" id="mjF-2X-Uc0"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aWs-cg-CKn" secondAttribute="trailing" constant="20" symbolic="YES" id="sDW-1w-JmZ"/>
                             <constraint firstItem="bOe-Np-62j" firstAttribute="leading" secondItem="9It-ec-IkN" secondAttribute="leadingMargin" constant="20" id="sfx-1q-gfm"/>
-                            <constraint firstItem="aWs-cg-CKn" firstAttribute="top" secondItem="hQQ-Jt-xOf" secondAttribute="bottom" id="thi-wt-dIJ"/>
                             <constraint firstItem="V4i-TZ-x9r" firstAttribute="leading" secondItem="9It-ec-IkN" secondAttribute="leadingMargin" id="vKo-MX-iyu"/>
                         </constraints>
                     </view>
@@ -755,22 +744,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lzF-mF-AqB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="207" y="109"/>
-        </scene>
-        <!--AdultInstructionViewController-->
-        <scene sceneID="OTy-KX-eOT">
-            <objects>
-                <viewControllerPlaceholder storyboardName="AdultTest" referencedIdentifier="AdultInstructionViewController" id="gpp-Oc-hEO" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5t6-Wf-erF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="632" y="-716"/>
-        </scene>
-        <!--ChildrenInstructionViewController-->
-        <scene sceneID="GIN-nv-edI">
-            <objects>
-                <viewControllerPlaceholder storyboardName="ChildrenTest" referencedIdentifier="ChildrenInstructionViewController" id="hc1-yJ-Pc0" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zla-gN-iEw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="632" y="-560"/>
         </scene>
     </scenes>
 </document>
