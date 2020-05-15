@@ -25,7 +25,7 @@ class CalibrationCoordinator: BaseCoordinator<Void> {
         viewController.viewModelBuilder = { [weak self, disposeBag] in
             let viewModel = CalibrationViewModel(input: $0)
             viewModel.router.showTitle
-                .emit(onNext: { self?.showTitleView(on: viewController) })
+                .emit(onNext: { _ = self?.showTitleView(on: viewController) })
                 .disposed(by: disposeBag)
             
             return viewModel

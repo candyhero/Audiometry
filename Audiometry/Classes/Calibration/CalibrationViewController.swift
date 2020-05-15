@@ -7,21 +7,26 @@ class CalibrationViewController: UIViewController, Storyboardable {
     // MARK: UI Components
     @IBOutlet weak var returnButton: UIButton!
     
-    @IBOutlet weak var pbSaveCurrent: UIButton!
-    @IBOutlet weak var pbLoadOther: UIButton!
-    @IBOutlet weak var pbDeleteCurrent: UIButton!
+    @IBOutlet weak var setVolumeButton: UIButton!
+    @IBOutlet weak var clearMeasuredLevelButton: UIButton!
     
-    private var _settingUIs: [Int: CalibrationSettingUI] = [:]
+    @IBOutlet weak var saveAsNewButton: UIButton!
+    @IBOutlet weak var saveCurrentButton: UIButton!
+    @IBOutlet weak var loadOtherButton: UIButton!
+    @IBOutlet weak var deleteCurrentButton: UIButton!
     
-    @IBOutlet weak var svFreqLabels: UIStackView!
-    @IBOutlet weak var svPlayButtons: UIStackView!
+    @IBOutlet weak var currentSettingLabel: UILabel!
     
-    @IBOutlet weak var svExpectedLv: UIStackView!
-    @IBOutlet weak var svPresentationLv: UIStackView!
-    @IBOutlet weak var svMeasuredLv_L: UIStackView!
-    @IBOutlet weak var svMeasuredLv_R: UIStackView!
+    // MARK: Inputs
+    private var _settingUIs: [Int: CalibrationSettingUi] = [:]
     
-    @IBOutlet weak var lbCurrentSetting: UILabel!
+    @IBOutlet weak var expectedLevelStackView: UIStackView!
+    @IBOutlet weak var presentationLevelStackView: UIStackView!
+    @IBOutlet weak var leftMesauredLevelStackView: UIStackView!
+    @IBOutlet weak var rightMeasuredLevelStackView: UIStackView!
+    
+    @IBOutlet weak var frequencyStackView: UIStackView!
+    @IBOutlet weak var playButtonStackView: UIStackView!
     
     // MARK: Properties
     private var _pickerIndex: Int = 0;
@@ -33,9 +38,8 @@ class CalibrationViewController: UIViewController, Storyboardable {
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
-        initUI()
-        lbCurrentSetting.text = "None"
-        pbSaveCurrent.isEnabled = false
+        
+        setupView()
         
         viewModel = viewModelBuilder((
             onClickReturn: returnButton.rx.tap.asSignal(),
@@ -53,38 +57,39 @@ class CalibrationViewController: UIViewController, Storyboardable {
 //        }
     }
     
-    // MARK: Initialize ViewController
-    func initUI() {
-        setupStackview(svFreqLabels)
-        setupStackview(svPlayButtons)
-        setupStackview(svExpectedLv)
-        setupStackview(svPresentationLv)
-        setupStackview(svMeasuredLv_L)
-        setupStackview(svMeasuredLv_R)
+    // MARK: Setup View
+    func setupView() {
+        currentSettingLabel.text = "None"
+        saveCurrentButton.isEnabled = false
         
-        for freq in DEFAULT_FREQ {
-            let settingUI = CalibrationSettingUI(freq)
-//            settingUI.pbPlay.addTarget(self,
-//                                       action: #selector(toggleSingal(_:)),
-//                                       for: .touchUpInside)
-            _settingUIs[freq] = settingUI
+        let stackviews = [frequencyStackView,
+                          playButtonStackView,
+                          expectedLevelStackView,
+                          presentationLevelStackView,
+                          leftMesauredLevelStackView,
+                          rightMeasuredLevelStackView]
+        
+        _ = stackviews.map { sv in
+            sv?.axis = .horizontal
+            sv?.distribution = .fillEqually
+            sv?.alignment = .center
+            sv?.spacing = 20
+        }
+        
+        _ = DEFAULT_FREQ.map { frequency in
+            let settingUi = CalibrationSettingUiFactory.shared.getElement(frequency: frequency)
+            _settingUIs[frequency] = settingUi
             
-            // Displaying in subview
-            svFreqLabels.addArrangedSubview(settingUI.lbFreq)
-            svPlayButtons.addArrangedSubview(settingUI.pbPlay)
-            svExpectedLv.addArrangedSubview(settingUI.tfExpectedLv)
-            svPresentationLv.addArrangedSubview(settingUI.tfPresentationLv)
-            svMeasuredLv_L.addArrangedSubview(settingUI.tfMeasuredLv_L)
-            svMeasuredLv_R.addArrangedSubview(settingUI.tfMeasuredLv_R)
+            expectedLevelStackView.addArrangedSubview(settingUi.expectedLvTextField)
+            presentationLevelStackView.addArrangedSubview(settingUi.presentationLvTextField)
+            leftMesauredLevelStackView.addArrangedSubview(settingUi.leftMeasuredLvTextField)
+            rightMeasuredLevelStackView.addArrangedSubview(settingUi.rightMeasuredLvTextField)
+            
+            frequencyStackView.addArrangedSubview(settingUi.frequencyLabel)
+            playButtonStackView.addArrangedSubview(settingUi.playButton)
         }
     }
     
-    func setupStackview(_ sv: UIStackView!) {
-        sv.axis = .horizontal
-        sv.distribution = .fillEqually
-        sv.alignment = .center
-        sv.spacing = 20
-    }
 //
 //    // MARK: Calibration CRUD
 //    @IBAction func saveAsNewSetting(_ sender: UIButton) {

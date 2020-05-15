@@ -57,33 +57,33 @@ class CalibrationPlayer {
     }
     
     // Update volume to currently playing frequency tone
-    func updateVolume(_ ui: CalibrationSettingUI) {
-        // skip if not playing currently
-        if(!_generator.isStarted) {
-            return
-        }
-        
-        // retrieve vol
-        let expectedLv = Double(ui.tfExpectedLv.text!) ?? 0.0
-        let presentationLv = Double(ui.tfPresentationLv.text!) ?? 0.0
-        
-        let leftMeasuredLv = Double(ui.tfMeasuredLv_L.text!) ?? expectedLv
-        let rightMeasuredLv = Double(ui.tfMeasuredLv_R.text!) ?? expectedLv
-        
-        let leftCorrectionFactor = expectedLv - leftMeasuredLv
-        let rightCorrectionFactor = expectedLv - rightMeasuredLv
-        
-        for i in stride(from: 0.0, through: 1.0, by: RAMP_TIMESTEP) {
-            DispatchQueue.main.asyncAfter(
-                deadline: .now() + i * RAMP_TIME, execute:
-                {
-                    self._generator.parameters[1] = self.dbToAmp(
-                        (presentationLv + leftCorrectionFactor) * i)
-                    self._generator.parameters[2] = self.dbToAmp(
-                        (presentationLv + rightCorrectionFactor) * i)
-            })
-        }
-    }
+//    func updateVolume(_ ui: CalibrationSettingUi) {
+//        // skip if not playing currently
+//        if(!_generator.isStarted) {
+//            return
+//        }
+//        
+//        // retrieve vol
+//        let expectedLv = Double(ui.tfExpectedLv.text!) ?? 0.0
+//        let presentationLv = Double(ui.tfPresentationLv.text!) ?? 0.0
+//        
+//        let leftMeasuredLv = Double(ui.tfMeasuredLv_L.text!) ?? expectedLv
+//        let rightMeasuredLv = Double(ui.tfMeasuredLv_R.text!) ?? expectedLv
+//        
+//        let leftCorrectionFactor = expectedLv - leftMeasuredLv
+//        let rightCorrectionFactor = expectedLv - rightMeasuredLv
+//        
+//        for i in stride(from: 0.0, through: 1.0, by: RAMP_TIMESTEP) {
+//            DispatchQueue.main.asyncAfter(
+//                deadline: .now() + i * RAMP_TIME, execute:
+//                {
+//                    self._generator.parameters[1] = self.dbToAmp(
+//                        (presentationLv + leftCorrectionFactor) * i)
+//                    self._generator.parameters[2] = self.dbToAmp(
+//                        (presentationLv + rightCorrectionFactor) * i)
+//            })
+//        }
+//    }
     
     // Covert dB to amplitude in double (0.0 to 1.0 range)
     func dbToAmp (_ dB: Double!) -> Double{

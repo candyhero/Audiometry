@@ -26,11 +26,11 @@ class TitleCoordinator: BaseCoordinator<Void> {
             let viewModel = TitleViewModel(input: $0)
             
             viewModel.router.showCalibration
-                .emit(onNext: { self?.showCalibrationView(on: viewController) })
+                .emit(onNext: { _ = self?.showCalibrationView(on: viewController) })
                 .disposed(by: disposeBag)
             
             viewModel.router.showResult
-                .emit(onNext: { self?.showResultView(on: viewController) })
+                .emit(onNext: { _ = self?.showResultView(on: viewController) })
                 .disposed(by: disposeBag)
             
             return viewModel

@@ -14,6 +14,7 @@ protocol CalibrationViewPresentable {
     // MARK: - Inputs
     typealias Input = (
         onClickReturn: Signal<Void>,
+//        onClickSetVolume: Signal<>
         ()
     )
     
