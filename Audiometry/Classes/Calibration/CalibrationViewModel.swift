@@ -43,7 +43,8 @@ class CalibrationViewModel: CalibrationViewPresentable {
         ()
     )
     
-    init(input: CalibrationViewPresentable.Input){
+    init(input: CalibrationViewPresentable.Input,
+         calibrationService: CalibrationService){
         self.input = input
         self.output = CalibrationViewModel.output(input: input)
     }

@@ -21,9 +21,10 @@ class CalibrationCoordinator: BaseCoordinator<Void> {
     
     override func start() -> Observable<Void> {
         let viewController = CalibrationViewController.instantiate(AppStoryboards.Main)
+        let calibrationService = CalibrationService()
         
         viewController.viewModelBuilder = { [weak self, disposeBag] in
-            let viewModel = CalibrationViewModel(input: $0)
+            let viewModel = CalibrationViewModel(input: $0, calibrationService: calibrationService)
             viewModel.router.showTitle
                 .emit(onNext: { _ = self?.showTitleView(on: viewController) })
                 .disposed(by: disposeBag)
