@@ -14,8 +14,7 @@ protocol CalibrationViewPresentable {
     // MARK: - Inputs
     typealias Input = (
         onClickReturn: Signal<Void>,
-//        onClickSetVolume: Signal<>
-        ()
+        calibrationSetting: Observable<CalibrationSetting>
     )
     
     // MARK: - Outputs
@@ -47,6 +46,7 @@ class CalibrationViewModel: CalibrationViewPresentable {
          calibrationService: CalibrationService){
         self.input = input
         self.output = CalibrationViewModel.output(input: input)
+        self.process()
     }
 }
 
@@ -55,5 +55,11 @@ private extension CalibrationViewModel {
     static func output(input: CalibrationViewPresentable.Input) ->
         CalibrationViewPresentable.Output {
         return ()
+    }
+    
+    func process() -> Void {
+        input.calibrationSetting.bind { (setting) in
+            print(setting.name)
+        }
     }
 }

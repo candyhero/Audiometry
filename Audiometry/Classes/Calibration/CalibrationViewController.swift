@@ -1,7 +1,7 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
+import RxRelay
 
 class CalibrationViewController: UIViewController, Storyboardable {
     // MARK: UI Components
@@ -35,15 +35,19 @@ class CalibrationViewController: UIViewController, Storyboardable {
     private var viewModel: CalibrationViewPresentable!
     var viewModelBuilder: CalibrationViewModel.ViewModelBuilder!
     
+    private var calibrationSettingRelay = PublishRelay<CalibrationSetting>()
+    
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
+        setupBinding()
         
         viewModel = viewModelBuilder((
             onClickReturn: returnButton.rx.tap.asSignal(),
-            ()
+//            onClickSaveAsNew: saveAsNewButton.rx.tap.asSignal(),
+            calibrationSetting: calibrationSettingRelay.asObservable()
         ))
         
 //        let currentSetting = coordinator.getCalibrationSetting()
@@ -57,8 +61,33 @@ class CalibrationViewController: UIViewController, Storyboardable {
 //        }
     }
     
-    // MARK: Setup View
-    func setupView() {
+    // MARK:
+    private func setupBinding() {
+        _ = saveAsNewButton.rx.tap.bind{[weak self] _ in
+            // Prompt for user to input setting name
+            let alertController = UIAlertController(title: "Save",
+                                              message: "Please enter setting name:",
+                                              preferredStyle: .alert)
+            
+            let actions = [
+                UIAlertAction(title: "Confirm", style: .default){ _ in
+                    if let field = alertController.textFields?[0] {
+                        let setting = CalibrationService.shared.createNew(name: field.text!)
+                        self?.calibrationSettingRelay.accept(setting)
+                    }
+                },
+                UIAlertAction(title: "Cancel", style: .cancel)
+            ]
+            actions.forEach(alertController.addAction)
+            
+            alertController.addTextField { (textField) in
+                textField.placeholder = "i.e. iPad1-EP1"
+            }
+            self?.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    private func setupView() {
         currentSettingLabel.text = "None"
         saveCurrentButton.isEnabled = false
         
@@ -92,19 +121,6 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
 //
 //    // MARK: Calibration CRUD
-//    @IBAction func saveAsNewSetting(_ sender: UIButton) {
-//        inputPrompt(promptMsg: "Please enter setting name:",
-//                    errorMsg: "Setting name cannot be empty!",
-//                    fieldMsg: "i.e. iPad1-EP1",
-//                    confirmFunction: saveSetting)
-//    }
-//
-//    func saveSetting(_ settingName: String) {
-//        coordinator.saveCalibrationSetting(settingName, ui: _settingUIs)
-//        lbCurrentSetting.text = settingName
-//        pbSaveCurrent.isEnabled = true
-//        pbDeleteCurrent.isEnabled = true
-//    }
 //
 //    @IBAction func updateCurrentSetting(_ sender: UIButton) {
 //        coordinator.updateCalibrationSetting(ui: _settingUIs)

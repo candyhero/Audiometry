@@ -23,7 +23,7 @@
         <attribute name="endTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="testEarOrder" optional="YES" attributeType="String"/>
-        <attribute name="testFrequencyOrder" optional="YES" attributeType="Transformable" customClassName="[Int]"/>
+        <attribute name="testFrequencyOrder" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Int]"/>
         <attribute name="testGroup" optional="YES" attributeType="String"/>
         <attribute name="testMode" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
         <attribute name="testRole" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
@@ -40,10 +40,10 @@
         <attribute name="no_sound_correct_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="no_sound_count_L" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="no_sound_count_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="responses_L" optional="YES" attributeType="Transformable" customClassName="[Int]"/>
-        <attribute name="responses_R" optional="YES" attributeType="Transformable" customClassName="[Int]"/>
-        <attribute name="results_L" optional="YES" attributeType="Transformable" customClassName="[Int]"/>
-        <attribute name="results_R" optional="YES" attributeType="Transformable" customClassName="[Int]"/>
+        <attribute name="responses_L" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[Int]"/>
+        <attribute name="responses_R" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[Int]"/>
+        <attribute name="results_L" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[Int]"/>
+        <attribute name="results_R" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[Int]"/>
         <attribute name="spamCount_L" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="spamCount_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="startTime_L" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -53,7 +53,7 @@
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientProfile" inverseName="values" inverseEntity="PatientProfile"/>
     </entity>
     <entity name="TestProtocol" representedClassName=".TestProtocol" syncable="YES">
-        <attribute name="frequencySequence" optional="YES" attributeType="Transformable" customClassName="[Int]"/>
+        <attribute name="frequencySequence" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[Int]"/>
         <attribute name="isTestBoth" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isTestLeftFirst" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>

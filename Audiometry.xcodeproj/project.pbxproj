@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		67302818246F8A8D0017BF2A /* CalibrationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67302817246F8A8D0017BF2A /* CalibrationService.swift */; };
 		6730281B246F8CCA0017BF2A /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67302819246F8CC90017BF2A /* Repository.swift */; };
-		6730282224702B5E0017BF2A /* CalibrationSettingValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6730281E24702B5E0017BF2A /* CalibrationSettingValues.swift */; };
-		6730282424702B5E0017BF2A /* CalibrationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6730282024702B5E0017BF2A /* CalibrationSetting.swift */; };
+		673028292472D2710017BF2A /* CalibrationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673028272472D2710017BF2A /* CalibrationSetting.swift */; };
+		6730282A2472D2710017BF2A /* CalibrationSettingValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673028282472D2710017BF2A /* CalibrationSettingValues.swift */; };
 		6765D3E924561278004A1C46 /* ChildrenTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6765D3E124561278004A1C46 /* ChildrenTest.storyboard */; };
 		6765D3EA24561278004A1C46 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6765D3E324561278004A1C46 /* LaunchScreen.storyboard */; };
 		6765D3EB24561278004A1C46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6765D3E524561278004A1C46 /* Main.storyboard */; };
@@ -63,8 +63,8 @@
 		67302816246DA8B20017BF2A /* AudiometryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudiometryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		67302817246F8A8D0017BF2A /* CalibrationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationService.swift; sourceTree = "<group>"; };
 		67302819246F8CC90017BF2A /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		6730281E24702B5E0017BF2A /* CalibrationSettingValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationSettingValues.swift; sourceTree = "<group>"; };
-		6730282024702B5E0017BF2A /* CalibrationSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationSetting.swift; sourceTree = "<group>"; };
+		673028272472D2710017BF2A /* CalibrationSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationSetting.swift; sourceTree = "<group>"; };
+		673028282472D2710017BF2A /* CalibrationSettingValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationSettingValues.swift; sourceTree = "<group>"; };
 		6765D3E224561278004A1C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ChildrenTest.storyboard; sourceTree = "<group>"; };
 		6765D3E424561278004A1C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6765D3E624561278004A1C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,11 +123,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6730281D24702B5E0017BF2A /* Model */ = {
+		673028262472D2710017BF2A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6730282024702B5E0017BF2A /* CalibrationSetting.swift */,
-				6730281E24702B5E0017BF2A /* CalibrationSettingValues.swift */,
+				673028272472D2710017BF2A /* CalibrationSetting.swift */,
+				673028282472D2710017BF2A /* CalibrationSettingValues.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -216,10 +216,10 @@
 		67A3F91C2455FD2400798427 /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
+				673028262472D2710017BF2A /* Model */,
 				67BB30D02456150200D3ACCC /* AudiometryModel.xcdatamodeld */,
 				6765D3F724561321004A1C46 /* App */,
 				6765D3FA24561321004A1C46 /* Classes */,
-				6730281D24702B5E0017BF2A /* Model */,
 				6765D3EF24561321004A1C46 /* Library */,
 				67A3F9292455FD2400798427 /* Assets.xcassets */,
 				67A3F92E2455FD2400798427 /* Info.plist */,
@@ -448,9 +448,9 @@
 				6765D41624561321004A1C46 /* CalibrationViewController.swift in Sources */,
 				6765D41824561321004A1C46 /* CalibrationPlayer.swift in Sources */,
 				67302818246F8A8D0017BF2A /* CalibrationService.swift in Sources */,
+				673028292472D2710017BF2A /* CalibrationSetting.swift in Sources */,
 				6765D40F24561321004A1C46 /* AppCoordinator.swift in Sources */,
 				6765D40D24561321004A1C46 /* BaseCoordinator.swift in Sources */,
-				6730282224702B5E0017BF2A /* CalibrationSettingValues.swift in Sources */,
 				6730281B246F8CCA0017BF2A /* Repository.swift in Sources */,
 				6765D41424561321004A1C46 /* TitleViewController.swift in Sources */,
 				6765D41924561321004A1C46 /* CalibrationCoordinator.swift in Sources */,
@@ -464,7 +464,7 @@
 				67A3F9202455FD2400798427 /* SceneDelegate.swift in Sources */,
 				6765D41124561321004A1C46 /* ResultCoordinator.swift in Sources */,
 				6765D40B24561321004A1C46 /* CaptionText.swift in Sources */,
-				6730282424702B5E0017BF2A /* CalibrationSetting.swift in Sources */,
+				6730282A2472D2710017BF2A /* CalibrationSettingValues.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

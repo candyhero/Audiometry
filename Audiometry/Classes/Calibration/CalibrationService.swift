@@ -17,7 +17,7 @@ class CalibrationService: Repository<CalibrationSetting> {
     override init() {
         
     }
-    func createNew(name: String, values: [CalibrationSettingValues]) -> CalibrationSetting {
+    func createNew(name: String, values: [CalibrationSettingValues] = []) -> CalibrationSetting {
         let newSetting = CalibrationSetting(context: _managedContext)
         newSetting.name = name
         newSetting.timestamp = Date()

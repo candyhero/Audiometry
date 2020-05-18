@@ -22,7 +22,7 @@ extension CalibrationSetting {
     @NSManaged public var name: String?
     @NSManaged public var timestamp: Date?
 //    @NSManaged public var globalSetting: GlobalSetting?
-    @NSManaged public var values: NSOrderedSet?
+//    @NSManaged public var values: NSOrderedSet?
 
 }
 
