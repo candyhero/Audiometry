@@ -1,6 +1,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import RxRelay
 
 class CalibrationViewController: UIViewController, Storyboardable {
@@ -11,14 +12,14 @@ class CalibrationViewController: UIViewController, Storyboardable {
     @IBOutlet weak var clearMeasuredLevelButton: UIButton!
     
     @IBOutlet weak var saveAsNewButton: UIButton!
-    @IBOutlet weak var saveCurrentButton: UIButton!
+    @IBOutlet weak var saveToCurrentButton: UIButton!
     @IBOutlet weak var loadOtherButton: UIButton!
     @IBOutlet weak var deleteCurrentButton: UIButton!
     
     @IBOutlet weak var currentSettingLabel: UILabel!
     
     // MARK: Inputs
-    private var _settingUIs: [Int: CalibrationSettingUi] = [:]
+    private var _calibrationSettingUI: [Int: CalibrationSettingValueUI] = [:]
     
     @IBOutlet weak var expectedLevelStackView: UIStackView!
     @IBOutlet weak var presentationLevelStackView: UIStackView!
@@ -28,27 +29,37 @@ class CalibrationViewController: UIViewController, Storyboardable {
     @IBOutlet weak var frequencyStackView: UIStackView!
     @IBOutlet weak var playButtonStackView: UIStackView!
     
-    // MARK: Properties
-    private var _pickerIndex: Int = 0;
-    private var _playingFrequency: Int = -1;
+    let loadSettingPickerView = UIPickerView(frame: CGRect(x: 0, y: 50, width: 260, height: 160))
     
+    // MARK: I/O for viewmodel
     private var viewModel: CalibrationViewPresentable!
     var viewModelBuilder: CalibrationViewModel.ViewModelBuilder!
     
-    private var calibrationSettingRelay = PublishRelay<CalibrationSetting>()
+    private lazy var relays = (
+//        onSubmitCablirationSettingName: PublishRelay<String>(), // Relay for prompt
+        onSaveNewSetting: PublishRelay<(String, [CalibrationSettingValueUI])>(),
+        onSaveCurrentSetting: PublishRelay<[CalibrationSettingValueUI]>(),
+        onLoadSelectedSetting: PublishRelay<String>()
+    )
+    
+    private let disposeBag = DisposeBag()
     
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupView()
-        setupBinding()
-        
         viewModel = viewModelBuilder((
             onClickReturn: returnButton.rx.tap.asSignal(),
-//            onClickSaveAsNew: saveAsNewButton.rx.tap.asSignal(),
-            calibrationSetting: calibrationSettingRelay.asObservable()
+            onClickLoadOther: loadOtherButton.rx.tap.asSignal(),
+            onClickDeleteCurrent: deleteCurrentButton.rx.tap.asSignal(),
+            
+            onSaveNewSetting: relays.onSaveNewSetting.asSignal(),
+            onSaveCurrentSetting: relays.onSaveCurrentSetting.asSignal(),
+            onLoadSelectedSetting: relays.onLoadSelectedSetting.asSignal()
         ))
+        
+        setupView()
+        setupBinding()
         
 //        let currentSetting = coordinator.getCalibrationSetting()
 //        if(currentSetting == nil){
@@ -62,18 +73,70 @@ class CalibrationViewController: UIViewController, Storyboardable {
     }
     
     // MARK:
+    private func setupView() {
+        let stackviews = [
+            frequencyStackView,
+            playButtonStackView,
+            expectedLevelStackView,
+            presentationLevelStackView,
+            leftMesauredLevelStackView,
+            rightMeasuredLevelStackView
+        ]
+        
+        _ = stackviews.map { sv in
+            sv?.axis = .horizontal
+            sv?.distribution = .fillEqually
+            sv?.alignment = .center
+            sv?.spacing = 20
+        }
+        
+        _ = DEFAULT_FREQ.map { frequency in
+            let settingUi = CalibrationSettingUIFactory.shared.getElement(frequency: frequency)
+            _calibrationSettingUI[frequency] = settingUi
+            
+            expectedLevelStackView.addArrangedSubview(settingUi.expectedLevelTextField)
+            presentationLevelStackView.addArrangedSubview(settingUi.presentationLevelTextField)
+            leftMesauredLevelStackView.addArrangedSubview(settingUi.leftMeasuredLevelTextField)
+            rightMeasuredLevelStackView.addArrangedSubview(settingUi.rightMeasuredLevelTextField)
+            
+            frequencyStackView.addArrangedSubview(settingUi.frequencyLabel)
+            playButtonStackView.addArrangedSubview(settingUi.playButton)
+        }
+    }
+    
     private func setupBinding() {
+        bindSaveAsNew()
+        bindSaveToCurrent()
+        bindLoadOther()
+        
+        _ = viewModel.output.currentCalibrationSetting.drive(onNext: { [weak self] calibrationSetting in
+            if let setting = calibrationSetting{
+                self?.currentSettingLabel.text = setting.name
+                self?.saveToCurrentButton.isEnabled = true
+            } else {
+                self?.currentSettingLabel.text = "None"
+                self?.saveToCurrentButton.isEnabled = false
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    private func bindSaveAsNew() {
         _ = saveAsNewButton.rx.tap.bind{[weak self] _ in
             // Prompt for user to input setting name
             let alertController = UIAlertController(title: "Save",
-                                              message: "Please enter setting name:",
-                                              preferredStyle: .alert)
+                                                    message: "Please enter setting name:",
+                                                    preferredStyle: .alert)
             
             let actions = [
                 UIAlertAction(title: "Confirm", style: .default){ _ in
-                    if let field = alertController.textFields?[0] {
-                        let setting = CalibrationService.shared.createNew(name: field.text!)
-                        self?.calibrationSettingRelay.accept(setting)
+                    if let settingName = alertController.textFields?[0].text {
+                        if(settingName.isNotEmpty) {
+                            if let settingUIs = self?._calibrationSettingUI.values {
+                                self?.relays.onSaveNewSetting.accept((settingName, Array(settingUIs)))
+                            }
+                        } else {
+                            self?.showSettingNameErrorPrompt()
+                        }
                     }
                 },
                 UIAlertAction(title: "Cancel", style: .cancel)
@@ -84,39 +147,59 @@ class CalibrationViewController: UIViewController, Storyboardable {
                 textField.placeholder = "i.e. iPad1-EP1"
             }
             self?.present(alertController, animated: true, completion: nil)
+        }.disposed(by: disposeBag)
+    }
+    
+    private func bindSaveToCurrent(){
+        _ = saveToCurrentButton.rx.tap.bind{[weak self] _ in
+            if let settingUIs = self?._calibrationSettingUI.values {
+                self?.relays.onSaveCurrentSetting.accept(Array(settingUIs))
+            }
         }
     }
     
-    private func setupView() {
-        currentSettingLabel.text = "None"
-        saveCurrentButton.isEnabled = false
+    private func bindLoadOther(){
+        _ = viewModel.output.allCalibrationSettingNames
+            .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in return element }
+            .disposed(by: disposeBag)
         
-        let stackviews = [frequencyStackView,
-                          playButtonStackView,
-                          expectedLevelStackView,
-                          presentationLevelStackView,
-                          leftMesauredLevelStackView,
-                          rightMeasuredLevelStackView]
+        let onSelectedItem = loadSettingPickerView.rx.itemSelected.asDriver()
+        _ = onSelectedItem.drive(onNext: { item in
+            print("??", item)
+        })
         
-        _ = stackviews.map { sv in
-            sv?.axis = .horizontal
-            sv?.distribution = .fillEqually
-            sv?.alignment = .center
-            sv?.spacing = 20
-        }
-        
-        _ = DEFAULT_FREQ.map { frequency in
-            let settingUi = CalibrationSettingUiFactory.shared.getElement(frequency: frequency)
-            _settingUIs[frequency] = settingUi
+        _ = viewModel.output.allCalibrationSettingNames.drive(onNext: { [weak self] _ in
+            let alertController: UIAlertController! = UIAlertController(
+                    title: "Select a different setting",
+                    message: "\n\n\n\n\n\n\n\n\n",
+                    preferredStyle: .alert)
+
+            let actions = [
+                UIAlertAction(title: "Confirm", style: .default){ _ in
+//                    relays.onLoadSelectedSetting.
+                },
+                UIAlertAction(title: "Cancel", style: .cancel)
+            ]
+            actions.forEach(alertController.addAction)
             
-            expectedLevelStackView.addArrangedSubview(settingUi.expectedLvTextField)
-            presentationLevelStackView.addArrangedSubview(settingUi.presentationLvTextField)
-            leftMesauredLevelStackView.addArrangedSubview(settingUi.leftMeasuredLvTextField)
-            rightMeasuredLevelStackView.addArrangedSubview(settingUi.rightMeasuredLvTextField)
-            
-            frequencyStackView.addArrangedSubview(settingUi.frequencyLabel)
-            playButtonStackView.addArrangedSubview(settingUi.playButton)
-        }
+            if let pickerView = self?.loadSettingPickerView{
+                alertController.view.addSubview(pickerView)
+            }
+
+            self?.present(alertController, animated: true, completion: nil)
+        }).disposed(by: disposeBag)
+        
+    }
+    
+    private func showSettingNameErrorPrompt() {
+        let alertController = UIAlertController(title: "Error",
+                                                message: "Setting name cannot be empty!",
+                                                preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
 //

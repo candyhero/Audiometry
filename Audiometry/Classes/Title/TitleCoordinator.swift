@@ -12,8 +12,8 @@ import RxSwift
 class TitleCoordinator: BaseCoordinator<Void> {
 
     /// Utility `DisposeBag` used by the subclasses.
-    let disposeBag = DisposeBag()
-    var navigationController: UINavigationController!
+    private let disposeBag = DisposeBag()
+    private var navigationController: UINavigationController!
     
     init(navController: UINavigationController) {
         navigationController = navController

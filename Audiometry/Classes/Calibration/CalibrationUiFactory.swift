@@ -2,24 +2,27 @@
 import Foundation
 import UIKit
 
-class CalibrationSettingUiFactory {
-    static let shared = CalibrationSettingUiFactory()
+class CalibrationSettingUIFactory {
+    static let shared = CalibrationSettingUIFactory()
     
-    func getElement(frequency: Int) -> CalibrationSettingUi{
-        return CalibrationSettingUi(frequency)
+    func getElement(frequency: Int) -> CalibrationSettingValueUI{
+        return CalibrationSettingValueUI(frequency)
     }
 }
 
-class CalibrationSettingUi {
-    var expectedLvTextField = UITextField()
-    var presentationLvTextField = UITextField()
-    var leftMeasuredLvTextField = UITextField()
-    var rightMeasuredLvTextField = UITextField()
+class CalibrationSettingValueUI {
+    var expectedLevelTextField = UITextField()
+    var presentationLevelTextField = UITextField()
+    var leftMeasuredLevelTextField = UITextField()
+    var rightMeasuredLevelTextField = UITextField()
     
+    var frequency: Int!
     var frequencyLabel = UILabel()
     var playButton = UIButton(type:.system)
     
     init(_ frequency: Int) {
+        self.frequency = frequency
+        
         frequencyLabel.text = String(frequency)+" Hz"
         frequencyLabel.textAlignment = .center
         
@@ -30,8 +33,13 @@ class CalibrationSettingUi {
         playButton.titleEdgeInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
         playButton.backgroundColor = UIColor.gray
         
-        let textfields = [expectedLvTextField, presentationLvTextField,
-                          leftMeasuredLvTextField, rightMeasuredLvTextField]
+        let textfields = [
+            expectedLevelTextField,
+            presentationLevelTextField,
+            leftMeasuredLevelTextField,
+            rightMeasuredLevelTextField
+        ]
+        
         _ = textfields.map {
             $0.borderStyle = .roundedRect
             $0.textAlignment = .center
@@ -39,11 +47,12 @@ class CalibrationSettingUi {
         }
     }
         
-    func extractValuesInto(_ values: CalibrationSettingValues) {
-//        values.expectedLv = Double(self.tfExpectedLv.text!) ?? 0.0
-//        values.presentationLv = Double(self.tfPresentationLv.text!) ?? 0.0
-//        values.measuredLv_L = Double(self.tfMeasuredLv_L.text!) ?? 0.0
-//        values.measuredLv_R = Double(self.tfMeasuredLv_R.text!) ?? 0.0
+    func extractValuesInto(_ values: CalibrationSettingValues) -> CalibrationSettingValues{
+        values.expectedLevel = Double(self.expectedLevelTextField.text!) ?? 0.0
+        values.presentationLevel = Double(self.presentationLevelTextField.text!) ?? 0.0
+        values.leftMeasuredLevel = Double(self.leftMeasuredLevelTextField.text!) ?? 0.0
+        values.rightMeasuredLevel = Double(self.rightMeasuredLevelTextField.text!) ?? 0.0
+        return values
     }
     
     func updateDisplayValues(_ values: CalibrationSettingValues) {

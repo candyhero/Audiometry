@@ -15,9 +15,9 @@ class CalibrationService: Repository<CalibrationSetting> {
     static let shared: CalibrationService = CalibrationService()
     
     override init() {
-        
     }
-    func createNew(name: String, values: [CalibrationSettingValues] = []) -> CalibrationSetting {
+    
+    func createNewSetting(name: String, values: [CalibrationSettingValues] = []) -> CalibrationSetting {
         let newSetting = CalibrationSetting(context: _managedContext)
         newSetting.name = name
         newSetting.timestamp = Date()
@@ -26,20 +26,25 @@ class CalibrationService: Repository<CalibrationSetting> {
 //            let newValues = CalibrationSettingValues(context: _managedContext)
             newSetting.addToValues(v)
         }
+        
+        do {
+            try _managedContext.save()
+        } catch let error as NSError {
+            print("Failed to save new calibration setting")
+            print(error)
+        }
         return newSetting
     }
     
-    func fetchAllSortedByTime() -> Single<[CalibrationSetting]> {
+    func createNewSettingValues(frequency: Int) -> CalibrationSettingValues {
+        let newSettingValues = CalibrationSettingValues(context: _managedContext)
+        newSettingValues.frequency = Int16(frequency)
+        return newSettingValues
+    }
+    
+    func fetchAllSortedByTime() -> [CalibrationSetting] {
         let sortByTimestamp = NSSortDescriptor(key: #keyPath(CalibrationSetting.timestamp),
                                                ascending: true)
-        return Single.create { (single) -> Disposable in
-            do {
-                let settings = try self.fetchAll([sortByTimestamp])
-                print(settings)
-                single(.success(settings))
-            } catch { }
-            
-            return Disposables.create()
-        }
+        return try! self.fetchAll([sortByTimestamp]) 
     }
 }

@@ -14,12 +14,18 @@ protocol CalibrationViewPresentable {
     // MARK: - Inputs
     typealias Input = (
         onClickReturn: Signal<Void>,
-        calibrationSetting: Observable<CalibrationSetting>
+        onClickLoadOther: Signal<Void>,
+        onClickDeleteCurrent: Signal<Void>,
+        
+        onSaveNewSetting: Signal<(String, [CalibrationSettingValueUI])>,
+        onSaveCurrentSetting: Signal<[CalibrationSettingValueUI]>,
+        onLoadSelectedSetting: Signal<String>
     )
     
     // MARK: - Outputs
     typealias Output = (
-        
+        currentCalibrationSetting: Driver<CalibrationSetting?>,
+        allCalibrationSettingNames: Driver<[String]>
     )
     
     typealias ViewModelBuilder = (CalibrationViewPresentable.Input) -> CalibrationViewPresentable
@@ -32,34 +38,121 @@ class CalibrationViewModel: CalibrationViewPresentable {
     var input: CalibrationViewPresentable.Input
     var output: CalibrationViewPresentable.Output
     
+    typealias State = (
+        currentCalibrationSetting: BehaviorRelay<CalibrationSetting?>,
+        allCalibrationSettings: BehaviorRelay<[CalibrationSetting]>
+    )
+    let state: State = (
+        currentCalibrationSetting: BehaviorRelay<CalibrationSetting?>(value: nil),
+        allCalibrationSettings: BehaviorRelay<[CalibrationSetting]>(value: [])
+    )
+    
     typealias Routing = (
         showTitle: Signal<Void>,
         ()
     )
-    
     lazy var router: Routing = (
         showTitle: input.onClickReturn,
         ()
     )
     
-    init(input: CalibrationViewPresentable.Input,
-         calibrationService: CalibrationService){
+    private let disposeBag = DisposeBag()
+    
+    init(input: CalibrationViewPresentable.Input){
         self.input = input
-        self.output = CalibrationViewModel.output(input: input)
+        self.output = CalibrationViewModel.output(input: self.input,
+                                                  state: self.state)
+        
         self.process()
     }
 }
 
 private extension CalibrationViewModel {
     // MARK: - Return output to view here, e.g. alert message
-    static func output(input: CalibrationViewPresentable.Input) ->
-        CalibrationViewPresentable.Output {
-        return ()
+    static func output(input: CalibrationViewPresentable.Input,
+                       state: State) -> CalibrationViewPresentable.Output {
+        print("Set output...")
+        
+        return (
+            currentCalibrationSetting: state.currentCalibrationSetting.asDriver(),
+            allCalibrationSettingNames: state.allCalibrationSettings.map{ $0.map{($0.name ?? "Error")}}.asDriver(onErrorJustReturn: [])
+        )
     }
     
     func process() -> Void {
-        input.calibrationSetting.bind { (setting) in
-            print(setting.name)
+        var allSettings = CalibrationService.shared.fetchAllSortedByTime()
+        print("Setting Count (Init): ", allSettings.count)
+        
+        for setting in allSettings{
+            try! CalibrationService.shared.delete(setting)
         }
+        allSettings = CalibrationService.shared.fetchAllSortedByTime()
+        print("Setting Count (After Init): ", allSettings.count)
+        
+        // MARK: Bind
+        _ = input.onSaveNewSetting.emit(onNext: {[weak self] (settingName, settingUI) in
+                    
+    //            print("ViewModel:", settingName, settingUI.count)
+                let service = CalibrationService.shared
+                
+                let settingValues = settingUI.map {
+                    $0.extractValuesInto(service.createNewSettingValues(frequency: $0.frequency))
+                }
+                
+                let setting = service.createNewSetting(name: settingName, values: settingValues)
+                self?.state.currentCalibrationSetting.accept(setting)
+            }
+        ).disposed(by: disposeBag)
+        
+        _ = input.onSaveCurrentSetting.emit(onNext: {[weak self] settingUIs in
+        
+            if let setting = self?.state.currentCalibrationSetting.value
+            {
+                let lookup = setting.values?.reduce(
+                    into: [Int: CalibrationSettingValues]()
+                ){ (dict, v) in
+                    if let values = v as? CalibrationSettingValues{
+                        dict[Int(values.frequency)] = values
+                    }
+                }
+                print(lookup![2000] as Any)
+                
+                _ = settingUIs.map {
+                    $0.extractValuesInto((lookup?[$0.frequency])!)
+                }
+                print(lookup![2000] as Any)
+            }
+        }).disposed(by: disposeBag)
+        
+        _ = input.onClickLoadOther.emit(onNext: {[weak self] _ in
+            if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
+                self?.state.allCalibrationSettings.accept(allSettings)
+            } else {
+                print("Error when load all others")
+            }
+        }).disposed(by: disposeBag)
+        
+        _ = input.onLoadSelectedSetting.emit(onNext: { settingName in
+            print("VM:", settingName)
+        })
+        
+        _ = input.onClickDeleteCurrent.emit(onNext: {[weak self] _ in
+            if let setting = self?.state.currentCalibrationSetting.value{
+                self?.state.currentCalibrationSetting.accept(nil)
+                try! CalibrationService.shared.delete(setting)
+            }
+        }).disposed(by: disposeBag)
+        
+        _ = state.currentCalibrationSetting.bind{(calibrationSetting) in
+            if let setting = calibrationSetting {
+                print("State: \(String(describing: setting.name))")
+            } else {
+                print("State: nil")
+            }
+        }.disposed(by: disposeBag)
+        
+//        _ = state.allCalibrationSettings.bind{(allSettings) in
+//            print("State (After Load): \(String(describing: allSettings.count))")
+//        }.disposed(by: disposeBag)
     }
 }

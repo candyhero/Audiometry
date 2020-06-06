@@ -4,7 +4,7 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="globalSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GlobalSetting" inverseName="calibrationSetting" inverseEntity="GlobalSetting"/>
-        <relationship name="values" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="CalibrationSettingValues" inverseName="setting" inverseEntity="CalibrationSettingValues"/>
+        <relationship name="values" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" ordered="YES" destinationEntity="CalibrationSettingValues" inverseName="setting" inverseEntity="CalibrationSettingValues"/>
     </entity>
     <entity name="CalibrationSettingValues" representedClassName=".CalibrationSettingValues" syncable="YES">
         <attribute name="expectedLevel" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
