@@ -166,20 +166,29 @@ class CalibrationViewController: UIViewController, Storyboardable {
     }
     
     private func bindLoadOther(){
+        let allSettingNames = BehaviorRelay<[String]>(value: [])
+        let onSelectedSetting = BehaviorRelay<String>(value: "")
+        
         _ = viewModel.output.allCalibrationSettingNames
             .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in
                 return element
             }
             .disposed(by: disposeBag)
         
-        let onSelectedSetting = BehaviorRelay<String>(value: "")
+        _ = viewModel.output.allCalibrationSettingNames
+            .drive(allSettingNames)
+            .disposed(by: disposeBag)
         
-        _ = Driver.combineLatest(
-            loadSettingPickerView.rx.itemSelected.asDriver(),
-            viewModel.output.allCalibrationSettingNames
-        ).drive(onNext: {(selected, allSettingNames) in
-            onSelectedSetting.accept(allSettingNames[selected.row]) // selected.row not updated when triggerred
-        }).disposed(by: disposeBag)
+        _ = loadSettingPickerView.rx.itemSelected.asDriver()
+            .map{ allSettingNames.value[$0.row] }
+            .drive(onSelectedSetting)
+        
+//        _ = Driver.combineLatest(
+//            loadSettingPickerView.rx.itemSelected.asDriver(),
+//            viewModel.output.allCalibrationSettingNames
+//        ).drive(onNext: {(selected, allSettingNames) in
+//            onSelectedSetting.accept(allSettingNames[selected.row]) // selected.row not updated when triggerred
+//        }).disposed(by: disposeBag)
         
         _ = viewModel.output.allCalibrationSettingNames.skip(1)
             .drive(onNext: { allSettingNames in
