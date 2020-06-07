@@ -172,8 +172,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
         _ = viewModel.output.allCalibrationSettingNames
             .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in
                 return element
-            }
-            .disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         
         _ = viewModel.output.allCalibrationSettingNames
             .drive(allSettingNames)
@@ -182,13 +181,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
         _ = loadSettingPickerView.rx.itemSelected.asDriver()
             .map{ allSettingNames.value[$0.row] }
             .drive(onSelectedSetting)
-        
-//        _ = Driver.combineLatest(
-//            loadSettingPickerView.rx.itemSelected.asDriver(),
-//            viewModel.output.allCalibrationSettingNames
-//        ).drive(onNext: {(selected, allSettingNames) in
-//            onSelectedSetting.accept(allSettingNames[selected.row]) // selected.row not updated when triggerred
-//        }).disposed(by: disposeBag)
+            .disposed(by: disposeBag)
         
         _ = viewModel.output.allCalibrationSettingNames.skip(1)
             .drive(onNext: { allSettingNames in
