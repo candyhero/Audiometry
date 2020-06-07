@@ -99,7 +99,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
         bindSaveToCurrent()
         bindLoadOther()
         
-        _ = viewModel.output.currentCalibrationSetting.drive(
+        _ = viewModel.output.currentCalibrationSetting.drive( // MARK: TO-DO: add load values in UI
             onNext: { [weak self] calibrationSetting in
                 if let setting = calibrationSetting{
                     self?.currentSettingLabel.text = setting.name
@@ -140,7 +140,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
         func confirmAction(settingName: String){
             if(settingName.isNotEmpty) {
                 let params = (settingName, Array(_calibrationSettingUI.values))
-                self.relays.onSaveNewSetting.accept(params)
+                relays.onSaveNewSetting.accept(params)
             } else {
                 promptSettingNameInputError()
             }
@@ -221,45 +221,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
         }
     }
     
-//
-//    // MARK: Calibration CRUD
-//
-//    @IBAction func updateCurrentSetting(_ sender: UIButton) {
-//        coordinator.updateCalibrationSetting(ui: _settingUIs)
-//    }
-//
-//    @IBAction func loadOtherSetting(_ sender: UIButton) {
-//        _pickerIndex = 0
-//        coordinator.fetchAllCalibrationSettings()
-//
-//        pickerPrompt(confirmFunction: { ()->Void in
-//            let picked = self.coordinator.setCalibrationSettingByPicker(self._pickerIndex)
-//            self.loadCurrentSettingValues(picked!)
-//
-//            self.pbSaveCurrent.isEnabled = true
-//            self.pbDeleteCurrent.isEnabled = true
-//        })
-//    }
-//
-//    func loadCurrentSettingValues(_ setting: CalibrationSetting) {
-//        lbCurrentSetting.text = setting.name ?? "NULL"
-//
-//        for settingValues in setting.values ?? [] {
-//            let values = settingValues as! CalibrationSettingValues
-//            _settingUIs[Int(values.frequency)]?.updateDisplayValues(values)
-//        }
-//        pbSaveCurrent.isEnabled = true
-//    }
-//
-//    @IBAction func deleteCurrentSetting(_ sender: UIButton) {
-//        coordinator.deleteCalibrationSetting()
-//        lbCurrentSetting.text = "None"
-//
-//        pbSaveCurrent.isEnabled = false
-//        pbDeleteCurrent.isEnabled = false
-//    }
-//
-//    // MARK:
+//    // MARK: Load default values
 //    @IBAction func loadDefaultPresentationLv(_ sender: UIButton) {
 //        for settingUI in _settingUIs.values {
 //            settingUI.tfPresentationLv.text = String(DEFAULT_CALIBRATION_PLAYER_DB)
@@ -274,6 +236,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
 //
 //    }
 //
+//    // MARK: toggle play signal
 //    @IBAction func toggleSingal(_ sender: UIButton) {
 //        // No tone playing at all, simply toggle on
 //        let freq = sender.tag
@@ -296,27 +259,3 @@ class CalibrationViewController: UIViewController, Storyboardable {
 //        _playingFrequency = newFreq
 //    }
 }
-//
-//extension CalibrationViewController: UIPickerViewDelegate, UIPickerViewDataSource{
-//
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView,
-//                    numberOfRowsInComponent component: Int) -> Int {
-//        let settings = coordinator.getAllCalibrationSettings()
-//        return settings.count
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
-//                    forComponent component: Int) -> String? {
-//        let settings = coordinator.getAllCalibrationSettings()
-//        return settings[row].name
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
-//                    inComponent component: Int) {
-//        _pickerIndex = row
-//    }
-//}
