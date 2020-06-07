@@ -18,9 +18,6 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
     @IBOutlet weak var currentSettingLabel: UILabel!
     
-    // MARK: Inputs
-    private var _calibrationSettingUI: [Int: CalibrationSettingValueUI] = [:]
-    
     @IBOutlet weak var expectedLevelStackView: UIStackView!
     @IBOutlet weak var presentationLevelStackView: UIStackView!
     @IBOutlet weak var leftMesauredLevelStackView: UIStackView!
@@ -29,7 +26,11 @@ class CalibrationViewController: UIViewController, Storyboardable {
     @IBOutlet weak var frequencyStackView: UIStackView!
     @IBOutlet weak var playButtonStackView: UIStackView!
     
-    let loadSettingPickerView = UIPickerView(frame: CGRect(x: 0, y: 50, width: 260, height: 160))
+    private var _calibrationSettingUI: [Int: CalibrationSettingValueUI] = [:]
+    
+    let loadSettingPickerView = UIPickerView(
+        frame: CGRect(x: 0, y: 50, width: 260, height: 160)
+    )
     
     // MARK: I/O for viewmodel
     private var viewModel: CalibrationViewPresentable!
@@ -44,7 +45,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
     private let disposeBag = DisposeBag()
     
-    // MARK:
+    // MARK: Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,19 +61,8 @@ class CalibrationViewController: UIViewController, Storyboardable {
         
         setupView()
         setupBinding()
-        
-//        let currentSetting = coordinator.getCalibrationSetting()
-//        if(currentSetting == nil){
-//            lbCurrentSetting.text = "None"
-//            pbSaveCurrent.isEnabled = false
-//        } else {
-//            lbCurrentSetting.text = currentSetting!.name
-//            loadCurrentSettingValues(currentSetting!)
-//            pbSaveCurrent.isEnabled = true
-//        }
     }
     
-    // MARK:
     private func setupView() {
         let stackviews = [
             frequencyStackView,
@@ -109,49 +99,66 @@ class CalibrationViewController: UIViewController, Storyboardable {
         bindSaveToCurrent()
         bindLoadOther()
         
-        _ = viewModel.output.currentCalibrationSetting.drive(onNext: { [weak self] calibrationSetting in
-            if let setting = calibrationSetting{
-                self?.currentSettingLabel.text = setting.name
-                self?.saveToCurrentButton.isEnabled = true
-            } else {
-                self?.currentSettingLabel.text = "None"
-                self?.saveToCurrentButton.isEnabled = false
+        _ = viewModel.output.currentCalibrationSetting.drive(
+            onNext: { [weak self] calibrationSetting in
+                if let setting = calibrationSetting{
+                    self?.currentSettingLabel.text = setting.name
+                    self?.saveToCurrentButton.isEnabled = true
+                } else {
+                    self?.currentSettingLabel.text = "None"
+                    self?.saveToCurrentButton.isEnabled = false
+                }
             }
-        }).disposed(by: disposeBag)
+        ).disposed(by: disposeBag)
     }
     
     private func bindSaveAsNew() {
-        _ = saveAsNewButton.rx.tap.bind{[weak self] _ in
+        _ = saveAsNewButton.rx.tap.bind{ [weak self] _ in
+            promptSettingNameInputPrompt()
+        }.disposed(by: disposeBag)
+        
+        func promptSettingNameInputPrompt(){
             // Prompt for user to input setting name
-            let alertController = UIAlertController(title: "Save",
-                                                    message: "Please enter setting name:",
-                                                    preferredStyle: .alert)
-            
+            let alertController = UIAlertController(
+                title: "Save",
+                message: "Please enter setting name:",
+                preferredStyle: .alert
+            )
             let actions = [
                 UIAlertAction(title: "Confirm", style: .default){ _ in
                     if let settingName = alertController.textFields?[0].text {
-                        if(settingName.isNotEmpty) {
-                            if let settingUIs = self?._calibrationSettingUI.values {
-                                self?.relays.onSaveNewSetting.accept((settingName, Array(settingUIs)))
-                            }
-                        } else {
-                            self?.showSettingNameErrorPrompt()
-                        }
+                        confirmAction(settingName: settingName)
                     }
                 },
                 UIAlertAction(title: "Cancel", style: .cancel)
             ]
             actions.forEach(alertController.addAction)
-            
-            alertController.addTextField { (textField) in
-                textField.placeholder = "i.e. iPad1-EP1"
+            alertController.addTextField { $0.placeholder = "i.e. iPad1-EP1" }
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+        func confirmAction(settingName: String){
+            if(settingName.isNotEmpty) {
+                let params = (settingName, Array(_calibrationSettingUI.values))
+                self.relays.onSaveNewSetting.accept(params)
+            } else {
+                promptSettingNameInputError()
             }
-            self?.present(alertController, animated: true, completion: nil)
-        }.disposed(by: disposeBag)
+        }
+        
+        func promptSettingNameInputError() {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "Setting name cannot be empty!",
+                preferredStyle: .alert
+            )
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alertController, animated: true, completion: nil)
+        }
     }
     
     private func bindSaveToCurrent(){
-        _ = saveToCurrentButton.rx.tap.bind{[weak self] _ in
+        _ = saveToCurrentButton.rx.tap.bind{ [weak self] _ in
             if let settingUIs = self?._calibrationSettingUI.values {
                 self?.relays.onSaveCurrentSetting.accept(Array(settingUIs))
             }
@@ -160,46 +167,56 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
     private func bindLoadOther(){
         _ = viewModel.output.allCalibrationSettingNames
-            .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in return element }
+            .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in
+                return element
+            }
             .disposed(by: disposeBag)
         
-        let onSelectedItem = loadSettingPickerView.rx.itemSelected.asDriver()
-        _ = onSelectedItem.drive(onNext: { item in
-            print("??", item)
-        })
+        let onSelectedSetting = BehaviorRelay<String>(value: "")
         
-        _ = viewModel.output.allCalibrationSettingNames.drive(onNext: { [weak self] _ in
+        _ = Driver.combineLatest(
+            loadSettingPickerView.rx.itemSelected.asDriver(),
+            viewModel.output.allCalibrationSettingNames
+        ).drive(onNext: {(selected, allSettingNames) in
+            onSelectedSetting.accept(allSettingNames[selected.row]) // selected.row not updated when triggerred
+        }).disposed(by: disposeBag)
+        
+        _ = viewModel.output.allCalibrationSettingNames.skip(1)
+            .drive(onNext: { allSettingNames in
+                if let defaultSelectedSetting = allSettingNames.first{
+                    onSelectedSetting.accept(defaultSelectedSetting)
+                    promptPickerView()
+                } else {
+                    promptPickerViewError()
+                }
+            }).disposed(by: disposeBag)
+        
+        func promptPickerViewError(){
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "There is no other calibration settings!",
+                preferredStyle: .alert
+            )
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alertController, animated: true, completion: nil)
+        }
+        
+        func promptPickerView(){
             let alertController: UIAlertController! = UIAlertController(
-                    title: "Select a different setting",
-                    message: "\n\n\n\n\n\n\n\n\n",
-                    preferredStyle: .alert)
-
+                title: "Select a different setting",
+                message: "\n\n\n\n\n\n\n\n\n",
+                preferredStyle: .alert
+            )
             let actions = [
-                UIAlertAction(title: "Confirm", style: .default){ _ in
-//                    relays.onLoadSelectedSetting.
+                UIAlertAction(title: "Confirm", style: .default){ [weak self] _ in
+                    self?.relays.onLoadSelectedSetting.accept(onSelectedSetting.value)
                 },
                 UIAlertAction(title: "Cancel", style: .cancel)
             ]
             actions.forEach(alertController.addAction)
-            
-            if let pickerView = self?.loadSettingPickerView{
-                alertController.view.addSubview(pickerView)
-            }
-
-            self?.present(alertController, animated: true, completion: nil)
-        }).disposed(by: disposeBag)
-        
-    }
-    
-    private func showSettingNameErrorPrompt() {
-        let alertController = UIAlertController(title: "Error",
-                                                message: "Setting name cannot be empty!",
-                                                preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
+            alertController.view.addSubview(loadSettingPickerView)
+            present(alertController, animated: true, completion: nil)
+        }
     }
     
 //

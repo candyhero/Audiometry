@@ -80,30 +80,42 @@ private extension CalibrationViewModel {
     }
     
     func process() -> Void {
-        var allSettings = CalibrationService.shared.fetchAllSortedByTime()
-        print("Setting Count (Init): ", allSettings.count)
-        
-        for setting in allSettings{
-            try! CalibrationService.shared.delete(setting)
-        }
-        allSettings = CalibrationService.shared.fetchAllSortedByTime()
-        print("Setting Count (After Init): ", allSettings.count)
-        
+        clearAllSettings()
         // MARK: Bind
-        _ = input.onSaveNewSetting.emit(onNext: {[weak self] (settingName, settingUI) in
-                    
-    //            print("ViewModel:", settingName, settingUI.count)
-                let service = CalibrationService.shared
-                
-                let settingValues = settingUI.map {
-                    $0.extractValuesInto(service.createNewSettingValues(frequency: $0.frequency))
-                }
-                
-                let setting = service.createNewSetting(name: settingName, values: settingValues)
-                self?.state.currentCalibrationSetting.accept(setting)
+        bindSaveNewSetting()
+        bindSaveCurrentSetting()
+        bindLoadOther()
+        bind()
+    }
+    
+    private func clearAllSettings(){
+        if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
+            print("Setting Count (Init): ", allSettings.count)
+            
+            for setting in allSettings{
+                try! CalibrationService.shared.delete(setting)
             }
-        ).disposed(by: disposeBag)
-        
+        }
+        if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
+            print("Setting Count (AfterInit): ", allSettings.count)
+        }
+    }
+    
+    private func bindSaveNewSetting(){
+        _ = input.onSaveNewSetting.emit(onNext: {[weak self] (settingName, settingUI) in
+//            print("ViewModel:", settingName, settingUI.count)
+            let service = CalibrationService.shared
+            
+            let settingValues = settingUI.map {
+                $0.extractValuesInto(service.createNewSettingValues(frequency: $0.frequency))
+            }
+            
+            let setting = service.createNewSetting(name: settingName, values: settingValues)
+            self?.state.currentCalibrationSetting.accept(setting)
+        }).disposed(by: disposeBag)
+    }
+    
+    private func bindSaveCurrentSetting(){
         _ = input.onSaveCurrentSetting.emit(onNext: {[weak self] settingUIs in
         
             if let setting = self?.state.currentCalibrationSetting.value
@@ -123,19 +135,27 @@ private extension CalibrationViewModel {
                 print(lookup![2000] as Any)
             }
         }).disposed(by: disposeBag)
-        
+    }
+    
+    private func bindLoadOther(){
         _ = input.onClickLoadOther.emit(onNext: {[weak self] _ in
             if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
+                print("Load all:", self?.state.allCalibrationSettings.value.count, allSettings.count)
                 self?.state.allCalibrationSettings.accept(allSettings)
             } else {
                 print("Error when load all others")
             }
         }).disposed(by: disposeBag)
         
-        _ = input.onLoadSelectedSetting.emit(onNext: { settingName in
-            print("VM:", settingName)
-        })
-        
+        _ = input.onLoadSelectedSetting.emit(onNext: { [weak self] selectedSettingName in
+            if let allSettings = self?.state.allCalibrationSettings.value,
+               let selectedSetting = allSettings.filter({ $0.name == selectedSettingName }).first {
+                self?.state.currentCalibrationSetting.accept(selectedSetting)
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    private func bind(){
         _ = input.onClickDeleteCurrent.emit(onNext: {[weak self] _ in
             if let setting = self?.state.currentCalibrationSetting.value{
                 self?.state.currentCalibrationSetting.accept(nil)
@@ -150,9 +170,5 @@ private extension CalibrationViewModel {
                 print("State: nil")
             }
         }.disposed(by: disposeBag)
-        
-//        _ = state.allCalibrationSettings.bind{(allSettings) in
-//            print("State (After Load): \(String(describing: allSettings.count))")
-//        }.disposed(by: disposeBag)
     }
 }

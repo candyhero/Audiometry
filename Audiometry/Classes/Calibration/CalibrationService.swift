@@ -42,9 +42,9 @@ class CalibrationService: Repository<CalibrationSetting> {
         return newSettingValues
     }
     
-    func fetchAllSortedByTime() -> [CalibrationSetting] {
+    func fetchAllSortedByTime() throws -> [CalibrationSetting]?{
         let sortByTimestamp = NSSortDescriptor(key: #keyPath(CalibrationSetting.timestamp),
-                                               ascending: true)
-        return try! self.fetchAll([sortByTimestamp]) 
+                                               ascending: false)
+        return try? self.fetchAll([sortByTimestamp])
     }
 }
