@@ -75,7 +75,10 @@ private extension CalibrationViewModel {
         
         return (
             currentCalibrationSetting: state.currentCalibrationSetting.asDriver(),
-            allCalibrationSettingNames: state.allCalibrationSettings.map{ $0.map{($0.name ?? "Error")}}.asDriver(onErrorJustReturn: [])
+            allCalibrationSettingNames:
+                state.allCalibrationSettings
+                    .map{ $0.map{($0.name ?? "Error")}}
+                    .asDriver(onErrorJustReturn: [])
         )
     }
     
@@ -107,7 +110,7 @@ private extension CalibrationViewModel {
             let service = CalibrationService.shared
             
             let settingValues = settingUI.map {
-                $0.extractValuesInto(service.createNewSettingValues(frequency: $0.frequency))
+                $0.extractValuesInto(values: service.createNewSettingValues(frequency: $0.frequency))
             }
             
             let setting = service.createNewSetting(name: settingName, values: settingValues)
@@ -130,7 +133,7 @@ private extension CalibrationViewModel {
                 print(lookup![2000] as Any)
                 
                 _ = settingUIs.map {
-                    $0.extractValuesInto((lookup?[$0.frequency])!)
+                    $0.extractValuesInto(values: (lookup?[$0.frequency])!)
                 }
                 print(lookup![2000] as Any)
             }

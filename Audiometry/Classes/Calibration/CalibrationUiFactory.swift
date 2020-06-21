@@ -47,7 +47,7 @@ class CalibrationSettingValueUI {
         }
     }
         
-    func extractValuesInto(_ values: CalibrationSettingValues) -> CalibrationSettingValues{
+    func extractValuesInto(values: CalibrationSettingValues) -> CalibrationSettingValues{
         values.expectedLevel = Double(self.expectedLevelTextField.text!) ?? 0.0
         values.presentationLevel = Double(self.presentationLevelTextField.text!) ?? 0.0
         values.leftMeasuredLevel = Double(self.leftMeasuredLevelTextField.text!) ?? 0.0
@@ -55,10 +55,17 @@ class CalibrationSettingValueUI {
         return values
     }
     
-    func updateDisplayValues(_ values: CalibrationSettingValues) {
-//        self.tfExpectedLv.text = String(values.expectedLv)
-//        self.tfPresentationLv.text = String(values.presentationLv)
-//        self.tfMeasuredLv_L.text = String(values.measuredLv_L)
-//        self.tfMeasuredLv_R.text = String(values.measuredLv_R)
+    func loadValuesFrom(values: CalibrationSettingValues) {
+        self.expectedLevelTextField.text = String(values.expectedLevel)
+        self.presentationLevelTextField.text = String(values.presentationLevel)
+        self.leftMeasuredLevelTextField.text = String(values.leftMeasuredLevel)
+        self.rightMeasuredLevelTextField.text = String(values.rightMeasuredLevel)
+    }
+    
+    func clearValues(){
+        self.expectedLevelTextField.text = ""
+        self.presentationLevelTextField.text = ""
+        self.leftMeasuredLevelTextField.text = ""
+        self.rightMeasuredLevelTextField.text = ""
     }
 }

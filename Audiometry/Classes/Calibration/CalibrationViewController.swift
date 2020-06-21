@@ -101,15 +101,32 @@ class CalibrationViewController: UIViewController, Storyboardable {
         
         _ = viewModel.output.currentCalibrationSetting.drive( // MARK: TO-DO: add load values in UI
             onNext: { [weak self] calibrationSetting in
-                if let setting = calibrationSetting{
+                if let setting = calibrationSetting {
                     self?.currentSettingLabel.text = setting.name
                     self?.saveToCurrentButton.isEnabled = true
+                    loadValues(calibrationSetting: setting)
                 } else {
                     self?.currentSettingLabel.text = "None"
                     self?.saveToCurrentButton.isEnabled = false
+//                    clearValues()
                 }
             }
         ).disposed(by: disposeBag)
+        
+        func loadValues(calibrationSetting: CalibrationSetting){
+            _ = calibrationSetting.values?.array.map{ v in
+                if let values = v as? CalibrationSettingValues,
+                    let ui = _calibrationSettingUI[Int(values.frequency)] {
+                    ui.loadValuesFrom(values: values)
+                }
+            }
+        }
+        
+        func clearValues(){
+            for (_, ui) in _calibrationSettingUI {
+                ui.clearValues()
+            }
+        }
     }
     
     private func bindSaveAsNew() {
