@@ -40,7 +40,8 @@ class CalibrationViewController: UIViewController, Storyboardable {
 //        onSubmitCablirationSettingName: PublishRelay<String>(), // Relay for prompt
         onSaveNewSetting: PublishRelay<(String, [CalibrationSettingValueUI])>(),
         onSaveCurrentSetting: PublishRelay<[CalibrationSettingValueUI]>(),
-        onLoadSelectedSetting: PublishRelay<String>()
+        onLoadSelectedSetting: PublishRelay<String>(),
+        onTogglePlayCalibration: PublishRelay<Int>()
     )
     
     private let disposeBag = DisposeBag()
@@ -56,7 +57,9 @@ class CalibrationViewController: UIViewController, Storyboardable {
             
             onSaveNewSetting: relays.onSaveNewSetting.asSignal(),
             onSaveCurrentSetting: relays.onSaveCurrentSetting.asSignal(),
-            onLoadSelectedSetting: relays.onLoadSelectedSetting.asSignal()
+            onLoadSelectedSetting: relays.onLoadSelectedSetting.asSignal(),
+            
+            onTogglePlayCalibration: relays.onTogglePlayCalibration.asSignal()
         ))
         
         setupView()
@@ -95,44 +98,87 @@ class CalibrationViewController: UIViewController, Storyboardable {
     }
     
     private func setupBinding() {
+        bindLoadAllUiValues()
+        bindClearAllMeasuredLevelValues()
+        bindTogglePlayCalibration()
         bindSaveAsNew()
         bindSaveToCurrent()
         bindLoadOther()
-        
-        _ = viewModel.output.currentCalibrationSetting.drive( // MARK: TO-DO: add load values in UI
-            onNext: { [weak self] calibrationSetting in
-                if let setting = calibrationSetting {
-                    self?.currentSettingLabel.text = setting.name
-                    self?.saveToCurrentButton.isEnabled = true
-                    loadValues(calibrationSetting: setting)
-                } else {
-                    self?.currentSettingLabel.text = "None"
-                    self?.saveToCurrentButton.isEnabled = false
-//                    clearValues()
+    }
+    
+    private func bindLoadAllUiValues(){
+        func loadCurrentValues(calibrationSetting: CalibrationSetting?){
+            if let setting = calibrationSetting {
+                currentSettingLabel.text = setting.name
+                saveToCurrentButton.isEnabled = true
+                
+                _ = setting.values?.array.map{ v in
+                    if let values = v as? CalibrationSettingValues,
+                        let ui = _calibrationSettingUI[Int(values.frequency)] {
+                        ui.loadValuesFrom(values: values)
+                    }
                 }
-            }
-        ).disposed(by: disposeBag)
-        
-        func loadValues(calibrationSetting: CalibrationSetting){
-            _ = calibrationSetting.values?.array.map{ v in
-                if let values = v as? CalibrationSettingValues,
-                    let ui = _calibrationSettingUI[Int(values.frequency)] {
-                    ui.loadValuesFrom(values: values)
-                }
+            } else {
+                currentSettingLabel.text = "None"
+                saveToCurrentButton.isEnabled = false
             }
         }
+        _ = viewModel.output.currentCalibrationSetting
+            .drive(onNext: loadCurrentValues)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindClearAllMeasuredLevelValues(){
+        _ = clearMeasuredLevelButton.rx.tap
+            .bind{clearAllMeasuredLevelValues()}
+            .disposed(by: disposeBag)
         
-        func clearValues(){
+        func clearAllMeasuredLevelValues(){
             for (_, ui) in _calibrationSettingUI {
-                ui.clearValues()
+                ui.clearMeasuredLevelValues()
             }
         }
     }
     
+    private func bindTogglePlayCalibration(){
+        _ = _calibrationSettingUI.map{ (_, ui) in
+            ui.playButton.rx.tap
+                .bind{ togglePlayCalibration(frequency: ui.frequency) }
+                .disposed(by: disposeBag)
+        }
+        
+        func togglePlayCalibration(frequency: Int){
+            relays.onTogglePlayCalibration.accept(frequency)
+        }
+        
+        func togglePlayCalibrationUi(){
+            
+        }
+        //        // No tone playing at all, simply toggle on
+        //        let freq = sender.tag
+        //        let ui = _settingUIs[freq]!
+        //
+        //        let newFreq = coordinator.togglePlayer(_playingFrequency, freq, ui)
+        //
+        //        if(newFreq == -1) {
+        //            ui.pbPlay.setTitle("Off", for: .normal)
+        //        }
+        //        else if(_playingFrequency == -1) {
+        //            ui.pbPlay.setTitle("On", for: .normal)
+        //        }
+        //        else {
+        //            let uiOff = _settingUIs[_playingFrequency]!
+        //            uiOff.pbPlay.setTitle("Off", for: .normal)
+        //            ui.pbPlay.setTitle("On", for: .normal)
+        //        }
+        //
+        //        _playingFrequency = newFreq
+    }
+    
     private func bindSaveAsNew() {
-        _ = saveAsNewButton.rx.tap.bind{ [weak self] _ in
-            promptSettingNameInputPrompt()
-        }.disposed(by: disposeBag)
+        _ = saveAsNewButton.rx.tap
+            .bind{ promptSettingNameInputPrompt() }
+            .disposed(by: disposeBag)
         
         func promptSettingNameInputPrompt(){
             // Prompt for user to input setting name
@@ -175,10 +221,13 @@ class CalibrationViewController: UIViewController, Storyboardable {
     }
     
     private func bindSaveToCurrent(){
-        _ = saveToCurrentButton.rx.tap.bind{ [weak self] _ in
-            if let settingUIs = self?._calibrationSettingUI.values {
-                self?.relays.onSaveCurrentSetting.accept(Array(settingUIs))
-            }
+        _ = saveToCurrentButton.rx.tap
+            .bind{ saveToCurrent() }
+            .disposed(by: disposeBag)
+        
+        func saveToCurrent(){
+            let uis = Array(_calibrationSettingUI.values)
+            relays.onSaveCurrentSetting.accept(uis)
         }
     }
     
@@ -200,25 +249,17 @@ class CalibrationViewController: UIViewController, Storyboardable {
             .drive(onSelectedSetting)
             .disposed(by: disposeBag)
         
-        _ = viewModel.output.allCalibrationSettingNames.skip(1)
-            .drive(onNext: { allSettingNames in
-                if let defaultSelectedSetting = allSettingNames.first{
-                    onSelectedSetting.accept(defaultSelectedSetting)
-                    promptPickerView()
-                } else {
-                    promptPickerViewError()
-                }
-            }).disposed(by: disposeBag)
-        
-        func promptPickerViewError(){
-            let alertController = UIAlertController(
-                title: "Error",
-                message: "There is no other calibration settings!",
-                preferredStyle: .alert
-            )
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            present(alertController, animated: true, completion: nil)
+        func promptPicker(allSettingNames: [String]){
+            if let defaultSelectedSetting = allSettingNames.first{
+                onSelectedSetting.accept(defaultSelectedSetting)
+                promptPickerView()
+            } else {
+                promptPickerViewError()
+            }
         }
+        _ = viewModel.output.allCalibrationSettingNames.skip(1)
+            .drive(onNext: promptPicker)
+            .disposed(by: disposeBag)
         
         func promptPickerView(){
             let alertController: UIAlertController! = UIAlertController(
@@ -236,43 +277,15 @@ class CalibrationViewController: UIViewController, Storyboardable {
             alertController.view.addSubview(loadSettingPickerView)
             present(alertController, animated: true, completion: nil)
         }
+        
+        func promptPickerViewError(){
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "There is no other calibration settings!",
+                preferredStyle: .alert
+            )
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alertController, animated: true, completion: nil)
+        }
     }
-    
-//    // MARK: Load default values
-//    @IBAction func loadDefaultPresentationLv(_ sender: UIButton) {
-//        for settingUI in _settingUIs.values {
-//            settingUI.tfPresentationLv.text = String(DEFAULT_CALIBRATION_PLAYER_DB)
-//        }
-//    }
-//
-//    @IBAction func clearAllMeasuredLv(_ sender: UIButton) {
-//        for settingUI in _settingUIs.values {
-//            settingUI.tfMeasuredLv_L.text = ""
-//            settingUI.tfMeasuredLv_R.text = ""
-//        }
-//
-//    }
-//
-//    // MARK: toggle play signal
-//    @IBAction func toggleSingal(_ sender: UIButton) {
-//        // No tone playing at all, simply toggle on
-//        let freq = sender.tag
-//        let ui = _settingUIs[freq]!
-//
-//        let newFreq = coordinator.togglePlayer(_playingFrequency, freq, ui)
-//
-//        if(newFreq == -1) {
-//            ui.pbPlay.setTitle("Off", for: .normal)
-//        }
-//        else if(_playingFrequency == -1) {
-//            ui.pbPlay.setTitle("On", for: .normal)
-//        }
-//        else {
-//            let uiOff = _settingUIs[_playingFrequency]!
-//            uiOff.pbPlay.setTitle("Off", for: .normal)
-//            ui.pbPlay.setTitle("On", for: .normal)
-//        }
-//
-//        _playingFrequency = newFreq
-//    }
 }

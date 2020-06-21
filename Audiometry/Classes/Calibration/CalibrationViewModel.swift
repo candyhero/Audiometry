@@ -19,7 +19,9 @@ protocol CalibrationViewPresentable {
         
         onSaveNewSetting: Signal<(String, [CalibrationSettingValueUI])>,
         onSaveCurrentSetting: Signal<[CalibrationSettingValueUI]>,
-        onLoadSelectedSetting: Signal<String>
+        onLoadSelectedSetting: Signal<String>,
+
+        onTogglePlayCalibration: Signal<Int>
     )
     
     // MARK: - Outputs
@@ -71,27 +73,30 @@ private extension CalibrationViewModel {
     // MARK: - Return output to view here, e.g. alert message
     static func output(input: CalibrationViewPresentable.Input,
                        state: State) -> CalibrationViewPresentable.Output {
+        
         print("Set output...")
         
         return (
             currentCalibrationSetting: state.currentCalibrationSetting.asDriver(),
-            allCalibrationSettingNames:
-                state.allCalibrationSettings
-                    .map{ $0.map{($0.name ?? "Error")}}
-                    .asDriver(onErrorJustReturn: [])
+            allCalibrationSettingNames: state.allCalibrationSettings
+                .map{ $0.map{($0.name ?? "Error")}}
+                .asDriver(onErrorJustReturn: [])
         )
     }
     
     func process() -> Void {
-        clearAllSettings()
         // MARK: Bind
+        bindDebug()
+        
+        bindTogglePlayCalibration()
+        
         bindSaveNewSetting()
         bindSaveCurrentSetting()
         bindLoadOther()
-        bind()
+        bindDeleteCurrentSetting()
     }
     
-    private func clearAllSettings(){
+    private func bindDebug(){
         if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
             print("Setting Count (Init): ", allSettings.count)
             
@@ -102,27 +107,50 @@ private extension CalibrationViewModel {
         if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
             print("Setting Count (AfterInit): ", allSettings.count)
         }
+        
+        func debugCurrentSetting(calibrationSetting: CalibrationSetting?){
+            if let setting = calibrationSetting {
+                print("State: \(String(describing: setting.name))")
+            } else {
+                print("State: nil")
+            }
+        }
+        _ = state.currentCalibrationSetting
+            .bind(onNext: debugCurrentSetting)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindTogglePlayCalibration(){
+        func togglePlayCalibration(frequency: Int){
+            print("PlayFrequency: \(frequency)Hz")
+        }
+        _ = input.onTogglePlayCalibration
+            .emit(onNext: togglePlayCalibration)
+            .disposed(by: disposeBag)
     }
     
     private func bindSaveNewSetting(){
-        _ = input.onSaveNewSetting.emit(onNext: {[weak self] (settingName, settingUI) in
-//            print("ViewModel:", settingName, settingUI.count)
+        func saveNewSetting(settingName: String, settingUIs: [CalibrationSettingValueUI]){
             let service = CalibrationService.shared
-            
-            let settingValues = settingUI.map {
-                $0.extractValuesInto(values: service.createNewSettingValues(frequency: $0.frequency))
+            let settingValues = settingUIs.map {
+                $0.extractValuesInto(
+                    values: service.createNewSettingValues(frequency: $0.frequency)
+                )
             }
-            
-            let setting = service.createNewSetting(name: settingName, values: settingValues)
-            self?.state.currentCalibrationSetting.accept(setting)
-        }).disposed(by: disposeBag)
+            let setting = service.createNewSetting(
+                name: settingName,
+                values: settingValues
+            )
+            state.currentCalibrationSetting.accept(setting)
+        }
+        _ = input.onSaveNewSetting
+            .emit(onNext: saveNewSetting)
+            .disposed(by: disposeBag)
     }
     
     private func bindSaveCurrentSetting(){
-        _ = input.onSaveCurrentSetting.emit(onNext: {[weak self] settingUIs in
-        
-            if let setting = self?.state.currentCalibrationSetting.value
-            {
+        func saveCurrentSetting(settingUis: [CalibrationSettingValueUI]){
+            if let setting = state.currentCalibrationSetting.value{
                 let lookup = setting.values?.reduce(
                     into: [Int: CalibrationSettingValues]()
                 ){ (dict, v) in
@@ -130,48 +158,48 @@ private extension CalibrationViewModel {
                         dict[Int(values.frequency)] = values
                     }
                 }
-                print(lookup![2000] as Any)
-                
-                _ = settingUIs.map {
+                _ = settingUis.map {
                     $0.extractValuesInto(values: (lookup?[$0.frequency])!)
                 }
-                print(lookup![2000] as Any)
             }
-        }).disposed(by: disposeBag)
+        }
+        _ = input.onSaveCurrentSetting
+            .emit(onNext: saveCurrentSetting)
+            .disposed(by: disposeBag)
     }
     
     private func bindLoadOther(){
-        _ = input.onClickLoadOther.emit(onNext: {[weak self] _ in
+        func loadAllSettings(){
             if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
-                print("Load all:", self?.state.allCalibrationSettings.value.count, allSettings.count)
-                self?.state.allCalibrationSettings.accept(allSettings)
+                state.allCalibrationSettings.accept(allSettings)
             } else {
                 print("Error when load all others")
             }
-        }).disposed(by: disposeBag)
+        }
+        _ = input.onClickLoadOther
+            .emit(onNext: loadAllSettings)
+            .disposed(by: disposeBag)
         
-        _ = input.onLoadSelectedSetting.emit(onNext: { [weak self] selectedSettingName in
-            if let allSettings = self?.state.allCalibrationSettings.value,
-               let selectedSetting = allSettings.filter({ $0.name == selectedSettingName }).first {
-                self?.state.currentCalibrationSetting.accept(selectedSetting)
+        func loadSelectedSetting(selectedSettingName: String){
+            if let selectedSetting = state.allCalibrationSettings.value.filter({ $0.name == selectedSettingName }).first{
+                state.currentCalibrationSetting.accept(selectedSetting)
             }
-        }).disposed(by: disposeBag)
+        }
+        _ = input.onLoadSelectedSetting
+            .emit(onNext: loadSelectedSetting)
+            .disposed(by: disposeBag)
+        
     }
     
-    private func bind(){
-        _ = input.onClickDeleteCurrent.emit(onNext: {[weak self] _ in
-            if let setting = self?.state.currentCalibrationSetting.value{
-                self?.state.currentCalibrationSetting.accept(nil)
+    private func bindDeleteCurrentSetting(){
+        func deleteCurrentSetting(){
+            if let setting = state.currentCalibrationSetting.value{
+                state.currentCalibrationSetting.accept(nil)
                 try! CalibrationService.shared.delete(setting)
             }
-        }).disposed(by: disposeBag)
-        
-        _ = state.currentCalibrationSetting.bind{(calibrationSetting) in
-            if let setting = calibrationSetting {
-                print("State: \(String(describing: setting.name))")
-            } else {
-                print("State: nil")
-            }
-        }.disposed(by: disposeBag)
+        }
+        _ = input.onClickDeleteCurrent
+            .emit(onNext: deleteCurrentSetting)
+            .disposed(by: disposeBag)
     }
 }

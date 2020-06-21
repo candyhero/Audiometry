@@ -62,9 +62,7 @@ class CalibrationSettingValueUI {
         self.rightMeasuredLevelTextField.text = String(values.rightMeasuredLevel)
     }
     
-    func clearValues(){
-        self.expectedLevelTextField.text = ""
-        self.presentationLevelTextField.text = ""
+    func clearMeasuredLevelValues(){
         self.leftMeasuredLevelTextField.text = ""
         self.rightMeasuredLevelTextField.text = ""
     }
