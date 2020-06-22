@@ -36,15 +36,15 @@ class CalibrationService: Repository<CalibrationSetting> {
         return newSetting
     }
     
-    func createNewSettingValues(frequency: Int) -> CalibrationSettingValues {
+    func createNewSettingValues(frequency: Int) -> CalibrationSettingValues{
         let newSettingValues = CalibrationSettingValues(context: _managedContext)
         newSettingValues.frequency = Int16(frequency)
         return newSettingValues
     }
     
-    func fetchAllSortedByTime() throws -> [CalibrationSetting]?{
+    func fetchAllSortedByTime() throws -> [CalibrationSetting]{
         let sortByTimestamp = NSSortDescriptor(key: #keyPath(CalibrationSetting.timestamp),
                                                ascending: false)
-        return try? self.fetchAll([sortByTimestamp])
+        return try self.fetchAll([sortByTimestamp])
     }
 }

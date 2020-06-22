@@ -130,27 +130,25 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
     private func bindClearAllMeasuredLevelValues(){
         _ = clearMeasuredLevelButton.rx.tap
-            .bind{clearAllMeasuredLevelValues()}
-            .disposed(by: disposeBag)
-        
-        func clearAllMeasuredLevelValues(){
-            for (_, ui) in _calibrationSettingUI {
-                ui.clearMeasuredLevelValues()
+            .bind{[weak self] in
+                _ = self?._calibrationSettingUI.map{
+                    $0.value.clearMeasuredLevelValues()
+                }
             }
-        }
+            .disposed(by: disposeBag)
     }
     
     private func bindTogglePlayCalibration(){
-        _ = _calibrationSettingUI.map{ (_, ui) in
-            ui.playButton.rx.tap
-                .bind{ togglePlayCalibration(frequency: ui.frequency) }
+        _ = _calibrationSettingUI.map{ (_, settingUI) in
+            settingUI.playButton.rx.tap
+                .map{ settingUI.frequency }
+                .bind(to: relays.onTogglePlayCalibration)
                 .disposed(by: disposeBag)
         }
         
-        func togglePlayCalibration(frequency: Int){
-            relays.onTogglePlayCalibration.accept(frequency)
+        _ = viewModel.output.currentPlayerFrequency.drive{
+            
         }
-        
         func togglePlayCalibrationUi(){
             
         }
@@ -222,45 +220,39 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
     private func bindSaveToCurrent(){
         _ = saveToCurrentButton.rx.tap
-            .bind{ saveToCurrent() }
+            .map{ getSettingUIs() }
+            .bind(to: relays.onSaveCurrentSetting)
             .disposed(by: disposeBag)
         
-        func saveToCurrent(){
-            let uis = Array(_calibrationSettingUI.values)
-            relays.onSaveCurrentSetting.accept(uis)
+        func getSettingUIs() -> [CalibrationSettingValueUI]{
+            return Array(_calibrationSettingUI.values)
         }
     }
     
     private func bindLoadOther(){
-        let allSettingNames = BehaviorRelay<[String]>(value: [])
         let onSelectedSetting = BehaviorRelay<String>(value: "")
+        let allCalibrationSettingNames = viewModel.output.allCalibrationSettingNames.skip(1)
         
-        _ = viewModel.output.allCalibrationSettingNames
+        _ = loadSettingPickerView.rx.itemSelected.asDriver()
+            .withLatestFrom(allCalibrationSettingNames){ $1[$0.row] }
+            .drive(onSelectedSetting)
+            .disposed(by: disposeBag)
+            
+        _ = allCalibrationSettingNames
             .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in
                 return element
             }.disposed(by: disposeBag)
         
-        _ = viewModel.output.allCalibrationSettingNames
-            .drive(allSettingNames)
-            .disposed(by: disposeBag)
-        
-        _ = loadSettingPickerView.rx.itemSelected.asDriver()
-            .map{ allSettingNames.value[$0.row] }
-            .drive(onSelectedSetting)
-            .disposed(by: disposeBag)
-        
-        func promptPicker(allSettingNames: [String]){
-            if let defaultSelectedSetting = allSettingNames.first{
-                onSelectedSetting.accept(defaultSelectedSetting)
-                promptPickerView()
-            } else {
-                promptPickerViewError()
-            }
-        }
-        _ = viewModel.output.allCalibrationSettingNames.skip(1)
-            .drive(onNext: promptPicker)
-            .disposed(by: disposeBag)
-        
+        _ = allCalibrationSettingNames
+            .drive(onNext: { allNames in
+                if let defaultName = allNames.first{
+                    onSelectedSetting.accept(defaultName)
+                    promptPickerView()
+                } else {
+                    promptPickerViewError()
+                }
+            }).disposed(by: disposeBag)
+
         func promptPickerView(){
             let alertController: UIAlertController! = UIAlertController(
                 title: "Select a different setting",
