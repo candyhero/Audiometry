@@ -126,8 +126,15 @@ private extension CalibrationViewModel {
     
     private func bindTogglePlayCalibration(){
         _ = input.onTogglePlayCalibration
-            .emit(to: state.currentPlayerFrequency)
+            .map{ [weak self] frequency in
+                return frequency != self?.state.currentPlayerFrequency.value ? frequency : -1
+            }.emit(to: state.currentPlayerFrequency)
             .disposed(by: disposeBag)
+        
+        _ = state.currentPlayerFrequency.asDriver()
+            .drive(onNext: { _ in // toggle player
+                return
+            }).disposed(by: disposeBag)
     }
     
     private func bindSaveNewSetting(){

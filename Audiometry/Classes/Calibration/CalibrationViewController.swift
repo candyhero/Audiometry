@@ -146,12 +146,20 @@ class CalibrationViewController: UIViewController, Storyboardable {
                 .disposed(by: disposeBag)
         }
         
-        _ = viewModel.output.currentPlayerFrequency.drive{
-            
+        func togglePlayButton(old: Int, new: Int){
+            print(old, new)
+            if let ui = _calibrationSettingUI[old]{
+                ui.playButton.setTitle("Off", for: .normal)
+            }
+            if let ui = _calibrationSettingUI[new]{
+                ui.playButton.setTitle("On", for: .normal)
+            }
         }
-        func togglePlayCalibrationUi(){
-            
-        }
+        _ = Driver.zip(
+                viewModel.output.currentPlayerFrequency,
+                viewModel.output.currentPlayerFrequency.skip(1)
+            ).drive(onNext: togglePlayButton)
+            .disposed(by: disposeBag)
         //        // No tone playing at all, simply toggle on
         //        let freq = sender.tag
         //        let ui = _settingUIs[freq]!
