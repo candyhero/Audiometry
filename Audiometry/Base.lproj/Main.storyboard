@@ -436,26 +436,26 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="S5W-nM-nI2" userLabel="Sv Utilities">
-                                <rect key="frame" x="306" y="530" width="754" height="42"/>
+                                <rect key="frame" x="311" y="530" width="744" height="42"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojX-cv-moG">
-                                        <rect key="frame" x="0.0" y="0.0" width="132" height="42"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="165" height="42"/>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Set Volume"/>
+                                        <state key="normal" title="Update Volume"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dj-8b-wbX">
-                                        <rect key="frame" x="232" y="0.0" width="208" height="42"/>
+                                        <rect key="frame" x="265" y="0.0" width="165" height="42"/>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Load Default P. Level"/>
+                                        <state key="normal" title="Clear All Values"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdz-fs-qGN">
-                                        <rect key="frame" x="540" y="0.0" width="214" height="42"/>
+                                        <rect key="frame" x="530" y="0.0" width="214" height="42"/>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
@@ -540,6 +540,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="clearAllValuesButton" destination="2dj-8b-wbX" id="ZcO-JM-HLc"/>
                         <outlet property="clearMeasuredLevelButton" destination="zdz-fs-qGN" id="7N5-ny-VvW"/>
                         <outlet property="currentSettingLabel" destination="Ogj-UP-BQ9" id="ALy-D8-nh0"/>
                         <outlet property="deleteCurrentButton" destination="TOr-ti-8Lg" id="yB3-fD-PDD"/>
@@ -553,7 +554,7 @@
                         <outlet property="rightMeasuredLevelStackView" destination="DMk-zW-P9p" id="pfH-Nz-EPx"/>
                         <outlet property="saveAsNewButton" destination="Daj-K0-8w2" id="2f1-be-TXJ"/>
                         <outlet property="saveToCurrentButton" destination="Vyf-ZB-897" id="1em-tt-CA3"/>
-                        <outlet property="setVolumeButton" destination="ojX-cv-moG" id="Be0-GK-axi"/>
+                        <outlet property="updateVolumeButton" destination="ojX-cv-moG" id="Be0-GK-axi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3s-cI-oCg" sceneMemberID="firstResponder"/>

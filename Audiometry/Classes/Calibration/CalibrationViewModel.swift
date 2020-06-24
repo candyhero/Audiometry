@@ -21,7 +21,7 @@ protocol CalibrationViewPresentable {
         onSaveCurrentSetting: Signal<[CalibrationSettingValueUI]>,
         onLoadSelectedSetting: Signal<String>,
 
-        onTogglePlayCalibration: Signal<Int>
+        onTogglePlayCalibration: Signal<(Bool, CalibrationSettingValueUI)>
     )
     
     // MARK: - Outputs
@@ -40,6 +40,8 @@ protocol CalibrationViewPresentable {
 class CalibrationViewModel: CalibrationViewPresentable {
     var input: CalibrationViewPresentable.Input
     var output: CalibrationViewPresentable.Output
+    
+    var calibrationPlayer = CalibrationPlayer()
     
     typealias State = (
         currentPlayerFrequency: BehaviorRelay<Int>,
@@ -90,7 +92,7 @@ private extension CalibrationViewModel {
     
     func process() -> Void {
         // MARK: Bind
-        bindDebug()
+//        bindDebug()
         
         bindTogglePlayCalibration()
         
@@ -100,41 +102,43 @@ private extension CalibrationViewModel {
         bindDeleteCurrentSetting()
     }
     
-    private func bindDebug(){
-        if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
-            print("Setting Count (Init): ", allSettings.count)
-            
-            for setting in allSettings{
-                try! CalibrationService.shared.delete(setting)
-            }
-        }
-        if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
-            print("Setting Count (AfterInit): ", allSettings.count)
-        }
-        
-        func debugCurrentSetting(calibrationSetting: CalibrationSetting?){
-            if let setting = calibrationSetting {
-                print("State: \(String(describing: setting.name))")
-            } else {
-                print("State: nil")
-            }
-        }
-        _ = state.currentCalibrationSetting
-            .bind(onNext: debugCurrentSetting)
-            .disposed(by: disposeBag)
-    }
+//    private func bindDebug(){
+//        if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
+//            print("Setting Count (Init): ", allSettings.count)
+//
+//            for setting in allSettings{
+//                try! CalibrationService.shared.delete(setting)
+//            }
+//        }
+//        if let allSettings = try? CalibrationService.shared.fetchAllSortedByTime(){
+//            print("Setting Count (AfterInit): ", allSettings.count)
+//        }
+//
+//        func debugCurrentSetting(calibrationSetting: CalibrationSetting?){
+//            if let setting = calibrationSetting {
+//                print("State: \(String(describing: setting.name))")
+//            } else {
+//                print("State: nil")
+//            }
+//        }
+//        _ = state.currentCalibrationSetting
+//            .bind(onNext: debugCurrentSetting)
+//            .disposed(by: disposeBag)
+//    }
     
     private func bindTogglePlayCalibration(){
         _ = input.onTogglePlayCalibration
-            .map{ [weak self] frequency in
-                return frequency != self?.state.currentPlayerFrequency.value ? frequency : -1
-            }.emit(to: state.currentPlayerFrequency)
+            .map{ [weak self] (isToggle, ui) in
+                if isToggle && ui.frequency == self?.state.currentPlayerFrequency.value{
+                    self?.calibrationPlayer.stop()
+                    return (isToggle, -1)
+                }
+                self?.calibrationPlayer.play(ui: ui)
+                return (isToggle, ui.frequency)
+            }.filter{(isToggle, frequency) in return isToggle }
+            .map{(isToggle, frequency) in return frequency }
+            .emit(to: state.currentPlayerFrequency)
             .disposed(by: disposeBag)
-        
-        _ = state.currentPlayerFrequency.asDriver()
-            .drive(onNext: { _ in // toggle player
-                return
-            }).disposed(by: disposeBag)
     }
     
     private func bindSaveNewSetting(){
