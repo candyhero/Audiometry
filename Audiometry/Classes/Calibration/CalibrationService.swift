@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import RxSwift
  
 class CalibrationService: Repository<CalibrationSetting> {
     
@@ -23,7 +22,6 @@ class CalibrationService: Repository<CalibrationSetting> {
         newSetting.timestamp = Date()
         
         for v in values {
-//            let newValues = CalibrationSettingValues(context: _managedContext)
             newSetting.addToValues(v)
         }
         

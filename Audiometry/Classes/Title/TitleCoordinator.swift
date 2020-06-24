@@ -29,9 +29,9 @@ class TitleCoordinator: BaseCoordinator<Void> {
                 .emit(onNext: { _ = self?.showCalibrationView(on: viewController) })
                 .disposed(by: disposeBag)
             
-            viewModel.router.showResult
-                .emit(onNext: { _ = self?.showResultView(on: viewController) })
-                .disposed(by: disposeBag)
+//            viewModel.router.showResult
+//                .emit(onNext: { _ = self?.showResultView(on: viewController) })
+//                .disposed(by: disposeBag)
             
             return viewModel
         }

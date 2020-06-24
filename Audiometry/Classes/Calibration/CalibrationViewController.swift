@@ -37,7 +37,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
     private var viewModel: CalibrationViewPresentable!
     var viewModelBuilder: CalibrationViewModel.ViewModelBuilder!
     
-    private lazy var relays = (
+    private lazy var _relays = (
 //        onSubmitCablirationSettingName: PublishRelay<String>(), // Relay for prompt
         onSaveNewSetting: PublishRelay<(String, [CalibrationSettingValueUI])>(),
         onSaveCurrentSetting: PublishRelay<[CalibrationSettingValueUI]>(),
@@ -56,11 +56,11 @@ class CalibrationViewController: UIViewController, Storyboardable {
             onClickLoadOther: loadOtherButton.rx.tap.asSignal(),
             onClickDeleteCurrent: deleteCurrentButton.rx.tap.asSignal(),
             
-            onSaveNewSetting: relays.onSaveNewSetting.asSignal(),
-            onSaveCurrentSetting: relays.onSaveCurrentSetting.asSignal(),
-            onLoadSelectedSetting: relays.onLoadSelectedSetting.asSignal(),
+            onSaveNewSetting: _relays.onSaveNewSetting.asSignal(),
+            onSaveCurrentSetting: _relays.onSaveCurrentSetting.asSignal(),
+            onLoadSelectedSetting: _relays.onLoadSelectedSetting.asSignal(),
             
-            onTogglePlayCalibration: relays.onTogglePlayCalibration.asSignal()
+            onTogglePlayCalibration: _relays.onTogglePlayCalibration.asSignal()
         ))
         
         setupView()
@@ -135,18 +135,18 @@ class CalibrationViewController: UIViewController, Storyboardable {
     }
     
     private func bindTogglePlayCalibration(){
-        _ = _calibrationSettingUI.map{ (_, settingUI) in
+        _ = _calibrationSettingUI.map{[_calibrationSettingUI] (_, settingUI) in
             settingUI.playButton.rx.tap
                 .withLatestFrom(viewModel.output.currentPlayerFrequency){ $1 }
-                .map{ [weak self] currentFrequency in
-                    if let ui = self?._calibrationSettingUI[currentFrequency]{
+                .map{  currentFrequency in
+                    if let ui = _calibrationSettingUI[currentFrequency]{
                         ui.playButton.setTitle("Off", for: .normal)
                     }
                     if currentFrequency != settingUI.frequency{
                         settingUI.playButton.setTitle("On", for: .normal)
                     }
                     return (true, settingUI)
-                }.bind(to: relays.onTogglePlayCalibration)
+                }.bind(to: _relays.onTogglePlayCalibration)
                 .disposed(by: disposeBag)
         }
     }
@@ -155,24 +155,24 @@ class CalibrationViewController: UIViewController, Storyboardable {
         updateVolumeButton.rx.tap
             .withLatestFrom(viewModel.output.currentPlayerFrequency){ $1 }
             .filter{ $0 > 0 }
-            .map{ [weak self] currentFrequency in
-                return (false, (self?._calibrationSettingUI[currentFrequency])!)
-            }.bind(to: relays.onTogglePlayCalibration)
+            .map{[_calibrationSettingUI] currentFrequency in
+                return (false, _calibrationSettingUI[currentFrequency]!)
+            }.bind(to: _relays.onTogglePlayCalibration)
             .disposed(by: disposeBag)
     }
     
     private func bindClearAllValues(){
         clearAllValuesButton.rx.tap
-            .bind{[weak self] in
-                _ = self?._calibrationSettingUI.map{
+            .bind{[_calibrationSettingUI] in
+                _ = _calibrationSettingUI.map{
                     $0.value.clearAllValues()
                 }
             }.disposed(by: disposeBag)
     }
     private func bindClearAllMeasuredLevelValues(){
         clearMeasuredLevelButton.rx.tap
-            .bind{[weak self] in
-                _ = self?._calibrationSettingUI.map{
+            .bind{[_calibrationSettingUI] in
+                _ = _calibrationSettingUI.map{
                     $0.value.clearMeasuredLevelValues()
                 }
             }
@@ -207,7 +207,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
         func confirmAction(settingName: String){
             if(settingName.isNotEmpty) {
                 let params = (settingName, Array(_calibrationSettingUI.values))
-                relays.onSaveNewSetting.accept(params)
+                _relays.onSaveNewSetting.accept(params)
             } else {
                 promptSettingNameInputError()
             }
@@ -227,7 +227,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
     private func bindSaveToCurrent(){
         saveToCurrentButton.rx.tap
             .map{ getSettingUIs() }
-            .bind(to: relays.onSaveCurrentSetting)
+            .bind(to: _relays.onSaveCurrentSetting)
             .disposed(by: disposeBag)
         
         func getSettingUIs() -> [CalibrationSettingValueUI]{
@@ -266,8 +266,8 @@ class CalibrationViewController: UIViewController, Storyboardable {
                 preferredStyle: .alert
             )
             let actions = [
-                UIAlertAction(title: "Confirm", style: .default){ [weak self] _ in
-                    self?.relays.onLoadSelectedSetting.accept(onSelectedSetting.value)
+                UIAlertAction(title: "Confirm", style: .default){[_relays] _ in
+                    _relays.onLoadSelectedSetting.accept(onSelectedSetting.value)
                 },
                 UIAlertAction(title: "Cancel", style: .cancel)
             ]
