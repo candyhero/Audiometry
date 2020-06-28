@@ -134,9 +134,6 @@
                                         <state key="normal" title="L. Ear Only">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="setLeftOnly:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="Uqt-en-wd6"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28e-V9-IOP">
                                         <rect key="frame" x="155" y="0.0" width="116" height="38"/>
@@ -145,9 +142,6 @@
                                         <state key="normal" title="R. Ear Only">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="setRightOnly:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="hEr-JY-2TZ"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uy1-L9-U7i">
                                         <rect key="frame" x="311" y="0.0" width="144" height="38"/>
@@ -157,9 +151,6 @@
                                         <state key="normal" title="L. Ear -&gt; R. Ear">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="setLeftFirst:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="SMJ-ms-zjL"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7f1-Gd-dqN">
                                         <rect key="frame" x="495" y="0.0" width="144" height="38"/>
@@ -169,9 +160,6 @@
                                         <state key="normal" title="R. Ear -&gt; L. Ear">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="setRightFirst:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="UVy-Ag-W7v"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -186,9 +174,6 @@
                                         <state key="normal" title="Remove Last">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="removeLastFreq:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="A8j-Fz-WGO"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dE-Y5-4Uz">
                                         <rect key="frame" x="188" y="0.0" width="97" height="38"/>
@@ -197,9 +182,6 @@
                                         <state key="normal" title="Clear All">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="removeAllFreq:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="kTm-gg-4Vg"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APH-kS-42d">
                                         <rect key="frame" x="345" y="0.0" width="135" height="38"/>
@@ -209,9 +191,6 @@
                                         <state key="normal" title="Save Protocol">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="saveFreqSeqProtocol:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="Ike-Xg-61r"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPP-AS-nnX">
                                         <rect key="frame" x="540" y="0.0" width="135" height="38"/>
@@ -221,9 +200,6 @@
                                         <state key="normal" title="Load Protocol">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="loadFreqSeqProtocol:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="63w-6X-Ij3"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XyG-KZ-zIi">
                                         <rect key="frame" x="735" y="0.0" width="202" height="38"/>
@@ -233,9 +209,6 @@
                                         <state key="normal" title="Delete Current Protocol">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="deleteFreqSeqProtocol:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="Cos-LR-eVJ"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -253,9 +226,6 @@
                                                 <state key="normal" title="Switch to English">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
-                                                <connections>
-                                                    <action selector="switchToEnglish:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="xGw-eF-Kl6"/>
-                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86d-1f-LOL">
                                                 <rect key="frame" x="0.0" y="46" width="187" height="34"/>
@@ -265,9 +235,6 @@
                                                 <state key="normal" title="Switch to Portuguese">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
-                                                <connections>
-                                                    <action selector="switchToPortuguese:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="cPJ-tt-aSh"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -279,9 +246,6 @@
                                         <state key="normal" title="Adult Test">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="startAdultTest:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="Wcy-s1-Py1"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsK-vU-YA1">
                                         <rect key="frame" x="416" y="0.0" width="131" height="80"/>
@@ -291,9 +255,6 @@
                                         <state key="normal" title="Children Test">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="startChildrenTest:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="yrk-4Q-SYb"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -359,10 +320,18 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="lbEarOrder" destination="Pqh-ee-VOG" id="xem-39-7hV"/>
-                        <outlet property="lbFreqSeq" destination="yXe-Pb-BHe" id="QKO-bx-ebP"/>
-                        <outlet property="lbTestLanguage" destination="hLr-he-GrK" id="6FS-mj-X2m"/>
-                        <outlet property="svFreq" destination="efm-Xe-VU2" id="TW3-Qt-eeH"/>
+                        <outlet property="SaveAsNewButton" destination="APH-kS-42d" id="Bfi-Z6-cg0"/>
+                        <outlet property="adultTestButton" destination="03K-L4-Adi" id="T8M-oz-lsZ"/>
+                        <outlet property="childrenTestButton" destination="wsK-vU-YA1" id="Mg5-kE-HzP"/>
+                        <outlet property="clearAllFrequencySelectionButton" destination="6dE-Y5-4Uz" id="o2I-bz-bOf"/>
+                        <outlet property="clearLastFrequencySelectionButton" destination="DOx-bp-4vZ" id="Oev-gD-afI"/>
+                        <outlet property="deleteCurrentButton" destination="XyG-KZ-zIi" id="LVj-V9-tOk"/>
+                        <outlet property="loadOtherButton" destination="cPP-AS-nnX" id="rxR-k8-xTk"/>
+                        <outlet property="returnButton" destination="Oyg-8O-FTI" id="qgZ-oI-Tcn"/>
+                        <outlet property="testEarOrderLabel" destination="Pqh-ee-VOG" id="xem-39-7hV"/>
+                        <outlet property="testFrequencyButtonStackView" destination="efm-Xe-VU2" id="TW3-Qt-eeH"/>
+                        <outlet property="testFrequencySelectionLabel" destination="yXe-Pb-BHe" id="QKO-bx-ebP"/>
+                        <outlet property="testLanguageLabel" destination="hLr-he-GrK" id="6FS-mj-X2m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0v-ao-aih" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -578,19 +547,19 @@
                                 <state key="normal" title="Return to Title"/>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FcF-v1-OIM">
-                                <rect key="frame" x="586.5" y="60" width="193.5" height="0.0"/>
+                                <rect key="frame" x="586.5" y="60" width="193.5" height="20.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="num-Lw-Wzn">
-                                        <rect key="frame" x="0.0" y="0.0" width="193.5" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="193.5" height="20.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Frequency: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLa-7U-M23">
-                                                <rect key="frame" x="0.0" y="0.0" width="152.5" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="152.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="None" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6vb-TR-fTk">
-                                                <rect key="frame" x="152.5" y="0.0" width="41" height="0.0"/>
+                                                <rect key="frame" x="152.5" y="0.0" width="41" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -600,7 +569,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="bOe-Np-62j">
-                                <rect key="frame" x="40" y="80" width="1286" height="38"/>
+                                <rect key="frame" x="40" y="100.5" width="1286" height="38"/>
                                 <subviews>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h9I-h5-UhI">
                                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="38"/>
@@ -660,18 +629,18 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="V4i-TZ-x9r">
-                                <rect key="frame" x="20" y="158" width="470" height="846"/>
+                                <rect key="frame" x="20" y="178.5" width="490.5" height="825.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="UTK-WU-wHj">
-                                        <rect key="frame" x="0.0" y="28" width="470" height="30.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="490.5" height="30.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UTK-WU-wHj" id="WfQ-IR-xkH">
-                                            <rect key="frame" x="0.0" y="0.0" width="470" height="30.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="490.5" height="30.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPr-YM-uC0">
-                                                    <rect key="frame" x="0.0" y="0.0" width="470" height="30.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="490.5" height="30.5"/>
                                                     <state key="normal" title="Button"/>
                                                 </button>
                                             </subviews>
@@ -690,17 +659,17 @@
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="IgY-oA-yKG">
-                                <rect key="frame" x="500" y="158" width="846" height="846"/>
+                                <rect key="frame" x="520.5" y="178.5" width="825.5" height="825.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sQj-HH-lki" customClass="LineChartView" customModule="Charts">
-                                        <rect key="frame" x="0.0" y="0.0" width="846" height="423"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="825.5" height="413"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="sQj-HH-lki" secondAttribute="height" multiplier="2:1" id="P3M-M0-8tM"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oR8-g8-4vf" customClass="LineChartView" customModule="Charts">
-                                        <rect key="frame" x="0.0" y="423" width="846" height="423"/>
+                                        <rect key="frame" x="0.0" y="413" width="825.5" height="412.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="oR8-g8-4vf" secondAttribute="height" multiplier="2:1" id="JyI-W1-94N"/>

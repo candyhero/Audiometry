@@ -15,7 +15,7 @@ class GlobalSettingService: Repository<GlobalSetting> {
     
     override init() {
         super.init()
-        guard let globalSetting = try? fetchAll().first else{
+        guard let _ = try? fetchAll().first else{
             let globalSetting = GlobalSetting(context: _managedContext)
             globalSetting.testLanguage = Int16(TestLanguage.English.rawValue)
             
@@ -23,14 +23,13 @@ class GlobalSettingService: Repository<GlobalSetting> {
             
             return
         }
-        print("Global Calibration Setting:", globalSetting.calibrationSetting?.name ?? "nil")
     }
     
     func fetch() throws -> GlobalSetting{
         return try fetchAll().first!
     }
     
-    func updateCalibrationSetting(calibrationSetting: CalibrationSetting){
+    func updateCalibrationSetting(calibrationSetting: CalibrationSetting?){
         do {
             let globalSetting = try fetch()
             globalSetting.calibrationSetting = calibrationSetting

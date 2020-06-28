@@ -2,15 +2,15 @@
 import Foundation
 import UIKit
 
-class CalibrationSettingUIFactory {
-    static let shared = CalibrationSettingUIFactory()
+class CalibrationSettingUiFactory {
+    static let shared = CalibrationSettingUiFactory()
     
-    func getElement(frequency: Int) -> CalibrationSettingValueUI{
-        return CalibrationSettingValueUI(frequency)
+    func getElement(frequency: Int) -> CalibrationSettingValueUi{
+        return CalibrationSettingValueUi(frequency)
     }
 }
 
-class CalibrationSettingValueUI {
+class CalibrationSettingValueUi {
     var expectedLevelTextField = UITextField()
     var presentationLevelTextField = UITextField()
     var leftMeasuredLevelTextField = UITextField()

@@ -9,9 +9,9 @@
 import Foundation
 import CoreData
  
-class CalibrationService: Repository<CalibrationSetting> {
+class CalibrationSettingService: Repository<CalibrationSetting> {
     
-    static let shared: CalibrationService = CalibrationService()
+    static let shared: CalibrationSettingService = CalibrationSettingService()
     
     override init() {
     }

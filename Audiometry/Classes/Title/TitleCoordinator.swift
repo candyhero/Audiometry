@@ -22,7 +22,7 @@ class TitleCoordinator: BaseCoordinator<Void> {
     override func start() -> Observable<Void> {
         let viewController = TitleViewController.instantiate(AppStoryboards.Main)
         
-        viewController.viewModelBuilder = { [weak self, disposeBag] in
+        viewController.viewModelBuilder = {[weak self, disposeBag] in
             let viewModel = TitleViewModel(input: $0)
             
             viewModel.router.showCalibration
@@ -33,6 +33,10 @@ class TitleCoordinator: BaseCoordinator<Void> {
 //                .emit(onNext: { _ = self?.showResultView(on: viewController) })
 //                .disposed(by: disposeBag)
             
+            viewModel.router.showTest
+                .emit(onNext: { _ = self?.showTestProtocolView(on: viewController) })
+                .disposed(by: disposeBag)
+            
             return viewModel
         }
         
@@ -40,15 +44,21 @@ class TitleCoordinator: BaseCoordinator<Void> {
         return Observable.never()
     }
     
-    private func showCalibrationView(on rootViewController: UIViewController) -> Observable<Void> {
+    func showCalibrationView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show calibration view")
         let calibrationCoordinator = CalibrationCoordinator(navController: navigationController)
         return coordinate(to: calibrationCoordinator)
     }
     
-    private func showResultView(on rootViewController: UIViewController) -> Observable<Void> {
+    func showResultView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show result view")
         let resultCoordinator = ResultCoordinator(navController: navigationController)
         return coordinate(to: resultCoordinator)
+    }
+    
+    func showTestProtocolView(on rootViewController: UIViewController) -> Observable<Void> {
+        print("Show test protocol view")
+        let testProtocolCoordinator = TestProtocolCoordinator(navController: navigationController)
+        return coordinate(to: testProtocolCoordinator)
     }
 }

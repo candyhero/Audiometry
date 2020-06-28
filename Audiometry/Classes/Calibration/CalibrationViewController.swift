@@ -2,7 +2,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxRelay
 
 class CalibrationViewController: UIViewController, Storyboardable {
     // MARK: UI Components
@@ -27,31 +26,30 @@ class CalibrationViewController: UIViewController, Storyboardable {
     @IBOutlet weak var frequencyStackView: UIStackView!
     @IBOutlet weak var playButtonStackView: UIStackView!
     
-    private var _calibrationSettingUI: [Int: CalibrationSettingValueUI] = [:]
+    var _calibrationSettingUiLookup: [Int: CalibrationSettingValueUi] = [:]
     
     let loadSettingPickerView = UIPickerView(
         frame: CGRect(x: 0, y: 50, width: 260, height: 160)
     )
     
     // MARK: I/O for viewmodel
-    private var viewModel: CalibrationViewPresentable!
+    private var _viewModel: CalibrationViewPresentable!
     var viewModelBuilder: CalibrationViewModel.ViewModelBuilder!
     
     private lazy var _relays = (
 //        onSubmitCablirationSettingName: PublishRelay<String>(), // Relay for prompt
-        onSaveNewSetting: PublishRelay<(String, [CalibrationSettingValueUI])>(),
-        onSaveCurrentSetting: PublishRelay<[CalibrationSettingValueUI]>(),
+        onSaveNewSetting: PublishRelay<(String, [CalibrationSettingValueUi])>(),
+        onSaveCurrentSetting: PublishRelay<[CalibrationSettingValueUi]>(),
         onLoadSelectedSetting: PublishRelay<String>(),
-        onTogglePlayCalibration: PublishRelay<(Bool, CalibrationSettingValueUI)>()
+        onTogglePlayCalibration: PublishRelay<(Bool, CalibrationSettingValueUi)>()
     )
     
     private let disposeBag = DisposeBag()
     
-    // MARK: Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = viewModelBuilder((
+        _viewModel = viewModelBuilder((
             onClickReturn: returnButton.rx.tap.asSignal(),
             onClickLoadOther: loadOtherButton.rx.tap.asSignal(),
             onClickDeleteCurrent: deleteCurrentButton.rx.tap.asSignal(),
@@ -66,7 +64,9 @@ class CalibrationViewController: UIViewController, Storyboardable {
         setupView()
         setupBinding()
     }
-    
+}
+// MARK: Methods
+extension CalibrationViewController {
     private func setupView() {
         let stackviews = [
             frequencyStackView,
@@ -85,8 +85,8 @@ class CalibrationViewController: UIViewController, Storyboardable {
         }
         
         _ = DEFAULT_FREQ.map { frequency in
-            let settingUi = CalibrationSettingUIFactory.shared.getElement(frequency: frequency)
-            _calibrationSettingUI[frequency] = settingUi
+            let settingUi = CalibrationSettingUiFactory.shared.getElement(frequency: frequency)
+            _calibrationSettingUiLookup[frequency] = settingUi
             
             expectedLevelStackView.addArrangedSubview(settingUi.expectedLevelTextField)
             presentationLevelStackView.addArrangedSubview(settingUi.presentationLevelTextField)
@@ -119,7 +119,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
                 
                 _ = setting.values?.array.map{ v in
                     if let values = v as? CalibrationSettingValues,
-                        let ui = _calibrationSettingUI[Int(values.frequency)] {
+                        let ui = _calibrationSettingUiLookup[Int(values.frequency)] {
                         ui.loadValuesFrom(values: values)
                     }
                 }
@@ -129,23 +129,23 @@ class CalibrationViewController: UIViewController, Storyboardable {
             }
         }
         
-        viewModel.output.currentCalibrationSetting
+        _viewModel.output.currentCalibrationSetting
             .drive(onNext: loadCurrentValues)
             .disposed(by: disposeBag)
     }
     
     private func bindTogglePlayCalibration(){
-        _ = _calibrationSettingUI.map{[_calibrationSettingUI] (_, settingUI) in
-            settingUI.playButton.rx.tap
-                .withLatestFrom(viewModel.output.currentPlayerFrequency){ $1 }
+        _ = self._calibrationSettingUiLookup.map{[_calibrationSettingUiLookup] (_, settingUi) in
+            settingUi.playButton.rx.tap
+                .withLatestFrom(_viewModel.output.currentPlayerFrequency){ $1 }
                 .map{  currentFrequency in
-                    if let ui = _calibrationSettingUI[currentFrequency]{
+                    if let ui = _calibrationSettingUiLookup[currentFrequency]{
                         ui.playButton.setTitle("Off", for: .normal)
                     }
-                    if currentFrequency != settingUI.frequency{
-                        settingUI.playButton.setTitle("On", for: .normal)
+                    if currentFrequency != settingUi.frequency{
+                        settingUi.playButton.setTitle("On", for: .normal)
                     }
-                    return (true, settingUI)
+                    return (true, settingUi)
                 }.bind(to: _relays.onTogglePlayCalibration)
                 .disposed(by: disposeBag)
         }
@@ -153,26 +153,26 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
     private func bindUpdateVolume(){
         updateVolumeButton.rx.tap
-            .withLatestFrom(viewModel.output.currentPlayerFrequency){ $1 }
+            .withLatestFrom(_viewModel.output.currentPlayerFrequency){ $1 }
             .filter{ $0 > 0 }
-            .map{[_calibrationSettingUI] currentFrequency in
-                return (false, _calibrationSettingUI[currentFrequency]!)
+            .map{[_calibrationSettingUiLookup] currentFrequency in
+                return (false, _calibrationSettingUiLookup[currentFrequency]!)
             }.bind(to: _relays.onTogglePlayCalibration)
             .disposed(by: disposeBag)
     }
     
     private func bindClearAllValues(){
         clearAllValuesButton.rx.tap
-            .bind{[_calibrationSettingUI] in
-                _ = _calibrationSettingUI.map{
+            .bind{[_calibrationSettingUiLookup] in
+                _ = _calibrationSettingUiLookup.map{
                     $0.value.clearAllValues()
                 }
             }.disposed(by: disposeBag)
     }
     private func bindClearAllMeasuredLevelValues(){
         clearMeasuredLevelButton.rx.tap
-            .bind{[_calibrationSettingUI] in
-                _ = _calibrationSettingUI.map{
+            .bind{[_calibrationSettingUiLookup] in
+                _ = _calibrationSettingUiLookup.map{
                     $0.value.clearMeasuredLevelValues()
                 }
             }
@@ -206,7 +206,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
         
         func confirmAction(settingName: String){
             if(settingName.isNotEmpty) {
-                let params = (settingName, Array(_calibrationSettingUI.values))
+                let params = (settingName, Array(_calibrationSettingUiLookup.values))
                 _relays.onSaveNewSetting.accept(params)
             } else {
                 promptSettingNameInputError()
@@ -226,18 +226,18 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
     private func bindSaveToCurrent(){
         saveToCurrentButton.rx.tap
-            .map{ getSettingUIs() }
+            .map{ getSettingUiList() }
             .bind(to: _relays.onSaveCurrentSetting)
             .disposed(by: disposeBag)
         
-        func getSettingUIs() -> [CalibrationSettingValueUI]{
-            return Array(_calibrationSettingUI.values)
+        func getSettingUiList() -> [CalibrationSettingValueUi]{
+            return Array(_calibrationSettingUiLookup.values)
         }
     }
     
     private func bindLoadOther(){
         let onSelectedSetting = BehaviorRelay<String>(value: "")
-        let allCalibrationSettingNames = viewModel.output.allCalibrationSettingNames.skip(1)
+        let allCalibrationSettingNames = _viewModel.output.allCalibrationSettingNames.skip(1)
         
         loadSettingPickerView.rx.itemSelected.asDriver()
             .withLatestFrom(allCalibrationSettingNames){ $1[$0.row] }

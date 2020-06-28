@@ -17,11 +17,11 @@ protocol CalibrationViewPresentable {
         onClickLoadOther: Signal<Void>,
         onClickDeleteCurrent: Signal<Void>,
         
-        onSaveNewSetting: Signal<(String, [CalibrationSettingValueUI])>,
-        onSaveCurrentSetting: Signal<[CalibrationSettingValueUI]>,
+        onSaveNewSetting: Signal<(String, [CalibrationSettingValueUi])>,
+        onSaveCurrentSetting: Signal<[CalibrationSettingValueUi]>,
         onLoadSelectedSetting: Signal<String>,
 
-        onTogglePlayCalibration: Signal<(Bool, CalibrationSettingValueUI)>
+        onTogglePlayCalibration: Signal<(Bool, CalibrationSettingValueUi)>
     )
     
     // MARK: - Outputs
@@ -64,7 +64,6 @@ class CalibrationViewModel: CalibrationViewPresentable {
         ()
     )
     
-    
     init(input: CalibrationViewPresentable.Input){
         self.input = input
         self.output = CalibrationViewModel.output(input: self.input,
@@ -90,14 +89,22 @@ private extension CalibrationViewModel {
         )
     }
     
-    func process() -> Void {
+    private func process() -> Void {
         // MARK: Bind
+        fetchCalibrationSettingFromGlobalSetting()
         bindTogglePlayCalibration()
         bindSaveGlobalSetting()
         bindSaveNewSetting()
         bindSaveCurrentSetting()
         bindLoadOther()
         bindDeleteCurrentSetting()
+    }
+    
+    private func fetchCalibrationSettingFromGlobalSetting(){
+        if let globalSetting = try? GlobalSettingService.shared.fetch(){
+            _state.currentCalibrationSetting.accept(globalSetting.calibrationSetting)
+            print("Loaded from global setting: \(globalSetting.calibrationSetting?.name ?? "")")
+        }
     }
     
     private func bindTogglePlayCalibration(){
@@ -123,24 +130,22 @@ private extension CalibrationViewModel {
     
     private func bindSaveGlobalSetting(){
         _state.currentCalibrationSetting.asDriver()
-            .drive(onNext: { setting in
-                // TO-DO: Save to current calibration setting to global setting here
-                GlobalSettingService.shared
-            }).disposed(by: _disposeBag)
+            .drive(onNext: GlobalSettingService.shared.updateCalibrationSetting)
+            .disposed(by: _disposeBag)
     }
     
     private func bindSaveNewSetting(){
         input.onSaveNewSetting
-            .map{ (settingName, settingUIs) in
-                let service = CalibrationService.shared
-                let settingValues = settingUIs.map {
+            .map{ (settingName, settingUiList) in
+                let service = CalibrationSettingService.shared
+                let settingValuesList = settingUiList.map {
                     $0.extractValuesInto(
                         values: service.createNewSettingValues(frequency: $0.frequency)
                     )
                 }
                 return service.createNewSetting(
                     name: settingName,
-                    values: settingValues
+                    values: settingValuesList
                 )
             }
             .emit(to: _state.currentCalibrationSetting)
@@ -169,7 +174,7 @@ private extension CalibrationViewModel {
     
     private func bindLoadOther(){
         input.onClickLoadOther
-            .map{ _ in (try? CalibrationService.shared.fetchAllSortedByTime()) ?? []}
+            .map{ _ in (try? CalibrationSettingService.shared.fetchAllSortedByTime()) ?? []}
             .emit(to: _state.allCalibrationSettings)
             .disposed(by: _disposeBag)
         
@@ -186,7 +191,7 @@ private extension CalibrationViewModel {
         input.onClickDeleteCurrent
             .map{[_state] _ -> CalibrationSetting? in
                 if let setting = _state.currentCalibrationSetting.value{
-                    try! CalibrationService.shared.delete(setting)
+                    try! CalibrationSettingService.shared.delete(setting)
                 }
                 return nil
             }.emit(to: _state.currentCalibrationSetting)

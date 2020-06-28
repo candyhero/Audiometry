@@ -1,15 +1,15 @@
 //
-//  CalibrationCoordinator.swift
+//  TestProtocolCoordinator.swift
 //  Audiometry
 //
-//  Created by Xavier Chan on 21/1/20.
-//  Copyright © 2020 TriCounty. All rights reserved.
+//  Created by Xavier Chan on 28/6/20.
+//  Copyright © 2020 TriCountyProject. All rights reserved.
 //
 
 import UIKit
 import RxSwift
 
-class CalibrationCoordinator: BaseCoordinator<Void> {
+class TestProtocolCoordinator: BaseCoordinator<Void> {
     
     /// Utility `DisposeBag` used by the subclasses.
     let disposeBag = DisposeBag()
@@ -20,10 +20,10 @@ class CalibrationCoordinator: BaseCoordinator<Void> {
     }
     
     override func start() -> Observable<Void> {
-        let viewController = CalibrationViewController.instantiate(AppStoryboards.Main)
+        let viewController = TestProtocolViewController.instantiate(AppStoryboards.Main)
         
         viewController.viewModelBuilder = { [weak self, disposeBag] in
-            let viewModel = CalibrationViewModel(input: $0)
+            let viewModel = TestProtocolViewModel(input: $0)
             viewModel.router.showTitle
                 .emit(onNext: { _ = self?.showTitleView(on: viewController) })
                 .disposed(by: disposeBag)
