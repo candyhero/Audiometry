@@ -38,6 +38,7 @@
 		67E6915424A8D898001A5946 /* TestProtocolCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E6915324A8D898001A5946 /* TestProtocolCoordinator.swift */; };
 		67E6915624A8D8A1001A5946 /* TestProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E6915524A8D8A1001A5946 /* TestProtocolViewController.swift */; };
 		67E6915824A8D8AB001A5946 /* TestProtocolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E6915724A8D8AB001A5946 /* TestProtocolViewModel.swift */; };
+		67E6915A24B4E05D001A5946 /* TestProtocolService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E6915924B4E05D001A5946 /* TestProtocolService.swift */; };
 		DFE0A9BDCDF3516A5FA0FE05 /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A03CE53FAA705338FC8F883 /* Pods_Audiometry.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,7 @@
 		67E6915324A8D898001A5946 /* TestProtocolCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolCoordinator.swift; sourceTree = "<group>"; };
 		67E6915524A8D8A1001A5946 /* TestProtocolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolViewController.swift; sourceTree = "<group>"; };
 		67E6915724A8D8AB001A5946 /* TestProtocolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolViewModel.swift; sourceTree = "<group>"; };
+		67E6915924B4E05D001A5946 /* TestProtocolService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolService.swift; sourceTree = "<group>"; };
 		E38F37834E4DF5F00E4DCFF0 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -251,6 +253,7 @@
 				67E6915324A8D898001A5946 /* TestProtocolCoordinator.swift */,
 				67E6915524A8D8A1001A5946 /* TestProtocolViewController.swift */,
 				67E6915724A8D8AB001A5946 /* TestProtocolViewModel.swift */,
+				67E6915924B4E05D001A5946 /* TestProtocolService.swift */,
 			);
 			path = TestProtocol;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				6765D41424561321004A1C46 /* TitleViewController.swift in Sources */,
 				6765D41924561321004A1C46 /* CalibrationCoordinator.swift in Sources */,
 				6765D41524561321004A1C46 /* TitleViewModel.swift in Sources */,
+				67E6915A24B4E05D001A5946 /* TestProtocolService.swift in Sources */,
 				6765D41A24561321004A1C46 /* CalibrationUiFactory.swift in Sources */,
 				6765D40C24561321004A1C46 /* AppConstants.swift in Sources */,
 				67E6915624A8D8A1001A5946 /* TestProtocolViewController.swift in Sources */,

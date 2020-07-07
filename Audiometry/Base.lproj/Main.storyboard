@@ -104,7 +104,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="efm-Xe-VU2" userLabel="svFreq">
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="efm-Xe-VU2" userLabel="Sv FrequencySelection">
                                 <rect key="frame" x="20" y="232" width="1326" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="Pde-ox-jVr"/>
@@ -115,7 +115,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="s42-0C-uzQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -262,7 +262,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cr8-wm-dBM">
-                                <rect key="frame" x="564.5" y="667.5" width="237" height="20.5"/>
+                                <rect key="frame" x="620" y="667.5" width="126.5" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L./R. Ear Order: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bes-qV-dyO">
                                         <rect key="frame" x="0.0" y="0.0" width="122" height="20.5"/>
@@ -270,8 +270,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L. Ear -&gt; R. Ear" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pqh-ee-VOG">
-                                        <rect key="frame" x="122" y="0.0" width="115" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pqh-ee-VOG">
+                                        <rect key="frame" x="122" y="0.0" width="4.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -323,11 +323,15 @@
                         <outlet property="SaveAsNewButton" destination="APH-kS-42d" id="Bfi-Z6-cg0"/>
                         <outlet property="adultTestButton" destination="03K-L4-Adi" id="T8M-oz-lsZ"/>
                         <outlet property="childrenTestButton" destination="wsK-vU-YA1" id="Mg5-kE-HzP"/>
-                        <outlet property="clearAllFrequencySelectionButton" destination="6dE-Y5-4Uz" id="o2I-bz-bOf"/>
-                        <outlet property="clearLastFrequencySelectionButton" destination="DOx-bp-4vZ" id="Oev-gD-afI"/>
+                        <outlet property="clearAllFrequencyButton" destination="6dE-Y5-4Uz" id="KGd-Hr-JPc"/>
+                        <outlet property="clearLastFrequencyButton" destination="DOx-bp-4vZ" id="vbe-Pi-WFD"/>
                         <outlet property="deleteCurrentButton" destination="XyG-KZ-zIi" id="LVj-V9-tOk"/>
                         <outlet property="loadOtherButton" destination="cPP-AS-nnX" id="rxR-k8-xTk"/>
                         <outlet property="returnButton" destination="Oyg-8O-FTI" id="qgZ-oI-Tcn"/>
+                        <outlet property="setLeftOnly" destination="Iml-Go-6KU" id="S3u-SP-ry7"/>
+                        <outlet property="setLeftRight" destination="Uy1-L9-U7i" id="zNS-NW-8sj"/>
+                        <outlet property="setRightLeft" destination="7f1-Gd-dqN" id="4cc-iK-zXX"/>
+                        <outlet property="setRightOnly" destination="28e-V9-IOP" id="syD-We-w6Q"/>
                         <outlet property="testEarOrderLabel" destination="Pqh-ee-VOG" id="xem-39-7hV"/>
                         <outlet property="testFrequencyButtonStackView" destination="efm-Xe-VU2" id="TW3-Qt-eeH"/>
                         <outlet property="testFrequencySelectionLabel" destination="yXe-Pb-BHe" id="QKO-bx-ebP"/>

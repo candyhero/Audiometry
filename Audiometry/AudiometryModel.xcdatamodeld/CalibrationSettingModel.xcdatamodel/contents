@@ -17,12 +17,13 @@
     <entity name="GlobalSetting" representedClassName=".GlobalSetting" syncable="YES" codeGenerationType="class">
         <attribute name="testLanguage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="calibrationSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CalibrationSetting" inverseName="globalSetting" inverseEntity="CalibrationSetting"/>
+        <relationship name="testProtocol" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TestProtocol" inverseName="globalSetting" inverseEntity="TestProtocol"/>
     </entity>
     <entity name="PatientProfile" representedClassName=".PatientProfile" syncable="YES" codeGenerationType="class">
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="endTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
-        <attribute name="testEarOrder" optional="YES" attributeType="String"/>
+        <attribute name="testEarOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="testFrequencyOrder" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Int]"/>
         <attribute name="testGroup" optional="YES" attributeType="String"/>
         <attribute name="testMode" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
@@ -53,16 +54,16 @@
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientProfile" inverseName="values" inverseEntity="PatientProfile"/>
     </entity>
     <entity name="TestProtocol" representedClassName=".TestProtocol" syncable="YES" codeGenerationType="class">
-        <attribute name="frequencySequence" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[Int]"/>
-        <attribute name="isTestBoth" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isTestLeftFirst" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="testEarOrder" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="testFrequencyOrder" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[Int]"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="globalSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GlobalSetting" inverseName="testProtocol" inverseEntity="GlobalSetting"/>
     </entity>
     <elements>
         <element name="CalibrationSetting" positionX="-372.671875" positionY="-46.83203125" width="128" height="103"/>
         <element name="CalibrationSettingValues" positionX="-54" positionY="18" width="128" height="133"/>
-        <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="73"/>
+        <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="88"/>
         <element name="PatientProfile" positionX="-180" positionY="81" width="128" height="193"/>
         <element name="PatientProfileValues" positionX="-171" positionY="90" width="128" height="343"/>
         <element name="TestProtocol" positionX="-189" positionY="63" width="128" height="118"/>

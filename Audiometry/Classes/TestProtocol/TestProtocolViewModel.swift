@@ -10,15 +10,37 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+enum TestEarOrder: Int {
+    case Finished = 0
+    case LeftOnly = 1
+    case RightOnly = 2
+    case LeftRight = 3
+    case RightLeft = 4
+    
+    func next() -> TestEarOrder{
+        switch self {
+            case .LeftRight: return .RightOnly
+            case .RightLeft: return .LeftOnly
+            default: return .Finished
+        }
+    }
+}
 protocol TestProtocolViewPresentable {
     // MARK: - Inputs
     typealias Input = (
         onClickReturn: Signal<Void>,
-        ()
+        onSelectFrequency: Signal<Int>,
+        onClearLastFrequency: Signal<Void>,
+        onClearAllFrequency: Signal<Void>,
+        
+        onSelectEarOrder: Signal<TestEarOrder>
     )
     
     // MARK: - Outputs
-    typealias Output = ()
+    typealias Output = (
+        currentFrequencySelection: Driver<[Int]>,
+        currentEarOrderSelection: Driver<TestEarOrder>
+    )
     
     typealias ViewModelBuilder = (TestProtocolViewPresentable.Input) -> TestProtocolViewPresentable
     
@@ -32,8 +54,15 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
     
     private let _disposeBag = DisposeBag()
     
-    typealias State = ()
-    private let _state: State = ()
+    typealias State = (
+        currentFrequencySelection: BehaviorRelay<[Int]>,
+        currentEarOrderSelection: BehaviorRelay<TestEarOrder>
+    )
+    
+    private let _state: State = (
+        currentFrequencySelection: BehaviorRelay<[Int]>(value: []),
+        currentEarOrderSelection: BehaviorRelay<TestEarOrder>(value: .LeftOnly)
+    )
     
     typealias Routing = (
         showTitle: Signal<Void>,
@@ -60,10 +89,43 @@ private extension TestProtocolViewModel {
         
         print("Set output...")
         
-        return ()
+        return (
+            currentFrequencySelection: _state.currentFrequencySelection.asDriver(),
+            currentEarOrderSelection: _state.currentEarOrderSelection.asDriver()
+        )
     }
     
     private func process() -> Void {
         // MARK: Bind
+        bindTestFrequencySelection()
+        bindTestEarOrderSelection()
+    }
+    
+    private func bindTestFrequencySelection(){
+        input.onSelectFrequency
+            .filter{[_state] frequency in !_state.currentFrequencySelection.value.contains(frequency)
+            }.map{[_state] frequency -> [Int] in
+                return _state.currentFrequencySelection.value + [frequency]
+            }.emit(to: _state.currentFrequencySelection)
+            .disposed(by: _disposeBag)
+        
+        input.onClearLastFrequency
+            .filter{[_state] _ in _state.currentFrequencySelection.value.isNotEmpty }
+            .map{[_state] frequency -> [Int] in
+                let list = _state.currentFrequencySelection.value
+                return Array(list.prefix(list.count-1))
+            }.emit(to: _state.currentFrequencySelection)
+            .disposed(by: _disposeBag)
+        
+        input.onClearAllFrequency
+            .map{[]}
+            .emit(to: _state.currentFrequencySelection)
+            .disposed(by: _disposeBag)
+    }
+    
+    private func bindTestEarOrderSelection(){
+        input.onSelectEarOrder
+            .emit(to: _state.currentEarOrderSelection)
+            .disposed(by: _disposeBag)
     }
 }

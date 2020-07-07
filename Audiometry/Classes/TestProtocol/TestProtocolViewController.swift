@@ -20,8 +20,13 @@ class TestProtocolViewController: UIViewController, Storyboardable {
     @IBOutlet weak var testEarOrderLabel: UILabel!
     @IBOutlet weak var testLanguageLabel: UILabel!
     
-    @IBOutlet weak var clearLastFrequencySelectionButton: UIButton!
-    @IBOutlet weak var clearAllFrequencySelectionButton: UIButton!
+    @IBOutlet weak var setLeftOnly: UIButton!
+    @IBOutlet weak var setRightOnly: UIButton!
+    @IBOutlet weak var setLeftRight: UIButton!
+    @IBOutlet weak var setRightLeft: UIButton!
+    
+    @IBOutlet weak var clearLastFrequencyButton: UIButton!
+    @IBOutlet weak var clearAllFrequencyButton: UIButton!
     @IBOutlet weak var SaveAsNewButton: UIButton!
     @IBOutlet weak var loadOtherButton: UIButton!
     @IBOutlet weak var deleteCurrentButton: UIButton!
@@ -29,7 +34,8 @@ class TestProtocolViewController: UIViewController, Storyboardable {
     @IBOutlet weak var adultTestButton: UIButton!
     @IBOutlet weak var childrenTestButton: UIButton!
     
-    private var _freqButtons = [UIButton]()
+    private var _frequencyButtons: [Int:UIButton]!
+    private var _earOrderButtons: [TestEarOrder:UIButton]!
     
     let loadTestProtocolPickerView = UIPickerView(
         frame: CGRect(x: 0, y: 50, width: 260, height: 160)
@@ -39,15 +45,25 @@ class TestProtocolViewController: UIViewController, Storyboardable {
     private var _viewModel: TestProtocolViewPresentable!
     var viewModelBuilder: TestProtocolViewModel.ViewModelBuilder!
     
-    private let disposeBag = DisposeBag()
+    private lazy var _relays = (
+        onSelectFrequency: PublishRelay<Int>(),
+        onSelectEarOrder: PublishRelay<TestEarOrder>()
+    )
+    
+    private let _disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         _viewModel = viewModelBuilder((
             onClickReturn: returnButton.rx.tap.asSignal(),
-            ()
+            onSelectFrequency: _relays.onSelectFrequency.asSignal(),
+            onClearLastFrequency: clearLastFrequencyButton.rx.tap.asSignal(),
+            onClearAllFrequency: clearAllFrequencyButton.rx.tap.asSignal(),
+            
+            onSelectEarOrder: _relays.onSelectEarOrder.asSignal()
         ))
         
         setupView()
+        setupBinding()
     }
 
     private func setupView() {
@@ -58,137 +74,82 @@ class TestProtocolViewController: UIViewController, Storyboardable {
 
         testFrequencySelectionLabel.textAlignment = .center
         testFrequencySelectionLabel.numberOfLines = 0
-
-        for freq in DEFAULT_FREQ {
-//            let newButton = ProtocolUIFactory.GetNewFrequencyButton(frequency: freq)
-//            newButton.addTarget(self, action: #selector(addNewFreq(_:)), for: .touchUpInside)
-//
-//            _freqButtons.append(newButton)
-//            svFreq.addArrangedSubview(newButton)
+        
+        _frequencyButtons = DEFAULT_FREQ.reduce(
+            into: [Int: UIButton]()
+        ){ (lookup, frequency) in
+            let button = UIButton(type:.system)
+            button.setTitle(String(frequency) + " Hz", for: .normal)
+            button.bounds = CGRect(x:0, y:0, width:300, height:300)
+            button.backgroundColor = UIColor.gray
+            button.setTitleColor(UIColor.white, for: .normal)
+            button.titleEdgeInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+            
+            lookup[frequency] = button
+            testFrequencyButtonStackView.addArrangedSubview(button)
         }
+        
+        _earOrderButtons = [
+            .LeftOnly: setLeftOnly,
+            .RightOnly: setRightOnly,
+            .LeftRight: setLeftRight,
+            .RightLeft: setRightLeft
+        ]
     }
 }
 
 extension TestProtocolViewController {
-
+    private func setupBinding() {
+        bindTestFrequencySelection()
+        bindTestEarOrderSelection()
+    }
+    
+    private func bindTestFrequencySelection(){
+        _ = _frequencyButtons.map{ (frequency, button) in
+            button.rx.tap
+                .map{ frequency }
+                .bind(to: _relays.onSelectFrequency)
+                .disposed(by: _disposeBag)
+        }
+        
+        _viewModel.output.currentFrequencySelection
+            .map{ frequencySelection in
+                if(frequencySelection.isEmpty){
+                    return "Test Sequence: None"
+                }
+                
+                let (size, count) = (5, frequencySelection.count)
+                return String("Test Sequence:") +
+                    stride(from: 0, to: count, by: size).map {
+                        frequencySelection[$0 ..< min($0 + size, count)]
+                            .map{"\($0) Hz ► "}.joined()
+                    }.joined(separator: "\n")
+                
+            }.drive(testFrequencySelectionLabel.rx.text)
+            .disposed(by: _disposeBag)
+    }
+    
+    private func bindTestEarOrderSelection(){
+        _ = _earOrderButtons.map{(testEarOrder, button) in
+            button.rx.tap
+                .map{ testEarOrder }
+                .bind(to: _relays.onSelectEarOrder)
+                .disposed(by: _disposeBag)
+        }
+        
+        _viewModel.output.currentEarOrderSelection
+            .map{[_earOrderButtons] testEarOrder in
+                if let button = _earOrderButtons?[testEarOrder],
+                    let label = button.titleLabel?.text{
+                    return label
+                } else {
+                    return "Error"
+                }
+            }.drive(testEarOrderLabel.rx.text)
+            .disposed(by: _disposeBag)
+    }
 }
-//class TestProtocolViewController: UIViewController, Storyboarded {
-//    // MARK:
-//    let coordinator = AppDelegate.testProcotolCoordinator
-//
-//    // MARK: Local Variables
-//    private var _pickerIndex: Int = 0;
-//
-//    // MARK: PretestError
-//    enum PreTestError: Error {
-//        case invalidTestingFrequencies
-//        case invalidPaientGroup
-//        case invalidPatentName
-//    }
-//
-//    // MARK: UI Components
-//    private var _freqButtons = [UIButton]()
-//
-//    @IBOutlet weak var pbAdult: UIButton!
-//    @IBOutlet weak var pbChildren: UIButton!
-//    @IBOutlet weak var svFreq: UIStackView!
-//    @IBOutlet weak var lbFreqSeq: UILabel!
-//    @IBOutlet weak var lbEarOrder: UILabel!
-//    @IBOutlet weak var lbTestLanguage: UILabel!
-//
-//    // MARK: Initialize ViewController
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        setupUI()
-//        clearFreqSeqLabel()
-//        lbEarOrder.text = "L. Ear -> R. Ear"
-//        coordinator.setTestEarOrder(isLeft: true, isBoth: true)
-//        lbTestLanguage.text = coordinator.getTestLanguage().toString()
-//        if coordinator.isPractice() {
-//            pbAdult.setTitle("Adult Practice", for: .normal)
-//            pbChildren.setTitle("Children Practice", for: .normal)
-//        }
-//    }
-//
-//    @IBAction func back(_ sender: UIButton) {
-//        coordinator.back()
-//    }
-//
-//    func setupUI() {
-//        svFreq.axis = .horizontal
-//        svFreq.distribution = .fillEqually
-//        svFreq.alignment = .center
-//        svFreq.spacing = 15
-//
-//        lbFreqSeq.textAlignment = .center
-//        lbFreqSeq.numberOfLines = 0
-//
-//        for freq in DEFAULT_FREQ {
-//            let newButton = ProtocolUIFactory.GetNewFrequencyButton(frequency: freq)
-//            newButton.addTarget(self, action: #selector(addNewFreq(_:)), for: .touchUpInside)
-//
-//            _freqButtons.append(newButton)
-//            svFreq.addArrangedSubview(newButton)
-//        }
-//    }
-//
-//    func clearFreqSeqLabel(){
-//        updateFreqSeqLabel([])
-//    }
-//    func updateFreqSeqLabel(_ frequencies: [Int]) {
-//        var bufferString = String("Test Sequence: ")
-//        for freq in frequencies {
-//            if(bufferString.count >= 60) { bufferString.append("\n") }
-//            bufferString.append(String(freq) + " Hz")
-//            bufferString.append(" ► ")
-//        }
-//        if(bufferString.count < 20) { bufferString.append("None") }
-//        lbFreqSeq.text! = bufferString
-//    }
-//
-//    // MARK: UIButton Actions
-//    @IBAction func switchToEnglish(_ sender: UIButton) {
-//        lbTestLanguage.text = coordinator.setTestLanguage(language: .English).toString()
-//    }
-//
-//    @IBAction func switchToPortuguese(_ sender: UIButton) {
-//        lbTestLanguage.text = coordinator.setTestLanguage(language: .Portuguese).toString()
-//    }
-//
-//    // MARK: Set test order
-//    @IBAction func setLeftFirst(_ sender: UIButton) {
-//        coordinator.setTestEarOrder(isLeft: true, isBoth: true)
-//        lbEarOrder.text = sender.titleLabel?.text
-//    }
-//
-//    @IBAction func setRightFirst(_ sender: UIButton) {
-//        coordinator.setTestEarOrder(isLeft: false, isBoth: true)
-//        lbEarOrder.text = sender.titleLabel?.text
-//    }
-//
-//    @IBAction func setLeftOnly(_ sender: UIButton) {
-//        coordinator.setTestEarOrder(isLeft: true, isBoth: false)
-//        lbEarOrder.text = sender.titleLabel?.text
-//    }
-//
-//    @IBAction func setRightOnly(_ sender: UIButton) {
-//        coordinator.setTestEarOrder(isLeft: false, isBoth: false)
-//        lbEarOrder.text = sender.titleLabel?.text
-//    }
-//    // MARK:
-//    @IBAction func addNewFreq(_ sender: UIButton) {
-//        updateFreqSeqLabel(coordinator.addTestFrequencyValue(sender.tag) )
-//    }
-//
-//    @IBAction func removeLastFreq(_ sender: UIButton) {
-//        updateFreqSeqLabel(coordinator.removeLastTestFrequencyValue() )
-//    }
-//
-//    @IBAction func removeAllFreq(_ sender: UIButton) {
-//        updateFreqSeqLabel(coordinator.removeAllTestFrequencyValues() )
-//    }
-//
+
 //    // MARK: CoreData
 //    @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
 //        if coordinator.getFrequencyBufferCount() == 0 {

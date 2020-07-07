@@ -44,7 +44,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
         onTogglePlayCalibration: PublishRelay<(Bool, CalibrationSettingValueUi)>()
     )
     
-    private let disposeBag = DisposeBag()
+    private let _disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,7 +131,7 @@ extension CalibrationViewController {
         
         _viewModel.output.currentCalibrationSetting
             .drive(onNext: loadCurrentValues)
-            .disposed(by: disposeBag)
+            .disposed(by: _disposeBag)
     }
     
     private func bindTogglePlayCalibration(){
@@ -147,7 +147,7 @@ extension CalibrationViewController {
                     }
                     return (true, settingUi)
                 }.bind(to: _relays.onTogglePlayCalibration)
-                .disposed(by: disposeBag)
+                .disposed(by: _disposeBag)
         }
     }
     
@@ -158,7 +158,7 @@ extension CalibrationViewController {
             .map{[_calibrationSettingUiLookup] currentFrequency in
                 return (false, _calibrationSettingUiLookup[currentFrequency]!)
             }.bind(to: _relays.onTogglePlayCalibration)
-            .disposed(by: disposeBag)
+            .disposed(by: _disposeBag)
     }
     
     private func bindClearAllValues(){
@@ -167,7 +167,7 @@ extension CalibrationViewController {
                 _ = _calibrationSettingUiLookup.map{
                     $0.value.clearAllValues()
                 }
-            }.disposed(by: disposeBag)
+            }.disposed(by: _disposeBag)
     }
     private func bindClearAllMeasuredLevelValues(){
         clearMeasuredLevelButton.rx.tap
@@ -176,13 +176,13 @@ extension CalibrationViewController {
                     $0.value.clearMeasuredLevelValues()
                 }
             }
-            .disposed(by: disposeBag)
+            .disposed(by: _disposeBag)
     }
     
     private func bindSaveAsNew() {
         saveAsNewButton.rx.tap
             .bind{ promptSettingNameInputPrompt() }
-            .disposed(by: disposeBag)
+            .disposed(by: _disposeBag)
         
         func promptSettingNameInputPrompt(){
             // Prompt for user to input setting name
@@ -228,7 +228,7 @@ extension CalibrationViewController {
         saveToCurrentButton.rx.tap
             .map{ getSettingUiList() }
             .bind(to: _relays.onSaveCurrentSetting)
-            .disposed(by: disposeBag)
+            .disposed(by: _disposeBag)
         
         func getSettingUiList() -> [CalibrationSettingValueUi]{
             return Array(_calibrationSettingUiLookup.values)
@@ -242,12 +242,12 @@ extension CalibrationViewController {
         loadSettingPickerView.rx.itemSelected.asDriver()
             .withLatestFrom(allCalibrationSettingNames){ $1[$0.row] }
             .drive(onSelectedSetting)
-            .disposed(by: disposeBag)
+            .disposed(by: _disposeBag)
             
         allCalibrationSettingNames
             .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in
                 return element
-            }.disposed(by: disposeBag)
+            }.disposed(by: _disposeBag)
         
         allCalibrationSettingNames
             .drive(onNext: { allNames in
@@ -257,7 +257,7 @@ extension CalibrationViewController {
                 } else {
                     promptPickerViewError()
                 }
-            }).disposed(by: disposeBag)
+            }).disposed(by: _disposeBag)
 
         func promptPickerView(){
             let alertController: UIAlertController! = UIAlertController(
