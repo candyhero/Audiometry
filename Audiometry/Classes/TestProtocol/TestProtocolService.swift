@@ -10,14 +10,20 @@ import Foundation
 
 class TestProtocolService: Repository<TestProtocol> {
     
-    static let shared: CalibrationSettingService = CalibrationSettingService()
+    static let shared: TestProtocolService = TestProtocolService()
     
     override init() {
     }
     
-    func createNewTestProtocol(name: String) -> TestProtocol {
+    func createNewTestProtocol(
+        name: String,
+        frequencyOrder: [Int],
+        earOrder: TestEarOrder
+    ) -> TestProtocol {
         let newProtocol = TestProtocol(context: _managedContext)
         newProtocol.name = name
+        newProtocol.testFrequencyOrder = frequencyOrder
+        newProtocol.testEarOrder = Int16(earOrder.rawValue)
         newProtocol.timestamp = Date()
         
         do {

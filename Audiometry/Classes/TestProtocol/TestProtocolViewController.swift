@@ -27,7 +27,7 @@ class TestProtocolViewController: UIViewController, Storyboardable {
     
     @IBOutlet weak var clearLastFrequencyButton: UIButton!
     @IBOutlet weak var clearAllFrequencyButton: UIButton!
-    @IBOutlet weak var SaveAsNewButton: UIButton!
+    @IBOutlet weak var saveAsNewButton: UIButton!
     @IBOutlet weak var loadOtherButton: UIButton!
     @IBOutlet weak var deleteCurrentButton: UIButton!
     
@@ -47,7 +47,9 @@ class TestProtocolViewController: UIViewController, Storyboardable {
     
     private lazy var _relays = (
         onSelectFrequency: PublishRelay<Int>(),
-        onSelectEarOrder: PublishRelay<TestEarOrder>()
+        onSelectEarOrder: PublishRelay<TestEarOrder>(),
+        
+        onSaveNewProtocol: PublishRelay<String>()
     )
     
     private let _disposeBag = DisposeBag()
@@ -59,7 +61,8 @@ class TestProtocolViewController: UIViewController, Storyboardable {
             onClearLastFrequency: clearLastFrequencyButton.rx.tap.asSignal(),
             onClearAllFrequency: clearAllFrequencyButton.rx.tap.asSignal(),
             
-            onSelectEarOrder: _relays.onSelectEarOrder.asSignal()
+            onSelectEarOrder: _relays.onSelectEarOrder.asSignal(),
+            onSaveNewProtocol: _relays.onSaveNewProtocol.asSignal()
         ))
         
         setupView()
@@ -148,6 +151,103 @@ extension TestProtocolViewController {
             }.drive(testEarOrderLabel.rx.text)
             .disposed(by: _disposeBag)
     }
+    
+    private func bindSaveAsNew(){
+        saveAsNewButton.rx.tap
+            .bind{ promptSettingNameInputPrompt() }
+            .disposed(by: _disposeBag)
+        
+        func promptSettingNameInputPrompt(){
+            let alertController = UIAlertController(
+                title: "Save",
+                message: "Please enter protocl name:",
+                preferredStyle: .alert
+            )
+            let actions = [
+                UIAlertAction(title: "Confirm", style: .default){ _ in
+                    if let protocolName = alertController.textFields?[0].text {
+                        confirmAction(protocolName: protocolName)
+                    }
+                },
+                UIAlertAction(title: "Cancel", style: .cancel)
+            ]
+            actions.forEach(alertController.addAction)
+            alertController.addTextField { $0.placeholder = "i.e. iPad1-EP1" }
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+        func confirmAction(protocolName: String){
+            if(protocolName.isNotEmpty) {
+                _relays.onSaveNewProtocol.accept(protocolName)
+            } else {
+                promptProtocolNameInputError()
+            }
+        }
+        
+        func promptProtocolNameInputError() {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "Protocol name cannot be empty!",
+                preferredStyle: .alert
+            )
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    private func bindLoadOther(){
+        loadOtherButton.rx.tap
+    }
+        
+//        let onSelectedSetting = BehaviorRelay<String>(value: "")
+//        let allCalibrationSettingNames = _viewModel.output.allCalibrationSettingNames.skip(1)
+//
+//        loadSettingPickerView.rx.itemSelected.asDriver()
+//            .withLatestFrom(allCalibrationSettingNames){ $1[$0.row] }
+//            .drive(onSelectedSetting)
+//            .disposed(by: _disposeBag)
+//
+//        allCalibrationSettingNames
+//            .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in
+//                return element
+//            }.disposed(by: _disposeBag)
+//
+//        allCalibrationSettingNames
+//            .drive(onNext: { allNames in
+//                if let defaultName = allNames.first{
+//                    onSelectedSetting.accept(defaultName)
+//                    promptPickerView()
+//                } else {
+//                    promptPickerViewError()
+//                }
+//            }).disposed(by: _disposeBag)
+//
+//        func promptPickerView(){
+//            let alertController: UIAlertController! = UIAlertController(
+//                title: "Select a different setting",
+//                message: "\n\n\n\n\n\n\n\n\n",
+//                preferredStyle: .alert
+//            )
+//            let actions = [
+//                UIAlertAction(title: "Confirm", style: .default){[_relays] _ in
+//                    _relays.onLoadSelectedSetting.accept(onSelectedSetting.value)
+//                },
+//                UIAlertAction(title: "Cancel", style: .cancel)
+//            ]
+//            actions.forEach(alertController.addAction)
+//            alertController.view.addSubview(loadSettingPickerView)
+//            present(alertController, animated: true, completion: nil)
+//        }
+//
+//        func promptPickerViewError(){
+//            let alertController = UIAlertController(
+//                title: "Error",
+//                message: "There is no other calibration settings!",
+//                preferredStyle: .alert
+//            )
+//            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+//            present(alertController, animated: true, completion: nil)
+//        }
 }
 
 //    // MARK: CoreData

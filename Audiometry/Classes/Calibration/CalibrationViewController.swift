@@ -185,7 +185,6 @@ extension CalibrationViewController {
             .disposed(by: _disposeBag)
         
         func promptSettingNameInputPrompt(){
-            // Prompt for user to input setting name
             let alertController = UIAlertController(
                 title: "Save",
                 message: "Please enter setting name:",

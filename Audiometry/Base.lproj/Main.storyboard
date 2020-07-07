@@ -320,7 +320,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="SaveAsNewButton" destination="APH-kS-42d" id="Bfi-Z6-cg0"/>
                         <outlet property="adultTestButton" destination="03K-L4-Adi" id="T8M-oz-lsZ"/>
                         <outlet property="childrenTestButton" destination="wsK-vU-YA1" id="Mg5-kE-HzP"/>
                         <outlet property="clearAllFrequencyButton" destination="6dE-Y5-4Uz" id="KGd-Hr-JPc"/>
@@ -328,6 +327,7 @@
                         <outlet property="deleteCurrentButton" destination="XyG-KZ-zIi" id="LVj-V9-tOk"/>
                         <outlet property="loadOtherButton" destination="cPP-AS-nnX" id="rxR-k8-xTk"/>
                         <outlet property="returnButton" destination="Oyg-8O-FTI" id="qgZ-oI-Tcn"/>
+                        <outlet property="saveAsNewButton" destination="APH-kS-42d" id="Bfi-Z6-cg0"/>
                         <outlet property="setLeftOnly" destination="Iml-Go-6KU" id="S3u-SP-ry7"/>
                         <outlet property="setLeftRight" destination="Uy1-L9-U7i" id="zNS-NW-8sj"/>
                         <outlet property="setRightLeft" destination="7f1-Gd-dqN" id="4cc-iK-zXX"/>

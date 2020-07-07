@@ -33,7 +33,8 @@ protocol TestProtocolViewPresentable {
         onClearLastFrequency: Signal<Void>,
         onClearAllFrequency: Signal<Void>,
         
-        onSelectEarOrder: Signal<TestEarOrder>
+        onSelectEarOrder: Signal<TestEarOrder>,
+        onSaveNewProtocol: Signal<String>
     )
     
     // MARK: - Outputs
@@ -56,12 +57,14 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
     
     typealias State = (
         currentFrequencySelection: BehaviorRelay<[Int]>,
-        currentEarOrderSelection: BehaviorRelay<TestEarOrder>
+        currentEarOrderSelection: BehaviorRelay<TestEarOrder>,
+        currentTestProtocol: BehaviorRelay<TestProtocol?>
     )
     
     private let _state: State = (
         currentFrequencySelection: BehaviorRelay<[Int]>(value: []),
-        currentEarOrderSelection: BehaviorRelay<TestEarOrder>(value: .LeftOnly)
+        currentEarOrderSelection: BehaviorRelay<TestEarOrder>(value: .LeftOnly),
+        currentTestProtocol: BehaviorRelay<TestProtocol?>(value: nil)
     )
     
     typealias Routing = (
@@ -126,6 +129,18 @@ private extension TestProtocolViewModel {
     private func bindTestEarOrderSelection(){
         input.onSelectEarOrder
             .emit(to: _state.currentEarOrderSelection)
+            .disposed(by: _disposeBag)
+    }
+    
+    private func bindSaveNewProtocol(){
+        input.onSaveNewProtocol
+            .map{[_state] name -> TestProtocol in
+                return TestProtocolService.shared.createNewTestProtocol(
+                    name: name,
+                    frequencyOrder: _state.currentFrequencySelection.value,
+                    earOrder: _state.currentEarOrderSelection.value
+                )
+            }.emit(to: _state.currentTestProtocol)
             .disposed(by: _disposeBag)
     }
 }
