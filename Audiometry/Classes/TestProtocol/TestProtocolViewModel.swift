@@ -26,21 +26,27 @@ enum TestEarOrder: Int {
     }
 }
 protocol TestProtocolViewPresentable {
-    // MARK: - Inputs
+    // MARK: - Inp uts
     typealias Input = (
         onClickReturn: Signal<Void>,
-        onSelectFrequency: Signal<Int>,
+        onClickLoadOther: Signal<Void>,
+        onClickDeleteCurrent: Signal<Void>,
+        
         onClearLastFrequency: Signal<Void>,
         onClearAllFrequency: Signal<Void>,
         
+        onSelectFrequency: Signal<Int>,
         onSelectEarOrder: Signal<TestEarOrder>,
-        onSaveNewProtocol: Signal<String>
+        
+        onSaveNewProtocol: Signal<String>,
+        onLoadSelectedProtocol: Signal<String>
     )
     
     // MARK: - Outputs
     typealias Output = (
         currentFrequencySelection: Driver<[Int]>,
-        currentEarOrderSelection: Driver<TestEarOrder>
+        currentEarOrderSelection: Driver<TestEarOrder>,
+        allTestProtocolNames: Driver<[String]>
     )
     
     typealias ViewModelBuilder = (TestProtocolViewPresentable.Input) -> TestProtocolViewPresentable
@@ -58,15 +64,17 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
     typealias State = (
         currentFrequencySelection: BehaviorRelay<[Int]>,
         currentEarOrderSelection: BehaviorRelay<TestEarOrder>,
-        currentTestProtocol: BehaviorRelay<TestProtocol?>
+        currentTestProtocol: BehaviorRelay<TestProtocol?>,
+        allTestProtocols: BehaviorRelay<[TestProtocol]>
     )
     
     private let _state: State = (
         currentFrequencySelection: BehaviorRelay<[Int]>(value: []),
-        currentEarOrderSelection: BehaviorRelay<TestEarOrder>(value: .LeftOnly),
-        currentTestProtocol: BehaviorRelay<TestProtocol?>(value: nil)
+        currentEarOrderSelection: BehaviorRelay<TestEarOrder>(value: .LeftRight),
+        currentTestProtocol: BehaviorRelay<TestProtocol?>(value: nil),
+        allTestProtocols: BehaviorRelay<[TestProtocol]>(value: [])
     )
-    
+         
     typealias Routing = (
         showTitle: Signal<Void>,
         ()
@@ -94,7 +102,10 @@ private extension TestProtocolViewModel {
         
         return (
             currentFrequencySelection: _state.currentFrequencySelection.asDriver(),
-            currentEarOrderSelection: _state.currentEarOrderSelection.asDriver()
+            currentEarOrderSelection: _state.currentEarOrderSelection.asDriver(),
+            allTestProtocolNames: _state.allTestProtocols
+                .map{ $0.map{($0.name ?? "Error")}}
+                .asDriver(onErrorJustReturn: [])
         )
     }
     
@@ -102,9 +113,17 @@ private extension TestProtocolViewModel {
         // MARK: Bind
         bindTestFrequencySelection()
         bindTestEarOrderSelection()
+        bindSaveNewProtocol()
+        bindLoadOtherProtocol()
+        bindDeleteCurrentProtocol()
     }
     
     private func bindTestFrequencySelection(){
+        _state.currentTestProtocol.asDriver().skip(1)
+            .map{ $0?.testFrequencyOrder ?? [] }
+            .drive(_state.currentFrequencySelection)
+            .disposed(by: _disposeBag)
+        
         input.onSelectFrequency
             .filter{[_state] frequency in !_state.currentFrequencySelection.value.contains(frequency)
             }.map{[_state] frequency -> [Int] in
@@ -127,6 +146,11 @@ private extension TestProtocolViewModel {
     }
     
     private func bindTestEarOrderSelection(){
+        _state.currentTestProtocol.asDriver().skip(1)
+            .map{ TestEarOrder(rawValue: Int($0?.testEarOrder ?? -1)) ?? .LeftRight }
+            .drive(_state.currentEarOrderSelection)
+            .disposed(by: _disposeBag)
+        
         input.onSelectEarOrder
             .emit(to: _state.currentEarOrderSelection)
             .disposed(by: _disposeBag)
@@ -140,6 +164,32 @@ private extension TestProtocolViewModel {
                     frequencyOrder: _state.currentFrequencySelection.value,
                     earOrder: _state.currentEarOrderSelection.value
                 )
+            }.emit(to: _state.currentTestProtocol)
+            .disposed(by: _disposeBag)
+    }
+    
+    private func bindLoadOtherProtocol(){
+        input.onClickLoadOther
+            .map{ _ in (try? TestProtocolService.shared.fetchAllSortedByTime()) ?? []}
+            .emit(to: _state.allTestProtocols)
+            .disposed(by: _disposeBag)
+        
+        input.onLoadSelectedProtocol
+            .map{[_state] protocolName in
+                _state.allTestProtocols.value
+                    .filter({ $0.name == protocolName})
+                    .first
+            }.emit(to: _state.currentTestProtocol)
+            .disposed(by: _disposeBag)
+    }
+    
+    private func bindDeleteCurrentProtocol(){
+        input.onClickDeleteCurrent
+            .map{[_state] _ -> TestProtocol? in
+                if let setting = _state.currentTestProtocol.value{
+                    try! TestProtocolService.shared.delete(setting)
+                }
+                return nil
             }.emit(to: _state.currentTestProtocol)
             .disposed(by: _disposeBag)
     }

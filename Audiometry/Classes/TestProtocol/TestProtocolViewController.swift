@@ -49,7 +49,8 @@ class TestProtocolViewController: UIViewController, Storyboardable {
         onSelectFrequency: PublishRelay<Int>(),
         onSelectEarOrder: PublishRelay<TestEarOrder>(),
         
-        onSaveNewProtocol: PublishRelay<String>()
+        onSaveNewProtocol: PublishRelay<String>(),
+        onLoadSelectedProtocol: PublishRelay<String>()
     )
     
     private let _disposeBag = DisposeBag()
@@ -57,12 +58,17 @@ class TestProtocolViewController: UIViewController, Storyboardable {
     override func viewDidLoad() {
         _viewModel = viewModelBuilder((
             onClickReturn: returnButton.rx.tap.asSignal(),
-            onSelectFrequency: _relays.onSelectFrequency.asSignal(),
+            onClickLoadOther: loadOtherButton.rx.tap.asSignal(),
+            onClickDeleteCurrent: deleteCurrentButton.rx.tap.asSignal(),
+            
             onClearLastFrequency: clearLastFrequencyButton.rx.tap.asSignal(),
             onClearAllFrequency: clearAllFrequencyButton.rx.tap.asSignal(),
             
+            onSelectFrequency: _relays.onSelectFrequency.asSignal(),
             onSelectEarOrder: _relays.onSelectEarOrder.asSignal(),
-            onSaveNewProtocol: _relays.onSaveNewProtocol.asSignal()
+            
+            onSaveNewProtocol: _relays.onSaveNewProtocol.asSignal(),
+            onLoadSelectedProtocol: _relays.onLoadSelectedProtocol.asSignal()
         ))
         
         setupView()
@@ -105,8 +111,11 @@ extension TestProtocolViewController {
     private func setupBinding() {
         bindTestFrequencySelection()
         bindTestEarOrderSelection()
+        
+        bindSaveAsNew()
+        bindLoadOther()
     }
-    
+        
     private func bindTestFrequencySelection(){
         _ = _frequencyButtons.map{ (frequency, button) in
             button.rx.tap
@@ -160,7 +169,7 @@ extension TestProtocolViewController {
         func promptSettingNameInputPrompt(){
             let alertController = UIAlertController(
                 title: "Save",
-                message: "Please enter protocl name:",
+                message: "Please enter protocol name:",
                 preferredStyle: .alert
             )
             let actions = [
@@ -196,103 +205,63 @@ extension TestProtocolViewController {
     }
     
     private func bindLoadOther(){
-        loadOtherButton.rx.tap
-    }
+//        loadOtherButton.rx.tap
+        let onSelectedProtocol = BehaviorRelay<String>(value: "")
+        let allTestProtocolNames = _viewModel.output.allTestProtocolNames.skip(1)
         
-//        let onSelectedSetting = BehaviorRelay<String>(value: "")
-//        let allCalibrationSettingNames = _viewModel.output.allCalibrationSettingNames.skip(1)
-//
-//        loadSettingPickerView.rx.itemSelected.asDriver()
-//            .withLatestFrom(allCalibrationSettingNames){ $1[$0.row] }
-//            .drive(onSelectedSetting)
-//            .disposed(by: _disposeBag)
-//
-//        allCalibrationSettingNames
-//            .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in
-//                return element
-//            }.disposed(by: _disposeBag)
-//
-//        allCalibrationSettingNames
-//            .drive(onNext: { allNames in
-//                if let defaultName = allNames.first{
-//                    onSelectedSetting.accept(defaultName)
-//                    promptPickerView()
-//                } else {
-//                    promptPickerViewError()
-//                }
-//            }).disposed(by: _disposeBag)
-//
-//        func promptPickerView(){
-//            let alertController: UIAlertController! = UIAlertController(
-//                title: "Select a different setting",
-//                message: "\n\n\n\n\n\n\n\n\n",
-//                preferredStyle: .alert
-//            )
-//            let actions = [
-//                UIAlertAction(title: "Confirm", style: .default){[_relays] _ in
-//                    _relays.onLoadSelectedSetting.accept(onSelectedSetting.value)
-//                },
-//                UIAlertAction(title: "Cancel", style: .cancel)
-//            ]
-//            actions.forEach(alertController.addAction)
-//            alertController.view.addSubview(loadSettingPickerView)
-//            present(alertController, animated: true, completion: nil)
-//        }
-//
-//        func promptPickerViewError(){
-//            let alertController = UIAlertController(
-//                title: "Error",
-//                message: "There is no other calibration settings!",
-//                preferredStyle: .alert
-//            )
-//            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-//            present(alertController, animated: true, completion: nil)
-//        }
+        loadTestProtocolPickerView.rx.itemSelected.asDriver()
+            .withLatestFrom(allTestProtocolNames){ $1[$0.row] }
+            .drive(onSelectedProtocol)
+            .disposed(by: _disposeBag)
+        
+        allTestProtocolNames
+            .drive(loadTestProtocolPickerView.rx.itemTitles){ (row, element) in
+                return element
+            }.disposed(by: _disposeBag)
+        
+        allTestProtocolNames
+            .drive(onNext: { allNames in
+                if let defaultName = allNames.first{
+                    onSelectedProtocol.accept(defaultName)
+                    promptPickerView()
+                } else {
+                    promptPickerViewError()
+                }
+            }).disposed(by: _disposeBag)
+        
+        func promptPickerView(){
+            let alertController: UIAlertController! = UIAlertController(
+                title: "Select a different test protocol",
+                message: "\n\n\n\n\n\n\n\n\n",
+                preferredStyle: .alert
+            )
+            let actions = [
+                UIAlertAction(title: "Confirm", style: .default){[_relays] _ in
+                    _relays.onLoadSelectedProtocol.accept(onSelectedProtocol.value)
+                },
+                UIAlertAction(title: "Cancel", style: .cancel)
+            ]
+            actions.forEach(alertController.addAction)
+            alertController.view.addSubview(loadTestProtocolPickerView)
+            present(alertController, animated: true, completion: nil)
+        }
+        
+        func promptPickerViewError(){
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "There is no other test protocols!",
+                preferredStyle: .alert
+            )
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    private func bindStartTest(){
+        
+    }
 }
 
-//    // MARK: CoreData
-//    @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
-//        if coordinator.getFrequencyBufferCount() == 0 {
-//            errorPrompt(errorMsg: "There is no test frequency selected")
-//        } else {
-//            inputPrompt(promptMsg: "Please Enter Protocol Name:",
-//                        errorMsg: "Protocol name cannot be empty!",
-//                        fieldMsg: "",
-//                        confirmFunction: saveProtocol)
-//        }
-//    }
-//
-//    @IBAction func loadFreqSeqProtocol(_ sender: UIButton) {
-//        _pickerIndex = 0
-//
-//        if !coordinator.isAnyTestProtocols() {
-//            errorPrompt(errorMsg: "There is no saved protocol!")
-//        }
-//        else {
-//            pickerPrompt(confirmFunction: { () in
-//                self.updateFreqSeqLabel(
-//                        self.coordinator.loadProtocol(self._pickerIndex)
-//                )
-//            })
-//        }
-//    }
-//
-//    func saveProtocol(_ protocolName: String) {
-//        if coordinator.isProtocolNameExisted(protocolName) {
-//            errorPrompt(errorMsg: "Protocol name already exists!")
-//            return
-//        }
-//        coordinator.saveAsNewProtocol(protocolName)
-//    }
-//
-//    @IBAction func deleteFreqSeqProtocol(_ sender: UIButton) {
-//        if coordinator.deleteCurrentTestProtocol() {
-//            errorPrompt(errorMsg: "There is no selected protcol!")
-//        } else {
-//            clearFreqSeqLabel()
-//        }
-//    }
-//
 //    @IBAction func startAdultTest(_ sender: UIButton) {
 //        coordinator.setIsAdult(isAdult: true)
 //        promptToStartTest()
@@ -347,31 +316,5 @@ extension TestProtocolViewController {
 //        } catch {
 //            print("[Error] Unexpected error: \(error).")
 //        }
-//    }
-//
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
-//}
-//
-//extension TestProtocolViewController: UIPickerViewDelegate, UIPickerViewDataSource{
-//
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return coordinator.getTestProtocolCount()
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView,
-//                    titleForRow row: Int,
-//                    forComponent component: Int) -> String? {
-//        return coordinator.getTestProtocolName(_pickerIndex)
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        _pickerIndex = row
 //    }
 //}

@@ -96,7 +96,7 @@ private extension CalibrationViewModel {
         bindSaveGlobalSetting()
         bindSaveNewSetting()
         bindSaveCurrentSetting()
-        bindLoadOther()
+        bindLoadOtherSetting()
         bindDeleteCurrentSetting()
     }
     
@@ -172,7 +172,7 @@ private extension CalibrationViewModel {
             .disposed(by: _disposeBag)
     }
     
-    private func bindLoadOther(){
+    private func bindLoadOtherSetting(){
         input.onClickLoadOther
             .map{ _ in (try? CalibrationSettingService.shared.fetchAllSortedByTime()) ?? []}
             .emit(to: _state.allCalibrationSettings)
