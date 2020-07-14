@@ -9,22 +9,6 @@
 import Foundation
 import UIKit
 
-enum TestLanguage: Int {
-    case Invalid = 0
-    case English = 1
-    case Portuguese = 2
-    case Spanish = 3
-    
-    func toString() -> String {
-        switch self {
-        case .Invalid: return "Invalid"
-        case .English: return "English"
-        case .Portuguese: return "Portuguese"
-        case .Spanish: return "Spanish"
-        }
-    }
-}
-
 let SHAPE_ICON_PATH = "Resources/Shape_Icons"
 let ANIMAL_ICON_PATH = "Resources/Animal_Icons"
 let ANIMAL_TONE_PATH = "Resources/Animal_Tones"

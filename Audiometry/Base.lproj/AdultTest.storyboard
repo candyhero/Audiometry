@@ -30,9 +30,6 @@
                                         <state key="normal">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
-                                        <connections>
-                                            <action selector="checkResponse:" destination="Xos-0w-K0n" eventType="touchUpInside" id="gke-M1-1md"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMI-ZF-NxX">
                                         <rect key="frame" x="0.0" y="512" width="683" height="512"/>
@@ -43,9 +40,6 @@
                                         <state key="normal">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
-                                        <connections>
-                                            <action selector="checkResponse:" destination="Xos-0w-K0n" eventType="touchUpInside" id="adW-dx-gpl"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -55,9 +49,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Uk-Sk-nqx">
                                 <rect key="frame" x="20" y="0.0" width="98" height="30"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <action selector="backToTitle:" destination="Xos-0w-K0n" eventType="touchUpInside" id="X0z-4S-F0O"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bpw-UR-4Wm">
                                 <rect key="frame" x="1044.5" y="361" width="301.5" height="302"/>
@@ -69,9 +60,6 @@
                                 <state key="normal" title="No Sound">
                                     <color key="titleColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="checkResponse:" destination="Xos-0w-K0n" eventType="touchUpInside" id="zgJ-KO-hqI"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bH-v6-7C1">
                                 <rect key="frame" x="20" y="884" width="301.5" height="120"/>
@@ -83,9 +71,6 @@
                                 <state key="normal" title="Repeat">
                                     <color key="titleColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="repeatPlaying:" destination="Xos-0w-K0n" eventType="touchUpInside" id="8vL-da-izD"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1EF-nR-31E">
                                 <rect key="frame" x="1044.5" y="884" width="301.5" height="120"/>
@@ -97,9 +82,6 @@
                                 <state key="normal" title="Pause">
                                     <color key="titleColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="pausePlaying:" destination="Xos-0w-K0n" eventType="touchUpInside" id="9cK-ax-5Pk"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRV-Wa-CQF">
                                 <rect key="frame" x="20" y="369" width="301.5" height="286.5"/>
@@ -121,7 +103,7 @@
                         <constraints>
                             <constraint firstItem="1EF-nR-31E" firstAttribute="trailing" secondItem="5kn-ku-J6l" secondAttribute="trailingMargin" id="2Jx-RE-rva"/>
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2Uk-Sk-nqx" secondAttribute="trailing" constant="8" symbolic="YES" id="6D5-xP-WfL"/>
-                            <constraint firstItem="2Uk-Sk-nqx" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="6VY-Yg-3qc"/>
+                            <constraint firstItem="2Uk-Sk-nqx" firstAttribute="top" secondItem="5kn-ku-J6l" secondAttribute="top" id="6VY-Yg-3qc"/>
                             <constraint firstItem="Bpw-UR-4Wm" firstAttribute="centerY" secondItem="5kn-ku-J6l" secondAttribute="centerY" id="7pR-p5-J6h"/>
                             <constraint firstItem="2Uk-Sk-nqx" firstAttribute="leading" secondItem="5kn-ku-J6l" secondAttribute="leadingMargin" id="Cx6-XU-vK9"/>
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="leading" secondItem="yRV-Wa-CQF" secondAttribute="trailing" constant="20" id="FzC-JQ-E9D"/>
@@ -132,7 +114,7 @@
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="centerY" secondItem="5kn-ku-J6l" secondAttribute="centerY" id="MYU-ct-FYZ"/>
                             <constraint firstItem="Bpw-UR-4Wm" firstAttribute="trailing" secondItem="5kn-ku-J6l" secondAttribute="trailingMargin" id="WMj-bk-Z0O"/>
                             <constraint firstItem="1EF-nR-31E" firstAttribute="leading" secondItem="YIq-yB-AZP" secondAttribute="trailing" constant="20" id="Y0O-Yb-TME"/>
-                            <constraint firstItem="UDg-n5-yK3" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="dcp-v9-ylU"/>
+                            <constraint firstItem="UDg-n5-yK3" firstAttribute="top" secondItem="5kn-ku-J6l" secondAttribute="top" id="dcp-v9-ylU"/>
                             <constraint firstItem="yRV-Wa-CQF" firstAttribute="leading" secondItem="5kn-ku-J6l" secondAttribute="leadingMargin" id="kEd-nI-BMk"/>
                             <constraint firstItem="1bH-v6-7C1" firstAttribute="leading" secondItem="5kn-ku-J6l" secondAttribute="leadingMargin" id="kjV-nR-14o"/>
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="kw1-5z-8iO"/>
@@ -143,13 +125,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="lbInstruction" destination="yRV-Wa-CQF" id="SZX-Gg-4mj"/>
-                        <outlet property="lbProgress" destination="UDg-n5-yK3" id="2rb-WA-hn0"/>
-                        <outlet property="pbFirst" destination="5eT-zC-Hxs" id="p8s-Ae-X1k"/>
-                        <outlet property="pbNoSound" destination="Bpw-UR-4Wm" id="yzq-5B-rVf"/>
-                        <outlet property="pbPause" destination="1EF-nR-31E" id="Myd-fk-bql"/>
-                        <outlet property="pbRepeat" destination="1bH-v6-7C1" id="6c1-zI-Wev"/>
-                        <outlet property="pbSecond" destination="qMI-ZF-NxX" id="b2J-jM-3pD"/>
+                        <outlet property="firstResponseButton" destination="5eT-zC-Hxs" id="MbX-lF-k7f"/>
+                        <outlet property="instructionLabvel" destination="yRV-Wa-CQF" id="17a-3O-jjb"/>
+                        <outlet property="noSoundResponseButton" destination="Bpw-UR-4Wm" id="di0-er-5Ng"/>
+                        <outlet property="pauseButton" destination="1EF-nR-31E" id="xte-rQ-61m"/>
+                        <outlet property="progressLabel" destination="UDg-n5-yK3" id="khF-Cf-dKj"/>
+                        <outlet property="repeatButton" destination="1bH-v6-7C1" id="aTS-eA-hDt"/>
+                        <outlet property="returnButton" destination="2Uk-Sk-nqx" id="4GB-yJ-PzK"/>
+                        <outlet property="secondResponseButton" destination="qMI-ZF-NxX" id="Bp8-aF-RIb"/>
                         <outlet property="svIcons" destination="YIq-yB-AZP" id="atM-bc-2Wo"/>
                     </connections>
                 </viewController>
@@ -172,9 +155,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xGj-8Z-nbi">
                                 <rect key="frame" x="20" y="0.0" width="98" height="30"/>
                                 <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <action selector="backToTitle:" destination="eEg-l9-aEs" eventType="touchUpInside" id="LeR-Ic-fpm"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GmR-MD-8t1">
                                 <rect key="frame" x="268" y="440.5" width="830" height="143.5"/>
@@ -191,9 +171,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" title="Continue After Switching the Earphone"/>
-                                        <connections>
-                                            <action selector="continueToTest:" destination="eEg-l9-aEs" eventType="touchUpInside" id="GuE-Zh-kMm"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -201,14 +178,13 @@
                         <color key="backgroundColor" red="0.79475296463830714" green="1" blue="0.63224668155982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xGj-8Z-nbi" secondAttribute="trailing" constant="20" symbolic="YES" id="1j1-U7-7QE"/>
-                            <constraint firstItem="xGj-8Z-nbi" firstAttribute="top" secondItem="ra8-Zp-pXY" secondAttribute="bottom" id="Ai5-xf-b0Y"/>
+                            <constraint firstItem="xGj-8Z-nbi" firstAttribute="top" secondItem="X4E-YG-IhF" secondAttribute="top" id="Ai5-xf-b0Y"/>
                             <constraint firstItem="GmR-MD-8t1" firstAttribute="centerY" secondItem="X4E-YG-IhF" secondAttribute="centerY" id="Ic6-Hc-lsP"/>
                             <constraint firstItem="GmR-MD-8t1" firstAttribute="centerX" secondItem="X4E-YG-IhF" secondAttribute="centerX" id="lfK-bs-gHd"/>
                             <constraint firstItem="xGj-8Z-nbi" firstAttribute="leading" secondItem="X4E-YG-IhF" secondAttribute="leadingMargin" id="sK1-6E-QOX"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="lbCaption" destination="Fbl-Cm-EPg" id="iot-Xh-07D"/>
                         <outlet property="pbContinue" destination="04f-DG-o9J" id="ldJ-FG-WNl"/>
                     </connections>
                 </viewController>
@@ -216,10 +192,10 @@
             </objects>
             <point key="canvasLocation" x="921.96193265007309" y="286.5234375"/>
         </scene>
-        <!--Adult Instruction View Controller-->
+        <!--Adult Test Instruction View Controller-->
         <scene sceneID="rjg-Ks-cq9">
             <objects>
-                <viewController storyboardIdentifier="AdultInstructionViewController" id="H19-23-Hv8" customClass="AdultInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdultInstructionViewController" id="H19-23-Hv8" customClass="AdultTestInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X8z-cw-Fej"/>
                         <viewControllerLayoutGuide type="bottom" id="gpb-8g-Tlx"/>
@@ -288,19 +264,6 @@
                                     <color key="titleColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbz-0r-a2i">
-                                <rect key="frame" x="1044.5" y="0.0" width="301.5" height="120"/>
-                                <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="eAp-4S-pUu"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                                <state key="normal" title="Start Testing!"/>
-                                <connections>
-                                    <action selector="startTest:" destination="H19-23-Hv8" eventType="touchUpInside" id="wM3-uo-6dl"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5SV-3M-pbc">
                                 <rect key="frame" x="1044.5" y="361" width="301.5" height="302"/>
                                 <constraints>
@@ -318,6 +281,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbz-0r-a2i">
+                                <rect key="frame" x="1044.5" y="0.0" width="301.5" height="120"/>
+                                <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="eAp-4S-pUu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="Start Testing!"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -327,33 +300,33 @@
                             <constraint firstItem="5mD-Au-94F" firstAttribute="top" secondItem="X8z-cw-Fej" secondAttribute="bottom" id="8dB-5E-9gK"/>
                             <constraint firstItem="Ulh-08-mvM" firstAttribute="leading" secondItem="7CH-5U-An6" secondAttribute="leadingMargin" id="DpS-H0-qO2"/>
                             <constraint firstItem="5mD-Au-94F" firstAttribute="leading" secondItem="b8i-ED-zDi" secondAttribute="trailing" constant="20" id="PM1-2F-HPT"/>
-                            <constraint firstItem="gpb-8g-Tlx" firstAttribute="top" secondItem="3JU-sZ-hLL" secondAttribute="bottom" constant="20" id="Tz8-pB-ShC"/>
+                            <constraint firstAttribute="bottom" secondItem="3JU-sZ-hLL" secondAttribute="bottom" constant="20" id="Tz8-pB-ShC"/>
                             <constraint firstItem="5SV-3M-pbc" firstAttribute="trailing" secondItem="7CH-5U-An6" secondAttribute="trailingMargin" id="W5b-Ug-f7e"/>
                             <constraint firstItem="Ulh-08-mvM" firstAttribute="centerY" secondItem="7CH-5U-An6" secondAttribute="centerY" id="WQv-93-Iri"/>
                             <constraint firstItem="3JU-sZ-hLL" firstAttribute="leading" secondItem="5mD-Au-94F" secondAttribute="trailing" constant="20" id="YW9-ym-29f"/>
                             <constraint firstItem="5mD-Au-94F" firstAttribute="leading" secondItem="Ulh-08-mvM" secondAttribute="trailing" constant="20" id="Yis-SP-CJh"/>
                             <constraint firstItem="5SV-3M-pbc" firstAttribute="centerY" secondItem="7CH-5U-An6" secondAttribute="centerY" id="Z8A-Oj-Cy8"/>
                             <constraint firstItem="5mD-Au-94F" firstAttribute="centerY" secondItem="7CH-5U-An6" secondAttribute="centerY" id="ZiX-z5-TY1"/>
-                            <constraint firstItem="dBi-HB-tJb" firstAttribute="top" secondItem="X8z-cw-Fej" secondAttribute="bottom" id="a7X-Dx-Mdy"/>
                             <constraint firstItem="5mD-Au-94F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dBi-HB-tJb" secondAttribute="trailing" constant="8" symbolic="YES" id="hMR-BO-6zh"/>
                             <constraint firstItem="3JU-sZ-hLL" firstAttribute="trailing" secondItem="7CH-5U-An6" secondAttribute="trailingMargin" id="kTn-oN-YRQ"/>
-                            <constraint firstItem="gpb-8g-Tlx" firstAttribute="top" secondItem="b8i-ED-zDi" secondAttribute="bottom" constant="20" id="n0v-ev-93c"/>
+                            <constraint firstAttribute="bottom" secondItem="b8i-ED-zDi" secondAttribute="bottom" constant="20" id="n0v-ev-93c"/>
                             <constraint firstItem="5SV-3M-pbc" firstAttribute="leading" secondItem="5mD-Au-94F" secondAttribute="trailing" constant="20" id="qMY-h4-Oz6"/>
-                            <constraint firstItem="dBi-HB-tJb" firstAttribute="top" secondItem="X8z-cw-Fej" secondAttribute="bottom" id="rKb-As-9Ak"/>
+                            <constraint firstItem="dBi-HB-tJb" firstAttribute="top" secondItem="7CH-5U-An6" secondAttribute="top" id="rKb-As-9Ak"/>
                             <constraint firstItem="lbz-0r-a2i" firstAttribute="trailing" secondItem="7CH-5U-An6" secondAttribute="trailingMargin" id="vOq-uB-MWY"/>
                             <constraint firstItem="5mD-Au-94F" firstAttribute="centerX" secondItem="7CH-5U-An6" secondAttribute="centerX" id="vaz-te-WNO"/>
-                            <constraint firstItem="lbz-0r-a2i" firstAttribute="top" secondItem="X8z-cw-Fej" secondAttribute="bottom" id="y9o-E9-mbS"/>
+                            <constraint firstItem="lbz-0r-a2i" firstAttribute="top" secondItem="7CH-5U-An6" secondAttribute="top" id="y9o-E9-mbS"/>
                             <constraint firstItem="b8i-ED-zDi" firstAttribute="leading" secondItem="7CH-5U-An6" secondAttribute="leadingMargin" id="zyz-Fx-ET3"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="lbCaption" destination="Ulh-08-mvM" id="4IR-QQ-woP"/>
-                        <outlet property="pbFirst" destination="hFa-b0-Uqe" id="3VY-jZ-ZXu"/>
-                        <outlet property="pbNoSound" destination="5SV-3M-pbc" id="fyk-Mi-H6o"/>
-                        <outlet property="pbPause" destination="3JU-sZ-hLL" id="LAa-LT-f21"/>
-                        <outlet property="pbRepeat" destination="b8i-ED-zDi" id="wra-cj-ImW"/>
-                        <outlet property="pbSecond" destination="x90-gC-any" id="DcQ-04-3ah"/>
-                        <outlet property="pbStart" destination="lbz-0r-a2i" id="rk8-94-haj"/>
+                        <outlet property="firstResponseButton" destination="hFa-b0-Uqe" id="TvM-Yl-Cdf"/>
+                        <outlet property="instructionLabel" destination="Ulh-08-mvM" id="eAf-TR-Jzk"/>
+                        <outlet property="noSoundResponseButton" destination="5SV-3M-pbc" id="bAG-Fg-aRd"/>
+                        <outlet property="pauseButton" destination="3JU-sZ-hLL" id="3xh-xZ-mn6"/>
+                        <outlet property="repeatButton" destination="b8i-ED-zDi" id="hUa-tG-64r"/>
+                        <outlet property="returnToTitleButton" destination="dBi-HB-tJb" id="zMS-ri-cvj"/>
+                        <outlet property="secondResponseButton" destination="x90-gC-any" id="hFL-wX-SJd"/>
+                        <outlet property="startTestButton" destination="lbz-0r-a2i" id="6Zd-G8-jzu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Wt-QW-mHL" userLabel="First Responder" sceneMemberID="firstResponder"/>

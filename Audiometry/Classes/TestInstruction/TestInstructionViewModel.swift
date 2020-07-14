@@ -11,8 +11,10 @@ import RxSwift
 import RxCocoa
 
 protocol TestInstructionViewPresentable {
-    // MARK: - Inp uts
+    // MARK: - Inputs
     typealias Input = (
+        onClickReturn: Signal<Void>,
+        ()
     )
     
     // MARK: - Outputs
@@ -26,26 +28,28 @@ protocol TestInstructionViewPresentable {
 }
 
 class TestInstructionViewModel: TestInstructionViewPresentable {
-    var input: TestInstructionViewModel.Input
-    var output: TestInstructionViewModel.Output
+    var input: TestInstructionViewPresentable.Input
+    var output: TestInstructionViewPresentable.Output
     
     private let _disposeBag = DisposeBag()
     
     typealias State = (
     )
-    
     private let _state: State = (
     )
          
     typealias Routing = (
+        showTitle: Signal<Void>,
+        ()
     )
     lazy var router: Routing = (
+        showTitle: input.onClickReturn,
+        ()
     )
     
     init(input: TestInstructionViewModel.Input) {
         self.input = input
-        self.output = TestInstructionViewModel.output(input: self.input,
-                                                  _state: self._state)
+        self.output = TestInstructionViewModel.output(input: self.input, state: self._state)
         
         self.process()
     }
@@ -54,7 +58,7 @@ class TestInstructionViewModel: TestInstructionViewPresentable {
 extension TestInstructionViewModel {
     // MARK: - Return output to view here, e.g. alert message
     static func output(input: TestInstructionViewPresentable.Input,
-                       _state: State) -> TestInstructionViewPresentable.Output {
+                       state: State) -> TestInstructionViewPresentable.Output {
         
         print("Set output...")
         

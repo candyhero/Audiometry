@@ -10,23 +10,8 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-enum TestEarOrder: Int {
-    case Finished = 0
-    case LeftOnly = 1
-    case RightOnly = 2
-    case LeftRight = 3
-    case RightLeft = 4
-    
-    func next() -> TestEarOrder{
-        switch self {
-            case .LeftRight: return .RightOnly
-            case .RightLeft: return .LeftOnly
-            default: return .Finished
-        }
-    }
-}
 protocol TestProtocolViewPresentable {
-    // MARK: - Inp uts
+    // MARK: - Inputs
     typealias Input = (
         onClickReturn: Signal<Void>,
         onClickLoadOther: Signal<Void>,
@@ -39,7 +24,9 @@ protocol TestProtocolViewPresentable {
         onSelectEarOrder: Signal<TestEarOrder>,
         
         onSaveNewProtocol: Signal<String>,
-        onLoadSelectedProtocol: Signal<String>
+        onLoadSelectedProtocol: Signal<String>,
+        
+        onStartTest: Signal<PatientType>
     )
     
     // MARK: - Outputs
@@ -65,29 +52,36 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
         currentFrequencySelection: BehaviorRelay<[Int]>,
         currentEarOrderSelection: BehaviorRelay<TestEarOrder>,
         currentTestProtocol: BehaviorRelay<TestProtocol?>,
-        allTestProtocols: BehaviorRelay<[TestProtocol]>
+        allTestProtocols: BehaviorRelay<[TestProtocol]>,
+        
+        testType: PublishRelay<TestType>,
+        patientType: PublishRelay<PatientType>
     )
-    
     private let _state: State = (
         currentFrequencySelection: BehaviorRelay<[Int]>(value: []),
         currentEarOrderSelection: BehaviorRelay<TestEarOrder>(value: .LeftRight),
         currentTestProtocol: BehaviorRelay<TestProtocol?>(value: nil),
-        allTestProtocols: BehaviorRelay<[TestProtocol]>(value: [])
+        allTestProtocols: BehaviorRelay<[TestProtocol]>(value: []),
+        
+        testType: PublishRelay<TestType>(),
+        patientType: PublishRelay<PatientType>()
     )
          
     typealias Routing = (
         showTitle: Signal<Void>,
-        ()
+        startTest: Signal<(TestType, PatientType)>
     )
     lazy var router: Routing = (
         showTitle: input.onClickReturn,
-        ()
+        startTest: Signal.combineLatest(
+            _state.testType.asSignal(),
+            _state.patientType.asSignal()
+        ) { ($0, $1) }
     )
     
     init(input: TestProtocolViewPresentable.Input) {
         self.input = input
-        self.output = TestProtocolViewModel.output(input: self.input,
-                                                  _state: self._state)
+        self.output = TestProtocolViewModel.output(input: self.input, state: self._state)
         
         self.process()
     }
@@ -96,14 +90,13 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
 private extension TestProtocolViewModel {
     // MARK: - Return output to view here, e.g. alert message
     static func output(input: TestProtocolViewPresentable.Input,
-                       _state: State) -> TestProtocolViewPresentable.Output {
-        
+                       state: State) -> TestProtocolViewPresentable.Output {
         print("Set output...")
         
         return (
-            currentFrequencySelection: _state.currentFrequencySelection.asDriver(),
-            currentEarOrderSelection: _state.currentEarOrderSelection.asDriver(),
-            allTestProtocolNames: _state.allTestProtocols
+            currentFrequencySelection: state.currentFrequencySelection.asDriver(),
+            currentEarOrderSelection: state.currentEarOrderSelection.asDriver(),
+            allTestProtocolNames: state.allTestProtocols
                 .map { $0.map { ($0.name ?? "Error") } }
                 .asDriver(onErrorJustReturn: [])
         )

@@ -49,7 +49,9 @@ class TestProtocolViewController: UIViewController, Storyboardable {
         onSelectEarOrder: PublishRelay<TestEarOrder>(),
         
         onSaveNewProtocol: PublishRelay<String>(),
-        onLoadSelectedProtocol: PublishRelay<String>()
+        onLoadSelectedProtocol: PublishRelay<String>(),
+        
+        onStartTest: PublishRelay<PatientType>()
     )
     
     private let _disposeBag = DisposeBag()
@@ -67,13 +69,17 @@ class TestProtocolViewController: UIViewController, Storyboardable {
             onSelectEarOrder: _relays.onSelectEarOrder.asSignal(),
             
             onSaveNewProtocol: _relays.onSaveNewProtocol.asSignal(),
-            onLoadSelectedProtocol: _relays.onLoadSelectedProtocol.asSignal()
+            onLoadSelectedProtocol: _relays.onLoadSelectedProtocol.asSignal(),
+
+            onStartTest: _relays.onStartTest.asSignal()
         ))
         
         setupView()
         setupBinding()
     }
+}
 
+extension TestProtocolViewController {
     private func setupView() {
         testFrequencyButtonStackView.axis = .horizontal
         testFrequencyButtonStackView.distribution = .fillEqually
@@ -104,9 +110,7 @@ class TestProtocolViewController: UIViewController, Storyboardable {
             .RightLeft: setRightLeft
         ]
     }
-}
-
-extension TestProtocolViewController {
+    
     private func setupBinding() {
         bindTestFrequencySelection()
         bindTestEarOrderSelection()
@@ -258,20 +262,19 @@ extension TestProtocolViewController {
     
     private func bindStartTest() {
         // TO-DO
-    }
-}
+        let testType = BehaviorRelay<PatientType>(value: .Invalid)
+        
+        adultTestButton.rx.tap
+            .map { PatientType.Adult }
+            .bind(to: testType)
+            .disposed(by: _disposeBag)
+        
+        childrenTestButton.rx.tap
+            .map { PatientType.Children }
+            .bind(to: testType)
+            .disposed(by: _disposeBag)
+        
 
-//    @IBAction func startAdultTest(_ sender: UIButton) {
-//        coordinator.setIsAdult(isAdult: true)
-//        promptToStartTest()
-//    }
-//
-//    @IBAction func startChildrenTest(_ sender: UIButton) {
-//        coordinator.setIsAdult(isAdult: false)
-//        promptToStartTest()
-//    }
-//
-//    func promptToStartTest() {
 //        // Error, no freq selected
 //        if(coordinator.getFrequencyBufferCount() == 0) {
 //            errorPrompt(errorMsg: "There is no frequency selected!")
@@ -298,7 +301,6 @@ extension TestProtocolViewController {
 //        alertCtrl.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 //
 //        self.present(alertCtrl, animated: true, completion: nil)
-//    }
 //
 //    func startTest(_ patientGroup: String, _ patientName: String) {
 //        let isAdult = coordinator.isAdult()
@@ -316,4 +318,6 @@ extension TestProtocolViewController {
 //            print("[Error] Unexpected error: \(error).")
 //        }
 //    }
-//}
+        
+    }
+}

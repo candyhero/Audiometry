@@ -17,6 +17,7 @@
 		673A899124BDE41700B2B56B /* ChildrenTestInstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673A899024BDE41700B2B56B /* ChildrenTestInstructionViewController.swift */; };
 		673A899524BDE5CE00B2B56B /* TestInstructionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673A899424BDE5CE00B2B56B /* TestInstructionCoordinator.swift */; };
 		673A899724BDE62F00B2B56B /* TestInstructionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673A899624BDE62F00B2B56B /* TestInstructionViewModel.swift */; };
+		673A899924BDFC8800B2B56B /* TestSettingEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673A899824BDFC8800B2B56B /* TestSettingEnums.swift */; };
 		6765D3E924561278004A1C46 /* ChildrenTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6765D3E124561278004A1C46 /* ChildrenTest.storyboard */; };
 		6765D3EA24561278004A1C46 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6765D3E324561278004A1C46 /* LaunchScreen.storyboard */; };
 		6765D3EB24561278004A1C46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6765D3E524561278004A1C46 /* Main.storyboard */; };
@@ -82,6 +83,7 @@
 		673A899024BDE41700B2B56B /* ChildrenTestInstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTestInstructionViewController.swift; sourceTree = "<group>"; };
 		673A899424BDE5CE00B2B56B /* TestInstructionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInstructionCoordinator.swift; sourceTree = "<group>"; };
 		673A899624BDE62F00B2B56B /* TestInstructionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInstructionViewModel.swift; sourceTree = "<group>"; };
+		673A899824BDFC8800B2B56B /* TestSettingEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSettingEnums.swift; sourceTree = "<group>"; };
 		6765D3E224561278004A1C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ChildrenTest.storyboard; sourceTree = "<group>"; };
 		6765D3E424561278004A1C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6765D3E624561278004A1C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 		6765D3EF24561321004A1C46 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				673A899824BDFC8800B2B56B /* TestSettingEnums.swift */,
 				6765D3F424561321004A1C46 /* AppConstants.swift */,
 				6765D3F324561321004A1C46 /* CaptionText.swift */,
 				6765D3F124561321004A1C46 /* Storyboardable.swift */,
@@ -522,6 +525,7 @@
 				67E6915824A8D8AB001A5946 /* TestProtocolViewModel.swift in Sources */,
 				673A898D24BB976B00B2B56B /* TestCoordinator.swift in Sources */,
 				67A3F9202455FD2400798427 /* SceneDelegate.swift in Sources */,
+				673A899924BDFC8800B2B56B /* TestSettingEnums.swift in Sources */,
 				6765D41124561321004A1C46 /* ResultCoordinator.swift in Sources */,
 				673A898B24BB975400B2B56B /* TestViewModel.swift in Sources */,
 				6765D40B24561321004A1C46 /* CaptionText.swift in Sources */,

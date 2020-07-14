@@ -44,21 +44,21 @@ class TitleCoordinator: BaseCoordinator<Void> {
         return Observable.never()
     }
     
-    func showCalibrationView(on rootViewController: UIViewController) -> Observable<Void> {
+    private func showCalibrationView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show calibration view")
         let calibrationCoordinator = CalibrationCoordinator(navController: _navigationController)
         return coordinate(to: calibrationCoordinator)
     }
     
-    func showResultView(on rootViewController: UIViewController) -> Observable<Void> {
-        print("Show result view")
-        let resultCoordinator = ResultCoordinator(navController: _navigationController)
-        return coordinate(to: resultCoordinator)
-    }
-    
-    func showTestProtocolView(on rootViewController: UIViewController) -> Observable<Void> {
+    private func showTestProtocolView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show test protocol view")
         let testProtocolCoordinator = TestProtocolCoordinator(navController: _navigationController)
         return coordinate(to: testProtocolCoordinator)
+    }
+    
+    private func showResultView(on rootViewController: UIViewController) -> Observable<Void> {
+        print("Show result view")
+        let resultCoordinator = ResultCoordinator(navController: _navigationController)
+        return coordinate(to: resultCoordinator)
     }
 }

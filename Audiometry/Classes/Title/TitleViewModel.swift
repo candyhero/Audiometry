@@ -41,7 +41,6 @@ class TitleViewModel: TitleViewPresentable {
         showCalibration: Signal<Void>,
         showResult: Signal<Void>
     )
-    
     lazy var router: Routing = (
         showTest: input.onClickTest,
         showPractice: input.onClickPractice,
