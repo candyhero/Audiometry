@@ -84,7 +84,7 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
         ()
     )
     
-    init(input: TestProtocolViewPresentable.Input){
+    init(input: TestProtocolViewPresentable.Input) {
         self.input = input
         self.output = TestProtocolViewModel.output(input: self.input,
                                                   _state: self._state)
@@ -104,7 +104,7 @@ private extension TestProtocolViewModel {
             currentFrequencySelection: _state.currentFrequencySelection.asDriver(),
             currentEarOrderSelection: _state.currentEarOrderSelection.asDriver(),
             allTestProtocolNames: _state.allTestProtocols
-                .map{ $0.map{($0.name ?? "Error")}}
+                .map { $0.map { ($0.name ?? "Error") } }
                 .asDriver(onErrorJustReturn: [])
         )
     }
@@ -118,36 +118,36 @@ private extension TestProtocolViewModel {
         bindDeleteCurrentProtocol()
     }
     
-    private func bindTestFrequencySelection(){
+    private func bindTestFrequencySelection() {
         _state.currentTestProtocol.asDriver().skip(1)
-            .map{ $0?.testFrequencyOrder ?? [] }
+            .map { $0?.testFrequencyOrder ?? [] }
             .drive(_state.currentFrequencySelection)
             .disposed(by: _disposeBag)
         
         input.onSelectFrequency
-            .filter{[_state] frequency in !_state.currentFrequencySelection.value.contains(frequency)
-            }.map{[_state] frequency -> [Int] in
+            .filter { [_state] frequency in !_state.currentFrequencySelection.value.contains(frequency)
+            }.map { [_state] frequency -> [Int] in
                 return _state.currentFrequencySelection.value + [frequency]
             }.emit(to: _state.currentFrequencySelection)
             .disposed(by: _disposeBag)
         
         input.onClearLastFrequency
-            .filter{[_state] _ in _state.currentFrequencySelection.value.isNotEmpty }
-            .map{[_state] frequency -> [Int] in
+            .filter { [_state] _ in _state.currentFrequencySelection.value.isNotEmpty }
+            .map { [_state] frequency -> [Int] in
                 let list = _state.currentFrequencySelection.value
                 return Array(list.prefix(list.count-1))
             }.emit(to: _state.currentFrequencySelection)
             .disposed(by: _disposeBag)
         
         input.onClearAllFrequency
-            .map{[]}
+            .map { [] }
             .emit(to: _state.currentFrequencySelection)
             .disposed(by: _disposeBag)
     }
     
-    private func bindTestEarOrderSelection(){
+    private func bindTestEarOrderSelection() {
         _state.currentTestProtocol.asDriver().skip(1)
-            .map{ TestEarOrder(rawValue: Int($0?.testEarOrder ?? -1)) ?? .LeftRight }
+            .map { TestEarOrder(rawValue: Int($0?.testEarOrder ?? -1)) ?? .LeftRight }
             .drive(_state.currentEarOrderSelection)
             .disposed(by: _disposeBag)
         
@@ -156,9 +156,9 @@ private extension TestProtocolViewModel {
             .disposed(by: _disposeBag)
     }
     
-    private func bindSaveNewProtocol(){
+    private func bindSaveNewProtocol() {
         input.onSaveNewProtocol
-            .map{[_state] name -> TestProtocol in
+            .map { [_state] name -> TestProtocol in
                 return TestProtocolService.shared.createNewTestProtocol(
                     name: name,
                     frequencyOrder: _state.currentFrequencySelection.value,
@@ -168,24 +168,24 @@ private extension TestProtocolViewModel {
             .disposed(by: _disposeBag)
     }
     
-    private func bindLoadOtherProtocol(){
+    private func bindLoadOtherProtocol() {
         input.onClickLoadOther
-            .map{ _ in (try? TestProtocolService.shared.fetchAllSortedByTime()) ?? []}
+            .map { _ in (try? TestProtocolService.shared.fetchAllSortedByTime()) ?? [] }
             .emit(to: _state.allTestProtocols)
             .disposed(by: _disposeBag)
         
         input.onLoadSelectedProtocol
-            .map{[_state] protocolName in
+            .map { [_state] protocolName in
                 _state.allTestProtocols.value
-                    .filter({ $0.name == protocolName})
+                    .filter({ $0.name == protocolName })
                     .first
             }.emit(to: _state.currentTestProtocol)
             .disposed(by: _disposeBag)
     }
     
-    private func bindDeleteCurrentProtocol(){
+    private func bindDeleteCurrentProtocol() {
         input.onClickDeleteCurrent
-            .map{[_state] _ -> TestProtocol? in
+            .map { [_state] _ -> TestProtocol? in
                 if let setting = _state.currentTestProtocol.value{
                     try! TestProtocolService.shared.delete(setting)
                 }

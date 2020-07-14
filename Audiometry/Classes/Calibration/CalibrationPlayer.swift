@@ -39,7 +39,7 @@ class CalibrationPlayer {
         _generator.stop()
     }
     
-    func play(ui: CalibrationSettingValueUi){
+    func play(ui: CalibrationSettingValueUi) {
         // Covert dB to amplitude in double (0.0 to 1.0 range)
         func dbToAmp (_ dB: Double!) -> Double{
             // volume in absolute dB to be converted to amplitude

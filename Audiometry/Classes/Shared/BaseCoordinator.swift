@@ -16,26 +16,26 @@ class BaseCoordinator<ResultType> {
     typealias CoordinationResult = ResultType
 
     /// Unique identifier.
-    private let identifier = UUID()
+    private let _identifier = UUID()
 
     /// Dictionary of the child coordinators. Every child coordinator should be added
     /// to that dictionary in order to keep it in memory.
     /// Key is an `identifier` of the child coordinator and value is the coordinator itself.
     /// Value type is `Any` because Swift doesn't allow to store generic types in the array.
-    private var childCoordinators = [UUID: Any]()
+    private var _childCoordinators = [UUID: Any]()
 
     /// Stores coordinator to the `childCoordinators` dictionary.
     ///
     /// - Parameter coordinator: Child coordinator to store.
     private func store<T>(coordinator: BaseCoordinator<T>) {
-        childCoordinators[coordinator.identifier] = coordinator
+        _childCoordinators[coordinator._identifier] = coordinator
     }
 
     /// Release coordinator from the `childCoordinators` dictionary.
     ///
     /// - Parameter coordinator: Coordinator to release.
     private func free<T>(coordinator: BaseCoordinator<T>) {
-        childCoordinators[coordinator.identifier] = nil
+        _childCoordinators[coordinator._identifier] = nil
     }
 
     /// 1. Stores coordinator in a dictionary of child coordinators.

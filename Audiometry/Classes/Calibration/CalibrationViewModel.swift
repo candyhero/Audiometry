@@ -64,7 +64,7 @@ class CalibrationViewModel: CalibrationViewPresentable {
         ()
     )
     
-    init(input: CalibrationViewPresentable.Input){
+    init(input: CalibrationViewPresentable.Input) {
         self.input = input
         self.output = CalibrationViewModel.output(input: self.input,
                                                   _state: self._state)
@@ -84,7 +84,7 @@ private extension CalibrationViewModel {
             currentPlayerFrequency: _state.currentPlayerFrequency.asDriver(),
             currentCalibrationSetting: _state.currentCalibrationSetting.asDriver(),
             allCalibrationSettingNames: _state.allCalibrationSettings
-                .map{ $0.map{($0.name ?? "Error")}}
+                .map { $0.map { ($0.name ?? "Error") } }
                 .asDriver(onErrorJustReturn: [])
         )
     }
@@ -100,43 +100,43 @@ private extension CalibrationViewModel {
         bindDeleteCurrentSetting()
     }
     
-    private func fetchCalibrationSettingFromGlobalSetting(){
-        if let globalSetting = try? GlobalSettingService.shared.fetch(){
+    private func fetchCalibrationSettingFromGlobalSetting() {
+        if let globalSetting = try? GlobalSettingService.shared.fetch() {
             _state.currentCalibrationSetting.accept(globalSetting.calibrationSetting)
             print("Loaded from global setting: \(globalSetting.calibrationSetting?.name ?? "")")
         }
     }
     
-    private func bindTogglePlayCalibration(){
+    private func bindTogglePlayCalibration() {
         input.onClickReturn
-            .emit(onNext: {[_calibrationPlayer] in
+            .emit(onNext: { [_calibrationPlayer] in
                 _calibrationPlayer.stop()
             })
             .disposed(by: _disposeBag)
         
         input.onTogglePlayCalibration
-            .map{[_state, _calibrationPlayer] (isToggle, ui) in
+            .map { [_state, _calibrationPlayer] (isToggle, ui) in
                 if isToggle && ui.frequency == _state.currentPlayerFrequency.value{
                     _calibrationPlayer.stop()
                     return (isToggle, -1)
                 }
                 _calibrationPlayer.play(ui: ui)
                 return (isToggle, ui.frequency)
-            }.filter{(isToggle, frequency) in return isToggle }
-            .map{(isToggle, frequency) in return frequency }
+            }.filter { (isToggle, frequency) in return isToggle }
+            .map { (isToggle, frequency) in return frequency }
             .emit(to: _state.currentPlayerFrequency)
             .disposed(by: _disposeBag)
     }
     
-    private func bindSaveGlobalSetting(){
+    private func bindSaveGlobalSetting() {
         _state.currentCalibrationSetting.asDriver()
             .drive(onNext: GlobalSettingService.shared.updateCalibrationSetting)
             .disposed(by: _disposeBag)
     }
     
-    private func bindSaveNewSetting(){
+    private func bindSaveNewSetting() {
         input.onSaveNewSetting
-            .map{ (settingName, settingUiList) in
+            .map { (settingName, settingUiList) in
                 let service = CalibrationSettingService.shared
                 let settingValuesList = settingUiList.map {
                     $0.extractValuesInto(
@@ -152,13 +152,13 @@ private extension CalibrationViewModel {
             .disposed(by: _disposeBag)
     }
     
-    private func bindSaveCurrentSetting(){
+    private func bindSaveCurrentSetting() {
         input.onSaveCurrentSetting
-            .map{[_state] settingUis -> CalibrationSetting? in
+            .map { [_state] settingUis -> CalibrationSetting? in
                 if let setting = _state.currentCalibrationSetting.value{
                     let lookup = setting.values?.reduce(
                         into: [Int: CalibrationSettingValues]()
-                    ){ (dict, v) in
+                    ) { (dict, v) in
                         if let values = v as? CalibrationSettingValues{
                             dict[Int(values.frequency)] = values
                         }
@@ -172,14 +172,14 @@ private extension CalibrationViewModel {
             .disposed(by: _disposeBag)
     }
     
-    private func bindLoadOtherSetting(){
+    private func bindLoadOtherSetting() {
         input.onClickLoadOther
-            .map{ _ in (try? CalibrationSettingService.shared.fetchAllSortedByTime()) ?? []}
+            .map { _ in (try? CalibrationSettingService.shared.fetchAllSortedByTime()) ?? [] }
             .emit(to: _state.allCalibrationSettings)
             .disposed(by: _disposeBag)
         
         input.onLoadSelectedSetting
-            .map{[_state] settingName in
+            .map { [_state] settingName in
                 _state.allCalibrationSettings.value
                     .filter({ $0.name == settingName})
                     .first
@@ -187,9 +187,9 @@ private extension CalibrationViewModel {
             .disposed(by: _disposeBag)
     }
     
-    private func bindDeleteCurrentSetting(){
+    private func bindDeleteCurrentSetting() {
         input.onClickDeleteCurrent
-            .map{[_state] _ -> CalibrationSetting? in
+            .map { [_state] _ -> CalibrationSetting? in
                 if let setting = _state.currentCalibrationSetting.value{
                     try! CalibrationSettingService.shared.delete(setting)
                 }

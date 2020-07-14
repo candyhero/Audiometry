@@ -11,17 +11,17 @@ import RxSwift
 
 class AppCoordinator: BaseCoordinator<Void> {
 
-    private let window: UIWindow
+    private let _window: UIWindow
     
     /// Utility `DisposeBag` used by the subclasses.
     let disposeBag = DisposeBag()
     var navigationController = UINavigationController()
     
     init(window: UIWindow) {
-        self.window = window
+        _window = window
         
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
+        _window.rootViewController = navigationController
+        _window.makeKeyAndVisible()
         
         navigationController.setNavigationBarHidden(true, animated: false)
     }

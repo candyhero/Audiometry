@@ -25,11 +25,11 @@ class GlobalSettingService: Repository<GlobalSetting> {
         }
     }
     
-    func fetch() throws -> GlobalSetting{
+    func fetch() throws -> GlobalSetting {
         return try fetchAll().first!
     }
     
-    func updateCalibrationSetting(calibrationSetting: CalibrationSetting?){
+    func updateCalibrationSetting(calibrationSetting: CalibrationSetting?) {
         do {
             let globalSetting = try fetch()
             globalSetting.calibrationSetting = calibrationSetting
@@ -39,7 +39,7 @@ class GlobalSettingService: Repository<GlobalSetting> {
         }
     }
     
-    func updateTestLanguage(testLanguage: TestLanguage){
+    func updateTestLanguage(testLanguage: TestLanguage) {
         do {
             let globalSetting = try fetch()
             globalSetting.testLanguage = Int16(testLanguage.rawValue)

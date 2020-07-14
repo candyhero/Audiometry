@@ -47,7 +47,7 @@ class CalibrationSettingValueUi {
         }
     }
         
-    func extractValuesInto(values: CalibrationSettingValues) -> CalibrationSettingValues{
+    func extractValuesInto(values: CalibrationSettingValues) -> CalibrationSettingValues {
         values.expectedLevel = Double(self.expectedLevelTextField.text!) ?? 0.0
         values.presentationLevel = Double(self.presentationLevelTextField.text!) ?? 0.0
         values.leftMeasuredLevel = Double(self.leftMeasuredLevelTextField.text!) ?? 0.0
@@ -62,14 +62,14 @@ class CalibrationSettingValueUi {
         self.rightMeasuredLevelTextField.text = String(values.rightMeasuredLevel)
     }
     
-    func clearAllValues(){
+    func clearAllValues() {
         self.expectedLevelTextField.text = ""
         self.presentationLevelTextField.text = ""
         self.leftMeasuredLevelTextField.text = ""
         self.rightMeasuredLevelTextField.text = ""
     }
     
-    func clearMeasuredLevelValues(){
+    func clearMeasuredLevelValues() {
         self.leftMeasuredLevelTextField.text = ""
         self.rightMeasuredLevelTextField.text = ""
     }

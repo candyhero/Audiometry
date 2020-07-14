@@ -12,32 +12,50 @@ import RxSwift
 class TestProtocolCoordinator: BaseCoordinator<Void> {
     
     /// Utility `DisposeBag` used by the subclasses.
-    let disposeBag = DisposeBag()
-    var navigationController: UINavigationController!
+    private let _disposeBag = DisposeBag()
+    private var _navigationController: UINavigationController!
     
     init(navController: UINavigationController) {
-        navigationController = navController
+        _navigationController = navController
     }
     
     override func start() -> Observable<Void> {
         let viewController = TestProtocolViewController.instantiate(AppStoryboards.Main)
         
-        viewController.viewModelBuilder = { [weak self, disposeBag] in
+        viewController.viewModelBuilder = { [weak self, _disposeBag] in
             let viewModel = TestProtocolViewModel(input: $0)
             viewModel.router.showTitle
                 .emit(onNext: { _ = self?.showTitleView(on: viewController) })
-                .disposed(by: disposeBag)
+                .disposed(by: _disposeBag)
             
             return viewModel
         }
         
-        navigationController.pushViewController(viewController, animated: true)
+        _navigationController.pushViewController(viewController, animated: true)
         return Observable.never()
+    }
+    
+    private func showAdultTestInstructionView(on rootViewController: UIViewController) -> Observable<Void> {
+        print("Show adult test instruction view")
+        let testInstructionCoordinator = TestInstructionCoordinator(
+            navController: _navigationController,
+            isAdult: true
+        )
+        return coordinate(to: testInstructionCoordinator)
+    }
+    
+    private func showChildrenTestInstructionView(on rootViewController: UIViewController) -> Observable<Void> {
+        print("Show children test instruction view")
+        let testInstructionCoordinator = TestInstructionCoordinator(
+            navController: _navigationController,
+            isAdult: false
+        )
+        return coordinate(to: testInstructionCoordinator)
     }
     
     private func showTitleView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show title view")
-        navigationController.popToRootViewController(animated: true)
+        _navigationController.popToRootViewController(animated: true)
         return Observable.never()
     }
 }

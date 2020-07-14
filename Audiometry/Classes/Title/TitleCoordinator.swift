@@ -12,22 +12,22 @@ import RxSwift
 class TitleCoordinator: BaseCoordinator<Void> {
 
     /// Utility `DisposeBag` used by the subclasses.
-    private let disposeBag = DisposeBag()
-    private var navigationController: UINavigationController!
+    private let _disposeBag = DisposeBag()
+    private var _navigationController: UINavigationController!
     
     init(navController: UINavigationController) {
-        navigationController = navController
+        _navigationController = navController
     }
     
     override func start() -> Observable<Void> {
         let viewController = TitleViewController.instantiate(AppStoryboards.Main)
         
-        viewController.viewModelBuilder = {[weak self, disposeBag] in
+        viewController.viewModelBuilder = { [weak self, _disposeBag] in
             let viewModel = TitleViewModel(input: $0)
             
             viewModel.router.showCalibration
                 .emit(onNext: { _ = self?.showCalibrationView(on: viewController) })
-                .disposed(by: disposeBag)
+                .disposed(by: _disposeBag)
             
 //            viewModel.router.showResult
 //                .emit(onNext: { _ = self?.showResultView(on: viewController) })
@@ -35,30 +35,30 @@ class TitleCoordinator: BaseCoordinator<Void> {
             
             viewModel.router.showTest
                 .emit(onNext: { _ = self?.showTestProtocolView(on: viewController) })
-                .disposed(by: disposeBag)
+                .disposed(by: _disposeBag)
             
             return viewModel
         }
         
-        navigationController.pushViewController(viewController, animated: true)
+        _navigationController.pushViewController(viewController, animated: true)
         return Observable.never()
     }
     
     func showCalibrationView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show calibration view")
-        let calibrationCoordinator = CalibrationCoordinator(navController: navigationController)
+        let calibrationCoordinator = CalibrationCoordinator(navController: _navigationController)
         return coordinate(to: calibrationCoordinator)
     }
     
     func showResultView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show result view")
-        let resultCoordinator = ResultCoordinator(navController: navigationController)
+        let resultCoordinator = ResultCoordinator(navController: _navigationController)
         return coordinate(to: resultCoordinator)
     }
     
     func showTestProtocolView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show test protocol view")
-        let testProtocolCoordinator = TestProtocolCoordinator(navController: navigationController)
+        let testProtocolCoordinator = TestProtocolCoordinator(navController: _navigationController)
         return coordinate(to: testProtocolCoordinator)
     }
 }

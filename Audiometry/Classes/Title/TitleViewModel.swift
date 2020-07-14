@@ -49,7 +49,7 @@ class TitleViewModel: TitleViewPresentable {
         showResult: input.onClickResult
     )
     
-    init(input: TitleViewPresentable.Input){
+    init(input: TitleViewPresentable.Input) {
         self.input = input
         self.output = TitleViewModel.output(input: input)
     }

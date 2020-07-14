@@ -11,14 +11,14 @@ class TitleViewController: UIViewController, Storyboardable {
     @IBOutlet private weak var resultButton: UIButton!
     
     // MARK: Properties
-    private var viewModel: TitleViewPresentable!
+    private var _viewModel: TitleViewPresentable!
     var viewModelBuilder: TitleViewPresentable.ViewModelBuilder!
     
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = viewModelBuilder((
+        _viewModel = viewModelBuilder((
             onClickTest: testButton.rx.tap.asSignal(),
             onClickPractice: practiceButton.rx.tap.asSignal(),
             onClickCalibration: calibrationButton.rx.tap.asSignal(),

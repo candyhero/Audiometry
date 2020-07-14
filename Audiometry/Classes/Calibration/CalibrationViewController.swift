@@ -26,9 +26,9 @@ class CalibrationViewController: UIViewController, Storyboardable {
     @IBOutlet weak var frequencyStackView: UIStackView!
     @IBOutlet weak var playButtonStackView: UIStackView!
     
-    var _calibrationSettingUiLookup: [Int: CalibrationSettingValueUi] = [:]
+    private var _calibrationSettingUiLookup: [Int: CalibrationSettingValueUi] = [:]
     
-    let loadSettingPickerView = UIPickerView(
+    private let loadSettingPickerView = UIPickerView(
         frame: CGRect(x: 0, y: 50, width: 260, height: 160)
     )
     
@@ -111,13 +111,13 @@ extension CalibrationViewController {
         bindLoadOther()
     }
     
-    private func bindLoadAllUiValues(){
-        func loadCurrentValues(calibrationSetting: CalibrationSetting?){
+    private func bindLoadAllUiValues() {
+        func loadCurrentValues(calibrationSetting: CalibrationSetting?) {
             if let setting = calibrationSetting {
                 currentSettingLabel.text = setting.name
                 saveToCurrentButton.isEnabled = true
                 
-                _ = setting.values?.array.map{ v in
+                _ = setting.values?.array.map { v in
                     if let values = v as? CalibrationSettingValues,
                         let ui = _calibrationSettingUiLookup[Int(values.frequency)] {
                         ui.loadValuesFrom(values: values)
@@ -134,11 +134,11 @@ extension CalibrationViewController {
             .disposed(by: _disposeBag)
     }
     
-    private func bindTogglePlayCalibration(){
-        _ = self._calibrationSettingUiLookup.map{[_calibrationSettingUiLookup] (_, settingUi) in
+    private func bindTogglePlayCalibration() {
+        _ = self._calibrationSettingUiLookup.map { [_calibrationSettingUiLookup] (_, settingUi) in
             settingUi.playButton.rx.tap
-                .withLatestFrom(_viewModel.output.currentPlayerFrequency){ $1 }
-                .map{  currentFrequency in
+                .withLatestFrom(_viewModel.output.currentPlayerFrequency) { $1 }
+                .map {  currentFrequency in
                     if let ui = _calibrationSettingUiLookup[currentFrequency]{
                         ui.playButton.setTitle("Off", for: .normal)
                     }
@@ -151,28 +151,28 @@ extension CalibrationViewController {
         }
     }
     
-    private func bindUpdateVolume(){
+    private func bindUpdateVolume() {
         updateVolumeButton.rx.tap
-            .withLatestFrom(_viewModel.output.currentPlayerFrequency){ $1 }
-            .filter{ $0 > 0 }
-            .map{[_calibrationSettingUiLookup] currentFrequency in
+            .withLatestFrom(_viewModel.output.currentPlayerFrequency) { $1 }
+            .filter { $0 > 0 }
+            .map { [_calibrationSettingUiLookup] currentFrequency in
                 return (false, _calibrationSettingUiLookup[currentFrequency]!)
             }.bind(to: _relays.onTogglePlayCalibration)
             .disposed(by: _disposeBag)
     }
     
-    private func bindClearAllValues(){
+    private func bindClearAllValues() {
         clearAllValuesButton.rx.tap
-            .bind{[_calibrationSettingUiLookup] in
-                _ = _calibrationSettingUiLookup.map{
+            .bind { [_calibrationSettingUiLookup] in
+                _ = _calibrationSettingUiLookup.map {
                     $0.value.clearAllValues()
                 }
             }.disposed(by: _disposeBag)
     }
-    private func bindClearAllMeasuredLevelValues(){
+    private func bindClearAllMeasuredLevelValues() {
         clearMeasuredLevelButton.rx.tap
-            .bind{[_calibrationSettingUiLookup] in
-                _ = _calibrationSettingUiLookup.map{
+            .bind { [_calibrationSettingUiLookup] in
+                _ = _calibrationSettingUiLookup.map {
                     $0.value.clearMeasuredLevelValues()
                 }
             }
@@ -181,17 +181,17 @@ extension CalibrationViewController {
     
     private func bindSaveAsNew() {
         saveAsNewButton.rx.tap
-            .bind{ promptSettingNameInputPrompt() }
+            .bind { promptSettingNameInputPrompt() }
             .disposed(by: _disposeBag)
         
-        func promptSettingNameInputPrompt(){
+        func promptSettingNameInputPrompt() {
             let alertController = UIAlertController(
                 title: "Save",
                 message: "Please enter setting name:",
                 preferredStyle: .alert
             )
             let actions = [
-                UIAlertAction(title: "Confirm", style: .default){ _ in
+                UIAlertAction(title: "Confirm", style: .default) { _ in
                     if let settingName = alertController.textFields?[0].text {
                         confirmAction(settingName: settingName)
                     }
@@ -203,7 +203,7 @@ extension CalibrationViewController {
             self.present(alertController, animated: true, completion: nil)
         }
         
-        func confirmAction(settingName: String){
+        func confirmAction(settingName: String) {
             if(settingName.isNotEmpty) {
                 let params = (settingName, Array(_calibrationSettingUiLookup.values))
                 _relays.onSaveNewSetting.accept(params)
@@ -223,9 +223,9 @@ extension CalibrationViewController {
         }
     }
     
-    private func bindSaveToCurrent(){
+    private func bindSaveToCurrent() {
         saveToCurrentButton.rx.tap
-            .map{ getSettingUiList() }
+            .map { getSettingUiList() }
             .bind(to: _relays.onSaveCurrentSetting)
             .disposed(by: _disposeBag)
         
@@ -234,17 +234,17 @@ extension CalibrationViewController {
         }
     }
     
-    private func bindLoadOther(){
+    private func bindLoadOther() {
         let onSelectedSetting = BehaviorRelay<String>(value: "")
         let allCalibrationSettingNames = _viewModel.output.allCalibrationSettingNames.skip(1)
         
         loadSettingPickerView.rx.itemSelected.asDriver()
-            .withLatestFrom(allCalibrationSettingNames){ $1[$0.row] }
+            .withLatestFrom(allCalibrationSettingNames) { $1[$0.row] }
             .drive(onSelectedSetting)
             .disposed(by: _disposeBag)
             
         allCalibrationSettingNames
-            .drive(loadSettingPickerView.rx.itemTitles){ (row, element) in
+            .drive(loadSettingPickerView.rx.itemTitles) { (row, element) in
                 return element
             }.disposed(by: _disposeBag)
         
@@ -258,14 +258,14 @@ extension CalibrationViewController {
                 }
             }).disposed(by: _disposeBag)
 
-        func promptPickerView(){
+        func promptPickerView() {
             let alertController: UIAlertController! = UIAlertController(
                 title: "Select a different setting",
                 message: "\n\n\n\n\n\n\n\n\n",
                 preferredStyle: .alert
             )
             let actions = [
-                UIAlertAction(title: "Confirm", style: .default){[_relays] _ in
+                UIAlertAction(title: "Confirm", style: .default) { [_relays] _ in
                     _relays.onLoadSelectedSetting.accept(onSelectedSetting.value)
                 },
                 UIAlertAction(title: "Cancel", style: .cancel)
@@ -275,7 +275,7 @@ extension CalibrationViewController {
             present(alertController, animated: true, completion: nil)
         }
         
-        func promptPickerViewError(){
+        func promptPickerViewError() {
             let alertController = UIAlertController(
                 title: "Error",
                 message: "There is no other calibration settings!",
