@@ -38,13 +38,13 @@ enum TestEarOrder: Int {
     }
 }
 
-enum TestType: Int {
+enum TestMode: Int {
     case Invalid = 0
-    case TestMode = 1
-    case PracticeMode = 2
+    case Test = 1
+    case Practice = 2
 }
 
-enum PatientType: Int {
+enum PatientRole: Int {
     case Invalid = 0
     case Adult = 1
     case Children = 2

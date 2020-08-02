@@ -52,7 +52,8 @@ class TitleCoordinator: BaseCoordinator<Void> {
     
     private func showTestProtocolView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show test protocol view")
-        let testProtocolCoordinator = TestProtocolCoordinator(navController: _navigationController)
+        let testProtocolCoordinator = TestProtocolCoordinator(navController: _navigationController,
+                                                              testMode: TestMode.Test)
         return coordinate(to: testProtocolCoordinator)
     }
     

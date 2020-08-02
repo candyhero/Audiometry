@@ -14,9 +14,11 @@ class TestProtocolCoordinator: BaseCoordinator<Void> {
     /// Utility `DisposeBag` used by the subclasses.
     private let _disposeBag = DisposeBag()
     private var _navigationController: UINavigationController!
+    private var _testMode: TestMode!
     
-    init(navController: UINavigationController) {
+    init(navController: UINavigationController, testMode: TestMode) {
         _navigationController = navController
+        _testMode = testMode
     }
     
     override func start() -> Observable<Void> {
@@ -24,9 +26,12 @@ class TestProtocolCoordinator: BaseCoordinator<Void> {
         
         viewController.viewModelBuilder = { [weak self, _disposeBag] in
             let viewModel = TestProtocolViewModel(input: $0)
+            viewModel.setTestMode(testMode: self?._testMode ?? TestMode.Invalid)
+            
             viewModel.router.showTitle
                 .emit(onNext: { _ = self?.showTitleView(on: viewController) })
                 .disposed(by: _disposeBag)
+            
             
             return viewModel
         }

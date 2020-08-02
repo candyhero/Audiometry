@@ -49,4 +49,13 @@ class GlobalSettingService: Repository<GlobalSetting> {
         }
     }
     
+    func updatePatientProfile(patientProfile: PatientProfile) {
+        do {
+            let globalSetting = try fetch()
+            globalSetting.patientProfile = patientProfile
+            try _managedContext.save()
+        } catch {
+            print("Failed to update patient profile")
+        }
+    }
 }

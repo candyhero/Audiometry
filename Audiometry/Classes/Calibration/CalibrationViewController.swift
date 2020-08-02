@@ -181,15 +181,17 @@ extension CalibrationViewController {
     
     private func bindSaveAsNew() {
         saveAsNewButton.rx.tap
-            .bind { promptSettingNameInputPrompt() }
+            .bind { promptSettingNameInput() }
             .disposed(by: _disposeBag)
         
-        func promptSettingNameInputPrompt() {
+        func promptSettingNameInput() {
             let alertController = UIAlertController(
                 title: "Save",
                 message: "Please enter setting name:",
                 preferredStyle: .alert
             )
+            alertController.addTextField { $0.placeholder = "i.e. iPad1-EP1" }
+            
             let actions = [
                 UIAlertAction(title: "Confirm", style: .default) { _ in
                     if let settingName = alertController.textFields?[0].text {
@@ -199,7 +201,7 @@ extension CalibrationViewController {
                 UIAlertAction(title: "Cancel", style: .cancel)
             ]
             actions.forEach(alertController.addAction)
-            alertController.addTextField { $0.placeholder = "i.e. iPad1-EP1" }
+            
             self.present(alertController, animated: true, completion: nil)
         }
         

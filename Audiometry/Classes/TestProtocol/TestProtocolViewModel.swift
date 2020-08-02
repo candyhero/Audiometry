@@ -10,6 +10,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+struct PatientProfileModel {
+    var patientName: String
+    var patientGroup: String
+    var patientRole: PatientRole
+    var testMode: TestMode
+}
+
 protocol TestProtocolViewPresentable {
     // MARK: - Inputs
     typealias Input = (
@@ -26,11 +33,13 @@ protocol TestProtocolViewPresentable {
         onSaveNewProtocol: Signal<String>,
         onLoadSelectedProtocol: Signal<String>,
         
-        onStartTest: Signal<PatientType>
+        onStartTest: Signal<PatientProfileModel>
     )
     
     // MARK: - Outputs
     typealias Output = (
+        testMode: Driver<TestMode>,
+        
         currentFrequencySelection: Driver<[Int]>,
         currentEarOrderSelection: Driver<TestEarOrder>,
         allTestProtocolNames: Driver<[String]>
@@ -54,8 +63,7 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
         currentTestProtocol: BehaviorRelay<TestProtocol?>,
         allTestProtocols: BehaviorRelay<[TestProtocol]>,
         
-        testType: PublishRelay<TestType>,
-        patientType: PublishRelay<PatientType>
+        testMode: BehaviorRelay<TestMode>
     )
     private let _state: State = (
         currentFrequencySelection: BehaviorRelay<[Int]>(value: []),
@@ -63,20 +71,16 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
         currentTestProtocol: BehaviorRelay<TestProtocol?>(value: nil),
         allTestProtocols: BehaviorRelay<[TestProtocol]>(value: []),
         
-        testType: PublishRelay<TestType>(),
-        patientType: PublishRelay<PatientType>()
+        testMode: BehaviorRelay<TestMode>(value: .Invalid)
     )
          
     typealias Routing = (
         showTitle: Signal<Void>,
-        startTest: Signal<(TestType, PatientType)>
+        startTest: Signal<PatientProfileModel>
     )
     lazy var router: Routing = (
         showTitle: input.onClickReturn,
-        startTest: Signal.combineLatest(
-            _state.testType.asSignal(),
-            _state.patientType.asSignal()
-        ) { ($0, $1) }
+        startTest: input.onStartTest
     )
     
     init(input: TestProtocolViewPresentable.Input) {
@@ -84,6 +88,10 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
         self.output = TestProtocolViewModel.output(input: self.input, state: self._state)
         
         self.process()
+    }
+    
+    func setTestMode(testMode: TestMode){
+        _state.testMode.accept(testMode)
     }
 }
 
@@ -94,6 +102,7 @@ private extension TestProtocolViewModel {
         print("Set output...")
         
         return (
+            testMode: state.testMode.asDriver(),
             currentFrequencySelection: state.currentFrequencySelection.asDriver(),
             currentEarOrderSelection: state.currentEarOrderSelection.asDriver(),
             allTestProtocolNames: state.allTestProtocols
@@ -109,6 +118,7 @@ private extension TestProtocolViewModel {
         bindSaveNewProtocol()
         bindLoadOtherProtocol()
         bindDeleteCurrentProtocol()
+        bindStartTest()
     }
     
     private func bindTestFrequencySelection() {
@@ -184,6 +194,21 @@ private extension TestProtocolViewModel {
                 }
                 return nil
             }.emit(to: _state.currentTestProtocol)
+            .disposed(by: _disposeBag)
+    }
+    
+    private func bindStartTest() {
+        input.onStartTest
+            .emit(onNext: {[_state] (model) in
+                print(model)
+//                let profile = PatientProfileService.shared.createNewPatientProfile(
+//                    model: model,
+//                    testEarOrder: _state.currentEarOrderSelection.value,
+//                    testFrequencyOrder: _state.currentFrequencySelection.value
+//                )
+//
+//                GlobalSettingService.shared.updatePatientProfile(patientProfile: profile)
+            })
             .disposed(by: _disposeBag)
     }
 }

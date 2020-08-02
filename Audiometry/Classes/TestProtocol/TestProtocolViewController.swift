@@ -51,7 +51,7 @@ class TestProtocolViewController: UIViewController, Storyboardable {
         onSaveNewProtocol: PublishRelay<String>(),
         onLoadSelectedProtocol: PublishRelay<String>(),
         
-        onStartTest: PublishRelay<PatientType>()
+        onStartTest: PublishRelay<PatientProfileModel>()
     )
     
     private let _disposeBag = DisposeBag()
@@ -117,6 +117,8 @@ extension TestProtocolViewController {
         
         bindSaveAsNew()
         bindLoadOther()
+        
+        bindStartTest()
     }
         
     private func bindTestFrequencySelection() {
@@ -262,62 +264,86 @@ extension TestProtocolViewController {
     
     private func bindStartTest() {
         // TO-DO
-        let testType = BehaviorRelay<PatientType>(value: .Invalid)
+        let patientRole = BehaviorRelay<PatientRole>(value: .Invalid)
         
         adultTestButton.rx.tap
-            .map { PatientType.Adult }
-            .bind(to: testType)
+            .map { PatientRole.Adult }
+            .bind(to: patientRole)
             .disposed(by: _disposeBag)
         
         childrenTestButton.rx.tap
-            .map { PatientType.Children }
-            .bind(to: testType)
+            .map { PatientRole.Children }
+            .bind(to: patientRole)
+            .disposed(by: _disposeBag)
+
+        patientRole.asDriver()
+            .skip(1)
+            .withLatestFrom(_viewModel.output.currentFrequencySelection) { ($0, $1) }
+            .filter{ validateFrequencySelection($0.1) }
+            .withLatestFrom(_viewModel.output.testMode) { ($0.0, $1) }
+            .drive(onNext: { (role, testMode) in
+                promptPatientNameGroupInput(patientRole: role, testMode: testMode)
+            })
             .disposed(by: _disposeBag)
         
-
-//        // Error, no freq selected
-//        if(coordinator.getFrequencyBufferCount() == 0) {
-//            errorPrompt(errorMsg: "There is no frequency selected!")
-//            return
-//        }
-//
-//        // Double Textfield Prompt
-//        let alertCtrl = UIAlertController(
-//            title: "Save",
-//            message: "Please Enter Patient's Group & Name:",
-//            preferredStyle: .alert)
-//
-//        alertCtrl.addTextField { (textField) in textField.placeholder = "Patient's Group" }
-//        alertCtrl.addTextField { (textField) in textField.placeholder = "Patient's Name, i.e. John Smith 1" }
-//
-//        let confirmActionHandler = { (action: UIAlertAction) in
-//            if let patientGroup = alertCtrl.textFields?[0].text,
-//                let patientName = alertCtrl.textFields?[1].text{
-//                self.startTest(patientGroup, patientName)
-//            }
-//        }
-//
-//        alertCtrl.addAction(UIAlertAction(title: "Confirm", style: .default, handler: confirmActionHandler))
-//        alertCtrl.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-//
-//        self.present(alertCtrl, animated: true, completion: nil)
-//
-//    func startTest(_ patientGroup: String, _ patientName: String) {
-//        let isAdult = coordinator.isAdult()
-//        do{
-//            guard patientGroup.count > 0 else { throw PreTestError.invalidPaientGroup }
-//            guard patientName.count > 0 else { throw PreTestError.invalidPatentName }
-//
-//            coordinator.saveNewPatientProfile(patientGroup, patientName, lbEarOrder.text!)
-//            coordinator.showInstructionView(sender: nil, isAdult: isAdult)
-//        } catch PreTestError.invalidPaientGroup {
-//            errorPrompt(errorMsg: "Patient group cannot be empty!")
-//        } catch PreTestError.invalidPatentName {
-//            errorPrompt(errorMsg: "Patient name cannot be empty!")
-//        } catch {
-//            print("[Error] Unexpected error: \(error).")
-//        }
-//    }
+        func validateFrequencySelection(_ frequencySelection: [Int]) -> Bool {
+            if(frequencySelection.isEmpty) {
+                promptError(errorMessage: "There is no test frequency selected!")
+                return false
+            }
+            return true
+        }
         
+        func promptPatientNameGroupInput(patientRole: PatientRole, testMode: TestMode) {
+            let alertController = UIAlertController(
+                title: "Save",
+                message: "Please Enter Patient's Group & Name:",
+                preferredStyle: .alert
+            )
+            alertController.addTextField { $0.placeholder = "Patient's Group, i.e. ABC" }
+            alertController.addTextField { $0.placeholder = "Patient's Name, i.e. John Smith 1" }
+            
+            let actions = [
+                UIAlertAction(title: "Confirm", style: .default) { _ in
+                    if let patientGroup = alertController.textFields?[0].text,
+                        let patientName = alertController.textFields?[1].text{
+                        
+                        let model = PatientProfileModel(
+                            patientName: patientGroup,
+                            patientGroup: patientName,
+                            patientRole: patientRole,
+                            testMode: testMode
+                        )
+                        confirmAction(model: model)
+                    }
+                },
+                UIAlertAction(title: "Cancel", style: .cancel)
+            ]
+            actions.forEach(alertController.addAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+
+        func confirmAction(model: PatientProfileModel) {
+            if(model.patientGroup.isEmpty) {
+                promptError(errorMessage: "Patient group cannot be empty!")
+            }
+            else if(model.patientName.isEmpty) {
+                promptError(errorMessage: "Patient Name cannot be empty!")
+            }
+            else {
+                _relays.onStartTest.accept(model)
+            }
+        }
+        
+        func promptError(errorMessage: String) {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: errorMessage,
+                preferredStyle: .alert
+            )
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alertController, animated: true, completion: nil)
+        }
     }
 }
+
