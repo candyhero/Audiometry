@@ -41,6 +41,29 @@ class ChildrenTestInstructionViewController: UIViewController, Storyboardable {
 
 extension ChildrenTestInstructionViewController {
     private func setupView() {
+        let imagePath = "\(ANIMAL_ICON_PATH)/500Hz"
+        let image = UIImage(named: imagePath)?.withRenderingMode(.alwaysOriginal)
         
+        self.firstResponseButton.imageView?.contentMode = .scaleAspectFit
+        self.secondResponseButton.imageView?.contentMode = .scaleAspectFit
+        
+        self.firstResponseButton.setImage(image, for: .normal)
+        self.secondResponseButton.setImage(image, for: .normal)
+        
+        self.firstResponseButton.adjustsImageWhenHighlighted = false
+        self.secondResponseButton.adjustsImageWhenHighlighted = false
+        self.noSoundResponseButton.adjustsImageWhenHighlighted = false
     }
+    
+//    private func loadPortuguese() {
+//        let attachment:NSTextAttachment = NSTextAttachment()
+//        attachment.image = UIImage(named: "\(ANIMAL_ICON_PATH)/emoji")
+//
+//        let caption:NSMutableAttributedString = NSMutableAttributedString(string: PORT_CHILDREN_CAPTION_TEXT)
+//        caption.append(NSAttributedString(attachment: attachment))
+//        lbCaption.attributedText = caption
+//
+//        pbStart.setTitle(PORT_START_TEXT, for: .normal)
+//        pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
+//    }
 }

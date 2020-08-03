@@ -42,6 +42,26 @@ class AdultTestInstructionViewController: UIViewController, Storyboardable {
 
 extension AdultTestInstructionViewController {
     private func setupView() {
-        
+        let imagePath = "\(SHAPE_ICON_PATH)/500Hz"
+        let image = UIImage(named: imagePath)?.withRenderingMode(.alwaysOriginal)
+
+        self.firstResponseButton.imageView?.contentMode = .scaleAspectFit
+        self.secondResponseButton.imageView?.contentMode = .scaleAspectFit
+
+        self.firstResponseButton.setImage(image, for: .normal)
+        self.secondResponseButton.setImage(image, for: .normal)
+
+        self.firstResponseButton.adjustsImageWhenHighlighted = false
+        self.secondResponseButton.adjustsImageWhenHighlighted = false
+        self.noSoundResponseButton.adjustsImageWhenHighlighted = false
     }
+    
+//    private func loadPortuguese() {
+//        lbCaption.text = PORT_ADULT_CAPTION_TEXT
+//        pbNoSound.setBackgroundImage(UIImage(named: "\(ANIMAL_ICON_PATH)/no_sound_Port"), for: .normal)
+//        pbNoSound.setTitle("", for: .normal)
+//        pbStart.setTitle(PORT_START_TEXT, for: .normal)
+//        pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
+//        pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
+//    }
 }
