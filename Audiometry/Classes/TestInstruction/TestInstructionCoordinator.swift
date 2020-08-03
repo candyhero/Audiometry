@@ -14,42 +14,45 @@ class TestInstructionCoordinator: BaseCoordinator<Void> {
     /// Utility `DisposeBag` used by the subclasses.
     private let _disposeBag = DisposeBag()
     private var _navigationController: UINavigationController!
-    private var _isAdult: Bool!
+    private var _role: PatientRole!
     
-    init(navController: UINavigationController, isAdult: Bool) {
+    init(navController: UINavigationController, role: PatientRole) {
         _navigationController = navController
-        _isAdult = isAdult
+        _role = role
     }
     
     override func start() -> Observable<Void> {
-        let viewController = _isAdult
-            ? startAdultTestInstructionView()
-            : startChildrenTestInstructionView()
+        switch _role {
+        case .Adult:
+            let viewController = AdultTestInstructionViewController.instantiate(AppStoryboards.AdultTest)
+            viewController.viewModelBuilder = startTestInstructionViewModel
+            _navigationController.pushViewController(viewController, animated: true)
+            break
+        case .Children:
+            let viewController = ChildrenTestInstructionViewController.instantiate(AppStoryboards.AdultTest)
+            viewController.viewModelBuilder = startTestInstructionViewModel
+            _navigationController.pushViewController(viewController, animated: true)
+            break
+        default:
+            break
+        }
 
-        _navigationController.pushViewController(viewController, animated: true)
         return Observable.never()
     }
     
-    private func startAdultTestInstructionView() -> UIViewController{
-        let viewController = AdultTestInstructionViewController.instantiate(AppStoryboards.AdultTest)
-            
-        viewController.viewModelBuilder = { [weak self, _disposeBag] in
-            let viewModel = TestInstructionViewModel(input: $0)
+    private func startTestInstructionViewModel(input: TestInstructionViewModel.Input) -> TestInstructionViewModel {
+        let viewModel = TestInstructionViewModel(input: input)
+        
+//        viewModel.router.showTitle
+//            .emit(onNext: { _ = self?.showTitleView(on: viewController) })
+//            .disposed(by: _disposeBag)
+//
+//        viewModel.router.startTest
+//            .emit(onNext: { _ = self?.showTestInstructionView(on: viewController,
+//                                                              model: $0)})
+//            .disposed(by: _disposeBag)
 
-            return viewModel
-        }
-        return viewController
-    }
-    
-    private func startChildrenTestInstructionView() -> UIViewController{
-        let viewController = ChildrenTestInstructionViewController.instantiate(AppStoryboards.ChildrenTest)
-            
-        viewController.viewModelBuilder = { [weak self, _disposeBag] in
-            let viewModel = TestInstructionViewModel(input: $0)
-
-            return viewModel
-        }
-        return viewController
+        return viewModel
     }
     
     private func showTitleView(on rootViewController: UIViewController) -> Observable<Void> {
@@ -58,13 +61,9 @@ class TestInstructionCoordinator: BaseCoordinator<Void> {
         return Observable.never()
     }
     
-    private func showAdultTest(on rootViewController: UIViewController) -> Observable<Void> {
+    private func showTestView(on rootViewController: UIViewController) -> Observable<Void> {
         print("Show adult test view")
-        return Observable.never()
-    }
-    
-    private func showChildrenTest(on rootViewController: UIViewController) -> Observable<Void> {
-        print("Show children test view")
-        return Observable.never()
+        let testCoordinator = TestCoordinator(navController: _navigationController, role: _role)
+        return coordinate(to: testCoordinator)
     }
 }

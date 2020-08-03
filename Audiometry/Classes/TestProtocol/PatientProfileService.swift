@@ -18,6 +18,7 @@ class PatientProfileService: Repository<PatientProfile> {
     
     func createNewPatientProfile(
         model: PatientProfileModel,
+        testMode: TestMode,
         testEarOrder: TestEarOrder,
         testFrequencyOrder: [Int]
     ) -> PatientProfile {
@@ -27,8 +28,8 @@ class PatientProfileService: Repository<PatientProfile> {
         newProfile.name = model.patientName
         newProfile.group = model.patientGroup
         newProfile.testRole = Int16(model.patientRole.rawValue)
-        newProfile.testMode = Int16(model.testMode.rawValue)
         
+        newProfile.testMode = Int16(testMode.rawValue)
         newProfile.testEarOrder = Int16(testEarOrder.rawValue)
         newProfile.testFrequencyOrder = testFrequencyOrder
         

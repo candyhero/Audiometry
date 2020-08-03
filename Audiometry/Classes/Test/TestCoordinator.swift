@@ -14,42 +14,44 @@ class TestCoordinator: BaseCoordinator<Void> {
     /// Utility `DisposeBag` used by the subclasses.
     private let _disposeBag = DisposeBag()
     private var _navigationController: UINavigationController!
-    private var _isAdult: Bool!
+    private var _role: PatientRole!
     
-    init(navController: UINavigationController, isAdult: Bool) {
+    init(navController: UINavigationController, role: PatientRole) {
         _navigationController = navController
-        _isAdult = isAdult
+        _role = role
     }
     
     override func start() -> Observable<Void> {
-        let viewController = _isAdult
-            ? startAdultTestView()
-            : startChildrenTestView()
-        
-        _navigationController.pushViewController(viewController, animated: true)
+        switch _role {
+        case .Adult:
+            let viewController = AdultTestViewController.instantiate(AppStoryboards.AdultTest)
+            viewController.viewModelBuilder = startTestViewModel
+            _navigationController.pushViewController(viewController, animated: true)
+            break
+        case .Children:
+            let viewController = ChildrenTestViewController.instantiate(AppStoryboards.AdultTest)
+            viewController.viewModelBuilder = startTestViewModel
+            _navigationController.pushViewController(viewController, animated: true)
+            break
+        default:
+            break
+        }
         return Observable.never()
     }
     
-    private func startAdultTestView() -> UIViewController{
-        let viewController = AdultTestViewController.instantiate(AppStoryboards.AdultTest)
-            
-        viewController.viewModelBuilder = { [weak self, _disposeBag] in
-            let viewModel = TestViewModel(input: $0)
+    private func startTestViewModel(input: TestViewModel.Input) -> TestViewModel {
+        let viewModel = TestViewModel(input: input)
+        
+//        viewModel.router.showTitle
+//            .emit(onNext: { _ = self?.showTitleView(on: viewController) })
+//            .disposed(by: _disposeBag)
+//
+//        viewModel.router.startTest
+//            .emit(onNext: { _ = self?.showTestInstructionView(on: viewController,
+//                                                              model: $0)})
+//            .disposed(by: _disposeBag)
 
-            return viewModel
-        }
-        return viewController
-    }
-    
-    private func startChildrenTestView() -> UIViewController{
-        let viewController = ChildrenTestViewController.instantiate(AppStoryboards.ChildrenTest)
-            
-        viewController.viewModelBuilder = { [weak self, _disposeBag] in
-            let viewModel = TestViewModel(input: $0)
-
-            return viewModel
-        }
-        return viewController
+        return viewModel
     }
     
     private func showTitleView(on rootViewController: UIViewController) -> Observable<Void> {

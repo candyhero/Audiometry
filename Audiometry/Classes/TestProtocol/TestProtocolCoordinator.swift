@@ -32,6 +32,10 @@ class TestProtocolCoordinator: BaseCoordinator<Void> {
                 .emit(onNext: { _ = self?.showTitleView(on: viewController) })
                 .disposed(by: _disposeBag)
             
+            viewModel.router.startTest
+                .emit(onNext: { _ = self?.showTestInstructionView(on: viewController,
+                                                                  role: $0)})
+                .disposed(by: _disposeBag)
             
             return viewModel
         }
@@ -40,20 +44,12 @@ class TestProtocolCoordinator: BaseCoordinator<Void> {
         return Observable.never()
     }
     
-    private func showAdultTestInstructionView(on rootViewController: UIViewController) -> Observable<Void> {
+    private func showTestInstructionView(on rootViewController: UIViewController,
+                                         role: PatientRole) -> Observable<Void> {
         print("Show adult test instruction view")
         let testInstructionCoordinator = TestInstructionCoordinator(
             navController: _navigationController,
-            isAdult: true
-        )
-        return coordinate(to: testInstructionCoordinator)
-    }
-    
-    private func showChildrenTestInstructionView(on rootViewController: UIViewController) -> Observable<Void> {
-        print("Show children test instruction view")
-        let testInstructionCoordinator = TestInstructionCoordinator(
-            navController: _navigationController,
-            isAdult: false
+            role: role
         )
         return coordinate(to: testInstructionCoordinator)
     }

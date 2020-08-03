@@ -14,7 +14,7 @@ protocol TestInstructionViewPresentable {
     // MARK: - Inputs
     typealias Input = (
         onClickReturn: Signal<Void>,
-        ()
+        onClickStartTest: Signal<Void>
     )
     
     // MARK: - Outputs
@@ -40,11 +40,11 @@ class TestInstructionViewModel: TestInstructionViewPresentable {
          
     typealias Routing = (
         showTitle: Signal<Void>,
-        ()
+        startTest: Signal<Void>
     )
     lazy var router: Routing = (
         showTitle: input.onClickReturn,
-        ()
+        startTest: input.onClickStartTest
     )
     
     init(input: TestInstructionViewModel.Input) {

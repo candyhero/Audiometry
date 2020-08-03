@@ -32,20 +32,15 @@ class ChildrenTestInstructionViewController: UIViewController, Storyboardable {
     override func viewDidLoad() {
         _viewModel = viewModelBuilder((
             onClickReturn: returnButton.rx.tap.asSignal(),
-            ()
+            onClickStartTest: startTestButton.rx.tap.asSignal()
         ))
         
         setupView()
-        setupBinding()
     }
 }
 
 extension ChildrenTestInstructionViewController {
     private func setupView() {
-        
-    }
-    
-    private func setupBinding() {
         
     }
 }

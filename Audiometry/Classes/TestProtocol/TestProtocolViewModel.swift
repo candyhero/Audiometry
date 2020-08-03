@@ -14,7 +14,6 @@ struct PatientProfileModel {
     var patientName: String
     var patientGroup: String
     var patientRole: PatientRole
-    var testMode: TestMode
 }
 
 protocol TestProtocolViewPresentable {
@@ -38,8 +37,6 @@ protocol TestProtocolViewPresentable {
     
     // MARK: - Outputs
     typealias Output = (
-        testMode: Driver<TestMode>,
-        
         currentFrequencySelection: Driver<[Int]>,
         currentEarOrderSelection: Driver<TestEarOrder>,
         allTestProtocolNames: Driver<[String]>
@@ -76,11 +73,11 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
          
     typealias Routing = (
         showTitle: Signal<Void>,
-        startTest: Signal<PatientProfileModel>
+        startTest: Signal<PatientRole>
     )
     lazy var router: Routing = (
         showTitle: input.onClickReturn,
-        startTest: input.onStartTest
+        startTest: input.onStartTest.map { $0.patientRole }
     )
     
     init(input: TestProtocolViewPresentable.Input) {
@@ -102,7 +99,6 @@ private extension TestProtocolViewModel {
         print("Set output...")
         
         return (
-            testMode: state.testMode.asDriver(),
             currentFrequencySelection: state.currentFrequencySelection.asDriver(),
             currentEarOrderSelection: state.currentEarOrderSelection.asDriver(),
             allTestProtocolNames: state.allTestProtocols
@@ -203,6 +199,7 @@ private extension TestProtocolViewModel {
                 print(model)
 //                let profile = PatientProfileService.shared.createNewPatientProfile(
 //                    model: model,
+//                    testMode: _state.testMode.value,
 //                    testEarOrder: _state.currentEarOrderSelection.value,
 //                    testFrequencyOrder: _state.currentFrequencySelection.value
 //                )

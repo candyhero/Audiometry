@@ -280,9 +280,8 @@ extension TestProtocolViewController {
             .skip(1)
             .withLatestFrom(_viewModel.output.currentFrequencySelection) { ($0, $1) }
             .filter{ validateFrequencySelection($0.1) }
-            .withLatestFrom(_viewModel.output.testMode) { ($0.0, $1) }
-            .drive(onNext: { (role, testMode) in
-                promptPatientNameGroupInput(patientRole: role, testMode: testMode)
+            .drive(onNext: { (role, frequencySelection) in
+                promptPatientNameGroupInput(patientRole: role)
             })
             .disposed(by: _disposeBag)
         
@@ -294,7 +293,7 @@ extension TestProtocolViewController {
             return true
         }
         
-        func promptPatientNameGroupInput(patientRole: PatientRole, testMode: TestMode) {
+        func promptPatientNameGroupInput(patientRole: PatientRole) {
             let alertController = UIAlertController(
                 title: "Save",
                 message: "Please Enter Patient's Group & Name:",
@@ -311,8 +310,7 @@ extension TestProtocolViewController {
                         let model = PatientProfileModel(
                             patientName: patientGroup,
                             patientGroup: patientName,
-                            patientRole: patientRole,
-                            testMode: testMode
+                            patientRole: patientRole
                         )
                         confirmAction(model: model)
                     }
