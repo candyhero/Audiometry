@@ -32,6 +32,7 @@ protocol TestProtocolViewPresentable {
         onSaveNewProtocol: Signal<String>,
         onLoadSelectedProtocol: Signal<String>,
         
+        onValidateState: Signal<PatientRole>,
         onStartTest: Signal<PatientProfileModel>
     )
     
@@ -39,7 +40,9 @@ protocol TestProtocolViewPresentable {
     typealias Output = (
         currentFrequencySelection: Driver<[Int]>,
         currentEarOrderSelection: Driver<TestEarOrder>,
-        allTestProtocolNames: Driver<[String]>
+        allTestProtocolNames: Driver<[String]>,
+        
+        validateState: Driver<Bool>
     )
     
     typealias ViewModelBuilder = (TestProtocolViewPresentable.Input) -> TestProtocolViewPresentable
@@ -60,7 +63,8 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
         currentTestProtocol: BehaviorRelay<TestProtocol?>,
         allTestProtocols: BehaviorRelay<[TestProtocol]>,
         
-        testMode: BehaviorRelay<TestMode>
+        testMode: BehaviorRelay<TestMode>,
+        validateState: BehaviorRelay<Bool>
     )
     private let _state: State = (
         currentFrequencySelection: BehaviorRelay<[Int]>(value: []),
@@ -68,7 +72,8 @@ class TestProtocolViewModel: TestProtocolViewPresentable {
         currentTestProtocol: BehaviorRelay<TestProtocol?>(value: nil),
         allTestProtocols: BehaviorRelay<[TestProtocol]>(value: []),
         
-        testMode: BehaviorRelay<TestMode>(value: .Invalid)
+        testMode: BehaviorRelay<TestMode>(value: .Invalid),
+        validateState: BehaviorRelay<Bool>(value: false)
     )
          
     typealias Routing = (
@@ -99,6 +104,7 @@ private extension TestProtocolViewModel {
         print("Set output...")
         
         return (
+            validateState: state.validateState.asDriver(),
             currentFrequencySelection: state.currentFrequencySelection.asDriver(),
             currentEarOrderSelection: state.currentEarOrderSelection.asDriver(),
             allTestProtocolNames: state.allTestProtocols
@@ -194,6 +200,18 @@ private extension TestProtocolViewModel {
     }
     
     private func bindStartTest() {
+        input.onValidateState
+            .map{ _ in validateState() }
+            .emit(to: _state.validateState)
+            .disposed(by: _disposeBag)
+        
+        func validateState() -> Bool {
+            let frequencySelection = _state.currentFrequencySelection.value
+            let testMode = _state.testMode.value
+            return (frequencySelection.isNotEmpty && testMode == TestMode.Test)
+                || (frequencySelection.count == 1 && testMode == TestMode.Practice)
+        }
+        
         input.onStartTest
             .emit(onNext: {[_state] (model) in
                 print(model)

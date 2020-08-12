@@ -40,11 +40,12 @@
 		6795CEC924A3A143002C71A1 /* GlobalSettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6795CEC824A3A143002C71A1 /* GlobalSettingService.swift */; };
 		67A3F91E2455FD2400798427 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A3F91D2455FD2400798427 /* AppDelegate.swift */; };
 		67A3F9202455FD2400798427 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A3F91F2455FD2400798427 /* SceneDelegate.swift */; };
-		67A3F92A2455FD2400798427 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67A3F9292455FD2400798427 /* Assets.xcassets */; };
 		67A3F9382455FD2400798427 /* AudiometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A3F9372455FD2400798427 /* AudiometryTests.swift */; };
 		67A3F9432455FD2400798427 /* AudiometryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A3F9422455FD2400798427 /* AudiometryUITests.swift */; };
 		67BB30D22456150200D3ACCC /* AudiometryModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67BB30D02456150200D3ACCC /* AudiometryModel.xcdatamodeld */; };
 		67D6A89124D716F600E03EA5 /* PatientProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D6A89024D716F600E03EA5 /* PatientProfileService.swift */; };
+		67D6A92B24E41F8E00E03EA5 /* AssetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D6A92A24E41F8E00E03EA5 /* AssetHelper.swift */; };
+		67D6A96E24E424D100E03EA5 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 67D6A96D24E424D100E03EA5 /* Assets */; };
 		67E6915424A8D898001A5946 /* TestProtocolCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E6915324A8D898001A5946 /* TestProtocolCoordinator.swift */; };
 		67E6915624A8D8A1001A5946 /* TestProtocolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E6915524A8D8A1001A5946 /* TestProtocolViewController.swift */; };
 		67E6915824A8D8AB001A5946 /* TestProtocolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E6915724A8D8AB001A5946 /* TestProtocolViewModel.swift */; };
@@ -107,7 +108,6 @@
 		6795CEC824A3A143002C71A1 /* GlobalSettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettingService.swift; sourceTree = "<group>"; };
 		67A3F91D2455FD2400798427 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67A3F91F2455FD2400798427 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		67A3F9292455FD2400798427 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67A3F92E2455FD2400798427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67A3F9372455FD2400798427 /* AudiometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudiometryTests.swift; sourceTree = "<group>"; };
 		67A3F9392455FD2400798427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,6 +116,9 @@
 		67BB30CB2456140600D3ACCC /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67BB30D12456150200D3ACCC /* CalibrationSettingModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CalibrationSettingModel.xcdatamodel; sourceTree = "<group>"; };
 		67D6A89024D716F600E03EA5 /* PatientProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientProfileService.swift; sourceTree = "<group>"; };
+		67D6A92A24E41F8E00E03EA5 /* AssetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetHelper.swift; sourceTree = "<group>"; };
+		67D6A96D24E424D100E03EA5 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
+		67D6A96F24E4252600E03EA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67E6915324A8D898001A5946 /* TestProtocolCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolCoordinator.swift; sourceTree = "<group>"; };
 		67E6915524A8D8A1001A5946 /* TestProtocolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolViewController.swift; sourceTree = "<group>"; };
 		67E6915724A8D8AB001A5946 /* TestProtocolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolViewModel.swift; sourceTree = "<group>"; };
@@ -181,6 +184,7 @@
 				6765D3F524561321004A1C46 /* BaseCoordinator.swift */,
 				67302819246F8CC90017BF2A /* Repository.swift */,
 				6795CEC824A3A143002C71A1 /* GlobalSettingService.swift */,
+				67D6A92A24E41F8E00E03EA5 /* AssetHelper.swift */,
 			);
 			name = Shared;
 			path = Audiometry/Classes/Shared;
@@ -261,10 +265,11 @@
 		67A3F91C2455FD2400798427 /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
+				67D6A96F24E4252600E03EA5 /* Assets.xcassets */,
+				67D6A96D24E424D100E03EA5 /* Assets */,
 				67BB30D02456150200D3ACCC /* AudiometryModel.xcdatamodeld */,
 				6765D3F724561321004A1C46 /* App */,
 				6765D3FA24561321004A1C46 /* Classes */,
-				67A3F9292455FD2400798427 /* Assets.xcassets */,
 				67A3F92E2455FD2400798427 /* Info.plist */,
 				6765D3E724561278004A1C46 /* AdultTest.storyboard */,
 				6765D3E124561278004A1C46 /* ChildrenTest.storyboard */,
@@ -428,7 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6765D3EA24561278004A1C46 /* LaunchScreen.storyboard in Resources */,
-				67A3F92A2455FD2400798427 /* Assets.xcassets in Resources */,
+				67D6A96E24E424D100E03EA5 /* Assets in Resources */,
 				6765D3EC24561278004A1C46 /* AdultTest.storyboard in Resources */,
 				6765D3E924561278004A1C46 /* ChildrenTest.storyboard in Resources */,
 				6765D3EB24561278004A1C46 /* Main.storyboard in Resources */,
@@ -522,6 +527,7 @@
 				673A898F24BDE3FA00B2B56B /* AdultTestInstructionViewController.swift in Sources */,
 				67E6915624A8D8A1001A5946 /* TestProtocolViewController.swift in Sources */,
 				6765D40924561321004A1C46 /* Storyboardable.swift in Sources */,
+				67D6A92B24E41F8E00E03EA5 /* AssetHelper.swift in Sources */,
 				67D6A89124D716F600E03EA5 /* PatientProfileService.swift in Sources */,
 				6765D41224561321004A1C46 /* ResultViewController.swift in Sources */,
 				67A3F91E2455FD2400798427 /* AppDelegate.swift in Sources */,

@@ -187,7 +187,7 @@
         <!--Children Test Instruction View Controller-->
         <scene sceneID="U25-yc-cpo">
             <objects>
-                <viewController storyboardIdentifier="ChildrenInstructionViewController" id="fuW-Nb-Tgi" customClass="ChildrenTestInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChildrenTestInstructionViewController" id="fuW-Nb-Tgi" customClass="ChildrenTestInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3ps-zf-mYD"/>
                         <viewControllerLayoutGuide type="bottom" id="3gq-iC-jDC"/>
@@ -197,14 +197,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="itn-qD-c8k">
-                                <rect key="frame" x="20" y="0.0" width="98" height="91"/>
+                                <rect key="frame" x="20" y="0.0" width="74" height="91"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yiQ-Cw-ZiX">
-                                        <rect key="frame" x="0.0" y="0.0" width="98" height="30"/>
-                                        <state key="normal" title="Return to Title"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                                        <state key="normal" title="Return"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yvl-4D-QvU">
-                                        <rect key="frame" x="0.0" y="50" width="98" height="41"/>
+                                        <rect key="frame" x="0.0" y="50" width="74" height="41"/>
                                         <color key="backgroundColor" red="1" green="0.58546906399999998" blue="0.0072833478759999999" alpha="0.29612585619999998" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <state key="normal" title="Repeat">

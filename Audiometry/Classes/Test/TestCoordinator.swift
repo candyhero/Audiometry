@@ -14,6 +14,7 @@ class TestCoordinator: BaseCoordinator<Void> {
     /// Utility `DisposeBag` used by the subclasses.
     private let _disposeBag = DisposeBag()
     private var _navigationController: UINavigationController!
+    private var _viewController: UIViewController!
     private var _role: PatientRole!
     
     init(navController: UINavigationController, role: PatientRole) {
@@ -26,31 +27,30 @@ class TestCoordinator: BaseCoordinator<Void> {
         case .Adult:
             let viewController = AdultTestViewController.instantiate(AppStoryboards.AdultTest)
             viewController.viewModelBuilder = startTestViewModel
-            _navigationController.pushViewController(viewController, animated: true)
+            _viewController = viewController
             break
         case .Children:
             let viewController = ChildrenTestViewController.instantiate(AppStoryboards.AdultTest)
             viewController.viewModelBuilder = startTestViewModel
-            _navigationController.pushViewController(viewController, animated: true)
+            _viewController = viewController
             break
         default:
-            break
+            return Observable.never()
         }
+        _navigationController.pushViewController(_viewController, animated: true)
         return Observable.never()
     }
     
     private func startTestViewModel(input: TestViewModel.Input) -> TestViewModel {
         let viewModel = TestViewModel(input: input)
         
-//        viewModel.router.showTitle
-//            .emit(onNext: { _ = self?.showTitleView(on: viewController) })
-//            .disposed(by: _disposeBag)
-//
-//        viewModel.router.startTest
-//            .emit(onNext: { _ = self?.showTestInstructionView(on: viewController,
-//                                                              model: $0)})
-//            .disposed(by: _disposeBag)
-
+        if let viewController = _viewController {
+            viewModel.router.showTitle
+                .emit(onNext: { [weak self] in
+                    _ = self?.showTitleView(on: viewController)
+                })
+                .disposed(by: _disposeBag)
+        }
         return viewModel
     }
     

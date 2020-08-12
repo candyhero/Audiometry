@@ -51,6 +51,7 @@ class TestProtocolViewController: UIViewController, Storyboardable {
         onSaveNewProtocol: PublishRelay<String>(),
         onLoadSelectedProtocol: PublishRelay<String>(),
         
+        onValidateState: PublishRelay<PatientRole>(),
         onStartTest: PublishRelay<PatientProfileModel>()
     )
     
@@ -71,6 +72,7 @@ class TestProtocolViewController: UIViewController, Storyboardable {
             onSaveNewProtocol: _relays.onSaveNewProtocol.asSignal(),
             onLoadSelectedProtocol: _relays.onLoadSelectedProtocol.asSignal(),
 
+            onValidateState: _relays.onValidateState.asSignal(),
             onStartTest: _relays.onStartTest.asSignal()
         ))
         
@@ -275,19 +277,26 @@ extension TestProtocolViewController {
             .map { PatientRole.Children }
             .bind(to: patientRole)
             .disposed(by: _disposeBag)
-
-        patientRole.asDriver()
+        
+        patientRole
+            .bind(to: _relays.onValidateState)
+            .disposed(by: _disposeBag)
+        
+        _viewModel.output.validateState
             .skip(1)
-            .withLatestFrom(_viewModel.output.currentFrequencySelection) { ($0, $1) }
-            .filter{ validateFrequencySelection($0.1) }
-            .drive(onNext: { (role, frequencySelection) in
-                promptPatientNameGroupInput(patientRole: role)
+            .drive(onNext: { isValid in
+                isValid
+                    ? promptPatientNameGroupInput(patientRole: patientRole.value)
+                    : promptError(errorMessage: "Frequency cannot be empty!")
             })
             .disposed(by: _disposeBag)
         
-        func validateFrequencySelection(_ frequencySelection: [Int]) -> Bool {
+        func validateFrequencySelection(_ frequencySelection: [Int], testMode: TestMode) -> Bool {
             if(frequencySelection.isEmpty) {
                 promptError(errorMessage: "There is no test frequency selected!")
+                return false
+            } else if(testMode == .Practice && frequencySelection.count > 1) {
+                promptError(errorMessage: "Please select only one frequency for practice!")
                 return false
             }
             return true

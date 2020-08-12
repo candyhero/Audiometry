@@ -11,7 +11,6 @@ import Foundation
 class PatientProfileService: Repository<PatientProfile> {
     
     static let shared: PatientProfileService = PatientProfileService()
-    static let sharedProfile: PatientProfile! = nil
     
     override init() {
     }
@@ -50,5 +49,14 @@ class PatientProfileService: Repository<PatientProfile> {
     
     func addNewValues() {
         
+    }
+    
+    func fetchValidProfiles() throws -> [PatientProfile] {
+        let profiles = try fetchAll()
+        for emptyProfile in profiles.filter({ $0.values?.count ?? 0 == 0 }) {
+            _managedContext.delete(emptyProfile)
+        }
+        try _managedContext.save()
+        return profiles.filter { $0.values?.count ?? 0 > 0 }
     }
 }

@@ -14,6 +14,8 @@ class TitleViewController: UIViewController, Storyboardable {
     private var _viewModel: TitleViewPresentable!
     var viewModelBuilder: TitleViewPresentable.ViewModelBuilder!
     
+    private let _disposeBag = DisposeBag()
+    
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +26,39 @@ class TitleViewController: UIViewController, Storyboardable {
             onClickCalibration: calibrationButton.rx.tap.asSignal(),
             onClickResult: resultButton.rx.tap.asSignal()
         ))
+        
+        setupBinding()
+    }
+}
+
+extension TitleViewController {
+    private func setupBinding() {
+        _viewModel.output.validateCalibrationSetting
+            .skip(1)
+            .filter{ _ in true }
+            .drive(onNext: { _ in
+                promptError(errorMessage: "There is no calibration setting!")
+            })
+            .disposed(by: _disposeBag)
+        
+        _viewModel.output.validatePatientProfile
+            .skip(1)
+            .filter{ _ in true }
+            .drive(onNext: { _ in
+                promptError(errorMessage: "There is no patient profiles!")
+            })
+            .disposed(by: _disposeBag)
+        
+        
+        func promptError(errorMessage: String) {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: errorMessage,
+                preferredStyle: .alert
+            )
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alertController, animated: true, completion: nil)
+        }
     }
 }
 

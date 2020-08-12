@@ -29,12 +29,20 @@ class TitleCoordinator: BaseCoordinator<Void> {
                 .emit(onNext: { _ = self?.showCalibrationView(on: viewController) })
                 .disposed(by: _disposeBag)
             
-//            viewModel.router.showResult
-//                .emit(onNext: { _ = self?.showResultView(on: viewController) })
-//                .disposed(by: disposeBag)
+            viewModel.router.showResult
+                .emit(onNext: { _ = self?.showResultView(on: viewController) })
+                .disposed(by: _disposeBag)
             
             viewModel.router.showTest
-                .emit(onNext: { _ = self?.showTestProtocolView(on: viewController) })
+                .emit(onNext: {
+                    _ = self?.showTestProtocolView(on: viewController, testmode: TestMode.Test)
+                })
+                .disposed(by: _disposeBag)
+            
+            viewModel.router.showPractice
+                .emit(onNext: {
+                    _ = self?.showTestProtocolView(on: viewController, testmode: TestMode.Practice)
+                })
                 .disposed(by: _disposeBag)
             
             return viewModel
@@ -50,10 +58,10 @@ class TitleCoordinator: BaseCoordinator<Void> {
         return coordinate(to: calibrationCoordinator)
     }
     
-    private func showTestProtocolView(on rootViewController: UIViewController) -> Observable<Void> {
+    private func showTestProtocolView(on rootViewController: UIViewController, testmode: TestMode) -> Observable<Void> {
         print("Show test protocol view")
         let testProtocolCoordinator = TestProtocolCoordinator(navController: _navigationController,
-                                                              testMode: TestMode.Test)
+                                                              testMode: testmode)
         return coordinate(to: testProtocolCoordinator)
     }
     

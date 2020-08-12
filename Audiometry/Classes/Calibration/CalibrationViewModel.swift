@@ -66,8 +66,7 @@ class CalibrationViewModel: CalibrationViewPresentable {
     
     init(input: CalibrationViewPresentable.Input) {
         self.input = input
-        self.output = CalibrationViewModel.output(input: self.input,
-                                                  state: self._state)
+        self.output = CalibrationViewModel.output(input: input, state: _state)
         
         self.process()
     }
@@ -76,10 +75,7 @@ class CalibrationViewModel: CalibrationViewPresentable {
 private extension CalibrationViewModel {
     // MARK: - Return output to view here, e.g. alert message
     static func output(input: CalibrationViewPresentable.Input,
-                    state: State) -> CalibrationViewPresentable.Output {
-        
-        print("Set output...")
-        
+                       state: State) -> CalibrationViewPresentable.Output {
         return (
             currentPlayerFrequency: state.currentPlayerFrequency.asDriver(),
             currentCalibrationSetting: state.currentCalibrationSetting.asDriver(),

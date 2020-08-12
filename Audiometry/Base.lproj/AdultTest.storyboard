@@ -103,7 +103,7 @@
                         <constraints>
                             <constraint firstItem="1EF-nR-31E" firstAttribute="trailing" secondItem="5kn-ku-J6l" secondAttribute="trailingMargin" id="2Jx-RE-rva"/>
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2Uk-Sk-nqx" secondAttribute="trailing" constant="8" symbolic="YES" id="6D5-xP-WfL"/>
-                            <constraint firstItem="2Uk-Sk-nqx" firstAttribute="top" secondItem="5kn-ku-J6l" secondAttribute="top" id="6VY-Yg-3qc"/>
+                            <constraint firstItem="2Uk-Sk-nqx" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="6VY-Yg-3qc"/>
                             <constraint firstItem="Bpw-UR-4Wm" firstAttribute="centerY" secondItem="5kn-ku-J6l" secondAttribute="centerY" id="7pR-p5-J6h"/>
                             <constraint firstItem="2Uk-Sk-nqx" firstAttribute="leading" secondItem="5kn-ku-J6l" secondAttribute="leadingMargin" id="Cx6-XU-vK9"/>
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="leading" secondItem="yRV-Wa-CQF" secondAttribute="trailing" constant="20" id="FzC-JQ-E9D"/>
@@ -114,7 +114,7 @@
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="centerY" secondItem="5kn-ku-J6l" secondAttribute="centerY" id="MYU-ct-FYZ"/>
                             <constraint firstItem="Bpw-UR-4Wm" firstAttribute="trailing" secondItem="5kn-ku-J6l" secondAttribute="trailingMargin" id="WMj-bk-Z0O"/>
                             <constraint firstItem="1EF-nR-31E" firstAttribute="leading" secondItem="YIq-yB-AZP" secondAttribute="trailing" constant="20" id="Y0O-Yb-TME"/>
-                            <constraint firstItem="UDg-n5-yK3" firstAttribute="top" secondItem="5kn-ku-J6l" secondAttribute="top" id="dcp-v9-ylU"/>
+                            <constraint firstItem="UDg-n5-yK3" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="dcp-v9-ylU"/>
                             <constraint firstItem="yRV-Wa-CQF" firstAttribute="leading" secondItem="5kn-ku-J6l" secondAttribute="leadingMargin" id="kEd-nI-BMk"/>
                             <constraint firstItem="1bH-v6-7C1" firstAttribute="leading" secondItem="5kn-ku-J6l" secondAttribute="leadingMargin" id="kjV-nR-14o"/>
                             <constraint firstItem="YIq-yB-AZP" firstAttribute="top" secondItem="DIX-OQ-mz8" secondAttribute="bottom" id="kw1-5z-8iO"/>
@@ -195,7 +195,7 @@
         <!--Adult Test Instruction View Controller-->
         <scene sceneID="rjg-Ks-cq9">
             <objects>
-                <viewController storyboardIdentifier="AdultInstructionViewController" id="H19-23-Hv8" customClass="AdultTestInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdultTestInstructionViewController" id="H19-23-Hv8" customClass="AdultTestInstructionViewController" customModule="Audiometry" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X8z-cw-Fej"/>
                         <viewControllerLayoutGuide type="bottom" id="gpb-8g-Tlx"/>
@@ -233,14 +233,11 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBi-HB-tJb">
-                                <rect key="frame" x="20" y="0.0" width="98" height="30"/>
+                                <rect key="frame" x="20" y="0.0" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="hXc-iQ-oea"/>
                                 </constraints>
-                                <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <action selector="back:" destination="H19-23-Hv8" eventType="touchUpInside" id="hs6-0q-Kvz"/>
-                                </connections>
+                                <state key="normal" title="Return"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3JU-sZ-hLL">
                                 <rect key="frame" x="1044.5" y="884" width="301.5" height="120"/>
@@ -311,10 +308,10 @@
                             <constraint firstItem="3JU-sZ-hLL" firstAttribute="trailing" secondItem="7CH-5U-An6" secondAttribute="trailingMargin" id="kTn-oN-YRQ"/>
                             <constraint firstAttribute="bottom" secondItem="b8i-ED-zDi" secondAttribute="bottom" constant="20" id="n0v-ev-93c"/>
                             <constraint firstItem="5SV-3M-pbc" firstAttribute="leading" secondItem="5mD-Au-94F" secondAttribute="trailing" constant="20" id="qMY-h4-Oz6"/>
-                            <constraint firstItem="dBi-HB-tJb" firstAttribute="top" secondItem="7CH-5U-An6" secondAttribute="top" id="rKb-As-9Ak"/>
+                            <constraint firstItem="dBi-HB-tJb" firstAttribute="top" secondItem="X8z-cw-Fej" secondAttribute="bottom" id="rKb-As-9Ak"/>
                             <constraint firstItem="lbz-0r-a2i" firstAttribute="trailing" secondItem="7CH-5U-An6" secondAttribute="trailingMargin" id="vOq-uB-MWY"/>
                             <constraint firstItem="5mD-Au-94F" firstAttribute="centerX" secondItem="7CH-5U-An6" secondAttribute="centerX" id="vaz-te-WNO"/>
-                            <constraint firstItem="lbz-0r-a2i" firstAttribute="top" secondItem="7CH-5U-An6" secondAttribute="top" id="y9o-E9-mbS"/>
+                            <constraint firstItem="lbz-0r-a2i" firstAttribute="top" secondItem="X8z-cw-Fej" secondAttribute="bottom" id="y9o-E9-mbS"/>
                             <constraint firstItem="b8i-ED-zDi" firstAttribute="leading" secondItem="7CH-5U-An6" secondAttribute="leadingMargin" id="zyz-Fx-ET3"/>
                         </constraints>
                     </view>
@@ -324,7 +321,7 @@
                         <outlet property="noSoundResponseButton" destination="5SV-3M-pbc" id="bAG-Fg-aRd"/>
                         <outlet property="pauseButton" destination="3JU-sZ-hLL" id="3xh-xZ-mn6"/>
                         <outlet property="repeatButton" destination="b8i-ED-zDi" id="hUa-tG-64r"/>
-                        <outlet property="returnToTitleButton" destination="dBi-HB-tJb" id="zMS-ri-cvj"/>
+                        <outlet property="returnButton" destination="dBi-HB-tJb" id="Ma5-ai-1UB"/>
                         <outlet property="secondResponseButton" destination="x90-gC-any" id="hFL-wX-SJd"/>
                         <outlet property="startTestButton" destination="lbz-0r-a2i" id="6Zd-G8-jzu"/>
                     </connections>

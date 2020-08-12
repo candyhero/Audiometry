@@ -14,6 +14,7 @@ class TestInstructionCoordinator: BaseCoordinator<Void> {
     /// Utility `DisposeBag` used by the subclasses.
     private let _disposeBag = DisposeBag()
     private var _navigationController: UINavigationController!
+    private var _viewController: UIViewController!
     private var _role: PatientRole!
     
     init(navController: UINavigationController, role: PatientRole) {
@@ -26,38 +27,41 @@ class TestInstructionCoordinator: BaseCoordinator<Void> {
         case .Adult:
             let viewController = AdultTestInstructionViewController.instantiate(AppStoryboards.AdultTest)
             viewController.viewModelBuilder = startTestInstructionViewModel
-            _navigationController.pushViewController(viewController, animated: true)
+            _viewController = viewController
             break
         case .Children:
-            let viewController = ChildrenTestInstructionViewController.instantiate(AppStoryboards.AdultTest)
+            let viewController = ChildrenTestInstructionViewController.instantiate(AppStoryboards.ChildrenTest)
             viewController.viewModelBuilder = startTestInstructionViewModel
-            _navigationController.pushViewController(viewController, animated: true)
+            _viewController = viewController
             break
         default:
-            break
+            return Observable.never()
         }
-
+        _navigationController.pushViewController(_viewController, animated: true)
         return Observable.never()
     }
     
     private func startTestInstructionViewModel(input: TestInstructionViewModel.Input) -> TestInstructionViewModel {
         let viewModel = TestInstructionViewModel(input: input)
-        
-//        viewModel.router.showTitle
-//            .emit(onNext: { _ = self?.showTitleView(on: viewController) })
-//            .disposed(by: _disposeBag)
-//
-//        viewModel.router.startTest
-//            .emit(onNext: { _ = self?.showTestInstructionView(on: viewController,
-//                                                              model: $0)})
-//            .disposed(by: _disposeBag)
-
+        if let viewController = _viewController {
+            viewModel.router.showTitle
+                .emit(onNext: { [weak self] in
+                    _ = self?.showPreviousView(on: viewController)
+                })
+                .disposed(by: _disposeBag)
+            
+            viewModel.router.startTest
+                .emit(onNext: { [weak self] in
+                    _ = self?.showTestView(on: viewController)
+                })
+                .disposed(by: _disposeBag)
+        }
         return viewModel
     }
     
-    private func showTitleView(on rootViewController: UIViewController) -> Observable<Void> {
-        print("Show title view")
-        _navigationController.popToRootViewController(animated: true)
+    private func showPreviousView(on rootViewController: UIViewController) -> Observable<Void> {
+        print("Show previous view")
+        _navigationController.popViewController(animated: true)
         return Observable.never()
     }
     

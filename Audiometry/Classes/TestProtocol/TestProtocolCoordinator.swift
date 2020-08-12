@@ -33,8 +33,9 @@ class TestProtocolCoordinator: BaseCoordinator<Void> {
                 .disposed(by: _disposeBag)
             
             viewModel.router.startTest
-                .emit(onNext: { _ = self?.showTestInstructionView(on: viewController,
-                                                                  role: $0)})
+                .emit(onNext: {
+                    _ = self?.showTestInstructionView(on: viewController, role: $0)
+                })
                 .disposed(by: _disposeBag)
             
             return viewModel
