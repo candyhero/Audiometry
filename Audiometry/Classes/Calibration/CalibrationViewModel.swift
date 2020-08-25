@@ -17,8 +17,8 @@ protocol CalibrationViewPresentable {
         onClickLoadOther: Signal<Void>,
         onClickDeleteCurrent: Signal<Void>,
         
-        onSaveNewSetting: Signal<(String, [CalibrationSettingValueUi])>,
-        onSaveCurrentSetting: Signal<[CalibrationSettingValueUi]>,
+        onSaveNewSetting: Signal<(String, [Int: CalibrationSettingValueUi])>,
+        onSaveCurrentSetting: Signal<[Int: CalibrationSettingValueUi]>,
         onLoadSelectedSetting: Signal<String>,
 
         onTogglePlayCalibration: Signal<(Bool, CalibrationSettingValueUi)>
@@ -132,16 +132,13 @@ private extension CalibrationViewModel {
     
     private func bindSaveNewSetting() {
         input.onSaveNewSetting
-            .map { (settingName, settingUiList) in
+            .map { (settingName, settingUiLookup) in
                 let service = CalibrationSettingService.shared
-                let settingValuesList = settingUiList.map {
-                    $0.extractValuesInto(
-                        values: service.createNewSettingValues(frequency: $0.frequency)
-                    )
-                }
                 return service.createNewSetting(
                     name: settingName,
-                    values: settingValuesList
+                    values: settingUiLookup.map {
+                        return service.createNewSettingValues().loadValues(from: $0.value)
+                    }
                 )
             }
             .emit(to: _state.currentCalibrationSetting)
@@ -150,17 +147,10 @@ private extension CalibrationViewModel {
     
     private func bindSaveCurrentSetting() {
         input.onSaveCurrentSetting
-            .map { [_state] settingUis -> CalibrationSetting? in
-                if let setting = _state.currentCalibrationSetting.value{
-                    let lookup = setting.values?.reduce(
-                        into: [Int: CalibrationSettingValues]()
-                    ) { (dict, v) in
-                        if let values = v as? CalibrationSettingValues{
-                            dict[Int(values.frequency)] = values
-                        }
-                    }
-                    _ = settingUis.map {
-                        $0.extractValuesInto(values: (lookup?[$0.frequency])!)
+            .map { [_state] settingUiLookup -> CalibrationSetting? in
+                if let setting = _state.currentCalibrationSetting.value {
+                    _ = setting.values.map {
+                        $0.loadValues(from: settingUiLookup[$0.frequency]!)
                     }
                 }
                 return _state.currentCalibrationSetting.value

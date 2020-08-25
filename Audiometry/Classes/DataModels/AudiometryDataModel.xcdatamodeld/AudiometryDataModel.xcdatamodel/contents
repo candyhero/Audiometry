@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19G73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="CalibrationSetting" representedClassName=".CalibrationSetting" syncable="YES" codeGenerationType="class">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CalibrationSetting" representedClassName=".CalibrationSetting" syncable="YES" codeGenerationType="category">
         <attribute name="name" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="calibrationSettingValues" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" ordered="YES" destinationEntity="CalibrationSettingValues" inverseName="setting" inverseEntity="CalibrationSettingValues"/>
         <relationship name="globalSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GlobalSetting" inverseName="calibrationSetting" inverseEntity="GlobalSetting"/>
-        <relationship name="values" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" ordered="YES" destinationEntity="CalibrationSettingValues" inverseName="setting" inverseEntity="CalibrationSettingValues"/>
     </entity>
-    <entity name="CalibrationSettingValues" representedClassName=".CalibrationSettingValues" syncable="YES" codeGenerationType="class">
+    <entity name="CalibrationSettingValues" representedClassName=".CalibrationSettingValues" syncable="YES" codeGenerationType="category">
         <attribute name="expectedLevel" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="frequency" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="frequencyInt16" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="leftMeasuredLevel" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="presentationLevel" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="rightMeasuredLevel" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="setting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CalibrationSetting" inverseName="values" inverseEntity="CalibrationSetting"/>
+        <relationship name="setting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CalibrationSetting" inverseName="calibrationSettingValues" inverseEntity="CalibrationSetting"/>
     </entity>
-    <entity name="GlobalSetting" representedClassName=".GlobalSetting" syncable="YES" codeGenerationType="class">
-        <attribute name="testLanguage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="GlobalSetting" representedClassName=".GlobalSetting" syncable="YES" codeGenerationType="category">
+        <attribute name="testLanguageInt16" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="calibrationSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CalibrationSetting" inverseName="globalSetting" inverseEntity="CalibrationSetting"/>
         <relationship name="patientProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientProfile" inverseName="globalSetting" inverseEntity="PatientProfile"/>
     </entity>
-    <entity name="PatientProfile" representedClassName=".PatientProfile" syncable="YES" codeGenerationType="class">
+    <entity name="PatientProfile" representedClassName=".PatientProfile" syncable="YES" codeGenerationType="category">
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="endTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="group" optional="YES" attributeType="String"/>
@@ -32,7 +32,7 @@
         <relationship name="globalSetting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GlobalSetting" inverseName="patientProfile" inverseEntity="GlobalSetting"/>
         <relationship name="values" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="PatientProfileValues" inverseName="profile" inverseEntity="PatientProfileValues"/>
     </entity>
-    <entity name="PatientProfileValues" representedClassName=".PatientProfileValues" syncable="YES" codeGenerationType="class">
+    <entity name="PatientProfileValues" representedClassName=".PatientProfileValues" syncable="YES" codeGenerationType="category">
         <attribute name="durationSeconds_L" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="durationSeconds_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="endTime_L" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -54,7 +54,7 @@
         <attribute name="threshold_R" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PatientProfile" inverseName="values" inverseEntity="PatientProfile"/>
     </entity>
-    <entity name="TestProtocol" representedClassName=".TestProtocol" syncable="YES" codeGenerationType="class">
+    <entity name="TestProtocol" representedClassName=".TestProtocol" syncable="YES" codeGenerationType="category">
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="testEarOrder" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
         <attribute name="testFrequencyOrder" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[Int]"/>
@@ -63,7 +63,7 @@
     <elements>
         <element name="CalibrationSetting" positionX="-372.671875" positionY="-46.83203125" width="128" height="103"/>
         <element name="CalibrationSettingValues" positionX="-54" positionY="18" width="128" height="133"/>
-        <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="88"/>
+        <element name="GlobalSetting" positionX="-198" positionY="54" width="128" height="28"/>
         <element name="PatientProfile" positionX="-180" positionY="81" width="128" height="208"/>
         <element name="PatientProfileValues" positionX="-171" positionY="90" width="128" height="343"/>
         <element name="TestProtocol" positionX="-189" positionY="63" width="128" height="103"/>

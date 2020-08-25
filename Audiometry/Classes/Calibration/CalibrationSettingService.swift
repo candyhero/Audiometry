@@ -19,10 +19,7 @@ class CalibrationSettingService: Repository<CalibrationSetting> {
         let newSetting = CalibrationSetting(context: _managedContext)
         newSetting.name = name
         newSetting.timestamp = Date()
-        
-        for v in values {
-            newSetting.addToValues(v)
-        }
+        newSetting.values = values
         
         do {
             try _managedContext.save()
@@ -33,10 +30,8 @@ class CalibrationSettingService: Repository<CalibrationSetting> {
         return newSetting
     }
     
-    func createNewSettingValues(frequency: Int) -> CalibrationSettingValues{
-        let newSettingValues = CalibrationSettingValues(context: _managedContext)
-        newSettingValues.frequency = Int16(frequency)
-        return newSettingValues
+    func createNewSettingValues() -> CalibrationSettingValues{
+        return CalibrationSettingValues(context: _managedContext)
     }
     
     func fetchAllSortedByTime() throws -> [CalibrationSetting]{

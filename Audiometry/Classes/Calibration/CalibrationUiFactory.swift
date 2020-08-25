@@ -46,16 +46,8 @@ class CalibrationSettingValueUi {
             $0.keyboardType = .asciiCapableNumberPad
         }
     }
-        
-    func extractValuesInto(values: CalibrationSettingValues) -> CalibrationSettingValues {
-        values.expectedLevel = Double(self.expectedLevelTextField.text!) ?? 0.0
-        values.presentationLevel = Double(self.presentationLevelTextField.text!) ?? 0.0
-        values.leftMeasuredLevel = Double(self.leftMeasuredLevelTextField.text!) ?? 0.0
-        values.rightMeasuredLevel = Double(self.rightMeasuredLevelTextField.text!) ?? 0.0
-        return values
-    }
     
-    func loadValuesFrom(values: CalibrationSettingValues) {
+    func loadValues(from values: CalibrationSettingValues) {
         self.expectedLevelTextField.text = String(values.expectedLevel)
         self.presentationLevelTextField.text = String(values.presentationLevel)
         self.leftMeasuredLevelTextField.text = String(values.leftMeasuredLevel)

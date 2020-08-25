@@ -206,6 +206,8 @@ private extension TestProtocolViewModel {
             .disposed(by: _disposeBag)
         
         func validateState() -> Bool {
+            // TO-DO: Split into two validations
+            // non empty & practice mode
             let frequencySelection = _state.currentFrequencySelection.value
             let testMode = _state.testMode.value
             return (frequencySelection.isNotEmpty && testMode == TestMode.Test)

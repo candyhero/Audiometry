@@ -17,7 +17,7 @@ class GlobalSettingService: Repository<GlobalSetting> {
         super.init()
         guard let _ = try? fetchAll().first else{
             let globalSetting = GlobalSetting(context: _managedContext)
-            globalSetting.testLanguage = Int16(TestLanguage.English.rawValue)
+            globalSetting.testLanguage = TestLanguage.English
             
             try? _managedContext.save()
             
@@ -42,7 +42,7 @@ class GlobalSettingService: Repository<GlobalSetting> {
     func updateTestLanguage(testLanguage: TestLanguage) {
         do {
             let globalSetting = try fetch()
-            globalSetting.testLanguage = Int16(testLanguage.rawValue)
+            globalSetting.testLanguage = testLanguage
             try _managedContext.save()
         } catch {
             print("Failed to update global setting")

@@ -38,8 +38,8 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
     private lazy var _relays = (
 //        onSubmitCablirationSettingName: PublishRelay<String>(), // Relay for prompt
-        onSaveNewSetting: PublishRelay<(String, [CalibrationSettingValueUi])>(),
-        onSaveCurrentSetting: PublishRelay<[CalibrationSettingValueUi]>(),
+        onSaveNewSetting: PublishRelay<(String, [Int: CalibrationSettingValueUi])>(),
+        onSaveCurrentSetting: PublishRelay<[Int: CalibrationSettingValueUi]>(),
         onLoadSelectedSetting: PublishRelay<String>(),
         onTogglePlayCalibration: PublishRelay<(Bool, CalibrationSettingValueUi)>()
     )
@@ -117,10 +117,9 @@ extension CalibrationViewController {
                 currentSettingLabel.text = setting.name
                 saveToCurrentButton.isEnabled = true
                 
-                _ = setting.values?.array.map { v in
-                    if let values = v as? CalibrationSettingValues,
-                        let ui = _calibrationSettingUiLookup[Int(values.frequency)] {
-                        ui.loadValuesFrom(values: values)
+                _ = setting.values.map { values in
+                    if let settingUi = _calibrationSettingUiLookup[values.frequency] {
+                        settingUi.loadValues(from: values)
                     }
                 }
             } else {
@@ -207,7 +206,7 @@ extension CalibrationViewController {
         
         func confirmAction(settingName: String) {
             if(settingName.isNotEmpty) {
-                let params = (settingName, Array(_calibrationSettingUiLookup.values))
+                let params = (settingName, _calibrationSettingUiLookup)
                 _relays.onSaveNewSetting.accept(params)
             } else {
                 promptSettingNameInputError()
@@ -227,13 +226,9 @@ extension CalibrationViewController {
     
     private func bindSaveToCurrent() {
         saveToCurrentButton.rx.tap
-            .map { getSettingUiList() }
+            .map { self._calibrationSettingUiLookup }
             .bind(to: _relays.onSaveCurrentSetting)
             .disposed(by: _disposeBag)
-        
-        func getSettingUiList() -> [CalibrationSettingValueUi]{
-            return Array(_calibrationSettingUiLookup.values)
-        }
     }
     
     private func bindLoadOther() {
