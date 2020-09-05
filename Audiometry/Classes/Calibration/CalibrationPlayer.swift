@@ -34,37 +34,35 @@ class CalibrationPlayer {
             print("Cant Start AudioKit", error)
         }
     }
-        
+}
+
+extension CalibrationPlayer {
     func stop() {
         _generator.stop()
     }
     
-    func play(ui: CalibrationSettingValueUi) {
-        // Covert dB to amplitude in double (0.0 to 1.0 range)
-        func dbToAmp (_ dB: Double!) -> Double{
-            // volume in absolute dB to be converted to amplitude
-            // 1.0 amplitude <-> 0 absoulte dB
-            let amplitude: Double = pow(10.0, (dB - SYSTEM_MAX_DB) / 20.0)
-            return (amplitude > 1) ? 1 : amplitude
-        }
-        
-        _generator.parameters[0] = Double(ui.frequency)
-        
-        let expectedLevel = Double(ui.expectedLevelTextField.text!) ?? 0.0
-        let presentationLevel = Double(ui.presentationLevelTextField.text!) ?? 0.0
-        let leftMeasuredLevel = Double(ui.leftMeasuredLevelTextField.text!) ?? 0.0
-        let rightMeasuredLevel = Double(ui.rightMeasuredLevelTextField.text!) ?? 0.0
-            
-        let leftCorrectionFactor =  expectedLevel - leftMeasuredLevel
-        let rightCorrectionFactor = expectedLevel - rightMeasuredLevel
-        
+    func play(with request: CalibrationSettingValuesRequest) {
+        _generator.parameters[0] = Double(request.frequency)
         for i in stride(from: 0.0, through: 1.0, by: RAMP_TIMESTEP) {
             DispatchQueue.main.asyncAfter(
                 deadline: .now() + i * RAMP_TIME, execute: { [weak self] in
-                    self?._generator.parameters[1] = dbToAmp((presentationLevel + leftCorrectionFactor) * i)
-                    self?._generator.parameters[2] = dbToAmp((presentationLevel + rightCorrectionFactor) * i)
+                    self?.adjustPresentationLevel(by: request, scale: i)
             })
         }
         _generator.start()
     }
+    
+    private func adjustPresentationLevel(by request: CalibrationSettingValuesRequest, scale: Double!) {
+        _generator.parameters[1] = dbToAmp(request.leftFinalPresentationLevel * scale)
+        _generator.parameters[2] = dbToAmp(request.rightFinalPresentationLevel * scale)
+    }
+
+    // Covert dB to amplitude in double (0.0 to 1.0 range)
+    private func dbToAmp (_ dB: Double!) -> Double{
+        // volume in absolute dB to be converted to amplitude
+        // 1.0 amplitude <-> 0 absoulte dB
+        let amplitude: Double = pow(10.0, (dB - SYSTEM_MAX_DB) / 20.0)
+        return (amplitude > 1) ? 1 : amplitude
+    }
+    
 }

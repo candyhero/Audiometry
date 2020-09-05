@@ -26,7 +26,7 @@ class CalibrationViewController: UIViewController, Storyboardable {
     @IBOutlet weak var frequencyStackView: UIStackView!
     @IBOutlet weak var playButtonStackView: UIStackView!
     
-    private var _calibrationSettingUiLookup: [Int: CalibrationSettingValueUi] = [:]
+    private var _calibrationSettingUiLookup: [Int: CalibrationSettingValuesUi] = [:]
     
     private let loadSettingPickerView = UIPickerView(
         frame: CGRect(x: 0, y: 50, width: 260, height: 160)
@@ -38,10 +38,12 @@ class CalibrationViewController: UIViewController, Storyboardable {
     
     private lazy var _relays = (
 //        onSubmitCablirationSettingName: PublishRelay<String>(), // Relay for prompt
-        onSaveNewSetting: PublishRelay<(String, [Int: CalibrationSettingValueUi])>(),
-        onSaveCurrentSetting: PublishRelay<[Int: CalibrationSettingValueUi]>(),
+        onSaveNewSetting: PublishRelay<(String, [CalibrationSettingValuesRequest])>(),
+        onSaveCurrentSetting: PublishRelay<[CalibrationSettingValuesRequest]>(),
         onLoadSelectedSetting: PublishRelay<String>(),
-        onTogglePlayCalibration: PublishRelay<(Bool, CalibrationSettingValueUi)>()
+        
+        onTogglePlayCalibration: PublishRelay<CalibrationSettingValuesRequest?>(),
+        onUpdatePlayCalibration: PublishRelay<CalibrationSettingValuesRequest?>()
     )
     
     private let _disposeBag = DisposeBag()
@@ -58,7 +60,8 @@ class CalibrationViewController: UIViewController, Storyboardable {
             onSaveCurrentSetting: _relays.onSaveCurrentSetting.asSignal(),
             onLoadSelectedSetting: _relays.onLoadSelectedSetting.asSignal(),
             
-            onTogglePlayCalibration: _relays.onTogglePlayCalibration.asSignal()
+            onTogglePlayCalibration: _relays.onTogglePlayCalibration.asSignal(),
+            onUpdatePlayCalibration: _relays.onUpdatePlayCalibration.asSignal()
         ))
         
         setupView()
@@ -85,7 +88,7 @@ extension CalibrationViewController {
         }
         
         _ = DEFAULT_FREQ.map { frequency in
-            let settingUi = CalibrationSettingUiFactory.shared.getElement(frequency: frequency)
+            let settingUi = CalibrationSettingValuesUiFactory.shared.getElement(frequency: frequency)
             _calibrationSettingUiLookup[frequency] = settingUi
             
             expectedLevelStackView.addArrangedSubview(settingUi.expectedLevelTextField)
@@ -138,13 +141,13 @@ extension CalibrationViewController {
             settingUi.playButton.rx.tap
                 .withLatestFrom(_viewModel.output.currentPlayerFrequency) { $1 }
                 .map {  currentFrequency in
-                    if let ui = _calibrationSettingUiLookup[currentFrequency]{
-                        ui.playButton.setTitle("Off", for: .normal)
+                    if let currentUi = _calibrationSettingUiLookup[currentFrequency]{
+                        currentUi.playButton.setTitle("Off", for: .normal)
                     }
                     if currentFrequency != settingUi.frequency{
                         settingUi.playButton.setTitle("On", for: .normal)
                     }
-                    return (true, settingUi)
+                    return settingUi.request
                 }.bind(to: _relays.onTogglePlayCalibration)
                 .disposed(by: _disposeBag)
         }
@@ -155,7 +158,7 @@ extension CalibrationViewController {
             .withLatestFrom(_viewModel.output.currentPlayerFrequency) { $1 }
             .filter { $0 > 0 }
             .map { [_calibrationSettingUiLookup] currentFrequency in
-                return (false, _calibrationSettingUiLookup[currentFrequency]!)
+                return _calibrationSettingUiLookup[currentFrequency]?.request
             }.bind(to: _relays.onTogglePlayCalibration)
             .disposed(by: _disposeBag)
     }
@@ -206,7 +209,7 @@ extension CalibrationViewController {
         
         func confirmAction(settingName: String) {
             if(settingName.isNotEmpty) {
-                let params = (settingName, _calibrationSettingUiLookup)
+                let params = (settingName, _calibrationSettingUiLookup.map { $0.value.request })
                 _relays.onSaveNewSetting.accept(params)
             } else {
                 promptSettingNameInputError()
@@ -226,7 +229,7 @@ extension CalibrationViewController {
     
     private func bindSaveToCurrent() {
         saveToCurrentButton.rx.tap
-            .map { self._calibrationSettingUiLookup }
+            .map { self._calibrationSettingUiLookup.map { $0.value.request } }
             .bind(to: _relays.onSaveCurrentSetting)
             .disposed(by: _disposeBag)
     }

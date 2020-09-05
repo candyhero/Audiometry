@@ -12,7 +12,6 @@ import CoreData
 
 
 public class CalibrationSettingValues: NSManagedObject {
-    
     var frequency: Int {
         set {
             frequencyInt16 = Int16(newValue)
@@ -24,13 +23,12 @@ public class CalibrationSettingValues: NSManagedObject {
 }
 
 extension CalibrationSettingValues {
-    
-    func loadValues(from ui: CalibrationSettingValueUi) -> CalibrationSettingValues {
-        frequency = ui.frequency
-        expectedLevel = Double(ui.expectedLevelTextField.text!) ?? 0.0
-        presentationLevel = Double(ui.presentationLevelTextField.text!) ?? 0.0
-        leftMeasuredLevel = Double(ui.leftMeasuredLevelTextField.text!) ?? 0.0
-        rightMeasuredLevel = Double(ui.rightMeasuredLevelTextField.text!) ?? 0.0
+    func loadValues(from request: CalibrationSettingValuesRequest) -> CalibrationSettingValues {
+        frequency = request.frequency
+        expectedLevel = request.expectedLevel
+        presentationLevel = request.presentationLevel
+        leftMeasuredLevel = request.leftMeasuredLevel
+        rightMeasuredLevel = request.rightMeasuredLevel
         return self
     }
 }

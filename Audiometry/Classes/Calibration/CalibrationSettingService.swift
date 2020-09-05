@@ -7,7 +7,7 @@
 //
 
 import Foundation
- 
+
 class CalibrationSettingService: Repository<CalibrationSetting> {
     
     static let shared: CalibrationSettingService = CalibrationSettingService()
@@ -15,11 +15,14 @@ class CalibrationSettingService: Repository<CalibrationSetting> {
     override init() {
     }
     
-    func createNewSetting(name: String, values: [CalibrationSettingValues] = []) -> CalibrationSetting {
+    func createNewSetting(name: String, from requests: [CalibrationSettingValuesRequest]) -> CalibrationSetting {
         let newSetting = CalibrationSetting(context: _managedContext)
         newSetting.name = name
         newSetting.timestamp = Date()
-        newSetting.values = values
+        
+        newSetting.values = requests.map {
+            return CalibrationSettingValues(context: _managedContext).loadValues(from: $0)
+        }
         
         do {
             try _managedContext.save()
@@ -30,8 +33,9 @@ class CalibrationSettingService: Repository<CalibrationSetting> {
         return newSetting
     }
     
-    func createNewSettingValues() -> CalibrationSettingValues{
-        return CalibrationSettingValues(context: _managedContext)
+    func updateSettingValues(setting: CalibrationSetting, from requests: [CalibrationSettingValuesRequest]) -> CalibrationSetting {
+        // update setting values here
+        return setting
     }
     
     func fetchAllSortedByTime() throws -> [CalibrationSetting]{

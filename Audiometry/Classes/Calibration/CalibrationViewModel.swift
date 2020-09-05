@@ -17,11 +17,12 @@ protocol CalibrationViewPresentable {
         onClickLoadOther: Signal<Void>,
         onClickDeleteCurrent: Signal<Void>,
         
-        onSaveNewSetting: Signal<(String, [Int: CalibrationSettingValueUi])>,
-        onSaveCurrentSetting: Signal<[Int: CalibrationSettingValueUi]>,
+        onSaveNewSetting: Signal<(String, [CalibrationSettingValuesRequest])>,
+        onSaveCurrentSetting: Signal<[CalibrationSettingValuesRequest]>,
         onLoadSelectedSetting: Signal<String>,
 
-        onTogglePlayCalibration: Signal<(Bool, CalibrationSettingValueUi)>
+        onTogglePlayCalibration: Signal<CalibrationSettingValuesRequest?>,
+        onUpdatePlayCalibration: Signal<CalibrationSettingValuesRequest?>
     )
     
     // MARK: - Outputs
@@ -111,15 +112,28 @@ private extension CalibrationViewModel {
             .disposed(by: _disposeBag)
         
         input.onTogglePlayCalibration
-            .map { [_state, _calibrationPlayer] (isToggle, ui) in
-                if isToggle && ui.frequency == _state.currentPlayerFrequency.value{
+            .map { [_state, _calibrationPlayer] request -> Int in
+                if let r = request, r.frequency != _state.currentPlayerFrequency.value {
+                    _calibrationPlayer.play(with: r)
+                    return r.frequency
+                } else {
                     _calibrationPlayer.stop()
-                    return (isToggle, -1)
+                    return -1
                 }
-                _calibrationPlayer.play(ui: ui)
-                return (isToggle, ui.frequency)
-            }.filter { (isToggle, frequency) in return isToggle }
-            .map { (isToggle, frequency) in return frequency }
+            }
+            .emit(to: _state.currentPlayerFrequency)
+            .disposed(by: _disposeBag)
+        
+        input.onUpdatePlayCalibration
+            .map { [_state, _calibrationPlayer] request -> Int in
+                if let r = request, r.frequency == _state.currentPlayerFrequency.value {
+                    _calibrationPlayer.play(with: r)
+                    return r.frequency
+                } else {
+                   _calibrationPlayer.stop()
+                   return -1
+               }
+            }
             .emit(to: _state.currentPlayerFrequency)
             .disposed(by: _disposeBag)
     }
@@ -132,14 +146,9 @@ private extension CalibrationViewModel {
     
     private func bindSaveNewSetting() {
         input.onSaveNewSetting
-            .map { (settingName, settingUiLookup) in
+            .map { (settingName, requests) in
                 let service = CalibrationSettingService.shared
-                return service.createNewSetting(
-                    name: settingName,
-                    values: settingUiLookup.map {
-                        return service.createNewSettingValues().loadValues(from: $0.value)
-                    }
-                )
+                return service.createNewSetting(name: settingName, from: requests)
             }
             .emit(to: _state.currentCalibrationSetting)
             .disposed(by: _disposeBag)
@@ -147,11 +156,10 @@ private extension CalibrationViewModel {
     
     private func bindSaveCurrentSetting() {
         input.onSaveCurrentSetting
-            .map { [_state] settingUiLookup -> CalibrationSetting? in
+            .map { [_state] requests -> CalibrationSetting? in
                 if let setting = _state.currentCalibrationSetting.value {
-                    _ = setting.values.map {
-                        $0.loadValues(from: settingUiLookup[$0.frequency]!)
-                    }
+                    let service = CalibrationSettingService.shared
+                    return service.updateSettingValues(setting: setting, from: requests)
                 }
                 return _state.currentCalibrationSetting.value
             }.emit(to: _state.currentCalibrationSetting)
@@ -167,8 +175,7 @@ private extension CalibrationViewModel {
         input.onLoadSelectedSetting
             .map { [_state] settingName in
                 _state.allCalibrationSettings.value
-                    .filter({ $0.name == settingName})
-                    .first
+                    .first{ $0.name == settingName}
             }.emit(to: _state.currentCalibrationSetting)
             .disposed(by: _disposeBag)
     }

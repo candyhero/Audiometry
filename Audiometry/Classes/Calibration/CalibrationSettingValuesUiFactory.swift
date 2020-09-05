@@ -2,15 +2,35 @@
 import Foundation
 import UIKit
 
-class CalibrationSettingUiFactory {
-    static let shared = CalibrationSettingUiFactory()
+class CalibrationSettingValuesUiFactory {
+    static let shared = CalibrationSettingValuesUiFactory()
     
-    func getElement(frequency: Int) -> CalibrationSettingValueUi{
-        return CalibrationSettingValueUi(frequency)
+    func getElement(frequency: Int) -> CalibrationSettingValuesUi{
+        return CalibrationSettingValuesUi(frequency)
     }
 }
 
-class CalibrationSettingValueUi {
+struct CalibrationSettingValuesRequest {
+    var frequency: Int!
+    var expectedLevel: Double!
+    var presentationLevel: Double!
+    var leftMeasuredLevel: Double!
+    var rightMeasuredLevel: Double!
+    
+    var leftFinalPresentationLevel: Double! {
+        get {
+            return presentationLevel + expectedLevel - leftMeasuredLevel
+        }
+    }
+    
+    var rightFinalPresentationLevel: Double! {
+        get {
+            return presentationLevel + expectedLevel - rightMeasuredLevel
+        }
+    }
+}
+
+class CalibrationSettingValuesUi {
     var expectedLevelTextField = UITextField()
     var presentationLevelTextField = UITextField()
     var leftMeasuredLevelTextField = UITextField()
@@ -19,6 +39,19 @@ class CalibrationSettingValueUi {
     var frequency: Int!
     var frequencyLabel = UILabel()
     var playButton = UIButton(type:.system)
+    
+    var request: CalibrationSettingValuesRequest {
+        get {
+            return CalibrationSettingValuesRequest(
+                frequency: self.frequency,
+                expectedLevel: Double(expectedLevelTextField.text!),
+                presentationLevel: Double(presentationLevelTextField.text!),
+                leftMeasuredLevel: Double(leftMeasuredLevelTextField.text!),
+                rightMeasuredLevel: Double(rightMeasuredLevelTextField.text!)
+            )
+        }
+    }
+    
     
     init(_ frequency: Int) {
         self.frequency = frequency
