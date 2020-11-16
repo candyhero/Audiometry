@@ -51,7 +51,7 @@ extension TestPlayer {
     
     mutating func terminate() {
         do {
-            try AudioKit.stop()
+            try AKManager.stop()
         } catch {
             print(error)
         }

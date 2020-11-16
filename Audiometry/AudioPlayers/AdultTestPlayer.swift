@@ -18,7 +18,7 @@ class AdultTestPlayer : TestPlayer {
 
     required init() {
         do {
-            try AudioKit.stop()
+            try AKManager.stop()
         } catch {
             print(error)
         }
@@ -50,10 +50,10 @@ class AdultTestPlayer : TestPlayer {
             return [leftOutput, rightOutput]
         }
         
-        AudioKit.output = _generator
+        AKManager.output = _generator
         
         do {
-            try AudioKit.start()
+            try AKManager.start()
             // Initialize / warm up player to eliminate the "first time click sound"
             // Don't remove
             updateFreq(Int(1))

@@ -11,7 +11,6 @@ class ResultCoordinator: Coordinator {
     var _patientProfileRepo = PatientProfileRepo.repo
 
     private var _globalSetting: GlobalSetting!
-    private var _currentPatient: PatientProfile!
     private var _patients: [PatientProfile] = []
 
     func start() {
@@ -31,10 +30,36 @@ class ResultCoordinator: Coordinator {
     func getAllPatientProfiles() -> [PatientProfile]{
         return _patients
     }
-
-    func getPatientProfileValues(_ index: Int) -> [PatientProfileValues]{
-        _currentPatient = _patients[index]
-        return getSortedValues(_currentPatient)
+    
+    func getPatientProfile(_ index: Int) -> PatientProfile {
+        return _patients[index]
+    }
+    
+    func getPatientProfileValues(_ index: Int) -> [PatientProfileValues] {
+        return getSortedValues(_patients[index])
+    }
+    
+    func deletePatientProfile(_ index: Int) -> Bool {
+        do {
+            try _patientProfileRepo.delete(_patients[index])
+            _patients.remove(at: index)
+            return true
+        }
+        catch {
+            return false
+        }
+    }
+    
+    func deleteAllPatientProfiles() -> Bool {
+        do {
+            for patient in _patients {
+                try _patientProfileRepo.delete(patient)
+            }
+            return true
+        }
+        catch {
+            return false
+        }
     }
 
     func exportAllPatients() -> URL! {

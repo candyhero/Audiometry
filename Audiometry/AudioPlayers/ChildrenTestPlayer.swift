@@ -25,7 +25,7 @@ class ChildrenTestPlayer : TestPlayer {
     
     required init() {
         do {
-            try AudioKit.stop()
+            try AKManager.stop()
         } catch {
             print(error)
         }
@@ -41,10 +41,10 @@ class ChildrenTestPlayer : TestPlayer {
         }
         
         _player = AKPlayer(audioFile: _file)
-        AudioKit.output = _player
+        AKManager.output = _player
         
         do {
-            try AudioKit.start()
+            try AKManager.start()
         } catch {
             print(error)
         }
@@ -55,7 +55,7 @@ class ChildrenTestPlayer : TestPlayer {
             _zFactor = Z_FACTORS[newFreq] ?? 0.0
             let path = "\(ANIMAL_TONE_PATH)/\(newFreq!)Hz.wav"
             let file = try AKAudioFile(readFileName: path)
-            _player.load(audioFile: file)
+            try _player.load(audioFile: file)
             _player.endTime = PULSE_TIME_CHILDREN * 2
         } catch {
             print(error)
