@@ -1,0 +1,45 @@
+
+/* Class = "UIButton"; normalTitle = "Continue After Switching the Earphone"; ObjectID = "04f-DG-o9J"; */
+"04f-DG-o9J.normalTitle" = "Continue After Switching the Earphone";
+
+/* Class = "UIButton"; normalTitle = "Pause"; ObjectID = "1EF-nR-31E"; */
+"1EF-nR-31E.normalTitle" = "Pause";
+
+/* Class = "UIButton"; normalTitle = "Repeat"; ObjectID = "1bH-v6-7C1"; */
+"1bH-v6-7C1.normalTitle" = "Repeat";
+
+/* Class = "UIButton"; normalTitle = "Return to Title"; ObjectID = "2Uk-Sk-nqx"; */
+"2Uk-Sk-nqx.normalTitle" = "Return to Title";
+
+/* Class = "UIButton"; normalTitle = "Pause"; ObjectID = "3JU-sZ-hLL"; */
+"3JU-sZ-hLL.normalTitle" = "Pause";
+
+/* Class = "UIButton"; normalTitle = "No Sound"; ObjectID = "5SV-3M-pbc"; */
+"5SV-3M-pbc.normalTitle" = "No Sound";
+
+/* Class = "UIButton"; normalTitle = "No Sound"; ObjectID = "Bpw-UR-4Wm"; */
+"Bpw-UR-4Wm.normalTitle" = "No Sound";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Fbl-Cm-EPg"; */
+"Fbl-Cm-EPg.text" = "Label";
+
+/* Class = "UILabel"; text = "Test Progress: __%"; ObjectID = "UDg-n5-yK3"; */
+"UDg-n5-yK3.text" = "Test Progress: __%";
+
+/* Class = "UILabel"; text = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound"; ObjectID = "Ulh-08-mvM"; */
+"Ulh-08-mvM.text" = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound";
+
+/* Class = "UIButton"; normalTitle = "Repeat"; ObjectID = "b8i-ED-zDi"; */
+"b8i-ED-zDi.normalTitle" = "Repeat";
+
+/* Class = "UIButton"; normalTitle = "Return to Title"; ObjectID = "dBi-HB-tJb"; */
+"dBi-HB-tJb.normalTitle" = "Return to Title";
+
+/* Class = "UIButton"; normalTitle = "Start Testing!"; ObjectID = "lbz-0r-a2i"; */
+"lbz-0r-a2i.normalTitle" = "Start Testing!";
+
+/* Class = "UIButton"; normalTitle = "Return to Title"; ObjectID = "xGj-8Z-nbi"; */
+"xGj-8Z-nbi.normalTitle" = "Return to Title";
+
+/* Class = "UILabel"; text = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound"; ObjectID = "yRV-Wa-CQF"; */
+"yRV-Wa-CQF.text" = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound";

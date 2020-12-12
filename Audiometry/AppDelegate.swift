@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static let navController = UINavigationController()
     
     static let mainCoordinator = MainCoordinator()
+    static let languageCoordinator = LanguageCoordiantor()
     static let calibrationCoordinator = CalibrationCoordinator()
     static let testProcotolCoordinator = TestProtocolCoordinator()
     static let testCoordinator = TestCoordinator()

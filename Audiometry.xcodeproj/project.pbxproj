@@ -29,6 +29,9 @@
 		4EEDE90E21BFB04600028C60 /* ChildrenTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EEDE90C21BFB04600028C60 /* ChildrenTest.storyboard */; };
 		4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */; };
 		4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */; };
+		67251B93241D5AFB00587F77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67251B95241D5AFB00587F77 /* Localizable.strings */; };
+		67251B99241D5D4A00587F77 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67251B98241D5D4A00587F77 /* LanguageViewController.swift */; };
+		67251B9B241D5D7700587F77 /* LanguageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67251B9A241D5D7700587F77 /* LanguageCoordinator.swift */; };
 		6794A4FF2400541600489C64 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 6794A4FE2400541600489C64 /* Assets */; };
 		67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */; };
 		67B58CF123D4CDF7003EFEE6 /* CalibrationSettingRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */; };
@@ -75,6 +78,18 @@
 		4EEDE90F21BFC07200028C60 /* ChildrenTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTestPlayer.swift; sourceTree = "<group>"; };
 		4EEDE91121BFC08200028C60 /* AdultTestPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultTestPlayer.swift; sourceTree = "<group>"; };
 		6703415723512E4E00ABFB89 /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		67251B87241D5A3600587F77 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		67251B88241D5A3600587F77 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
+		67251B89241D5A3600587F77 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/AdultTest.strings"; sourceTree = "<group>"; };
+		67251B8A241D5A3600587F77 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/ChildrenTest.strings"; sourceTree = "<group>"; };
+		67251B8B241D5A3E00587F77 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		67251B8C241D5A3E00587F77 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Main.strings"; sourceTree = "<group>"; };
+		67251B8D241D5A3E00587F77 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/AdultTest.strings"; sourceTree = "<group>"; };
+		67251B8E241D5A3E00587F77 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/ChildrenTest.strings"; sourceTree = "<group>"; };
+		67251B94241D5AFB00587F77 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		67251B96241D5AFD00587F77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		67251B98241D5D4A00587F77 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
+		67251B9A241D5D7700587F77 /* LanguageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCoordinator.swift; sourceTree = "<group>"; };
 		6794A4FE2400541600489C64 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
 		67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
 		67B58CF023D4CDF7003EFEE6 /* CalibrationSettingRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationSettingRepo.swift; sourceTree = "<group>"; };
@@ -92,7 +107,6 @@
 		67E329B423CE2C6A0068C2E2 /* PatientProfileRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientProfileRepo.swift; sourceTree = "<group>"; };
 		67E329B723CF5F190068C2E2 /* TestProtocolRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProtocolRepo.swift; sourceTree = "<group>"; };
 		67E329B923CF661E0068C2E2 /* ProtocolUIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolUIFactory.swift; sourceTree = "<group>"; };
-		67F4916C240EBAEF00AC891E /* TestPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = TestPlayground.playground; path = ../../../../Desktop/TestPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		6BB81B19970E35CFD84AF850 /* Pods_Audiometry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audiometry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFE8D055F906C3049CD786A8 /* Pods-Audiometry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audiometry.debug.xcconfig"; path = "Target Support Files/Pods-Audiometry/Pods-Audiometry.debug.xcconfig"; sourceTree = "<group>"; };
 		D0F8D66214902A3E6506CE7D /* ResultCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultCoordinator.swift; sourceTree = "<group>"; };
@@ -146,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				67B58CF523D5F7BC003EFEE6 /* Storyboarded.swift */,
+				67251B98241D5D4A00587F77 /* LanguageViewController.swift */,
 				4E4B3C7921A7266000191AF3 /* TitleViewController.swift */,
 				4E4B3C7821A7266000191AF3 /* CalibrationViewController.swift */,
 				4E4B3CEF21B03CF000191AF3 /* TestProtocolViewController.swift */,
@@ -171,6 +186,7 @@
 		4EC055EC21A724E60016AB0D = {
 			isa = PBXGroup;
 			children = (
+				67251B95241D5AFB00587F77 /* Localizable.strings */,
 				4EC055F721A724E60016AB0D /* Audiometry */,
 				1973150BF9644E63FB60AE81 /* Pods */,
 				B4A70806EF3F3D522B8F549B /* Frameworks */,
@@ -181,7 +197,6 @@
 		4EC055F721A724E60016AB0D /* Audiometry */ = {
 			isa = PBXGroup;
 			children = (
-				67F4916C240EBAEF00AC891E /* TestPlayground.playground */,
 				6794A4FE2400541600489C64 /* Assets */,
 				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
 				67C88C3B2400498F0000F6E7 /* AppConstants.swift */,
@@ -206,6 +221,7 @@
 			children = (
 				67B58CF323D5F795003EFEE6 /* Coordinator.swift */,
 				67B58CF723D5F812003EFEE6 /* MainCoordinator.swift */,
+				67251B9A241D5D7700587F77 /* LanguageCoordinator.swift */,
 				67B58CFB23D748DF003EFEE6 /* CalibrationCoordinator.swift */,
 				67B58D0223EF19C2003EFEE6 /* TestProcotolCoordinator.swift */,
 				67B58CF923D73833003EFEE6 /* TestCoordinator.swift */,
@@ -280,7 +296,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = TriCounty;
 				TargetAttributes = {
 					4EC055F421A724E60016AB0D = {
@@ -296,6 +312,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"pt-BR",
+				"es-419",
 			);
 			mainGroup = 4EC055EC21A724E60016AB0D;
 			productRefGroup = 4EC055EC21A724E60016AB0D;
@@ -315,6 +333,7 @@
 				4EC0560621A724E70016AB0D /* LaunchScreen.storyboard in Resources */,
 				6794A4FF2400541600489C64 /* Assets in Resources */,
 				4EC0560321A724E70016AB0D /* Assets.xcassets in Resources */,
+				67251B93241D5AFB00587F77 /* Localizable.strings in Resources */,
 				4E4B3C8E21A7267100191AF3 /* Main.storyboard in Resources */,
 				4E4B3CA521A9A30900191AF3 /* AdultTest.storyboard in Resources */,
 				4EEDE90E21BFB04600028C60 /* ChildrenTest.storyboard in Resources */,
@@ -375,6 +394,7 @@
 				4E4B3C7D21A7266000191AF3 /* CalibrationPlayer.swift in Sources */,
 				4EEDE90621BE876E00028C60 /* ChildrenTestViewController.swift in Sources */,
 				67B58CFC23D748DF003EFEE6 /* CalibrationCoordinator.swift in Sources */,
+				67251B99241D5D4A00587F77 /* LanguageViewController.swift in Sources */,
 				4E4B3CF021B03CF000191AF3 /* TestProtocolViewController.swift in Sources */,
 				67B58CF623D5F7BC003EFEE6 /* Storyboarded.swift in Sources */,
 				4E4B3C8321A7266000191AF3 /* TitleViewController.swift in Sources */,
@@ -385,6 +405,7 @@
 				4EEDE91221BFC08200028C60 /* AdultTestPlayer.swift in Sources */,
 				67B58D0323EF19C2003EFEE6 /* TestProcotolCoordinator.swift in Sources */,
 				4EEDE91021BFC07200028C60 /* ChildrenTestPlayer.swift in Sources */,
+				67251B9B241D5D7700587F77 /* LanguageCoordinator.swift in Sources */,
 				67B58CF123D4CDF7003EFEE6 /* CalibrationSettingRepo.swift in Sources */,
 				4EEDE90721BE876E00028C60 /* AdultTestViewController.swift in Sources */,
 				4E4B3C8221A7266000191AF3 /* CalibrationViewController.swift in Sources */,
@@ -414,6 +435,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				4E4B3C8921A7267100191AF3 /* Base */,
+				67251B88241D5A3600587F77 /* pt-BR */,
+				67251B8C241D5A3E00587F77 /* es-419 */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -422,6 +445,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				4E4B3CA321A9A30900191AF3 /* Base */,
+				67251B89241D5A3600587F77 /* pt-BR */,
+				67251B8D241D5A3E00587F77 /* es-419 */,
 			);
 			name = AdultTest.storyboard;
 			sourceTree = "<group>";
@@ -430,6 +455,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				4EC0560521A724E70016AB0D /* Base */,
+				67251B87241D5A3600587F77 /* pt-BR */,
+				67251B8B241D5A3E00587F77 /* es-419 */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -438,8 +465,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				4EEDE90D21BFB04600028C60 /* Base */,
+				67251B8A241D5A3600587F77 /* pt-BR */,
+				67251B8E241D5A3E00587F77 /* es-419 */,
 			);
 			name = ChildrenTest.storyboard;
+			sourceTree = "<group>";
+		};
+		67251B95241D5AFB00587F77 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				67251B94241D5AFB00587F77 /* pt-BR */,
+				67251B96241D5AFD00587F77 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -449,6 +487,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -471,6 +510,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -496,7 +536,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -510,6 +550,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -532,6 +573,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -551,7 +593,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -567,10 +609,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = S8QF6QA72P;
 				INFOPLIST_FILE = Audiometry/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"$(inherited)",
@@ -593,10 +635,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = S8QF6QA72P;
 				INFOPLIST_FILE = Audiometry/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"$(inherited)",

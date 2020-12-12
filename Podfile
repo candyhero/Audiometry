@@ -6,6 +6,6 @@ target 'Audiometry' do
   use_frameworks!
 
   # Pods for Audiometry
-  pod 'AudioKit/Core', '= 4.8'
-  pod 'Charts', '>=3.4.0'
+  pod 'AudioKit/Core', '4.9.4'
+  pod 'Charts', '3.6.0'
 end

@@ -1,0 +1,33 @@
+
+/* Class = "UIButton"; normalTitle = "Continue After Switching the Earphone"; ObjectID = "QpW-sO-Uze"; */
+"QpW-sO-Uze.normalTitle" = "Continue After Switching the Earphone";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "V1m-eF-kpG"; */
+"V1m-eF-kpG.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Start Testing!"; ObjectID = "Ww6-wk-edI"; */
+"Ww6-wk-edI.normalTitle" = "Start Testing!";
+
+/* Class = "UIButton"; normalTitle = "Return to Title"; ObjectID = "YKS-n1-fbd"; */
+"YKS-n1-fbd.normalTitle" = "Return to Title";
+
+/* Class = "UIButton"; normalTitle = "Repeat"; ObjectID = "Yvl-4D-QvU"; */
+"Yvl-4D-QvU.normalTitle" = "Repeat";
+
+/* Class = "UIButton"; normalTitle = "Return to Title"; ObjectID = "bgb-fT-YWn"; */
+"bgb-fT-YWn.normalTitle" = "Return to Title";
+
+/* Class = "UIButton"; normalTitle = "Repeat"; ObjectID = "lHW-Ue-LL4"; */
+"lHW-Ue-LL4.normalTitle" = "Repeat";
+
+/* Class = "UIButton"; normalTitle = "Pause"; ObjectID = "vga-Ag-dLw"; */
+"vga-Ag-dLw.normalTitle" = "Pause";
+
+/* Class = "UILabel"; text = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound"; ObjectID = "xeR-QT-CrY"; */
+"xeR-QT-CrY.text" = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound";
+
+/* Class = "UIButton"; normalTitle = "Return to Title"; ObjectID = "yiQ-Cw-ZiX"; */
+"yiQ-Cw-ZiX.normalTitle" = "Return to Title";
+
+/* Class = "UILabel"; text = "Test Progress: __%"; ObjectID = "zaA-u9-UI4"; */
+"zaA-u9-UI4.text" = "Test Progress: __%";

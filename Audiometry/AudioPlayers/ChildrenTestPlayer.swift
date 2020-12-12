@@ -55,7 +55,7 @@ class ChildrenTestPlayer : TestPlayer {
             _zFactor = Z_FACTORS[newFreq] ?? 0.0
             let path = "\(ANIMAL_TONE_PATH)/\(newFreq!)Hz.wav"
             let file = try AKAudioFile(readFileName: path)
-            _player.load(audioFile: file)
+            try _player.load(audioFile: file)
             _player.endTime = PULSE_TIME_CHILDREN * 2
         } catch {
             print(error)
