@@ -25,7 +25,7 @@ class ChildrenTestPlayer : TestPlayer {
     
     required init() {
         do {
-            try AKManager.stop()
+            try AudioKit.stop()
         } catch {
             print(error)
         }
@@ -41,10 +41,10 @@ class ChildrenTestPlayer : TestPlayer {
         }
         
         _player = AKPlayer(audioFile: _file)
-        AKManager.output = _player
+        AudioKit.output = _player
         
         do {
-            try AKManager.start()
+            try AudioKit.start()
         } catch {
             print(error)
         }

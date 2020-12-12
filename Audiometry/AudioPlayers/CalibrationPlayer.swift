@@ -16,7 +16,7 @@ class CalibrationPlayer {
     
     init() {
         do {
-            try AKManager.stop()
+            try AudioKit.stop()
         } catch {
             print(error)
         }
@@ -33,9 +33,9 @@ class CalibrationPlayer {
             return [leftOutput, rightOutput]
         }
         
-        AKManager.output = _generator
+        AudioKit.output = _generator
         do {
-            try AKManager.start()
+            try AudioKit.start()
         } catch let error as NSError {
             print("Cant Start AudioKit", error)
         }
