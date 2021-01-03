@@ -271,9 +271,9 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             i+=1
         }
         
-        let line_L = LineChartDataSet(values: lineChartEntry_L,
+        let line_L = LineChartDataSet(entries: lineChartEntry_L,
                                      label: "Presentation Lv. (Left) in dB")
-        let line_R = LineChartDataSet(values: lineChartEntry_R,
+        let line_R = LineChartDataSet(entries: lineChartEntry_R,
                                      label: "Presentation Lv. (Right) in dB")
         
         line_L.colors=[NSUIColor.blue]

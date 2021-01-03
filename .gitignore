@@ -81,3 +81,11 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+*.wav
+*.png
+*.jpg
+Audiometry/.DS_Store
+Audiometry/Assets/.DS_Store
+Audiometry/Assets/Animal_Icons/.DS_Store
+Audiometry/Assets/Animal_Tones/.DS_Store
+Audiometry/.DS_Store
