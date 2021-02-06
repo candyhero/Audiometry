@@ -14,11 +14,9 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     private var _globalSetting: GlobalSetting!
     private var _currentPatient: PatientProfile!
     
-    private var _array_patients: [PatientProfile] = []
-    private var _array_freqSeq: [Int] = []
-    private var _array_buttons: [UIButton] = []
-    
-    private var _patientSectionRows: [Int] = [] // section, row
+    private var _patients: [PatientProfile] = []
+    private var _patientButtons: [UIButton] = []
+    private var _patientSectionRowCount: [Int] = [] 
     
 //------------------------------------------------------------------------------
 // UI Components
@@ -35,26 +33,43 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var pbDeleteCurrentPatient: UIButton!
     
     @IBAction func deleteCurrentPatient(_ sender: UIButton) {
-//        print("Count: ", _array_buttons.count)
-//        for button in _array_buttons{
-//            print(button.tag)
-//        }
-        let alertMsg = "Are you sure to delete \"" + (_currentPatient?.name)! + "\" ?"
+        if let patientName = _currentPatient?.name {
+            let alertMsg = "Are you sure to delete patient: \(patientName)?"
+            alertPrompt(alertTitle: "Delete patient profile",
+                        alertMsg: alertMsg,
+                        confirmFunction: deletePatient,
+                        uiCtrl: self)
+        }
+    }
+    
+    func deletePatient(){
+        let indexPath = tbPatients.indexPathForSelectedRow
         
-        alertPrompt(alertTitle: "Delete patient profile",
-                    alertMsg: alertMsg,
-                    confirmFunction: deletePatient,
-                    uiCtrl: self)
+        if let section = indexPath?.section {
+            let patient = _patients[section]
+            _managedContext.delete(patient)
+            
+            _patients.remove(at: section)
+            _patientButtons.remove(at: section)
+            _patientSectionRowCount.remove(at: section)
+            
+            for (index, button) in _patientButtons.enumerated() {
+                button.tag = index
+            }
+            
+            _currentPatient = nil
+            tbPatients.deleteSections(IndexSet([section]), with: .fade)
+        }
     }
     
     @IBAction func exportAllPatients(_ sender: UIButton){
         // if no patient data
-        if(_array_patients.count == 0){
+        if(_patients.count == 0){
             return
         }
         
         do {
-            let csvText = Audiometry.exportAllPatientsInRows(_array_patients)
+            let csvText = Audiometry.exportAllPatientsInRows(_patients)
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
             
@@ -83,22 +98,17 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
 // TableView Functions
 //------------------------------------------------------------------------------
     func numberOfSections(in tableView: UITableView) -> Int {
-        
-        return _array_patients.count
+        return _patients.count
     }
     
-    func tableView(_ tableView: UITableView,
-                   viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let button = UIButton(type: .system)
-        
         button.backgroundColor = UIColor.darkGray
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(self,
-                         action: #selector(handleExpandClose),
-                         for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
         
-        let patient = _array_patients[section]
+        let patient = _patients[section]
         let title = "[\(patient.group ?? "NO_GROUP")] \(patient.name ?? "NO_NAME")"
             + "\(patient.isAdult ? "(Adult)":"(Child)")"
             + "\(patient.isPractice ? "[Practice]" : "")"
@@ -106,31 +116,24 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         button.setTitle(title, for: .normal)
         button.tag = section
         
-        _array_buttons.append(button)
-        // add button to array_buttons
+        _patientButtons.append(button)
         return button
     }
     
     @objc func handleExpandClose(button: UIButton!){
+        _currentPatient = _patients[button.tag]
         
-        _currentPatient = _array_patients[button.tag]
+        let patientProfileValues = getSortedPatientProfileValues(_currentPatient)
+        let indexPaths = patientProfileValues.indices.map { IndexPath(row: $0, section: button.tag)}
         
-        let values = getSortedValues(_currentPatient)
-        var array_indexPath = [IndexPath]()
-        
-        for freqIndex in values.indices {
-            let indexPath = IndexPath(row: freqIndex, section: button.tag)
-            array_indexPath.append(indexPath)
-        }
-        
-        if(_patientSectionRows[button.tag] > 0){
+        if(_patientSectionRowCount[button.tag] > 0){
             
-            _patientSectionRows[button.tag] = 0
-            tbPatients.deleteRows(at: array_indexPath, with: .fade)
+            _patientSectionRowCount[button.tag] = 0
+            tbPatients.deleteRows(at: indexPaths, with: .fade)
         }
         else {
-            _patientSectionRows[button.tag] = values.count
-            tbPatients.insertRows(at: array_indexPath, with: .fade)
+            _patientSectionRowCount[button.tag] = patientProfileValues.count
+            tbPatients.insertRows(at: indexPaths, with: .fade)
         }
     }
     
@@ -140,13 +143,13 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // Cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return _patientSectionRows[section]
+        return _patientSectionRowCount[section]
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Retrieve patient brief info
-        _currentPatient = _array_patients[indexPath.section]
-        let values = getSortedValues(_currentPatient)[indexPath.row]
+        _currentPatient = _patients[indexPath.section]
+        let values = getSortedPatientProfileValues(_currentPatient)[indexPath.row]
         
         print(_currentPatient)
 
@@ -178,33 +181,14 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        _currentPatient = _array_patients[indexPath.section]
-        let values = getSortedValues(_currentPatient)
+        _currentPatient = _patients[indexPath.section]
+        let values = getSortedPatientProfileValues(_currentPatient)
         updateGraph(values[indexPath.row])
     }
     
 //------------------------------------------------------------------------------
-// CoreData functions
+// Chart functions
 //------------------------------------------------------------------------------
-    func deletePatient(){
-        let indexPath = tbPatients.indexPathForSelectedRow
-        
-        if(indexPath?.section == nil){
-            return
-        }
-        
-        let patient = _array_patients[indexPath!.section]
-        _managedContext.delete(patient)
-        _array_patients.remove(at: indexPath!.section)
-        
-        _patientSectionRows.remove(at: indexPath!.section)
-        tbPatients.deleteSections(IndexSet([indexPath!.section]), with: .fade)
-        
-        //update button tags
-        //for button in
-    }
-    
     fileprivate func updateCharts(_ values: PatientProfileValues) {
         // Set y-axis
         let max_L = (values.results_L ?? []).max() ?? _DB_SYSTEM_MAX
@@ -339,7 +323,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         patientRequest.sortDescriptors = [sortByTimestamp]
         
         do {
-            _array_patients = try _managedContext.fetch(patientRequest)
+            _patients = try _managedContext.fetch(patientRequest)
         } catch let error as NSError{
             print("Could not fetch calibration setting.")
             print("\(error), \(error.userInfo)")
@@ -365,18 +349,16 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pbDeleteCurrentPatient.isEnabled = false
+//        pbDeleteCurrentPatient.isEnabled = false
         // Load result
         initSettings()
-        let mostRecentPatient = _array_patients.first!
+        let mostRecentPatient = _patients.first!
         
-        for patientProfile in _array_patients {
-            _patientSectionRows.append(0)
-        }
+        _patientSectionRowCount = _patients.map{ _ in return 0 }
         
-        let mostRecentValues = getSortedValues(mostRecentPatient)
+        let mostRecentValues = getSortedPatientProfileValues(mostRecentPatient)
         print(mostRecentPatient)
-        _patientSectionRows[0] = mostRecentValues.count
+        _patientSectionRowCount[0] = mostRecentValues.count
     }
     
     override func didReceiveMemoryWarning() {

@@ -156,7 +156,7 @@ func pickerPrompt(confirmFunction: @escaping () -> Void,
     uiCtrl.present(alertCtrl, animated: true, completion: nil)
 }
 
-func getSortedValues(_ patient: PatientProfile) -> [PatientProfileValues]{
+func getSortedPatientProfileValues(_ patient: PatientProfile) -> [PatientProfileValues]{
     let sortByFrequency = NSSortDescriptor(
         key: #keyPath(PatientProfileValues.frequency),
         ascending: true)
@@ -233,7 +233,7 @@ fileprivate func extractPatientValues(_ patientProfile: PatientProfile) -> Strin
     
     
     // Prepare threshold values
-    let patientProfileValues = getSortedValues(patientProfile)
+    let patientProfileValues = getSortedPatientProfileValues(patientProfile)
     var dict_threshold_L = [Int:Int]()
     var dict_threshold_R = [Int:Int]()
     var dict_spamCount_L = [Int:Int]()
