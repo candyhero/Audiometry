@@ -77,7 +77,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             _managedContext.delete(patient)
         }
         try? _managedContext.save()
-        performSegue(withIdentifier: "seguePracticeFromTitle", sender: nil)
+        performSegue(withIdentifier: "segueTitleFromResult", sender: nil)
     }
     
     @IBAction func exportAllPatients(_ sender: UIButton){
@@ -367,7 +367,6 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        pbDeleteCurrentPatient.isEnabled = false
         // Load result
         initSettings()
         let mostRecentPatient = _patients.first!

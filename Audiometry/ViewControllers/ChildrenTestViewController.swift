@@ -93,6 +93,13 @@ class ChildrenTestViewController: UIViewController {
         pulseCounter = 0
         _testModel.pausePlaying()
     }
+    
+    @IBAction func returnToTitle(_ sender: Any) {
+        _testModel.pausePlaying()
+        performSegue(withIdentifier: "segueTitleFromChildrenTest", sender: nil)
+    }
+    
+    
 
 //------------------------------------------------------------------------------
 // Test Functions

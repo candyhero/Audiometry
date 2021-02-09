@@ -20,6 +20,12 @@ class AdultTestPlayer : TestPlayer {
     var rightCorrFactor: Double!
     
     required init() {
+        do {
+            try AudioKit.stop()
+        } catch {
+            print(error)
+        }
+        
         leftCorrFactor = 0.0
         rightCorrFactor = 0.0
         
@@ -52,6 +58,9 @@ class AdultTestPlayer : TestPlayer {
         do {
             isStarted = true
             try AudioKit.start()
+            updateFreq(Int(1))
+            start()
+            stop()
         } catch {
             print(error)
         }

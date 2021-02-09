@@ -36,18 +36,17 @@ class ChildrenTestPlayer : TestPlayer {
         rightCorrFactor = 0.0
         
         do {
-            file = try AKAudioFile(readFileName: "Animal_Tones/250Hz.wav")
+            try AudioKit.stop()
+            
+            player = AKPlayer()
+            AudioKit.output = player
+            updateFreq(250)
+            updateVolume(0, true)
+            
             isStarted = true
-        } catch {
-            print(error)
-            return
-        }
-        
-        player = AKPlayer(audioFile: file)
-        AudioKit.output = player
-        
-        do {
             try AudioKit.start()
+            start()
+            stop()
         } catch {
             print(error)
         }
@@ -56,7 +55,8 @@ class ChildrenTestPlayer : TestPlayer {
     func updateFreq (_ newFreq: Int!) {
         do {
             zFactor = Z_FACTORS[newFreq] ?? 0.0
-            let file = try AKAudioFile(readFileName: "Animal_Tones/"+String(newFreq)+"Hz.wav")
+            let filePath = "Animal_Tones/\(newFreq!)Hz.wav"
+            let file = try AKAudioFile(readFileName: filePath)
             player.load(audioFile: file)
             player.endTime = PULSE_TIME_CHILDREN * 2
         } catch {
@@ -103,6 +103,7 @@ class ChildrenTestPlayer : TestPlayer {
         
         self.player.volume = 0
         self.player.play()
+        
         let corrFactor: Double! = isLeft ? leftCorrFactor : rightCorrFactor
         let playingLevel: Double! = self.currentVol + corrFactor + zFactor
         print("Playing Actual: ", playingLevel)

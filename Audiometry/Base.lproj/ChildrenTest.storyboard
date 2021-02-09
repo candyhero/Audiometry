@@ -122,7 +122,7 @@
                                 <rect key="frame" x="20" y="0.0" width="98" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="EJU-Ww-3zb" kind="showDetail" id="jFb-rL-OgV"/>
+                                    <action selector="returnToTitle:" destination="rqA-y9-Rxr" eventType="touchUpInside" id="azg-D5-x4q"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -154,6 +154,7 @@
                         <outlet property="svIcons" destination="Qrf-f3-cWA" id="yNa-L0-In9"/>
                         <segue destination="4xs-O5-bdk" kind="show" identifier="segueSwitchEar" id="2bL-Pn-Pg0"/>
                         <segue destination="npX-wU-hFR" kind="showDetail" identifier="segueResult" id="it3-2m-x0y"/>
+                        <segue destination="EJU-Ww-3zb" kind="showDetail" identifier="segueTitleFromChildrenTest" id="fLK-xg-KD6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UpN-4c-t75" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -358,7 +359,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dBq-r5-Uqm"/>
+        <segue reference="fLK-xg-KD6"/>
         <segue reference="6KL-Kd-kyS"/>
     </inferredMetricsTieBreakers>
 </document>

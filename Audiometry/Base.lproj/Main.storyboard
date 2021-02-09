@@ -343,7 +343,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oyg-8O-FTI">
-                                <rect key="frame" x="20" y="0.0" width="100" height="30"/>
+                                <rect key="frame" x="20" y="20" width="100" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
@@ -1052,7 +1052,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Tk-GJ-NMu">
-                                <rect key="frame" x="20" y="0.0" width="100" height="30"/>
+                                <rect key="frame" x="20" y="20" width="100" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
@@ -1095,8 +1095,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="S5N-7u-244"/>
-        <segue reference="hfc-YE-1Ho"/>
-        <segue reference="5hk-Ic-nXm"/>
+        <segue reference="soV-Dc-qAS"/>
+        <segue reference="Xp3-la-tot"/>
+        <segue reference="MLj-qe-4GS"/>
     </inferredMetricsTieBreakers>
 </document>
