@@ -60,6 +60,24 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             _currentPatient = nil
             tbPatients.deleteSections(IndexSet([section]), with: .fade)
         }
+        
+        try? _managedContext.save()
+    }
+    
+    @IBAction func deleteAllPatients(_ sender: UIButton) {
+        let alertMsg = "Are you sure to delete all patients?"
+        alertPrompt(alertTitle: "Delete patient profile",
+                    alertMsg: alertMsg,
+                    confirmFunction: deleteAllPatient,
+                    uiCtrl: self)
+    }
+    
+    func deleteAllPatient(){
+        for patient in _patients {
+            _managedContext.delete(patient)
+        }
+        try? _managedContext.save()
+        performSegue(withIdentifier: "seguePracticeFromTitle", sender: nil)
     }
     
     @IBAction func exportAllPatients(_ sender: UIButton){

@@ -45,8 +45,8 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Practice"/>
                                         <connections>
-                                            <action selector="startTesting:" destination="cTp-f6-a1r" eventType="touchUpInside" id="Lue-di-6RC"/>
-                                            <segue destination="98J-wo-Ehx" kind="show" id="KCN-nr-J9z"/>
+                                            <action selector="startPractice:" destination="cTp-f6-a1r" eventType="touchUpInside" id="1IJ-Wp-R9w"/>
+                                            <segue destination="98J-wo-Ehx" kind="show" identifier="seguePracticeFromTitle" id="KCN-nr-J9z"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dab-8t-SDg">
@@ -96,7 +96,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="Y3r-HM-Rvd" kind="show" identifier="segueProtocolFromTitle" id="94T-w3-BCe"/>
+                        <segue destination="Y3r-HM-Rvd" kind="show" identifier="segueTestFromTitle" id="94T-w3-BCe"/>
                         <segue destination="iwX-Tf-HtX" kind="show" identifier="segueResultFromTitle" id="Fsl-Dc-Egp"/>
                     </connections>
                 </viewController>
@@ -131,14 +131,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oyg-8O-FTI">
-                                <rect key="frame" x="20" y="20" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="5hk-Ic-nXm"/>
-                                </connections>
-                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gc3-JO-0I7">
                                 <rect key="frame" x="236.5" y="518" width="639" height="38"/>
                                 <subviews>
@@ -350,6 +342,14 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oyg-8O-FTI">
+                                <rect key="frame" x="20" y="0.0" width="100" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <segue destination="cTp-f6-a1r" kind="show" id="5hk-Ic-nXm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -382,7 +382,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0v-ao-aih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="219" y="121"/>
+            <point key="canvasLocation" x="218.5251798561151" y="120.86330935251799"/>
         </scene>
         <!--Calibration View Controller-->
         <scene sceneID="BnQ-jU-Usx">
@@ -396,8 +396,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juH-90-9kH">
-                                <rect key="frame" x="20" y="0.0" width="98" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juH-90-9kH">
+                                <rect key="frame" x="20" y="0.0" width="100" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
                                     <segue destination="cTp-f6-a1r" kind="showDetail" id="uKx-ej-dTy"/>
@@ -589,7 +589,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3s-cI-oCg" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-478" y="-1380"/>
+            <point key="canvasLocation" x="-478.05755395683457" y="-1380.5755395683454"/>
         </scene>
         <!--Result View Controller-->
         <scene sceneID="8mt-vM-H3Y">
@@ -607,7 +607,7 @@
                                 <rect key="frame" x="20" y="0.0" width="98" height="30"/>
                                 <state key="normal" title="Return to Title"/>
                                 <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="0wf-rk-Jqg"/>
+                                    <segue destination="cTp-f6-a1r" kind="show" identifier="segueTitleFromResult" id="0wf-rk-Jqg"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FcF-v1-OIM">
@@ -671,18 +671,35 @@
                                             <action selector="exportAllPatients:" destination="iwX-Tf-HtX" eventType="touchUpInside" id="Ehz-x2-lk5"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMi-gT-TtR">
-                                        <rect key="frame" x="792" y="0.0" width="240" height="38"/>
-                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Delete Current Patient Profile">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="deleteCurrentPatient:" destination="iwX-Tf-HtX" eventType="touchUpInside" id="FxC-c9-NoM"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Hky-C0-krW">
+                                        <rect key="frame" x="559" y="0.0" width="473" height="38"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMi-gT-TtR">
+                                                <rect key="frame" x="0.0" y="0.0" width="213" height="38"/>
+                                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                                <state key="normal" title="Delete All Patient Profiles">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="deleteAllPatients:" destination="iwX-Tf-HtX" eventType="touchUpInside" id="36U-FM-6Fr"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yE8-b3-uam">
+                                                <rect key="frame" x="233" y="0.0" width="240" height="38"/>
+                                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                                <state key="normal" title="Delete Current Patient Profile">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="deleteCurrentPatient:" destination="iwX-Tf-HtX" eventType="touchUpInside" id="Frl-qA-qor"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTf-x0-oPl">
                                         <rect key="frame" x="1032" y="0.0" width="0.0" height="38"/>
                                         <state key="normal" title="Next Freq &gt;"/>
@@ -821,14 +838,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Tk-GJ-NMu">
-                                <rect key="frame" x="20" y="20" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Return to Title"/>
-                                <connections>
-                                    <segue destination="cTp-f6-a1r" kind="show" id="MLj-qe-4GS"/>
-                                </connections>
-                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="cyU-I1-gfR">
                                 <rect key="frame" x="236.5" y="518" width="639" height="38"/>
                                 <subviews>
@@ -1042,6 +1051,14 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Tk-GJ-NMu">
+                                <rect key="frame" x="20" y="0.0" width="100" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Return to Title"/>
+                                <connections>
+                                    <segue destination="cTp-f6-a1r" kind="show" id="MLj-qe-4GS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1074,7 +1091,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fhD-73-yHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="219" y="-1381"/>
+            <point key="canvasLocation" x="218.5251798561151" y="-1381.294964028777"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

@@ -12,7 +12,18 @@ class TitleViewController: UIViewController {
     
     @IBAction func startTesting(_ sender: Any) {
         if(globalSetting.calibrationSetting != nil){
-            performSegue(withIdentifier: "segueProtocolFromTitle", sender: nil)
+            performSegue(withIdentifier: "segueTestFromTitle", sender: nil)
+        } else {
+            // Prompt for user error
+            errorPrompt(
+                errorMsg: "There is no calibration setting selected!",
+                uiCtrl: self)
+        }
+    }
+    
+    @IBAction func startPractice(_ sender: Any) {
+        if(globalSetting.calibrationSetting != nil){
+            performSegue(withIdentifier: "seguePracticeFromTitle", sender: nil)
         } else {
             // Prompt for user error
             errorPrompt(

@@ -16,8 +16,6 @@ class PracticeViewController: UIViewController {
     private var _array_settings: [TestSetting] = []
     private var _array_testFreqSeq: [Int] = []
     
-//    private let ARRAY_DEFAULT_FREQSEQ: [Double]! = [500, 4000, 1000, 8000, 250, 2000]
-    
     private var _currentPickerIndex: Int = 0;
     
     private var _testLanguage: String = "English"
