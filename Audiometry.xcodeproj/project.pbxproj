@@ -56,7 +56,7 @@
 		4E4B3CEF21B03CF000191AF3 /* ProtocolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolViewController.swift; sourceTree = "<group>"; };
 		4E4B3CF121B0FA3500191AF3 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
 		4E4B3CF521B1988000191AF3 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
-		4EC055F521A724E60016AB0D /* Audiometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audiometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EC055F521A724E60016AB0D /* Aud•It.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aud•It.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EC055F821A724E60016AB0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EC0560221A724E70016AB0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4EC0560521A724E70016AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		4EC055F621A724E60016AB0D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4EC055F521A724E60016AB0D /* Audiometry.app */,
+				4EC055F521A724E60016AB0D /* Aud•It.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -212,7 +212,7 @@
 			);
 			name = Audiometry;
 			productName = AudiometryKids;
-			productReference = 4EC055F521A724E60016AB0D /* Audiometry.app */;
+			productReference = 4EC055F521A724E60016AB0D /* Aud•It.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -497,7 +497,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = NQ7SD64Z4Y;
 				INFOPLIST_FILE = Audiometry/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -511,7 +511,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.humanitarian.audiometry.test;
-				PRODUCT_NAME = Audiometry;
+				PRODUCT_NAME = "Aud•It";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -523,7 +523,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = NQ7SD64Z4Y;
 				INFOPLIST_FILE = Audiometry/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -537,7 +537,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.humanitarian.audiometry.test;
-				PRODUCT_NAME = Audiometry;
+				PRODUCT_NAME = "Aud•It";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};

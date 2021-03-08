@@ -10,7 +10,7 @@
         <!--Title View Controller-->
         <scene sceneID="cf7-WR-69U">
             <objects>
-                <viewController storyboardIdentifier="TitleView" modalPresentationStyle="fullScreen" id="cTp-f6-a1r" customClass="TitleViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TitleView" modalPresentationStyle="fullScreen" id="cTp-f6-a1r" customClass="TitleViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4Ud-yW-L2I"/>
                         <viewControllerLayoutGuide type="bottom" id="qea-bF-98W"/>
@@ -46,7 +46,6 @@
                                         <state key="normal" title="Practice"/>
                                         <connections>
                                             <action selector="startPractice:" destination="cTp-f6-a1r" eventType="touchUpInside" id="1IJ-Wp-R9w"/>
-                                            <segue destination="98J-wo-Ehx" kind="show" identifier="seguePracticeFromTitle" id="KCN-nr-J9z"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dab-8t-SDg">
@@ -80,8 +79,8 @@
                                     <constraint firstAttribute="width" constant="180" id="Ai7-Mi-bUD"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audiometry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJh-zi-akX">
-                                <rect key="frame" x="430.5" y="228.5" width="251.5" height="57.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aud•It" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJh-zi-akX">
+                                <rect key="frame" x="487.5" y="228.5" width="137" height="57.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="48"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -95,9 +94,11 @@
                             <constraint firstItem="lJh-zi-akX" firstAttribute="centerX" secondItem="wbj-he-gXG" secondAttribute="centerX" id="lbe-3C-HW9"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Wpa-iy-aXb"/>
                     <connections>
                         <segue destination="Y3r-HM-Rvd" kind="show" identifier="segueTestFromTitle" id="94T-w3-BCe"/>
                         <segue destination="iwX-Tf-HtX" kind="show" identifier="segueResultFromTitle" id="Fsl-Dc-Egp"/>
+                        <segue destination="98J-wo-Ehx" kind="show" identifier="seguePracticeFromTitle" id="6Xi-TZ-tJE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YUe-jA-rry" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -107,7 +108,7 @@
         <!--Protocol View Controller-->
         <scene sceneID="yy7-68-HY3">
             <objects>
-                <viewController storyboardIdentifier="ProtocolView" modalPresentationStyle="fullScreen" id="Y3r-HM-Rvd" customClass="ProtocolViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProtocolView" modalPresentationStyle="fullScreen" id="Y3r-HM-Rvd" customClass="ProtocolViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rYx-y9-afQ"/>
                         <viewControllerLayoutGuide type="bottom" id="nLG-lN-eKU"/>
@@ -371,6 +372,7 @@
                             <constraint firstItem="gc3-JO-0I7" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="yt2-gg-M2Y"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="pyD-y2-pjk"/>
                     <connections>
                         <outlet property="lbEarOrder" destination="Pqh-ee-VOG" id="xem-39-7hV"/>
                         <outlet property="lbFreqSeq" destination="yXe-Pb-BHe" id="QKO-bx-ebP"/>
@@ -387,7 +389,7 @@
         <!--Calibration View Controller-->
         <scene sceneID="BnQ-jU-Usx">
             <objects>
-                <viewController storyboardIdentifier="CalibrationView" modalPresentationStyle="fullScreen" id="WbP-fl-Brp" customClass="CalibrationViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CalibrationView" modalPresentationStyle="fullScreen" id="WbP-fl-Brp" customClass="CalibrationViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DPu-xT-Zy9"/>
                         <viewControllerLayoutGuide type="bottom" id="dqe-qX-nyP"/>
@@ -594,7 +596,7 @@
         <!--Result View Controller-->
         <scene sceneID="8mt-vM-H3Y">
             <objects>
-                <viewController storyboardIdentifier="ResultView" modalPresentationStyle="fullScreen" id="iwX-Tf-HtX" customClass="ResultViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ResultView" modalPresentationStyle="fullScreen" id="iwX-Tf-HtX" customClass="ResultViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hQQ-Jt-xOf"/>
                         <viewControllerLayoutGuide type="bottom" id="IBh-WK-85D"/>
@@ -781,6 +783,7 @@
                             <constraint firstItem="V4i-TZ-x9r" firstAttribute="leading" secondItem="9It-ec-IkN" secondAttribute="leadingMargin" id="vKo-MX-iyu"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="6U3-u1-C8Z"/>
                     <connections>
                         <outlet property="chartView_L" destination="sQj-HH-lki" id="L4x-Bn-8uP"/>
                         <outlet property="chartView_R" destination="oR8-g8-4vf" id="joZ-It-NWT"/>
@@ -814,7 +817,7 @@
         <!--Practice View Controller-->
         <scene sceneID="hzR-55-l6Y">
             <objects>
-                <viewController storyboardIdentifier="PracticeView" modalPresentationStyle="fullScreen" id="98J-wo-Ehx" customClass="PracticeViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PracticeView" modalPresentationStyle="fullScreen" id="98J-wo-Ehx" customClass="PracticeViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BjP-JV-uJa"/>
                         <viewControllerLayoutGuide type="bottom" id="gI3-jY-cOw"/>
@@ -1080,6 +1083,7 @@
                             <constraint firstItem="cyU-I1-gfR" firstAttribute="top" secondItem="Ihm-i3-nZM" secondAttribute="bottom" constant="20" id="vww-H0-ng6"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="xW1-ZE-Ij4"/>
                     <connections>
                         <outlet property="lbEarOrder" destination="07S-Gd-5fi" id="slk-dY-acf"/>
                         <outlet property="lbFreqSeq" destination="V1e-XD-qPD" id="Daq-lc-hF7"/>
@@ -1097,6 +1101,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="soV-Dc-qAS"/>
         <segue reference="Xp3-la-tot"/>
-        <segue reference="MLj-qe-4GS"/>
+        <segue reference="5hk-Ic-nXm"/>
     </inferredMetricsTieBreakers>
 </document>
