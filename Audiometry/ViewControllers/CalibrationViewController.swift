@@ -50,6 +50,28 @@ class CalibrationViewController: UIViewController {
                     uiCtrl: self)
     }
     
+    @IBAction func updateCurrentSetting(_ sender: UIButton) {
+        currentSetting.timestamp = Date()
+        
+        for settingValues in currentSetting.values! {
+            let values = settingValues as! CalibrationSettingValues
+            
+            let settingUI = dict_settingUI[Int(values.frequency)]
+            
+            values.expectedLv = Double((settingUI?.tfExpectedLv.text)!) ?? 0.0
+            values.presentationLv = Double((settingUI?.tfPresentationLv.text)!) ?? 0.0
+            values.measuredLv_L = Double((settingUI?.tfMeasuredLv_L.text)!) ?? 0.0
+            values.measuredLv_R = Double((settingUI?.tfMeasuredLv_R.text)!) ?? 0.0
+        }
+        
+        do{
+            try managedContext.save()
+        } catch let error as NSError{
+            print("Could not update calibration setting.")
+            print("\(error), \(error.userInfo)")
+        }
+    }
+    
     func saveSetting(_ settingName: String){
         let setting = NSEntityDescription.insertNewObject(
             forEntityName: "CalibrationSetting",
@@ -85,28 +107,6 @@ class CalibrationViewController: UIViewController {
             try managedContext.save()
         } catch let error as NSError{
             print("Could not save calibration setting.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
-    @IBAction func updateCurrentSetting(_ sender: UIButton) {
-        currentSetting.timestamp = Date()
-        
-        for settingValues in currentSetting.values! {
-            let values = settingValues as! CalibrationSettingValues
-            
-            let settingUI = dict_settingUI[Int(values.frequency)]
-            
-            values.expectedLv = Double((settingUI?.tfExpectedLv.text)!) ?? 0.0
-            values.presentationLv = Double((settingUI?.tfPresentationLv.text)!) ?? 0.0
-            values.measuredLv_L = Double((settingUI?.tfMeasuredLv_L.text)!) ?? 0.0
-            values.measuredLv_R = Double((settingUI?.tfMeasuredLv_R.text)!) ?? 0.0
-        }
-        
-        do{
-            try managedContext.save()
-        } catch let error as NSError{
-            print("Could not update calibration setting.")
             print("\(error), \(error.userInfo)")
         }
     }
@@ -179,8 +179,13 @@ class CalibrationViewController: UIViewController {
 // View utiliy functions
 //------------------------------------------------------------------------------
     @IBAction func loadDefaultPresentationLv(_ sender: UIButton) {
-        for settingUI in dict_settingUI.values {
-            settingUI.tfPresentationLv.text = String(_DB_DEFAULT)
+        for (freq, settingUI) in dict_settingUI {
+            let expectedLevel = ER3A_EXPECTED_LEVELS[freq] ?? 0.0
+            let measuredLevel = ER3A_MEASURED_LEVELS[freq] ?? 0.0
+            settingUI.tfExpectedLv.text = String(expectedLevel)
+            settingUI.tfPresentationLv.text = String(DB_DEFAULT)
+            settingUI.tfMeasuredLv_L.text = String(measuredLevel)
+            settingUI.tfMeasuredLv_R.text = String(measuredLevel)
         }
     }
     

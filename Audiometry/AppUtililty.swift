@@ -23,12 +23,37 @@ let Z_FACTORS: [Int:Double] =
      8000 : 23.0 ]
 
 // Calibration Setting Constants
-let _DB_SYSTEM_MAX: Int! = 105 // At volume amplitude = 1.0
-let _DB_SYSTEM_MIN: Int! = 0 // At volume amplitude = 0.0
-let _DB_DEFAULT: Int! = 70
+let DB_SYSTEM_MAX: Int! = 105 // At volume amplitude = 1.0
+let DB_SYSTEM_MIN: Int! = 0 // At volume amplitude = 0.0
+let DB_DEFAULT: Int! = 70
 
-let _RAMP_TIME: Double! = 0.1
-let _RAMP_TIMESTEP: Double! = 0.01
+let RAMP_TIME: Double! = 0.1
+let RAMP_TIMESTEP: Double! = 0.01
+
+// ER3A Transducer Values
+let ER3A_EXPECTED_LEVELS =
+    [ 250 : 84.0,
+      500 : 75.5,
+      750 : 72.0,
+     1000 : 70.0,
+     1500 : 72.0,
+     2000 : 73.0,
+     3000 : 73.5,
+     4000 : 75.5,
+     6000 : 72.0,
+     8000 : 70.0 ]
+
+let ER3A_MEASURED_LEVELS =
+    [ 250 : 83.9,
+      500 : 86.9,
+      750 : 88.8,
+     1000 : 86.5,
+     1500 : 85.6,
+     2000 : 88.1,
+     3000 : 89.5,
+     4000 : 83.2,
+     6000 : 71.0,
+     8000 : 56.7 ]
 
 // Main Test Constants
 

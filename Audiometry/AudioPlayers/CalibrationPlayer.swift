@@ -68,9 +68,9 @@ class CalibrationPlayer {
         let leftCorrectionFactor = expectedLv - leftMeasuredLv
         let rightCorrectionFactor = expectedLv - rightMeasuredLv
         
-        for i in stride(from: 0.0, through: 1.0, by: _RAMP_TIMESTEP){
+        for i in stride(from: 0.0, through: 1.0, by: RAMP_TIMESTEP){
             DispatchQueue.main.asyncAfter(
-                deadline: .now() + i * _RAMP_TIME, execute:
+                deadline: .now() + i * RAMP_TIME, execute:
                 {
                     self._generator.parameters[1] = self.dbToAmp(
                         (presentationLv + leftCorrectionFactor) * i)
@@ -85,7 +85,7 @@ class CalibrationPlayer {
         
         // volume in absolute dB to be converted to amplitude
         // 1.0 amplitude <-> 0 absoulte dB
-        let ampDB: Double = dB - _DB_SYSTEM_MAX
+        let ampDB: Double = dB - DB_SYSTEM_MAX
         
         let amp: Double = pow(10.0, ampDB / 20.0)
         

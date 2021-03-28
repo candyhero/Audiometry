@@ -30,7 +30,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                                        <state key="normal" title="Start"/>
+                                        <state key="normal" title="Test"/>
                                         <connections>
                                             <action selector="startTesting:" destination="cTp-f6-a1r" eventType="touchUpInside" id="1xa-eS-dGI"/>
                                         </connections>
@@ -249,7 +249,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="9qR-ss-rRh">
-                                <rect key="frame" x="282.5" y="674" width="547" height="80"/>
+                                <rect key="frame" x="281" y="674" width="550" height="80"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="NhM-U3-ba2">
                                         <rect key="frame" x="0.0" y="0.0" width="187" height="80"/>
@@ -293,11 +293,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsK-vU-YA1">
-                                        <rect key="frame" x="416" y="0.0" width="131" height="80"/>
+                                        <rect key="frame" x="416" y="0.0" width="134" height="80"/>
                                         <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Children Test">
+                                        <state key="normal" title="Pediatric Test">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -455,43 +455,19 @@
                                     <constraint firstAttribute="height" constant="400" id="Bbe-us-i52"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="S5W-nM-nI2" userLabel="Sv Utilities">
-                                <rect key="frame" x="179" y="530" width="754" height="42"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojX-cv-moG">
-                                        <rect key="frame" x="0.0" y="0.0" width="132" height="42"/>
-                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Set Volume"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dj-8b-wbX">
-                                        <rect key="frame" x="232" y="0.0" width="208" height="42"/>
-                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Load Default P. Level"/>
-                                        <connections>
-                                            <action selector="loadDefaultPresentationLv:" destination="WbP-fl-Brp" eventType="touchUpInside" id="20E-F1-wkl"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdz-fs-qGN">
-                                        <rect key="frame" x="540" y="0.0" width="214" height="42"/>
-                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Clear Measured Level"/>
-                                        <connections>
-                                            <action selector="clearAllMeasuredLv:" destination="WbP-fl-Brp" eventType="touchUpInside" id="jRE-gu-SlD"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dj-8b-wbX">
+                                <rect key="frame" x="463.5" y="476" width="185" height="42"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                <state key="normal" title="Load ER3A Levels"/>
+                                <connections>
+                                    <action selector="loadDefaultPresentationLv:" destination="WbP-fl-Brp" eventType="touchUpInside" id="20E-F1-wkl"/>
+                                </connections>
+                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KYV-bI-zrM" userLabel="Sv CurrentSetting">
-                                <rect key="frame" x="472.5" y="607.5" width="167.5" height="20.5"/>
+                                <rect key="frame" x="472.5" y="660" width="167.5" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Setting: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wXn-bU-4Xg">
                                         <rect key="frame" x="0.0" y="0.0" width="126.5" height="20.5"/>
@@ -508,7 +484,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="x6O-tZ-X6c" userLabel="Sv UpdateSetting">
-                                <rect key="frame" x="169.5" y="648" width="773" height="38"/>
+                                <rect key="frame" x="283" y="700.5" width="546" height="38"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Daj-K0-8w2">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="38"/>
@@ -522,19 +498,8 @@
                                             <action selector="saveAsNewSetting:" destination="WbP-fl-Brp" eventType="touchUpInside" id="k94-is-FmC"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vyf-ZB-897">
-                                        <rect key="frame" x="208" y="0.0" width="147" height="38"/>
-                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Save to Current">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="updateCurrentSetting:" destination="WbP-fl-Brp" eventType="touchUpInside" id="eoh-XD-38I"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tdo-CP-2eF">
-                                        <rect key="frame" x="435" y="0.0" width="117" height="38"/>
+                                        <rect key="frame" x="208" y="0.0" width="117" height="38"/>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
@@ -546,7 +511,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TOr-ti-8Lg">
-                                        <rect key="frame" x="632" y="0.0" width="141" height="38"/>
+                                        <rect key="frame" x="405" y="0.0" width="141" height="38"/>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
@@ -559,28 +524,60 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="S5W-nM-nI2" userLabel="Sv Utilities">
+                                <rect key="frame" x="314.5" y="568" width="483" height="42"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdz-fs-qGN">
+                                        <rect key="frame" x="0.0" y="0.0" width="223" height="42"/>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Clear Measured Levels"/>
+                                        <connections>
+                                            <action selector="clearAllMeasuredLv:" destination="WbP-fl-Brp" eventType="touchUpInside" id="jRE-gu-SlD"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojX-cv-moG">
+                                        <rect key="frame" x="323" y="0.0" width="160" height="42"/>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="160" id="EhW-1o-uII"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="updateCurrentSetting:" destination="WbP-fl-Brp" eventType="touchUpInside" id="fGp-pS-CDI"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="KYV-bI-zrM" firstAttribute="centerX" secondItem="pXv-SH-4Bd" secondAttribute="centerX" id="2LO-28-c22"/>
                             <constraint firstItem="x6O-tZ-X6c" firstAttribute="centerX" secondItem="pXv-SH-4Bd" secondAttribute="centerX" id="3SB-LN-B7e"/>
                             <constraint firstItem="bY2-0E-pNT" firstAttribute="top" secondItem="juH-90-9kH" secondAttribute="bottom" constant="50" id="8n1-av-eqE"/>
-                            <constraint firstItem="x6O-tZ-X6c" firstAttribute="centerY" secondItem="pXv-SH-4Bd" secondAttribute="centerY" constant="250" id="AY8-cx-nOC"/>
+                            <constraint firstItem="2dj-8b-wbX" firstAttribute="centerY" secondItem="pXv-SH-4Bd" secondAttribute="centerY" constant="80" id="BiA-s0-mGm"/>
                             <constraint firstItem="x6O-tZ-X6c" firstAttribute="top" secondItem="KYV-bI-zrM" secondAttribute="bottom" constant="20" id="DRg-LU-hg6"/>
-                            <constraint firstItem="S5W-nM-nI2" firstAttribute="top" secondItem="bY2-0E-pNT" secondAttribute="bottom" constant="50" id="GRj-4r-VEq"/>
                             <constraint firstItem="juH-90-9kH" firstAttribute="top" secondItem="DPu-xT-Zy9" secondAttribute="bottom" id="GZv-sA-Aws"/>
                             <constraint firstItem="S5W-nM-nI2" firstAttribute="centerX" secondItem="pXv-SH-4Bd" secondAttribute="centerX" id="Lb2-Ol-b5d"/>
+                            <constraint firstItem="KYV-bI-zrM" firstAttribute="top" secondItem="S5W-nM-nI2" secondAttribute="bottom" constant="50" id="Ocu-zE-3bK"/>
                             <constraint firstItem="juH-90-9kH" firstAttribute="leading" secondItem="pXv-SH-4Bd" secondAttribute="leadingMargin" id="RZG-1p-odH"/>
                             <constraint firstItem="bY2-0E-pNT" firstAttribute="leading" secondItem="pXv-SH-4Bd" secondAttribute="leadingMargin" constant="20" id="SyS-Cv-HXq"/>
                             <constraint firstItem="bY2-0E-pNT" firstAttribute="centerX" secondItem="pXv-SH-4Bd" secondAttribute="centerX" id="aQj-Zz-Sww"/>
+                            <constraint firstItem="2dj-8b-wbX" firstAttribute="centerX" secondItem="pXv-SH-4Bd" secondAttribute="centerX" id="iAY-dF-mKB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bY2-0E-pNT" secondAttribute="trailing" constant="20" id="jU9-TD-0V3"/>
+                            <constraint firstItem="S5W-nM-nI2" firstAttribute="top" secondItem="2dj-8b-wbX" secondAttribute="bottom" constant="50" id="mYv-LV-Et3"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="lbCurrentSetting" destination="Ogj-UP-BQ9" id="ALy-D8-nh0"/>
                         <outlet property="pbDeleteCurrent" destination="TOr-ti-8Lg" id="Vl4-zP-lEc"/>
                         <outlet property="pbLoadOther" destination="tdo-CP-2eF" id="sZI-Lw-grc"/>
-                        <outlet property="pbSaveCurrent" destination="Vyf-ZB-897" id="Wp5-6h-hy7"/>
+                        <outlet property="pbSaveCurrent" destination="ojX-cv-moG" id="sWX-7u-acf"/>
                         <outlet property="svExpectedLv" destination="a95-q2-nm7" id="YE8-z8-05x"/>
                         <outlet property="svFreqLabels" destination="Bl5-ur-epE" id="4p9-2O-vX8"/>
                         <outlet property="svMeasuredLv_L" destination="V2v-PV-u6a" id="kpu-E4-Yc1"/>
@@ -674,7 +671,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Hky-C0-krW">
-                                        <rect key="frame" x="559" y="0.0" width="473" height="38"/>
+                                        <rect key="frame" x="819" y="0.0" width="213" height="38"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMi-gT-TtR">
                                                 <rect key="frame" x="0.0" y="0.0" width="213" height="38"/>
@@ -686,18 +683,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="deleteAllPatients:" destination="iwX-Tf-HtX" eventType="touchUpInside" id="36U-FM-6Fr"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yE8-b3-uam">
-                                                <rect key="frame" x="233" y="0.0" width="240" height="38"/>
-                                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                                <state key="normal" title="Delete Current Patient Profile">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="deleteCurrentPatient:" destination="iwX-Tf-HtX" eventType="touchUpInside" id="Frl-qA-qor"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -958,7 +943,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="sQk-or-VBM">
-                                <rect key="frame" x="255.5" y="674" width="601" height="80"/>
+                                <rect key="frame" x="254" y="674" width="604" height="80"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Iby-Xa-uhZ">
                                         <rect key="frame" x="0.0" y="0.0" width="187" height="80"/>
@@ -1004,11 +989,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUs-sl-vXO">
-                                        <rect key="frame" x="443" y="0.0" width="158" height="80"/>
+                                        <rect key="frame" x="443" y="0.0" width="161" height="80"/>
                                         <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                        <state key="normal" title="Children Practice">
+                                        <state key="normal" title="Pediatric Practice">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1099,8 +1084,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="soV-Dc-qAS"/>
-        <segue reference="Xp3-la-tot"/>
-        <segue reference="5hk-Ic-nXm"/>
+        <segue reference="S5N-7u-244"/>
+        <segue reference="hfc-YE-1Ho"/>
+        <segue reference="uKx-ej-dTy"/>
     </inferredMetricsTieBreakers>
 </document>

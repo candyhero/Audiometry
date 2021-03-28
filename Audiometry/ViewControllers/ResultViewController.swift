@@ -340,10 +340,10 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //------------------------------------------------------------------------------
     fileprivate func updateCharts(_ values: PatientProfileValues) {
         // Set y-axis
-        let max_L = (values.results_L ?? []).max() ?? _DB_SYSTEM_MAX
-        let max_R = (values.results_R ?? []).max() ?? _DB_SYSTEM_MAX
-        let min_L = (values.results_L ?? []).min() ?? _DB_SYSTEM_MIN
-        let min_R = (values.results_R ?? []).min() ?? _DB_SYSTEM_MIN
+        let max_L = (values.results_L ?? []).max() ?? DB_SYSTEM_MAX
+        let max_R = (values.results_R ?? []).max() ?? DB_SYSTEM_MAX
+        let min_L = (values.results_L ?? []).min() ?? DB_SYSTEM_MIN
+        let min_R = (values.results_R ?? []).min() ?? DB_SYSTEM_MIN
         
         let leftAxis_L = chartView_L.getAxis(YAxis.AxisDependency.left)
         let leftAxis_R = chartView_R.getAxis(YAxis.AxisDependency.left)
