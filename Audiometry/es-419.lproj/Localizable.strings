@@ -19,6 +19,7 @@
 // Protocol
 "Test Sequence Caption" = "Secuencia de Test: ";
 "Test Ear Order Caption" = "Orden Izq/Der: ";
+
 "Left Ear" = "Oido Izq";
 "Right Ear" = "Oído Der";
 "Left Right Ear" = "Oído Izq -> Oído Der";
@@ -29,8 +30,11 @@
 "Save Protocol" = "Guardar Protocolo";
 "Load Protocol" = "Cargar Protocolo";
 "Delete Current Protocol" = "Borrar Protocolo Actual";
+
 "Adult Test" = "Test de Adultos";
 "Children Test" = "Test Pediátrica";
+"Adult Practice" = "Práctica de Adultos";
+"Children Practice" = "Práctica Pediátrica";
 
 // Calibration
 "Expected SPL" =  "Nivel de Presión Sonora Esperado para 70 dBHL (dBSPL)";

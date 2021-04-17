@@ -30,8 +30,11 @@
 "Save Protocol" = "Salvar Protocolo";
 "Load Protocol" = "Carregar Protocolo";
 "Delete Current Protocol" = "Excluir protocolo atual";
-"Adult Test" = "Teste Adultos";
+
+"Adult Test" = "Teste Adulto";
 "Children Test" = "Teste Pediátrico";
+"Adult Practice" = "Prática Adulta";
+"Children Practice" = "Prática Pediátrica";
 
 // Calibration
 "Expected SPL" =  "Nível de Pressão Sonora Esperado para 70 dB HL (dB SPL)";

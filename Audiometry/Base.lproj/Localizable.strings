@@ -19,6 +19,7 @@
 // Protocol
 "Test Sequence Caption" = "Test Sequence: ";
 "Test Ear Order Caption" = "L./R. Ear Order: ";
+
 "Left Ear" = "L. Ear Only";
 "Right Ear" = "R. Ear Only";
 "Left Right Ear" = "L. Ear -> R. Ear";
@@ -29,8 +30,11 @@
 "Save Protocol" = "Save Protocol";
 "Load Protocol" = "Load Protocol";
 "Delete Current Protocol" = "Delete Current Protocol";
+
 "Adult Test" = "Adult Test";
 "Children Test" = "Pediatric Test";
+"Adult Practice" = "Adult Practice";
+"Children Practice" = "Pediatric Practice";
 
 // Calibration
 "Expected SPL" =  "Expected Sound Pressure Level for 70 dB HL (dB SPL)";

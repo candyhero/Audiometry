@@ -13,8 +13,8 @@ class PracticeViewController: UIViewController {
     private var _globalSetting: GlobalSetting! = nil
     private var _currentSetting: TestSetting! = nil
     
-    private var _array_settings: [TestSetting] = []
-    private var _array_testFreqSeq: [Int] = []
+    private var _calibrationSettings: [TestSetting] = []
+    private var _testSequenceFrequencies: [Int] = []
     
     private var _currentPickerIndex: Int = 0;
     
@@ -23,12 +23,29 @@ class PracticeViewController: UIViewController {
     //------------------------------------------------------------------------------
     // UI Components
     //------------------------------------------------------------------------------
-    private var _array_pbFreq = [UIButton]()
+    private var _frequencyToggleButtons = [UIButton]()
     
-    @IBOutlet weak var svFreq: UIStackView!
-    @IBOutlet weak var lbFreqSeq: UILabel!
-    @IBOutlet weak var lbEarOrder: UILabel!
-    @IBOutlet weak var lbTestLanguage: UILabel!
+    @IBOutlet weak var pbReturnToTitle: UIButton!
+    
+    @IBOutlet weak var pbLeftEarOnly: UIButton!
+    @IBOutlet weak var pbRightEarOnly: UIButton!
+    @IBOutlet weak var pbLeftRightEar: UIButton!
+    @IBOutlet weak var pbRightLeftEar: UIButton!
+    
+    @IBOutlet weak var pbRemoveLast: UIButton!
+    @IBOutlet weak var pbClearAll: UIButton!
+    @IBOutlet weak var pbSaveProtocol: UIButton!
+    @IBOutlet weak var pbLoadProtocol: UIButton!
+    @IBOutlet weak var pbDeleteCurrentProtocol: UIButton!
+    
+    @IBOutlet weak var pbAdultPractice: UIButton!
+    @IBOutlet weak var pbChildrenPractice: UIButton!
+    
+    @IBOutlet weak var lbTestSequence: UILabel!
+    @IBOutlet weak var lbTestEarOrderCaption: UILabel!
+    @IBOutlet weak var lbTestEarOrder: UILabel!
+    
+    @IBOutlet weak var svFrequencyToggleButtons: UIStackView!
     
     //------------------------------------------------------------------------------
     // CoreData
@@ -36,7 +53,7 @@ class PracticeViewController: UIViewController {
     @IBAction func saveFreqSeqProtocol(_ sender: UIButton) {
         
         // Prompt for no freq selected error
-        if(_array_testFreqSeq.count == 0)
+        if(_testSequenceFrequencies.count == 0)
         {
             errorPrompt(errorMsg: "There is no frequency selected!", uiCtrl: self)
             return
@@ -50,23 +67,13 @@ class PracticeViewController: UIViewController {
     }
     
     func saveProtocol(_ newProtocolName: String){
-        
-        // If duplicated name
-//        if(false){
-//            errorPrompt(
-//                errorMsg: "Protocol name already exists!",
-//                uiCtrl: self)
-//            return
-//        }
-        
-        // Else, save protocol
         let setting = NSEntityDescription.insertNewObject(
             forEntityName: "TestSetting",
             into: _managedContext) as! TestSetting
         
         setting.name = newProtocolName
         setting.timestamp = Date()
-        setting.frequencySequence = _array_testFreqSeq
+        setting.frequencySequence = _testSequenceFrequencies
         setting.isTestLeftFirst = _globalSetting.isTestingLeft
         setting.isTestBoth = _globalSetting.isTestingBoth
         
@@ -88,13 +95,13 @@ class PracticeViewController: UIViewController {
             TestSetting.fetchRequest()
         
         do {
-            _array_settings = try _managedContext.fetch(request)
+            _calibrationSettings = try _managedContext.fetch(request)
         } catch let error as NSError{
             print("Could not fetch calibration setting.")
             print("\(error), \(error.userInfo)")
         }
         
-        if _array_settings.count > 0 {
+        if _calibrationSettings.count > 0 {
             pickerPrompt(confirmFunction: loadProtocol,
                          uiCtrl: self)
         }
@@ -105,26 +112,24 @@ class PracticeViewController: UIViewController {
     }
     
     func loadProtocol(){
-        _currentSetting = _array_settings[_currentPickerIndex]
-        _array_testFreqSeq = _currentSetting.frequencySequence ?? []
-        updateLabel()
+        _currentSetting = _calibrationSettings[_currentPickerIndex]
+        _testSequenceFrequencies = _currentSetting.frequencySequence ?? []
+        reloadTestSequenceLabel()
     }
     
     @IBAction func deleteFreqSeqProtocol(_ sender: UIButton) {
         
         // Validate current protocol
         if(_currentSetting == nil) {
-            
-            errorPrompt(errorMsg: "There is no selected protcol!",
-                        uiCtrl: self)
+            errorPrompt(errorMsg: "There is no selected protcol!", uiCtrl: self)
             return
         }
         
         _managedContext.delete(_currentSetting)
         _currentSetting = nil
-        _array_testFreqSeq = []
+        _testSequenceFrequencies = []
         
-        updateLabel()
+        reloadTestSequenceLabel()
     }
     
     //------------------------------------------------------------------------------
@@ -133,69 +138,68 @@ class PracticeViewController: UIViewController {
     @IBAction func setLeftFirst(_ sender: UIButton) {
         _globalSetting.isTestingLeft = true
         _globalSetting.isTestingBoth = true
-        lbEarOrder.text = sender.titleLabel?.text!
+        lbTestEarOrder.text = sender.titleLabel?.text!
     }
     
     @IBAction func setRightFirst(_ sender: UIButton) {
         _globalSetting.isTestingLeft = false
         _globalSetting.isTestingBoth = true
-        lbEarOrder.text = sender.titleLabel?.text!
+        lbTestEarOrder.text = sender.titleLabel?.text!
     }
     
     @IBAction func setLeftOnly(_ sender: UIButton) {
         _globalSetting.isTestingLeft = true
         _globalSetting.isTestingBoth = false
-        lbEarOrder.text = sender.titleLabel?.text!
+        lbTestEarOrder.text = sender.titleLabel?.text!
     }
     
     @IBAction func setRightOnly(_ sender: UIButton) {
         _globalSetting.isTestingLeft = false
         _globalSetting.isTestingBoth = false
-        lbEarOrder.text = sender.titleLabel?.text!
+        lbTestEarOrder.text = sender.titleLabel?.text!
     }
     
     @IBAction func addNewTestSequenceFrequency(_ sender: UIButton){
         let freqID: Int! = sender.tag
-        if(!_array_testFreqSeq.contains(freqID) ){
-            _array_testFreqSeq.append(freqID)
-            updateLabel()
+        if(!_testSequenceFrequencies.contains(freqID) ){
+            _testSequenceFrequencies.append(freqID)
+            reloadTestSequenceLabel()
         }
     }
     
     @IBAction func removeLastFreq(_ sender: UIButton) {
-        if(_array_testFreqSeq.count > 0) {
-            _array_testFreqSeq.removeLast()
-            updateLabel()
+        if(_testSequenceFrequencies.count > 0) {
+            _testSequenceFrequencies.removeLast()
+            reloadTestSequenceLabel()
         }
     }
     
     @IBAction func removeAllFreq(_ sender: UIButton) {
-        if(_array_testFreqSeq.count > 0) {
-            _array_testFreqSeq.removeAll()
-            updateLabel()
+        if(_testSequenceFrequencies.count > 0) {
+            _testSequenceFrequencies.removeAll()
+            reloadTestSequenceLabel()
         }
     }
     
-    func updateLabel(){
+    func reloadTestSequenceLabel(){
+        var labelTextBuffer = NSLocalizedString("Test Sequence Caption", comment: "")
         
-        var tempFreqSeqStr = String("Test Sequence: ")
-        
-        var freqCount = 0
-        for freq in _array_testFreqSeq {
-            freqCount += 1
-            tempFreqSeqStr.append(String(freq) + " Hz")
-            tempFreqSeqStr.append(" ► ")
+        var count = 0
+        for frequency in _testSequenceFrequencies {
+            count += 1
+            labelTextBuffer.append(String(frequency) + " Hz")
+            labelTextBuffer.append(" ► ")
             
-            if(freqCount == 5){
-                tempFreqSeqStr.append("\n")
+            if(count == 5){
+                labelTextBuffer.append("\n")
             }
         }
         
-        if(freqCount == 0){
-            tempFreqSeqStr.append("None")
+        if(count == 0){
+            labelTextBuffer.append(NSLocalizedString("None", comment: ""))
         }
         
-        lbFreqSeq.text! = tempFreqSeqStr
+        lbTestSequence.text! = labelTextBuffer
     }
     
     //------------------------------------------------------------------------------
@@ -212,7 +216,7 @@ class PracticeViewController: UIViewController {
     func startPracticeTest(isAdult: Bool!) {
         
         // Error, no freq selected
-        if(_array_testFreqSeq.count == 0){
+        if(_testSequenceFrequencies.count == 0){
             errorPrompt(errorMsg: "There is no frequency selected!",
                         uiCtrl: self)
             return
@@ -294,16 +298,16 @@ class PracticeViewController: UIViewController {
         profile.isPractice = true
         
         profile.earOrder = _globalSetting.isTestingLeft ? "L" : "R"
-        profile.frequencyOrder = _array_testFreqSeq
+        profile.frequencyOrder = _testSequenceFrequencies
         print(profile)
         
         _globalSetting.patientProfile = profile
         
-        _globalSetting.testFrequencySequence = _array_testFreqSeq
+        _globalSetting.testFrequencySequence = _testSequenceFrequencies
         _globalSetting.testLanguage = _testLanguage
         
         _globalSetting.currentTestCount = 0
-        _globalSetting.totalTestCount = Int16(_globalSetting.isTestingBoth ? _array_testFreqSeq.count*2 : _array_testFreqSeq.count)
+        _globalSetting.totalTestCount = Int16(_globalSetting.isTestingBoth ? _testSequenceFrequencies.count*2 : _testSequenceFrequencies.count)
         
         do{
             try _managedContext.save()
@@ -319,58 +323,90 @@ class PracticeViewController: UIViewController {
     //------------------------------------------------------------------------------
     // Initialize View
     //------------------------------------------------------------------------------
+    func setupUI(){
+        svFrequencyToggleButtons.axis = .horizontal
+        svFrequencyToggleButtons.distribution = .fillEqually
+        svFrequencyToggleButtons.alignment = .center
+        svFrequencyToggleButtons.spacing = 15
+        
+        lbTestSequence.textAlignment = .center
+        lbTestSequence.numberOfLines = 0
+        
+        for frequency in DEFAULT_FREQUENCIES {
+            // Set up buttons
+            let pbNewFrequencyToggle = UIButton(type:.system)
+            
+            pbNewFrequencyToggle.bounds = CGRect(x:0, y:0, width:300, height:300)
+            pbNewFrequencyToggle.setTitle(String(frequency)+" Hz", for: .normal)
+            pbNewFrequencyToggle.backgroundColor = UIColor.gray
+            pbNewFrequencyToggle.setTitleColor(UIColor.white, for: .normal)
+            pbNewFrequencyToggle.tag = frequency
+            
+            // Binding an action function to the new button
+            // i.e. to play signal
+            pbNewFrequencyToggle.addTarget(self, action: #selector(addNewTestSequenceFrequency(_:)),
+                                 for: .touchUpInside)
+            pbNewFrequencyToggle.titleEdgeInsets = UIEdgeInsets(
+                top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+            
+            // Add the button to our current button array
+            _frequencyToggleButtons += [pbNewFrequencyToggle]
+            svFrequencyToggleButtons.addArrangedSubview(pbNewFrequencyToggle)
+        }
+    }
+    
+    private func reloadLocaleStrings() {
+        pbReturnToTitle.setTitle(
+            NSLocalizedString("Return To Title", comment: ""), for: .normal)
+            
+        lbTestEarOrderCaption.text =
+            NSLocalizedString("Test Ear Order Caption", comment: "")
+    
+        pbLeftEarOnly.setTitle(
+            NSLocalizedString("Left Ear", comment: ""), for: .normal)
+        pbRightEarOnly.setTitle(
+            NSLocalizedString("Right Ear", comment: ""), for: .normal)
+        pbLeftRightEar.setTitle(
+            NSLocalizedString("Left Right Ear", comment: ""), for: .normal)
+        pbRightLeftEar.setTitle(
+            NSLocalizedString("Right Left Ear", comment: ""), for: .normal)
+        
+        pbRemoveLast.setTitle(
+            NSLocalizedString("Remove Last", comment: ""), for: .normal)
+        pbClearAll.setTitle(
+            NSLocalizedString("Clear All", comment: ""), for: .normal)
+        pbSaveProtocol.setTitle(
+            NSLocalizedString("Save Protocol", comment: ""), for: .normal)
+        pbLoadProtocol.setTitle(
+            NSLocalizedString("Load Protocol", comment: ""), for: .normal)
+        pbDeleteCurrentProtocol.setTitle(
+            NSLocalizedString("Delete Current Protocol", comment: ""), for: .normal)
+        pbAdultPractice.setTitle(
+            NSLocalizedString("Adult Practice", comment: ""), for: .normal)
+        pbChildrenPractice.setTitle(
+            NSLocalizedString("Children Practice", comment: ""), for: .normal)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        updateLabel()
+        reloadTestSequenceLabel()
+        reloadLocaleStrings()
         
         // fetch global setting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
+        let request:NSFetchRequest<GlobalSetting> = GlobalSetting.fetchRequest()
         request.fetchLimit = 1
         
         do {
             _globalSetting = try _managedContext.fetch(request).first
             _globalSetting.isTestingLeft = true
             _globalSetting.isTestingBoth = true
-            lbEarOrder.text! = "L. Ear -> R. Ear"
-            
-        } catch let error as NSError{
+            lbTestEarOrder.text! = NSLocalizedString("Left Right Ear", comment: "")
+        }
+        catch let error as NSError{
             print("Could not fetch global setting.")
             print("\(error), \(error.userInfo)")
-        }
-    }
-    
-    func setupUI(){
-        svFreq.axis = .horizontal
-        svFreq.distribution = .fillEqually
-        svFreq.alignment = .center
-        svFreq.spacing = 15
-        
-        lbFreqSeq.textAlignment = .center
-        lbFreqSeq.numberOfLines = 0
-        
-        for freq in DEFAULT_FREQUENCIES {
-            // Set up buttons
-            let new_pbFreq = UIButton(type:.system)
-            
-            new_pbFreq.bounds = CGRect(x:0, y:0, width:300, height:300)
-            new_pbFreq.setTitle(String(freq)+" Hz", for: .normal)
-            new_pbFreq.backgroundColor = UIColor.gray
-            new_pbFreq.setTitleColor(UIColor.white, for: .normal)
-            new_pbFreq.tag = freq
-            
-            // Binding an action function to the new button
-            // i.e. to play signal
-            new_pbFreq.addTarget(self, action: #selector(addNewTestSequenceFrequency(_:)),
-                                 for: .touchUpInside)
-            new_pbFreq.titleEdgeInsets = UIEdgeInsets(
-                top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
-            
-            // Add the button to our current button array
-            _array_pbFreq += [new_pbFreq]
-            svFreq.addArrangedSubview(new_pbFreq)
         }
     }
     
@@ -388,12 +424,12 @@ extension PracticeViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        return _array_settings.count
+        return _calibrationSettings.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        return _array_settings[row].name
+        return _calibrationSettings[row].name
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,

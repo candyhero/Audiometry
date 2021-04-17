@@ -67,16 +67,6 @@ class ProtocolViewController: UIViewController {
     }
     
     func saveProtocol(_ newProtocolName: String){
-        
-        // If duplicated name
-//        if(false){
-//            errorPrompt(
-//                errorMsg: "Protocol name already exists!",
-//                uiCtrl: self)
-//            return
-//        }
-        
-        // Else, save protocol
         let setting = NSEntityDescription.insertNewObject(
             forEntityName: "TestSetting",
             into: _managedContext) as! TestSetting
@@ -131,9 +121,7 @@ class ProtocolViewController: UIViewController {
         
         // Validate current protocol
         if(_currentCalibrationSetting == nil) {
-            
-            errorPrompt(errorMsg: "There is no selected protcol!",
-                        uiCtrl: self)
+            errorPrompt(errorMsg: "There is no selected protcol!", uiCtrl: self)
             return
         }
         
@@ -194,7 +182,6 @@ class ProtocolViewController: UIViewController {
     }
     
     func reloadTestSequenceLabel(){
-        
         var labelTextBuffer = NSLocalizedString("Test Sequence Caption", comment: "")
         
         var count = 0
@@ -399,8 +386,7 @@ class ProtocolViewController: UIViewController {
         reloadLocaleStrings()
         
         // fetch global setting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
+        let request:NSFetchRequest<GlobalSetting> = GlobalSetting.fetchRequest()
         request.fetchLimit = 1
         
         do {
@@ -408,8 +394,8 @@ class ProtocolViewController: UIViewController {
             _globalSetting.isTestingLeft = true
             _globalSetting.isTestingBoth = true
             lbTestEarOrder.text! = NSLocalizedString("Left Right Ear", comment: "")
-            
-        } catch let error as NSError{
+        }
+        catch let error as NSError{
             print("Could not fetch global setting.")
             print("\(error), \(error.userInfo)")
         }
