@@ -128,20 +128,20 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         csvText.append("Frequency Test Order,")
         
         csvText.append("LSpam,")
-        for FREQ in ARRAY_DEFAULT_FREQ{
+        for FREQ in DEFAULT_FREQUENCIES{
             csvText.append("\(FREQ),")
         }
         csvText.append("RSpam,")
-        for FREQ in ARRAY_DEFAULT_FREQ{
+        for FREQ in DEFAULT_FREQUENCIES{
             csvText.append("\(FREQ),")
         }
         
         csvText.append("Result (L),")
-        for FREQ in ARRAY_DEFAULT_FREQ{
+        for FREQ in DEFAULT_FREQUENCIES{
             csvText.append("\(FREQ),")
         }
         csvText.append("Result (R),")
-        for FREQ in ARRAY_DEFAULT_FREQ{
+        for FREQ in DEFAULT_FREQUENCIES{
             csvText.append("\(FREQ),")
         }
         
@@ -195,21 +195,21 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // Left Ear Spam Count
         csvText.append( ",")
-        for FREQ in ARRAY_DEFAULT_FREQ{
+        for FREQ in DEFAULT_FREQUENCIES{
             let spamCount_L = dict_spamCount_L[FREQ, default:0]
             csvText.append((spamCount_L > 0) ? "\(spamCount_L)," : " ,")
         }
         
         // Left Ear Spam Count
         csvText.append( ",")
-        for FREQ in ARRAY_DEFAULT_FREQ{
+        for FREQ in DEFAULT_FREQUENCIES{
             let spamCount_R = dict_spamCount_R[FREQ, default:0]
             csvText.append((spamCount_R > 0) ? "\(spamCount_R)," : " ,")
         }
         
         // Left Ear Frequency Thresholds
         csvText.append( ",")
-        for FREQ in ARRAY_DEFAULT_FREQ{
+        for FREQ in DEFAULT_FREQUENCIES{
             let threshold_L = dict_threshold_L[FREQ, default:0]
             switch threshold_L{
             case 0:
@@ -225,7 +225,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // Right Ear Frequency Thresholds
         csvText.append( ",")
-        for FREQ in ARRAY_DEFAULT_FREQ{
+        for FREQ in DEFAULT_FREQUENCIES{
             let threshold_R = dict_threshold_R[FREQ, default:0]
             switch threshold_R{
             case 0:
@@ -259,7 +259,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let patient = _patients[section]
         let title = "[\(patient.group ?? "NO_GROUP")] \(patient.name ?? "NO_NAME")"
-            + "\(patient.isAdult ? "(Adult)":"(Child)")"
+            + "\(patient.isAdult ? "(Adult)":"(Pediatric)")"
             + "\(patient.isPractice ? "[Practice]" : "")"
         
         button.setTitle(title, for: .normal)

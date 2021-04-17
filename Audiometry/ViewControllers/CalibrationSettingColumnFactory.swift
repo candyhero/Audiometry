@@ -2,7 +2,7 @@
 import Foundation
 import UIKit
 
-struct SettingUI {
+struct CalibrationSettingColumn {
     var lbFreq: UILabel
     var pbPlay: UIButton
     var tfExpectedLv: UITextField
@@ -11,16 +11,16 @@ struct SettingUI {
     var tfMeasuredLv_R: UITextField
     
     init(freq: Int) {
-        lbFreq = CalibrationUIFactory.newLabel(String(freq)+" Hz")
-        pbPlay = CalibrationUIFactory.newButton(tag: freq)
-        tfExpectedLv = CalibrationUIFactory.newTextField()
-        tfPresentationLv = CalibrationUIFactory.newTextField()
-        tfMeasuredLv_L = CalibrationUIFactory.newTextField()
-        tfMeasuredLv_R = CalibrationUIFactory.newTextField()
+        lbFreq = CalibrationSettingColumnFactory.newLabel(String(freq)+" Hz")
+        pbPlay = CalibrationSettingColumnFactory.newButton(tag: freq)
+        tfExpectedLv = CalibrationSettingColumnFactory.newTextField()
+        tfPresentationLv = CalibrationSettingColumnFactory.newTextField()
+        tfMeasuredLv_L = CalibrationSettingColumnFactory.newTextField()
+        tfMeasuredLv_R = CalibrationSettingColumnFactory.newTextField()
     }
 }
 
-class CalibrationUIFactory {
+class CalibrationSettingColumnFactory {
     
     static func newLabel(_ text: String) -> UILabel {
         let label = UILabel()

@@ -1,0 +1,62 @@
+/* 
+  Localizable.strings
+  Audiometry
+
+  Created by Xavier Chan on 18/4/21.
+  Copyright © 2021 TriCounty. All rights reserved.
+*/
+
+// General
+"Test" = "Comenzar";
+"Practice" = "Práctica";
+"Calibration" = "Calibración";
+"View Results" = "Ver Resultados";
+
+"Change Language" = "Cambiar de Idioma";
+"Return To Title" = "Volver al Comienzo";
+"None" = "Ninguna";
+
+// Protocol
+"Test Sequence Caption" = "Secuencia de Test: ";
+"Test Ear Order Caption" = "Orden Izq/Der: ";
+"Left Ear" = "Oido Izq";
+"Right Ear" = "Oído Der";
+"Left Right Ear" = "Oído Izq -> Oído Der";
+"Right Left Ear" = "Oído Der -> Oído Izq";
+
+"Remove Last" = "Borrar último";
+"Clear All" = "Borrar todo";
+"Save Protocol" = "Guardar Protocolo";
+"Load Protocol" = "Cargar Protocolo";
+"Delete Current Protocol" = "Borrar Protocolo Actual";
+"Adult Test" = "Test de Adultos";
+"Children Test" = "Test Pediátrica";
+
+// Calibration
+"Expected SPL" =  "Nivel de Presión Sonora Esperado para 70 dBHL (dBSPL)";
+"Presentation Level" =  "Nivel de Presentación dB(HL)";
+"Left Measured Level" = "Nivel Izquierdo Medido para 70 dBHL (dBSPL)";
+"Right Measured Level" = "Nivel Derecho Medido para 70 dBHL (dBSPL)";
+"Current Setting Caption" = "Configuración Actual: ";
+
+"Load Default" = "Cargar Niveles ER3A";
+"Clear Measured Levels" = "Borrar Niveles Medido";
+"Save" = "Guardar";
+"Save As New" = "Guardar como Nuevo";
+"Load Other" = "Cargar Otro";
+"Delete Current" = "Borrar Actual";
+
+// Instruction
+"Start Testing" = "Comenzar!";
+"Adult Caption" = "Por favor haga click sobre el dibujo que produce el sonido o haga click en \"no hay sonido\" si no escucha ningún sonido.";
+"Adult Instruction" = "Por favor haga click sobre el dibujo que produce el sonido o haga click en \"no hay sonido\" si no escucha ningún sonido.";
+"Children Instruction" = "Por favor haga click sobre el dibujo que produce el sonido o haga click en \"no hay sonido\" si no escucha ningún sonido.";
+
+// Test
+"Repeat" = "Repetir";
+"Pause" = "Pausa";
+"No Sound" = "No hay sonido";
+
+// Pause
+"Pause Caption" = "Gran trabajo! A mitad de camino!";
+"Continue" = "Continuar";

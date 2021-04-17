@@ -130,16 +130,6 @@ class PracticeViewController: UIViewController {
     //------------------------------------------------------------------------------
     // Test Settings
     //------------------------------------------------------------------------------
-    @IBAction func switchToEnglish(_ sender: UIButton) {
-        _testLanguage = "English"
-        lbTestLanguage.text = _testLanguage
-    }
-    
-    @IBAction func switchToPortuguese(_ sender: UIButton) {
-        _testLanguage = "Portuguese"
-        lbTestLanguage.text = _testLanguage
-    }
-    
     @IBAction func setLeftFirst(_ sender: UIButton) {
         _globalSetting.isTestingLeft = true
         _globalSetting.isTestingBoth = true
@@ -164,7 +154,7 @@ class PracticeViewController: UIViewController {
         lbEarOrder.text = sender.titleLabel?.text!
     }
     
-    @IBAction func addNewFreq(_ sender: UIButton){
+    @IBAction func addNewTestSequenceFrequency(_ sender: UIButton){
         let freqID: Int! = sender.tag
         if(!_array_testFreqSeq.contains(freqID) ){
             _array_testFreqSeq.append(freqID)
@@ -361,7 +351,7 @@ class PracticeViewController: UIViewController {
         lbFreqSeq.textAlignment = .center
         lbFreqSeq.numberOfLines = 0
         
-        for freq in ARRAY_DEFAULT_FREQ {
+        for freq in DEFAULT_FREQUENCIES {
             // Set up buttons
             let new_pbFreq = UIButton(type:.system)
             
@@ -373,7 +363,7 @@ class PracticeViewController: UIViewController {
             
             // Binding an action function to the new button
             // i.e. to play signal
-            new_pbFreq.addTarget(self, action: #selector(addNewFreq(_:)),
+            new_pbFreq.addTarget(self, action: #selector(addNewTestSequenceFrequency(_:)),
                                  for: .touchUpInside)
             new_pbFreq.titleEdgeInsets = UIEdgeInsets(
                 top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)

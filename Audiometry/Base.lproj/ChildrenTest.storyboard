@@ -19,7 +19,7 @@
         <!--Children Test View Controller-->
         <scene sceneID="QVS-mb-LPB">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="rqA-y9-Rxr" customClass="ChildrenTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="rqA-y9-Rxr" customClass="ChildrenTestViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="04J-ds-2E9"/>
                         <viewControllerLayoutGuide type="bottom" id="e3Z-ae-l6w"/>
@@ -164,7 +164,7 @@
         <!--Pause View Controller-->
         <scene sceneID="TEh-PU-mFX">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="4xs-O5-bdk" customClass="PauseViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="4xs-O5-bdk" customClass="PauseViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZnU-fZ-k9e"/>
                         <viewControllerLayoutGuide type="bottom" id="cgv-7r-b6Z"/>
@@ -223,7 +223,7 @@
         <!--Children Instruction View Controller-->
         <scene sceneID="U25-yc-cpo">
             <objects>
-                <viewController storyboardIdentifier="ChildrenInstructionView" modalPresentationStyle="fullScreen" id="fuW-Nb-Tgi" customClass="ChildrenInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChildrenInstructionView" modalPresentationStyle="fullScreen" id="fuW-Nb-Tgi" customClass="ChildrenInstructionViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3ps-zf-mYD"/>
                         <viewControllerLayoutGuide type="bottom" id="3gq-iC-jDC"/>
@@ -359,7 +359,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fLK-xg-KD6"/>
-        <segue reference="6KL-Kd-kyS"/>
+        <segue reference="dyW-jr-jKy"/>
+        <segue reference="dML-5R-KJR"/>
     </inferredMetricsTieBreakers>
 </document>

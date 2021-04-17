@@ -32,7 +32,7 @@
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                         <state key="normal" title="Test"/>
                                         <connections>
-                                            <action selector="startTesting:" destination="cTp-f6-a1r" eventType="touchUpInside" id="1xa-eS-dGI"/>
+                                            <action selector="startTest:" destination="cTp-f6-a1r" eventType="touchUpInside" id="1xa-eS-dGI"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c5c-0e-X0P">
@@ -85,17 +85,28 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiu-a3-waO">
+                                <rect key="frame" x="20" y="0.0" width="118" height="30"/>
+                                <state key="normal" title="Switch Language"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="lJh-zi-akX" firstAttribute="centerY" secondItem="wbj-he-gXG" secondAttribute="centerY" constant="-160" id="Hii-Kd-RN5"/>
                             <constraint firstItem="5GO-Nb-Xou" firstAttribute="centerX" secondItem="wbj-he-gXG" secondAttribute="centerX" id="Jae-my-YGI"/>
+                            <constraint firstItem="kiu-a3-waO" firstAttribute="top" secondItem="4Ud-yW-L2I" secondAttribute="bottom" id="SEn-Rw-lbX"/>
                             <constraint firstItem="5GO-Nb-Xou" firstAttribute="top" secondItem="lJh-zi-akX" secondAttribute="bottom" constant="80" id="hPb-g1-mg2"/>
                             <constraint firstItem="lJh-zi-akX" firstAttribute="centerX" secondItem="wbj-he-gXG" secondAttribute="centerX" id="lbe-3C-HW9"/>
+                            <constraint firstItem="kiu-a3-waO" firstAttribute="leading" secondItem="wbj-he-gXG" secondAttribute="leadingMargin" id="zee-ni-hvd"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Wpa-iy-aXb"/>
                     <connections>
+                        <outlet property="pbCalibration" destination="dab-8t-SDg" id="lra-wY-3Ch"/>
+                        <outlet property="pbChangeLanguage" destination="kiu-a3-waO" id="e2P-zh-d3U"/>
+                        <outlet property="pbPractice" destination="c5c-0e-X0P" id="MPI-cG-FqL"/>
+                        <outlet property="pbTest" destination="Nwa-Vk-mtq" id="RE5-KE-miX"/>
+                        <outlet property="pbViewResult" destination="MVY-zw-dkX" id="G5q-w1-mR3"/>
                         <segue destination="Y3r-HM-Rvd" kind="show" identifier="segueTestFromTitle" id="94T-w3-BCe"/>
                         <segue destination="iwX-Tf-HtX" kind="show" identifier="segueResultFromTitle" id="Fsl-Dc-Egp"/>
                         <segue destination="98J-wo-Ehx" kind="show" identifier="seguePracticeFromTitle" id="6Xi-TZ-tJE"/>
@@ -196,7 +207,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="removeLastFreq:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="A8j-Fz-WGO"/>
+                                            <action selector="removeLastTestSequenceFrequency:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="A8j-Fz-WGO"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dE-Y5-4Uz">
@@ -207,7 +218,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="removeAllFreq:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="kTm-gg-4Vg"/>
+                                            <action selector="removeAllTestSequenceFrequencies:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="kTm-gg-4Vg"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APH-kS-42d">
@@ -249,39 +260,10 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="9qR-ss-rRh">
-                                <rect key="frame" x="281" y="674" width="550" height="80"/>
+                                <rect key="frame" x="404.5" y="674" width="303" height="80"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="NhM-U3-ba2">
-                                        <rect key="frame" x="0.0" y="0.0" width="187" height="80"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hn2-KQ-QRZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="187" height="38"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                                <state key="normal" title="Switch to English">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="switchToEnglish:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="xGw-eF-Kl6"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86d-1f-LOL">
-                                                <rect key="frame" x="0.0" y="46" width="187" height="34"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                                <state key="normal" title="Switch to Portuguese">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="switchToPortuguese:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="cPJ-tt-aSh"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="03K-L4-Adi">
-                                        <rect key="frame" x="247" y="0.0" width="109" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="109" height="80"/>
                                         <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
@@ -293,7 +275,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsK-vU-YA1">
-                                        <rect key="frame" x="416" y="0.0" width="134" height="80"/>
+                                        <rect key="frame" x="169" y="0.0" width="134" height="80"/>
                                         <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
@@ -326,23 +308,6 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulS-fe-rEE">
-                                <rect key="frame" x="467.5" y="774" width="177" height="20.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Language: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSl-b0-lsX">
-                                        <rect key="frame" x="0.0" y="0.0" width="121.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLr-he-GrK">
-                                        <rect key="frame" x="121.5" y="0.0" width="55.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oyg-8O-FTI">
                                 <rect key="frame" x="20" y="20" width="100" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -361,8 +326,6 @@
                             <constraint firstItem="yXe-Pb-BHe" firstAttribute="leading" secondItem="6lX-Zg-kVC" secondAttribute="leadingMargin" constant="20" id="QQJ-oF-NTS"/>
                             <constraint firstItem="9qR-ss-rRh" firstAttribute="top" secondItem="CfS-KY-79T" secondAttribute="bottom" constant="40" id="QkK-iP-fhG"/>
                             <constraint firstItem="gc3-JO-0I7" firstAttribute="top" secondItem="cr8-wm-dBM" secondAttribute="bottom" constant="20" id="Y7J-fb-raE"/>
-                            <constraint firstItem="ulS-fe-rEE" firstAttribute="top" secondItem="9qR-ss-rRh" secondAttribute="bottom" constant="20" id="ahG-Fx-whP"/>
-                            <constraint firstItem="ulS-fe-rEE" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="bPa-10-9VX"/>
                             <constraint firstItem="nLG-lN-eKU" firstAttribute="top" secondItem="9qR-ss-rRh" secondAttribute="bottom" constant="80" id="eyl-6G-GI4"/>
                             <constraint firstItem="cr8-wm-dBM" firstAttribute="centerX" secondItem="6lX-Zg-kVC" secondAttribute="centerX" id="ifv-BY-5GB"/>
                             <constraint firstItem="efm-Xe-VU2" firstAttribute="centerY" secondItem="6lX-Zg-kVC" secondAttribute="centerY" constant="-240" id="iih-aU-EoI"/>
@@ -374,10 +337,22 @@
                     </view>
                     <navigationItem key="navigationItem" id="pyD-y2-pjk"/>
                     <connections>
-                        <outlet property="lbEarOrder" destination="Pqh-ee-VOG" id="xem-39-7hV"/>
-                        <outlet property="lbFreqSeq" destination="yXe-Pb-BHe" id="QKO-bx-ebP"/>
-                        <outlet property="lbTestLanguage" destination="hLr-he-GrK" id="6FS-mj-X2m"/>
-                        <outlet property="svFreq" destination="efm-Xe-VU2" id="TW3-Qt-eeH"/>
+                        <outlet property="lbTestEarOrder" destination="Pqh-ee-VOG" id="xem-39-7hV"/>
+                        <outlet property="lbTestEarOrderCaption" destination="bes-qV-dyO" id="GOZ-hN-n36"/>
+                        <outlet property="lbTestSequence" destination="yXe-Pb-BHe" id="QKO-bx-ebP"/>
+                        <outlet property="pbAdultTest" destination="03K-L4-Adi" id="Xj2-cJ-53W"/>
+                        <outlet property="pbChildrenTest" destination="wsK-vU-YA1" id="cZC-NP-Jr9"/>
+                        <outlet property="pbClearAll" destination="6dE-Y5-4Uz" id="uD0-RB-WS0"/>
+                        <outlet property="pbDeleteCurrentProtocol" destination="XyG-KZ-zIi" id="KDo-Pa-fWb"/>
+                        <outlet property="pbLeftEarOnly" destination="Iml-Go-6KU" id="VLQ-Kf-cbh"/>
+                        <outlet property="pbLeftRightEar" destination="Uy1-L9-U7i" id="90H-18-f6b"/>
+                        <outlet property="pbLoadProtocol" destination="cPP-AS-nnX" id="6eI-Mg-r2r"/>
+                        <outlet property="pbRemoveLast" destination="DOx-bp-4vZ" id="ttP-Dt-uWJ"/>
+                        <outlet property="pbReturnToTitle" destination="Oyg-8O-FTI" id="iYD-oY-327"/>
+                        <outlet property="pbRightEarOnly" destination="28e-V9-IOP" id="o3T-HR-qW0"/>
+                        <outlet property="pbRightLeftEar" destination="7f1-Gd-dqN" id="XiW-A0-wP5"/>
+                        <outlet property="pbSaveProtocol" destination="APH-kS-42d" id="ii5-Cy-Pif"/>
+                        <outlet property="svFrequencyToggleButtons" destination="efm-Xe-VU2" id="TW3-Qt-eeH"/>
                         <segue destination="gpp-Oc-hEO" kind="showDetail" identifier="segueAdultTest" id="hfc-YE-1Ho"/>
                         <segue destination="hc1-yJ-Pc0" kind="showDetail" identifier="segueChildrenTest" id="S5N-7u-244"/>
                     </connections>
@@ -429,7 +404,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="he6-tg-0tr" userLabel="Sv PresentationLv">
                                         <rect key="frame" x="0.0" y="164" width="1032" height="31"/>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Measured Level for 70 dB HL (dB SPL) " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="it7-U2-QAP">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Left Measured Level for 70 dB HL (dB SPL)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="it7-U2-QAP">
                                         <rect key="frame" x="0.0" y="205" width="1032" height="31"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -438,7 +413,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V2v-PV-u6a" userLabel="Sv Left Measured Level">
                                         <rect key="frame" x="0.0" y="246" width="1032" height="31"/>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Measured Level for 70 dB HL (dB SPL) " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cdx-yj-0c1">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Measured Level for 70 dB HL (dB SPL)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cdx-yj-0c1">
                                         <rect key="frame" x="0.0" y="287" width="1032" height="31"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -463,7 +438,7 @@
                                 <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                 <state key="normal" title="Load ER3A Levels"/>
                                 <connections>
-                                    <action selector="loadDefaultPresentationLv:" destination="WbP-fl-Brp" eventType="touchUpInside" id="20E-F1-wkl"/>
+                                    <action selector="loadDefaultPresentationLevels:" destination="WbP-fl-Brp" eventType="touchUpInside" id="20E-F1-wkl"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KYV-bI-zrM" userLabel="Sv CurrentSetting">
@@ -535,7 +510,7 @@
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" title="Clear Measured Levels"/>
                                         <connections>
-                                            <action selector="clearAllMeasuredLv:" destination="WbP-fl-Brp" eventType="touchUpInside" id="jRE-gu-SlD"/>
+                                            <action selector="clearAllMeasuredLevels:" destination="WbP-fl-Brp" eventType="touchUpInside" id="jRE-gu-SlD"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojX-cv-moG">
@@ -575,9 +550,18 @@
                     </view>
                     <connections>
                         <outlet property="lbCurrentSetting" destination="Ogj-UP-BQ9" id="ALy-D8-nh0"/>
+                        <outlet property="lbCurrentSettingCaption" destination="wXn-bU-4Xg" id="t2W-oW-Lg0"/>
+                        <outlet property="lbExpectedSoundPressureLevel" destination="z6t-7y-nrQ" id="fGp-mi-Nai"/>
+                        <outlet property="lbLeftMeasuredLevel" destination="it7-U2-QAP" id="cRR-5a-OFb"/>
+                        <outlet property="lbPresentationLevel" destination="JcR-5J-V6V" id="RYf-KO-rsm"/>
+                        <outlet property="lbRightMeasuredLevel" destination="Cdx-yj-0c1" id="NTD-4H-84V"/>
+                        <outlet property="pbClearMesaureLevels" destination="zdz-fs-qGN" id="xns-Qa-4jf"/>
                         <outlet property="pbDeleteCurrent" destination="TOr-ti-8Lg" id="Vl4-zP-lEc"/>
-                        <outlet property="pbLoadOther" destination="tdo-CP-2eF" id="sZI-Lw-grc"/>
-                        <outlet property="pbSaveCurrent" destination="ojX-cv-moG" id="sWX-7u-acf"/>
+                        <outlet property="pbLoadDefault" destination="2dj-8b-wbX" id="Oyj-Q4-dEb"/>
+                        <outlet property="pbLoadOther" destination="tdo-CP-2eF" id="wDz-Mv-67t"/>
+                        <outlet property="pbReturnToTitle" destination="juH-90-9kH" id="Gxc-cT-lG6"/>
+                        <outlet property="pbSaveAsNew" destination="Daj-K0-8w2" id="jB5-eP-oYg"/>
+                        <outlet property="pbSaveCurrent" destination="ojX-cv-moG" id="CZ3-Ah-OQq"/>
                         <outlet property="svExpectedLv" destination="a95-q2-nm7" id="YE8-z8-05x"/>
                         <outlet property="svFreqLabels" destination="Bl5-ur-epE" id="4p9-2O-vX8"/>
                         <outlet property="svMeasuredLv_L" destination="V2v-PV-u6a" id="kpu-E4-Yc1"/>
@@ -943,41 +927,10 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="sQk-or-VBM">
-                                <rect key="frame" x="254" y="674" width="604" height="80"/>
+                                <rect key="frame" x="377.5" y="674" width="357" height="80"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Iby-Xa-uhZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="187" height="80"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Crf-U6-QDs">
-                                                <rect key="frame" x="0.0" y="0.0" width="187" height="38"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                                <state key="normal" title="Switch to English">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="switchToEnglish:" destination="98J-wo-Ehx" eventType="touchUpInside" id="HPU-pW-xHG"/>
-                                                    <action selector="switchToEnglish:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="MXG-YP-hsl"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WjI-Xj-8BK">
-                                                <rect key="frame" x="0.0" y="46" width="187" height="34"/>
-                                                <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                                <state key="normal" title="Switch to Portuguese">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="switchToPortuguese:" destination="Y3r-HM-Rvd" eventType="touchUpInside" id="0D8-cl-eEs"/>
-                                                    <action selector="switchToPortuguese:" destination="98J-wo-Ehx" eventType="touchUpInside" id="NsH-Xv-q55"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hix-7W-wqb">
-                                        <rect key="frame" x="247" y="0.0" width="136" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="136" height="80"/>
                                         <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
@@ -989,7 +942,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUs-sl-vXO">
-                                        <rect key="frame" x="443" y="0.0" width="161" height="80"/>
+                                        <rect key="frame" x="196" y="0.0" width="161" height="80"/>
                                         <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
@@ -1086,6 +1039,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="S5N-7u-244"/>
         <segue reference="hfc-YE-1Ho"/>
-        <segue reference="uKx-ej-dTy"/>
+        <segue reference="5hk-Ic-nXm"/>
     </inferredMetricsTieBreakers>
 </document>

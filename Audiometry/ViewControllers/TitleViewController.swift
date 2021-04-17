@@ -7,10 +7,17 @@ class TitleViewController: UIViewController {
     
     private var globalSetting: GlobalSetting! = nil
     
+    @IBOutlet weak var pbTest: UIButton!
+    @IBOutlet weak var pbPractice: UIButton!
+    @IBOutlet weak var pbCalibration: UIButton!
+    @IBOutlet weak var pbViewResult: UIButton!
+    
+    @IBOutlet weak var pbChangeLanguage: UIButton!
+    
     private let managedContext = (UIApplication.shared.delegate as!
         AppDelegate).persistentContainer.viewContext
     
-    @IBAction func startTesting(_ sender: Any) {
+    @IBAction func startTest(_ sender: Any) {
         if(globalSetting.calibrationSetting != nil){
             performSegue(withIdentifier: "segueTestFromTitle", sender: nil)
         } else {
@@ -58,16 +65,8 @@ class TitleViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        do {
-            try AudioKit.stop()
-        } catch let error as NSError {
-            print("Cant stop AudioKit", error)
-        }
-        
+    //
+    private func LoadGlobalSetting() {
         // fetch all CalibrationSetting
         let request:NSFetchRequest<GlobalSetting> =
             GlobalSetting.fetchRequest()
@@ -92,7 +91,36 @@ class TitleViewController: UIViewController {
             print("Could not fetch global setting.")
             print("\(error), \(error.userInfo)")
         }
+    }
+    
+    private func reloadLocaleStrings() {
+        pbTest.setTitle(
+            NSLocalizedString("Test", comment: ""), for: .normal)
+        pbPractice.setTitle(
+            NSLocalizedString("Practice", comment: ""), for: .normal)
+        pbCalibration.setTitle(
+            NSLocalizedString("Calibration", comment: ""), for: .normal)
+        pbViewResult.setTitle(
+            NSLocalizedString("View Results", comment: ""), for: .normal)
+        pbChangeLanguage.setTitle(
+            NSLocalizedString("Change Language", comment: ""), for: .normal)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        // Start AudioKit
+        do {
+            try AudioKit.stop()
+        } catch let error as NSError {
+            print("Cant stop AudioKit", error)
+        }
+        
+        LoadGlobalSetting()
+        
+        // Load language option
+        Bundle.set(language: .portuguese)
+        reloadLocaleStrings()
     }
 
     override func didReceiveMemoryWarning() {

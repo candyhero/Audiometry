@@ -29,3 +29,4 @@ var PORT_REPEAT_TEXT = "REPETIR"
 var PORT_PAUSE_TEXT = "PAUSAR"
 
 var PORT_CHILDREN_CAPTION_TEXT: String = "Aqui estes dois bichinhos. Um deste bichinhos vai cantar – você escuta e aperta aquele que cantou. Se nenhum dois cantar, você aperta"
+

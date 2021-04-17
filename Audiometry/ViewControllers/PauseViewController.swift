@@ -34,24 +34,9 @@ class PauseViewController: UIViewController {
             print("\(error), \(error.userInfo)")
         }
         
-        lbCaption.text = "Great job! Half way done!"
-        pbContinue.setTitle("Continue", for: .normal)
-        
-//        if((globalSetting.patientProfile?.isAdult)!){
-//            lbCaption.text = "Great job! Half way done!"
-//            pbContinue.setTitle("Continue", for: .normal)
-//        }
-//        else{
-//            lbCaption.text = ""
-//
-//            let imgDir = "Shape_Icons/1000Hz"
-//            let img = UIImage(named:imgDir)?.withRenderingMode(.alwaysOriginal)
-//            pbContinue.imageView?.contentMode = .center
-//
-//            pbContinue.setTitle("Continue", for: .normal)
-//            pbContinue.setImage(img, for: .normal)
-//            pbContinue.adjustsImageWhenHighlighted = false
-//        }
+        lbCaption.text = NSLocalizedString("Pause Caption", comment: "Instruction")
+        let continueString = NSLocalizedString("Continue", comment: "Continue")
+        pbContinue.setTitle(continueString, for: .normal)
     }
     override func viewDidLoad() {
         super.viewDidLoad()

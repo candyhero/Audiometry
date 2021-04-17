@@ -18,7 +18,7 @@
         <!--Adult Test View Controller-->
         <scene sceneID="jA6-ao-Rbd">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="Xos-0w-K0n" customClass="AdultTestViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DIX-OQ-mz8"/>
                         <viewControllerLayoutGuide type="bottom" id="VwC-He-InT"/>
@@ -169,7 +169,7 @@
         <!--Pause View Controller-->
         <scene sceneID="Pic-34-55A">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="eEg-l9-aEs" customClass="PauseViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="eEg-l9-aEs" customClass="PauseViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ra8-Zp-pXY"/>
                         <viewControllerLayoutGuide type="bottom" id="TiW-v8-wmN"/>
@@ -227,7 +227,7 @@
         <!--Adult Instruction View Controller-->
         <scene sceneID="rjg-Ks-cq9">
             <objects>
-                <viewController storyboardIdentifier="AdultInstructionView" modalPresentationStyle="fullScreen" id="H19-23-Hv8" customClass="AdultInstructionViewController" customModule="Audiometry" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdultInstructionView" modalPresentationStyle="fullScreen" id="H19-23-Hv8" customClass="AdultInstructionViewController" customModule="Aud_It" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X8z-cw-Fej"/>
                         <viewControllerLayoutGuide type="bottom" id="gpb-8g-Tlx"/>

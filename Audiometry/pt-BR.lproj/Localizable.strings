@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  Audiometry
+
+  Created by Xavier Chan on 18/4/21.
+  Copyright © 2021 TriCounty. All rights reserved.
+*/
+
+// General
+"Test" = "Teste";
+"Practice" = "Prática";
+"Calibration" = "Calibração";
+"View Results" = "Ver Resultados";
+
+"Change Language" = "Mudar Idioma";
+"Return To Title" = "Retornar ao Título";
+"None" = "Nada";
+
+// Protocol
+"Test Sequence Caption" = "Sequência de Teste: ";
+"Test Ear Order Caption" = "Ordem de Orelha: ";
+
+"Left Ear" = "Orelha Esquerda";
+"Right Ear" = "Orelha Direita";
+"Left Right Ear" = "Orelha Esquerda -> Direita";
+"Right Left Ear" = "Orelha Direita -> Esquerda";
+
+"Remove Last" = "Excluir o último";
+"Clear All" = "Excluir Tudo";
+"Save Protocol" = "Salvar Protocolo";
+"Load Protocol" = "Carregar Protocolo";
+"Delete Current Protocol" = "Excluir protocolo atual";
+"Adult Test" = "Teste Adultos";
+"Children Test" = "Teste Pediátrico";
+
+// Calibration
+"Expected SPL" =  "Nível de Pressão Sonora Esperado para 70 dB HL (dB SPL)";
+"Presentation Level" =  "Nível de Apresentação (dBHL)";
+"Left Measured Level" = "Nível de Esquerdo Medição para 70 dB HL (dB SPL)";
+"Right Measured Level" = "Nível de Direito Medição para 70 dB HL (dB SPL)";
+"Current Setting Caption" = "Configuração Atual: ";
+
+"Load Default" = "Carregar Níveles ER3A";
+"Clear Measured Levels" = "Clear Measured Levels";
+"Save" = "Salvar";
+"Save As New" = "Salvar como Novo";
+"Load Other" = "Carregar Outro";
+"Delete Current" = "Excluir Atual";
+
+// Instruction
+"Start Testing" = "Iniciar!";
+"Adult Caption" = "Na tela você verá 3 figuras que piscam. Em alguns momentos eles emitirão son e você deverá tocar na figura que emitiu som! \n\n Atenção: Quando você não escutar som nenhum basta clicar em SILÊNCIO !!!";
+"Adult Instruction" = "Por favor tocar na figura que emitiu som. Quando você não escutar som nenhum basta tocar em SILÊNCIO.";
+"Children Instruction" = "Aqui estes dois bichinhos. Um deste bichinhos vai cantar – você escuta e aperta aquele que cantou. Se nenhum dois cantar, você aperta";
+
+// Test
+"Repeat" = "Repetir";
+"Pause" = "Pausar";
+"No sound" = "Silêncio";
+
+// Pause
+"Pause Caption" = "Bom trabalho! Meio caminho feito!";
+"Continue" = "Continuar";
