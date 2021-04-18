@@ -12,36 +12,20 @@ import UIKit
 
 class PauseViewController: UIViewController {
     
-    private let managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
-    
-    private var globalSetting: GlobalSetting! = nil
-    
-    @IBOutlet weak var lbCaption: UILabel!
+    @IBOutlet weak var pbReturnToTitle: UIButton!
     @IBOutlet weak var pbContinue: UIButton!
     
-    func initCaption(){
-        // fetch global setting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        request.fetchLimit = 1
-        
-        do {
-            globalSetting = try managedContext.fetch(request).first
-            
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
-        }
-        
-        lbCaption.text = NSLocalizedString("Pause Caption", comment: "Instruction")
-        let continueString = NSLocalizedString("Continue", comment: "Continue")
-        pbContinue.setTitle(continueString, for: .normal)
-    }
+    @IBOutlet weak var lbCaption: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        initCaption()
+        
+        pbReturnToTitle.setTitle(
+            NSLocalizedString("Return To Title", comment: ""), for: .normal)
+        pbContinue.setTitle(
+            NSLocalizedString("Continue", comment: ""), for: .normal)
+        
+        lbCaption.text = NSLocalizedString("Pause Caption", comment: "")
     }
     
     override func didReceiveMemoryWarning() {

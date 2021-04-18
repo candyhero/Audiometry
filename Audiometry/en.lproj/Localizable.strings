@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   Audiometry
 
@@ -6,4 +6,61 @@
   Copyright © 2021 TriCounty. All rights reserved.
 */
 
-""
+// General
+"Test" = "Test";
+"Practice" = "Practice";
+"Calibration" = "Calibration";
+"View Results" = "View Results";
+
+"Change Language" = "Change Language";
+"Return To Title" = "Return to Title";
+"None" = "None";
+
+// Protocol
+"Test Sequence Caption" = "Test Sequence: ";
+"Test Ear Order Caption" = "L./R. Ear Order: ";
+
+"Left Ear" = "L. Ear Only";
+"Right Ear" = "R. Ear Only";
+"Left Right Ear" = "L. Ear -> R. Ear";
+"Right Left Ear" = "R. Ear -> L. Ear";
+
+"Remove Last" = "Remove Last";
+"Clear All" = "Clear All";
+"Save Protocol" = "Save Protocol";
+"Load Protocol" = "Load Protocol";
+"Delete Current Protocol" = "Delete Current Protocol";
+
+"Adult Test" = "Adult Test";
+"Children Test" = "Pediatric Test";
+"Adult Practice" = "Adult Practice";
+"Children Practice" = "Pediatric Practice";
+
+// Calibration
+"Expected SPL" =  "Expected Sound Pressure Level for 70 dB HL (dB SPL)";
+"Presentation Level" =  "Presentation Level (dBHL)";
+"Left Measured Level" = "Left Measured Level for 70 dB HL (dB SPL)";
+"Right Measured Level" = "Right Measured Level for 70 dB HL (dB SPL)";
+"Current Setting Caption" = "Current Setting: ";
+
+"Load Default" = "Load ER3A Levels";
+"Clear Measured Levels" = "Clear Measured Levels";
+"Save" = "Save";
+"Save As New" = "Save as New";
+"Load Other" = "Load Other";
+"Delete Current" = "Delete Current";
+
+// Instruction
+"Start Testing" = "Start Testing!";
+"Adult Caption" = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound";
+"Adult Instruction" = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound";
+"Children Instruction" = "Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound";
+
+// Test
+"Repeat" = "Repeat";
+"Pause" = "Pause";
+"No Sound" = "No Sound";
+
+// Pause
+"Pause Caption" = "Great job! Half way done!";
+"Continue" = "Continue";

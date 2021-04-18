@@ -4,79 +4,60 @@ import CoreData
 
 class AdultInstructionViewController: UIViewController {
     
-    private let _managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
-    
-    // All test setup settings
-    private var _globalSetting: GlobalSetting!
-    
-    @IBOutlet private weak var pbFirstInterval: UIButton!
-    @IBOutlet private weak var pbSecondInterval: UIButton!
-    
-    @IBOutlet private weak var pbNoSound: UIButton!
-    @IBOutlet weak var pbStart: UIButton!
+    @IBOutlet weak var pbReturnToTitle: UIButton!
     @IBOutlet weak var pbPause: UIButton!
     @IBOutlet weak var pbRepeat: UIButton!
+    @IBOutlet weak var pbStartTesting: UIButton!
+    
+    @IBOutlet weak var pbFirstInterval: UIButton!
+    @IBOutlet weak var pbSecondInterval: UIButton!
+    @IBOutlet weak var pbNoSound: UIButton!
     
     @IBOutlet weak var lbCaption: UILabel!
     
-    private func loadGlobalSetting() {
-        // fetch global setting
-        let request:NSFetchRequest<GlobalSetting> =
-            GlobalSetting.fetchRequest()
-        request.fetchLimit = 1
-        
-        do {
-            _globalSetting = try _managedContext.fetch(request).first
-            
-        } catch let error as NSError{
-            print("Could not fetch global setting.")
-            print("\(error), \(error.userInfo)")
-        }
-    }
-    
     private func loadPortuguse(){
-        lbCaption.text = PORT_ADULT_CAPTION_TEXT
-        pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
-        pbNoSound.setTitle("", for: .normal)
-        pbStart.setTitle(PORT_START_TEXT, for: .normal)
-        pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
-        pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
+        pbNoSound.setBackgroundImage(UIImage(named: NO_SOUND_PORTUGUESE), for: .normal)
+        
     }
     
-    private func loadButtonUI() {
-        let pbImgDir = "Shape_Icons/500Hz"
-        let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
+    private func reloadLocaleSetting(){
+        pbReturnToTitle.setTitle(
+            NSLocalizedString("Return To Title", comment: ""), for: .normal)
+        pbStartTesting.setTitle(
+            NSLocalizedString("Start Testing", comment: ""), for: .normal)
+        pbRepeat.setTitle(
+            NSLocalizedString("Repeat", comment: ""), for: .normal)
+        pbPause.setTitle(
+            NSLocalizedString("Pause", comment: ""), for: .normal)
+        pbNoSound.setTitle(
+            NSLocalizedString("No Sound", comment: ""), for: .normal)
         
-        self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
-        self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
+        lbCaption.text = NSLocalizedString("Adult Caption", comment: "")
+    }
+    
+    private func reloadButtonImage() {
+        let imagePath = "Shape_Icons/500Hz"
+        let image = UIImage(named: imagePath)?.withRenderingMode(.alwaysOriginal)
         
-        self.pbFirstInterval.setImage(pbImg, for: .normal)
-        self.pbSecondInterval.setImage(pbImg, for: .normal)
+        pbFirstInterval.imageView?.contentMode = .scaleAspectFit
+        pbSecondInterval.imageView?.contentMode = .scaleAspectFit
         
-        self.pbFirstInterval.adjustsImageWhenHighlighted = false
-        self.pbSecondInterval.adjustsImageWhenHighlighted = false
-        self.pbNoSound.adjustsImageWhenHighlighted = false
+        pbFirstInterval.setImage(image, for: .normal)
+        pbSecondInterval.setImage(image, for: .normal)
+        
+        pbFirstInterval.adjustsImageWhenHighlighted = false
+        pbSecondInterval.adjustsImageWhenHighlighted = false
+        
+        pbNoSound.setBackgroundImage(UIImage(named: NO_SOUND_ADULT), for: .normal)
+        pbNoSound.adjustsImageWhenHighlighted = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         DispatchQueue.main.async { [unowned self] in
-            self.loadGlobalSetting()
-            
-            switch self._globalSetting.testLanguage{
-            case "Invalid":
-                print("Invalid language option!!")
-                break
-            case "Portuguese":
-                print("Loading Portugese...")
-                self.loadPortuguse()
-            default:
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Shape_Icons/no_sound"), for: .normal)
-                break
-            }
-            self.loadButtonUI()
+            self.reloadLocaleSetting()
+            self.reloadButtonImage()
         }
     }
     

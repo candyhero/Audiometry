@@ -9,16 +9,18 @@ class ChildrenInstructionViewController: UIViewController {
     
     // All test setup settings
     private var _globalSetting: GlobalSetting!
-
-    @IBOutlet private weak var pbFirstInterval: UIButton!
-    @IBOutlet private weak var pbSecondInterval: UIButton!
     
-    @IBOutlet private weak var pbNoSound: UIButton!
-    @IBOutlet private weak var pbRepeat: UIButton!
-    @IBOutlet private weak var pbStart: UIButton!
+    @IBOutlet weak var pbReturnToTitle: UIButton!
+    @IBOutlet weak var pbRepeat: UIButton!
+    @IBOutlet weak var pbStartTesting: UIButton!
+
+    @IBOutlet weak var pbFirstInterval: UIButton!
+    @IBOutlet weak var pbSecondInterval: UIButton!
+    @IBOutlet weak var pbNoSound: UIButton!
+    
     @IBOutlet weak var lbCaption: UILabel!
     
-    private func loadGlobalSetting() {
+    private func reloadGlobalSetting() {
         // fetch global setting
         let request:NSFetchRequest<GlobalSetting> =
             GlobalSetting.fetchRequest()
@@ -32,58 +34,65 @@ class ChildrenInstructionViewController: UIViewController {
             print("\(error), \(error.userInfo)")
         }
     }
-    
-    private func loadButtonUI() {
-        let pbImgDir = "Animal_Icons/500Hz"
-        let pbImg = UIImage(named: pbImgDir)?.withRenderingMode(.alwaysOriginal)
+
+    private func reloadLocaleSetting(){
+        pbReturnToTitle.setTitle(
+            NSLocalizedString("Return To Title", comment: ""), for: .normal)
+        pbStartTesting.setTitle(
+            NSLocalizedString("Start Testing", comment: ""), for: .normal)
+        pbRepeat.setTitle(
+            NSLocalizedString("Repeat", comment: ""), for: .normal)
         
-        self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
-        self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
+        lbCaption.text = NSLocalizedString("Children Caption", comment: "")
         
-        self.pbFirstInterval.setImage(pbImg, for: .normal)
-        self.pbSecondInterval.setImage(pbImg, for: .normal)
-        
-        self.pbFirstInterval.adjustsImageWhenHighlighted = false
-        self.pbSecondInterval.adjustsImageWhenHighlighted = false
-        self.pbNoSound.adjustsImageWhenHighlighted = false
-        
+        let testLanguage = _globalSetting.getTestLanguage()
+        reloadInstructionCaption(testLanguage)
+        reloadNoSoundImage(testLanguage)
     }
     
-    private func loadPortuguse(){
-        let attachment:NSTextAttachment = NSTextAttachment()
-        attachment.image = UIImage(named: "Animal_Icons/emoji")
-        
-        var caption:NSMutableAttributedString =
-            NSMutableAttributedString(string: PORT_CHILDREN_CAPTION_TEXT)
-        
-        caption.append(NSAttributedString(attachment: attachment))
-        
-        lbCaption.attributedText = caption
-        
-        pbStart.setTitle(PORT_START_TEXT, for: .normal)
-        pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
+    private func reloadInstructionCaption(_ testLanguage: TestLanguage!) {
+        if (testLanguage == .portuguese) {
+            let attachment:NSTextAttachment = NSTextAttachment()
+            attachment.image = UIImage(named: NO_SOUND_EMOJI)
+            
+            let captionText: String = NSLocalizedString("Children Caption", comment: "")
+            let caption: NSMutableAttributedString = NSMutableAttributedString(string: captionText)
+            caption.append(NSAttributedString(attachment: attachment))
+            
+            lbCaption.text = ""
+            lbCaption.attributedText = caption
+        }
     }
     
+    private func reloadNoSoundImage(_ testLanguage: TestLanguage!) {
+        let isPortuguese = (testLanguage == .portuguese)
+        let noSoundImagePath = isPortuguese ? NO_SOUND_PORTUGUESE : NO_SOUND_CHILDREN
+        let noSoundImage = UIImage(named: noSoundImagePath)
+        pbNoSound.setBackgroundImage(noSoundImage, for: .normal)
+        pbNoSound.adjustsImageWhenHighlighted = false
+    }
+    
+    private func reloadButtonImage() {
+        let imagePath = "Animal_Icons/500Hz"
+        let image = UIImage(named: imagePath)?.withRenderingMode(.alwaysOriginal)
+        
+        pbFirstInterval.imageView?.contentMode = .scaleAspectFit
+        pbSecondInterval.imageView?.contentMode = .scaleAspectFit
+        
+        pbFirstInterval.setImage(image, for: .normal)
+        pbSecondInterval.setImage(image, for: .normal)
+        
+        pbFirstInterval.adjustsImageWhenHighlighted = false
+        pbSecondInterval.adjustsImageWhenHighlighted = false
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         DispatchQueue.main.async { [unowned self] in
-            self.loadGlobalSetting()
-            
-            switch self._globalSetting.testLanguage{
-            case "Invalid":
-                print("Invalid language option!!")
-                break
-            case "Portuguese":
-                print("Loading Portugese...")
-                self.loadPortuguse()
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
-            default:
-                self.pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
-                break
-            }
-            
-            self.loadButtonUI()
+            self.reloadGlobalSetting()
+            self.reloadLocaleSetting()
+            self.reloadButtonImage()
         }
     }
     

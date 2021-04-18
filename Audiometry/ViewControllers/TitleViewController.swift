@@ -4,21 +4,47 @@ import CoreData
 import AudioKit
 
 class TitleViewController: UIViewController {
+
+//------------------------------------------------------------------------------
+// Local Variables
+//------------------------------------------------------------------------------
+    private let _managedContext = (UIApplication.shared.delegate as!
+        AppDelegate).persistentContainer.viewContext
     
-    private var globalSetting: GlobalSetting! = nil
+    private var _globalSetting: GlobalSetting! = nil
+    private var _currentPickerIndex: Int = 0;
+
+//------------------------------------------------------------------------------
+// UI Components
+//------------------------------------------------------------------------------
+    @IBOutlet weak var pbChangeLanguage: UIButton!
     
     @IBOutlet weak var pbTest: UIButton!
     @IBOutlet weak var pbPractice: UIButton!
     @IBOutlet weak var pbCalibration: UIButton!
     @IBOutlet weak var pbViewResult: UIButton!
     
-    @IBOutlet weak var pbChangeLanguage: UIButton!
+//------------------------------------------------------------------------------
+// UI Action
+//------------------------------------------------------------------------------
+    @IBAction func changeLanguage(_ sender: UIButton) {
+        _currentPickerIndex = 0
+        
+        pickerPrompt(confirmFunction: {()->Void in
+            do{
+                self._globalSetting.testLanguageId = Int16(self._currentPickerIndex)
+                try self._managedContext.save()
+                
+                self.reloadLocaleSetting()
+            } catch let error as NSError{
+                print("Could not update calibration setting.")
+                print("\(error), \(error.userInfo)")
+            }
+        }, uiCtrl: self)
+    }
     
-    private let managedContext = (UIApplication.shared.delegate as!
-        AppDelegate).persistentContainer.viewContext
-    
-    @IBAction func startTest(_ sender: Any) {
-        if(globalSetting.calibrationSetting != nil){
+    @IBAction func startTest(_ sender: UIButton) {
+        if(_globalSetting.calibrationSetting != nil){
             performSegue(withIdentifier: "segueTestFromTitle", sender: nil)
         } else {
             // Prompt for user error
@@ -27,9 +53,9 @@ class TitleViewController: UIViewController {
                 uiCtrl: self)
         }
     }
-    
-    @IBAction func startPractice(_ sender: Any) {
-        if(globalSetting.calibrationSetting != nil){
+
+    @IBAction func startPractice(_ sender: UIButton) {
+        if(_globalSetting.calibrationSetting != nil){
             performSegue(withIdentifier: "seguePracticeFromTitle", sender: nil)
         } else {
             // Prompt for user error
@@ -45,9 +71,9 @@ class TitleViewController: UIViewController {
             PatientProfile.fetchRequest()
         
         do {
-            var profiles = try managedContext.fetch(patientRequest)
+            var profiles = try _managedContext.fetch(patientRequest)
             for emptyProfile in profiles.filter({$0.values?.count == 0}){
-                managedContext.delete(emptyProfile)
+                _managedContext.delete(emptyProfile)
             }
             profiles.removeAll(where: {$0.values?.count == 0})
             
@@ -65,35 +91,55 @@ class TitleViewController: UIViewController {
         }
     }
     
-    //
-    private func LoadGlobalSetting() {
+//------------------------------------------------------------------------------
+// Init
+//------------------------------------------------------------------------------
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Start AudioKit
+        do {
+            try AudioKit.stop()
+        } catch let error as NSError {
+            print("Cant stop AudioKit", error)
+        }
+        
+        reloadGlobalSetting()
+        reloadLocaleSetting()
+    }
+    
+    private func reloadGlobalSetting() {
         // fetch all CalibrationSetting
         let request:NSFetchRequest<GlobalSetting> =
             GlobalSetting.fetchRequest()
         request.fetchLimit = 1
         
         do {
-            let settings = try managedContext.fetch(request)
+            let settings = try _managedContext.fetch(request)
             if (settings.count == 0){
-                globalSetting = NSEntityDescription.insertNewObject(
+                _globalSetting = NSEntityDescription.insertNewObject(
                     forEntityName: "GlobalSetting",
-                    into: managedContext) as? GlobalSetting
+                    into: _managedContext) as? GlobalSetting
+                _globalSetting.testLanguageId = Int16(DEFAULT_TEST_LANGUAGE.rawValue)
+                
                 do{
-                    try managedContext.save()
+                    try _managedContext.save()
                 } catch let error as NSError{
                     print("Could not save global setting.")
                     print("\(error), \(error.userInfo)")
                 }
             } else {
-                globalSetting = settings.first
+                _globalSetting = settings.first
             }
         } catch let error as NSError{
             print("Could not fetch global setting.")
             print("\(error), \(error.userInfo)")
         }
     }
-    
-    private func reloadLocaleStrings() {
+    private func reloadLocaleSetting() {
+        // Load language option
+        Bundle.set(language: _globalSetting.getTestLanguage())
+        
         pbTest.setTitle(
             NSLocalizedString("Test", comment: ""), for: .normal)
         pbPractice.setTitle(
@@ -105,23 +151,6 @@ class TitleViewController: UIViewController {
         pbChangeLanguage.setTitle(
             NSLocalizedString("Change Language", comment: ""), for: .normal)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Start AudioKit
-        do {
-            try AudioKit.stop()
-        } catch let error as NSError {
-            print("Cant stop AudioKit", error)
-        }
-        
-        LoadGlobalSetting()
-        
-        // Load language option
-        Bundle.set(language: .portuguese)
-        reloadLocaleStrings()
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -129,3 +158,25 @@ class TitleViewController: UIViewController {
     }
 }
 
+extension TitleViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView,
+                    numberOfRowsInComponent component: Int) -> Int {
+        return TestLanguage.allCases.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
+                    forComponent component: Int) -> String? {
+        let testLanguage = TestLanguage(rawValue: row) ?? TestLanguage.english
+        return testLanguage.name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
+                    inComponent component: Int) {
+        _currentPickerIndex = row
+    }
+}

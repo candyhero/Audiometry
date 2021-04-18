@@ -156,6 +156,7 @@
                         <outlet property="pbNoSound" destination="Bpw-UR-4Wm" id="yzq-5B-rVf"/>
                         <outlet property="pbPause" destination="1EF-nR-31E" id="Myd-fk-bql"/>
                         <outlet property="pbRepeat" destination="1bH-v6-7C1" id="6c1-zI-Wev"/>
+                        <outlet property="pbReturnToTitle" destination="2Uk-Sk-nqx" id="dBr-vw-ein"/>
                         <outlet property="pbSecondInterval" destination="qMI-ZF-NxX" id="b2J-jM-3pD"/>
                         <outlet property="svIcons" destination="YIq-yB-AZP" id="atM-bc-2Wo"/>
                         <segue destination="eEg-l9-aEs" kind="show" identifier="segueSwitchEar" id="yI6-FT-bkZ"/>
@@ -188,8 +189,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GmR-MD-8t1">
                                 <rect key="frame" x="268" y="440.5" width="830" height="143.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbl-Cm-EPg">
-                                        <rect key="frame" x="359" y="0.0" width="112.5" height="57.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Great job! Half way done!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbl-Cm-EPg">
+                                        <rect key="frame" x="159.5" y="0.0" width="511" height="57.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -218,6 +219,7 @@
                     <connections>
                         <outlet property="lbCaption" destination="Fbl-Cm-EPg" id="iot-Xh-07D"/>
                         <outlet property="pbContinue" destination="04f-DG-o9J" id="ldJ-FG-WNl"/>
+                        <outlet property="pbReturnToTitle" destination="xGj-8Z-nbi" id="mhA-RZ-3sE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sev-9s-8kD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -321,7 +323,7 @@
                                 </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Please tap the shape that makes sounds, or tap “No Sound” if you don’t hear any sound" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ulh-08-mvM">
-                                <rect key="frame" x="32" y="160" width="315" height="704"/>
+                                <rect key="frame" x="20" y="160" width="315" height="704"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -359,8 +361,9 @@
                         <outlet property="pbNoSound" destination="5SV-3M-pbc" id="fyk-Mi-H6o"/>
                         <outlet property="pbPause" destination="3JU-sZ-hLL" id="LAa-LT-f21"/>
                         <outlet property="pbRepeat" destination="b8i-ED-zDi" id="wra-cj-ImW"/>
+                        <outlet property="pbReturnToTitle" destination="dBi-HB-tJb" id="vAC-7m-KCZ"/>
                         <outlet property="pbSecondInterval" destination="x90-gC-any" id="DcQ-04-3ah"/>
-                        <outlet property="pbStart" destination="lbz-0r-a2i" id="rk8-94-haj"/>
+                        <outlet property="pbStartTesting" destination="lbz-0r-a2i" id="rk8-94-haj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Wt-QW-mHL" userLabel="First Responder" sceneMemberID="firstResponder"/>

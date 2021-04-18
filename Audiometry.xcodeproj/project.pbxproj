@@ -35,6 +35,7 @@
 		6724711722451F320019BB8B /* PracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6724711622451F320019BB8B /* PracticeViewController.swift */; };
 		6765FEA1262B35D500666ADC /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6765FEA0262B35D500666ADC /* BundleExtension.swift */; };
 		6765FEAE262B3F3A00666ADC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6765FEB0262B3F3A00666ADC /* Localizable.strings */; };
+		6765FEBF262C803600666ADC /* GlobalSettingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6765FEBE262C803600666ADC /* GlobalSettingExtension.swift */; };
 		67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */; };
 		67DCEF2E22F68A8400C3117F /* CaptionText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DCEF2D22F68A8400C3117F /* CaptionText.swift */; };
 		DFB5839F2D0852BF2E70694E /* Pods_Audiometry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA9281A44F4747B4223B59A /* Pods_Audiometry.framework */; };
@@ -75,6 +76,8 @@
 		6765FEB9262B412200666ADC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AdultTest.storyboard; sourceTree = "<group>"; };
 		6765FEBA262B412200666ADC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ChildrenTest.storyboard; sourceTree = "<group>"; };
 		6765FEBB262B418F00666ADC /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6765FEBE262C803600666ADC /* GlobalSettingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettingExtension.swift; sourceTree = "<group>"; };
+		6765FEC0262CA4EA00666ADC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		67AD6AD222F0AD0200CF2D14 /* PauseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
 		67DCEF2D22F68A8400C3117F /* CaptionText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionText.swift; sourceTree = "<group>"; };
 		7D1C47F07515E0B86F9DF089 /* Pods-AudiometryKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudiometryKids.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudiometryKids/Pods-AudiometryKids.release.xcconfig"; sourceTree = "<group>"; };
@@ -177,8 +180,8 @@
 				4E32DA0721C17EAB00002770 /* Animal_Icons */,
 				4E32DA0621C17EAB00002770 /* Animal_Tones */,
 				4E32DA0521C17EAB00002770 /* Shape_Icons */,
+				6765FEBD262C7FE200666ADC /* Extensions */,
 				4E4B3C9321A752CB00191AF3 /* DataModels */,
-				4E4B3C7021A7266000191AF3 /* AudioPlayers */,
 				6765FE9E262B289900666ADC /* Models */,
 				4E4B3C7721A7266000191AF3 /* ViewControllers */,
 				4E4B3C6B21A7264300191AF3 /* Storyboards */,
@@ -187,7 +190,6 @@
 				4EC055F821A724E60016AB0D /* AppDelegate.swift */,
 				4EC0560221A724E70016AB0D /* Assets.xcassets */,
 				4EC0560721A724E70016AB0D /* Info.plist */,
-				6765FEA0262B35D500666ADC /* BundleExtension.swift */,
 				6765FEB0262B3F3A00666ADC /* Localizable.strings */,
 			);
 			path = Audiometry;
@@ -196,9 +198,19 @@
 		6765FE9E262B289900666ADC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4E4B3C7021A7266000191AF3 /* AudioPlayers */,
 				4E4B3CF121B0FA3500191AF3 /* TestModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6765FEBD262C7FE200666ADC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6765FEA0262B35D500666ADC /* BundleExtension.swift */,
+				6765FEBE262C803600666ADC /* GlobalSettingExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		B719595A35975C73C45D2886 /* Frameworks */ = {
@@ -352,6 +364,7 @@
 				67AD6AD422F0AEF800CF2D14 /* PauseViewController.swift in Sources */,
 				6765FEA1262B35D500666ADC /* BundleExtension.swift in Sources */,
 				4E4B3C9221A745EA00191AF3 /* AudiometryModel.xcdatamodeld in Sources */,
+				6765FEBF262C803600666ADC /* GlobalSettingExtension.swift in Sources */,
 				4EC055F921A724E60016AB0D /* AppDelegate.swift in Sources */,
 				4E4B3C7E21A7266000191AF3 /* TestPlayer.swift in Sources */,
 			);
@@ -398,6 +411,7 @@
 				6765FEB1262B3F4C00666ADC /* pt-BR */,
 				6765FEB2262B3F5E00666ADC /* es-419 */,
 				6765FEBB262B418F00666ADC /* Base */,
+				6765FEC0262CA4EA00666ADC /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

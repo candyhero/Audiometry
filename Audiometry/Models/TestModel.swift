@@ -55,11 +55,11 @@ class TestModel {
 //------------------------------------------------------------------------------
 // Getter functions
 //------------------------------------------------------------------------------
-    func getTestLauguage() -> String{
-        return _globalSetting.testLanguage ?? "Invalid"
+    func getTestLauguage() -> TestLanguage! {
+        return _globalSetting.getTestLanguage()
     }
     
-    func getNewTestFreq() -> Int{
+    func getNewTestFrequency() -> Int! {
         return _currentFreq
     }
     

@@ -54,7 +54,7 @@
 "Start Testing" = "Iniciar!";
 "Adult Caption" = "Na tela você verá 3 figuras que piscam. Em alguns momentos eles emitirão son e você deverá tocar na figura que emitiu som! \n\n Atenção: Quando você não escutar som nenhum basta clicar em SILÊNCIO !!!";
 "Adult Instruction" = "Por favor tocar na figura que emitiu som. Quando você não escutar som nenhum basta tocar em SILÊNCIO.";
-"Children Instruction" = "Aqui estes dois bichinhos. Um deste bichinhos vai cantar – você escuta e aperta aquele que cantou. Se nenhum dois cantar, você aperta";
+"Children Caption" = "Aqui estes dois bichinhos. Um deste bichinhos vai cantar – você escuta e aperta aquele que cantou. Se nenhum dois cantar, você aperta";
 
 // Test
 "Repeat" = "Repetir";

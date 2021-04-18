@@ -17,7 +17,7 @@ class CalibrationViewController: UIViewController {
     
     private var _player: CalibrationPlayer!
     private var _currentPickerIndex: Int = 0;
-    private var _currentPlayFreq: Int = -1;
+    private var _currentPlayerFrequency: Int = -1;
 
 //------------------------------------------------------------------------------
 // UI Components
@@ -208,29 +208,29 @@ class CalibrationViewController: UIViewController {
     @IBAction func togglePlayerSingal(_ sender: UIButton){
         // No tone playing at all, simply toggle on
         if(!_player.isStarted()){
-            _currentPlayFreq = sender.tag
+            _currentPlayerFrequency = sender.tag
             settingColumnLookup[sender.tag]!.pbPlay.setTitle("On", for: .normal)
             _player.startPlaying()
             
             // Update freq & vol
-            _player.updateFreq(_currentPlayFreq)
+            _player.updateFreq(_currentPlayerFrequency)
             _player.updateVolume(settingColumnLookup[sender.tag]!)
         }
             // Same tone, toggle it off
-        else if(_currentPlayFreq == sender.tag){
+        else if(_currentPlayerFrequency == sender.tag){
             settingColumnLookup[sender.tag]!.pbPlay.setTitle("Off", for: .normal)
-            _currentPlayFreq = -1
+            _currentPlayerFrequency = -1
             _player.stopPlaying()
         }
             // Else tone, switch frequency
         else {
-            settingColumnLookup[_currentPlayFreq]!.pbPlay.setTitle("Off", for: .normal)
+            settingColumnLookup[_currentPlayerFrequency]!.pbPlay.setTitle("Off", for: .normal)
             settingColumnLookup[sender.tag]!.pbPlay.setTitle("On", for: .normal)
             
-            _currentPlayFreq = sender.tag
+            _currentPlayerFrequency = sender.tag
             
             // Update freq & vol
-            _player.updateFreq(_currentPlayFreq)
+            _player.updateFreq(_currentPlayerFrequency)
             _player.updateVolume(settingColumnLookup[sender.tag]!)
         }
     }
@@ -365,4 +365,3 @@ extension CalibrationViewController: UIPickerViewDelegate, UIPickerViewDataSourc
         _currentPickerIndex = row
     }
 }
-

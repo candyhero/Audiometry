@@ -9,62 +9,66 @@ class ChildrenTestViewController: UIViewController {
     private var _testModel = TestModel()
     
     // Used by animator
-    private var timer, firstTimer, secondTimer: Timer?
-    private var pulseCounter: Int!
+    private var _timer, _firstTimer, _secondTimer: Timer?
+    private var _pulseCounter: Int!
     
-    private var buttonCounter: Int!
-    private var lastButton: UIButton!
+    private var _sameSelectionCounter: Int!
+    private var _lastSelection: UIButton!
     
-    @IBOutlet private weak var svIcons: UIStackView!
+    @IBOutlet weak var pbReturnToTitle: UIButton!
+    @IBOutlet weak var pbRepeat: UIButton!
+    @IBOutlet weak var pbPause: UIButton!
     
-    @IBOutlet private weak var pbFirstInterval: UIButton!
-    @IBOutlet private weak var pbSecondInterval: UIButton!
-    @IBOutlet private weak var pbNoSound: UIButton!
-    
-    @IBOutlet private weak var pbRepeat: UIButton!
-    @IBOutlet private weak var pbPause: UIButton!
+    @IBOutlet weak var pbFirstInterval: UIButton!
+    @IBOutlet weak var pbSecondInterval: UIButton!
+    @IBOutlet weak var pbNoSound: UIButton!
     
     @IBOutlet weak var lbProgress: UILabel!
+    
+    @IBOutlet weak var svIcons: UIStackView!
 //------------------------------------------------------------------------------
 // Main Flow
 //------------------------------------------------------------------------------
-    private func loadButtonUI() {
-        let freq: Int = _testModel.getNewTestFreq()
-        let imgDir = "Animal_Icons/"+String(freq)+"Hz"
-        let img = UIImage(named:imgDir)?.withRenderingMode(.alwaysOriginal)
-        
-        print(freq, imgDir)
-        
-        self.pbFirstInterval.imageView?.contentMode = .scaleAspectFit
-        self.pbSecondInterval.imageView?.contentMode = .scaleAspectFit
-        
-        self.pbFirstInterval.setImage(img, for: .normal)
-        self.pbSecondInterval.setImage(img, for: .normal)
-        
-        self.pbFirstInterval.adjustsImageWhenHighlighted = false
-        self.pbSecondInterval.adjustsImageWhenHighlighted = false
-    }
-    
-    private func testNewFreq(){
-        pulseCounter = 0
-        buttonCounter = 0
+    private func testNewFrequency(){
+        _pulseCounter = 0
+        _sameSelectionCounter = 0
         
         // Setup UI for next freq
         DispatchQueue.main.async { [unowned self] in
-            // Loading Progress Caption
-            let currentProgress: Int = self._testModel.getCurrentProgress()
-            self.lbProgress.text = "Test Progress: \(currentProgress)%"
-            
-            self.loadButtonUI()
+            self.reloadTestProgress()
+            self.reloadButtonImage()
         }
 
         // run test
         pulseToggle(isPlaying: true)
-        timer = Timer.scheduledTimer(timeInterval: 1.0,
+        _timer = Timer.scheduledTimer(timeInterval: 1.0,
                                      target: self,
                                      selector: #selector(testNextDB),
                                      userInfo: nil,
                                      repeats: false)
+    }
+
+    private func reloadTestProgress() {
+        // Loading Progress Caption
+        let currentProgress: Int = _testModel.getCurrentProgress()
+        lbProgress.text = "Test Progress: \(currentProgress)%"
+    }
+    
+    private func reloadButtonImage() {
+        let testFrequency: Int = _testModel.getNewTestFrequency()
+        let imagePath = "Animal_Icons/\(testFrequency)Hz"
+        let image = UIImage(named:imagePath)?.withRenderingMode(.alwaysOriginal)
+        
+        print(testFrequency, imagePath)
+        
+        pbFirstInterval.imageView?.contentMode = .scaleAspectFit
+        pbSecondInterval.imageView?.contentMode = .scaleAspectFit
+        
+        pbFirstInterval.setImage(image, for: .normal)
+        pbSecondInterval.setImage(image, for: .normal)
+        
+        pbFirstInterval.adjustsImageWhenHighlighted = false
+        pbSecondInterval.adjustsImageWhenHighlighted = false
     }
     
     @objc func testNextDB() {
@@ -84,13 +88,13 @@ class ChildrenTestViewController: UIViewController {
     }
     
     @IBAction private func pausePlaying(_ sender: UIButton) {
-        toggleButtons(toggle: false)
+        setButtonToggle(toggle: false)
         pulseToggle(isPlaying: false)
         
-        firstTimer?.invalidate()
-        secondTimer?.invalidate()
-        timer?.invalidate()
-        pulseCounter = 0
+        _firstTimer?.invalidate()
+        _secondTimer?.invalidate()
+        _timer?.invalidate()
+        _pulseCounter = 0
         _testModel.pausePlaying()
     }
     
@@ -99,8 +103,6 @@ class ChildrenTestViewController: UIViewController {
         performSegue(withIdentifier: "segueTitleFromChildrenTest", sender: nil)
     }
     
-    
-
 //------------------------------------------------------------------------------
 // Test Functions
 //------------------------------------------------------------------------------
@@ -108,15 +110,15 @@ class ChildrenTestViewController: UIViewController {
         pausePlaying(sender)
         
         //Check if same button 5 times in a row
-        if(sender == lastButton ?? nil){
-            buttonCounter += 1
+        if(sender == _lastSelection ?? nil){
+            _sameSelectionCounter += 1
         }
         else {
-            buttonCounter = 0
+            _sameSelectionCounter = 0
         }
         
-        if(buttonCounter >= 4){
-            buttonCounter = 0
+        if(_sameSelectionCounter >= 4){
+            _sameSelectionCounter = 0
             _testModel.increaseSpamCount()
             
             errorPrompt(
@@ -125,7 +127,7 @@ class ChildrenTestViewController: UIViewController {
         }
         
 //        print("Button Spam Count: ", buttonCounter)
-        lastButton = sender
+        _lastSelection = sender
         
         // DispatchQueue default **
         // Compare test blah
@@ -150,23 +152,23 @@ class ChildrenTestViewController: UIViewController {
         
         if(isThresholdFound){ // Done for this freq
 //            print("Next Freq: ", _testModel.getNewTestFreq())
-            if(_testModel.getNewTestFreq() < 0) {
+            if(_testModel.getNewTestFrequency() < 0) {
                 print("Switching to the other ear")
                 _testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueSwitchEar", sender: nil)
-            } else if(_testModel.getNewTestFreq() == 0){
+            } else if(_testModel.getNewTestFrequency() == 0){
                 // Already tested both ears
                 _testModel.terminatePlayer()
                 performSegue(withIdentifier: "segueResult", sender: nil)
             } else {
-                testNewFreq()
+                testNewFrequency()
             }
             return
         }
         
         // Still testing this frequency
         pulseToggle(isPlaying: true)
-        timer = Timer.scheduledTimer(timeInterval: 1.0,
+        _timer = Timer.scheduledTimer(timeInterval: 1.0,
                                      target: self,
                                      selector: #selector(testNextDB),
                                      userInfo: nil,
@@ -176,7 +178,7 @@ class ChildrenTestViewController: UIViewController {
 //------------------------------------------------------------------------------
 // Animation Functions
 //------------------------------------------------------------------------------
-    private func toggleButtons(toggle: Bool!) {
+    private func setButtonToggle(toggle: Bool!) {
         pbNoSound.isEnabled = toggle
         pbNoSound.isHighlighted = !toggle
         pbFirstInterval.isEnabled = toggle
@@ -195,21 +197,21 @@ class ChildrenTestViewController: UIViewController {
     
     private func pulseAnimation(_ delay: Double) {
         // Play pulse Animation by number of times
-        firstTimer = Timer.scheduledTimer(timeInterval: delay,
+        _firstTimer = Timer.scheduledTimer(timeInterval: delay,
                                           target: self,
                                           selector: #selector(self.pulseFirstInterval),
                                           userInfo: nil,
                                           repeats: false)
         
         let firstDuration = PULSE_TIME_CHILDREN * Double(NUM_OF_PULSE_CHILDREN) + PLAY_GAP_TIME
-        secondTimer = Timer.scheduledTimer(timeInterval: delay + firstDuration,
+        _secondTimer = Timer.scheduledTimer(timeInterval: delay + firstDuration,
                                            target: self,
                                            selector: #selector(self.pulseSecondInterval),
                                            userInfo: nil,
                                            repeats: false)
         
         let totalDuration = PULSE_TIME_CHILDREN * Double(NUM_OF_PULSE_CHILDREN * 2) + PLAY_GAP_TIME
-        timer = Timer.scheduledTimer(timeInterval: delay + totalDuration,
+        _timer = Timer.scheduledTimer(timeInterval: delay + totalDuration,
                                      target: self,
                                      selector: #selector(self.toggleNoSoundOn),
                                      userInfo: nil,
@@ -218,19 +220,19 @@ class ChildrenTestViewController: UIViewController {
     
     @objc private func pulseFirstInterval() {
         pbFirstInterval.isEnabled = true
-        pulseCounter = NUM_OF_PULSE_CHILDREN
+        _pulseCounter = NUM_OF_PULSE_CHILDREN
         pulseInterval(pbFirstInterval)
     }
     
     @objc private func pulseSecondInterval() {
         pbSecondInterval.isEnabled = true
-        pulseCounter = NUM_OF_PULSE_CHILDREN
+        _pulseCounter = NUM_OF_PULSE_CHILDREN
         pulseInterval(pbSecondInterval)
     }
     
     @objc private func pulseInterval(_ pbInterval: UIButton) {
-        if(pulseCounter == 0) {return}
-        pulseCounter -= 1
+        if(_pulseCounter == 0) {return}
+        _pulseCounter -= 1
         
         UIView.animate(withDuration: PULSE_TIME_CHILDREN / 2,
                        delay: 0,
@@ -258,28 +260,25 @@ class ChildrenTestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set UI
-        pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
+        reloadLocaleSetting()
+        setButtonToggle(toggle: false)
+        testNewFrequency()
+    }
+    
+    private func reloadLocaleSetting() {
+        pbReturnToTitle.setTitle(
+            NSLocalizedString("Return To Title", comment: ""), for: .normal)
+        pbRepeat.setTitle(
+            NSLocalizedString("Repeat", comment: ""), for: .normal)
+        pbPause.setTitle(
+            NSLocalizedString("Pause", comment: ""), for: .normal)
+        
+        let isPortuguese = (_testModel.getTestLauguage() == .portuguese)
+        let noSoundImagePath = isPortuguese ? NO_SOUND_PORTUGUESE : NO_SOUND_CHILDREN
+        let noSoundImage = UIImage(named: noSoundImagePath)
+        
+        pbNoSound.setBackgroundImage(noSoundImage, for: .normal)
         pbNoSound.adjustsImageWhenHighlighted = false
-        
-        switch _testModel.getTestLauguage(){
-        case "Invalid":
-            print("Invalid language option!!")
-            break
-        case "Portuguese":
-            print("Loading Portugese...")
-            pbPause.setTitle(PORT_PAUSE_TEXT, for: .normal)
-            pbRepeat.setTitle(PORT_REPEAT_TEXT, for: .normal)
-            pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound_Port"), for: .normal)
-            break
-        default:
-            pbNoSound.setBackgroundImage(UIImage(named: "Animal_Icons/no_sound"), for: .normal)
-            break
-        }
-        
-        toggleButtons(toggle: false)
-        
-        testNewFreq()
     }
     
     override var prefersStatusBarHidden: Bool {

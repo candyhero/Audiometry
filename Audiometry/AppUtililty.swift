@@ -10,6 +10,14 @@ import Foundation
 import UIKit
 
 // Global Constants
+let DEFAULT_TEST_LANGUAGE: TestLanguage = TestLanguage.english
+
+let NO_SOUND_EMOJI: String = "Animal_Icons/emoji"
+let NO_SOUND_CHILDREN: String = "Animal_Icons/no_sound"
+let NO_SOUND_PORTUGUESE: String = "Animal_Icons/no_sound_pt"
+
+let NO_SOUND_ADULT: String = "Shape_Icons/no_sound"
+
 let DEFAULT_FREQUENCIES: [Int] =
     [250, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000]
 //    [250.0, 500.0, 750.0, 1000.0, 1500.0, 2000.0, 3000.0, 4000.0, 6000.0, 8000.0]

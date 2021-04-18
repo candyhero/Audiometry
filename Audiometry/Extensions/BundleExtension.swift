@@ -41,7 +41,7 @@ extension Bundle {
     }
 }
 
-enum TestLanguage: Int {
+enum TestLanguage: Int, CaseIterable {
     case english = 0
     case portuguese = 1
     case spanish = 2

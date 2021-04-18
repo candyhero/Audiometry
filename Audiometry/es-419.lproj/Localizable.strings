@@ -52,9 +52,9 @@
 
 // Instruction
 "Start Testing" = "Comenzar!";
-"Adult Caption" = "Por favor haga click sobre el dibujo que produce el sonido o haga click en \"no hay sonido\" si no escucha ningún sonido.";
-"Adult Instruction" = "Por favor haga click sobre el dibujo que produce el sonido o haga click en \"no hay sonido\" si no escucha ningún sonido.";
-"Children Instruction" = "Por favor haga click sobre el dibujo que produce el sonido o haga click en \"no hay sonido\" si no escucha ningún sonido.";
+"Adult Caption" = "Por favor haga click sobre el dibujo que produce el sonido o haga click en \"No hay sonido\" si no escucha ningún sonido.";
+"Adult Instruction" = "Por favor haga click sobre el dibujo que produce el sonido o haga click en \"No hay sonido\" si no escucha ningún sonido.";
+"Children Caption" = "Por favor haga click sobre el dibujo que produce el sonido o haga click en \"No hay sonido\" si no escucha ningún sonido.";
 
 // Test
 "Repeat" = "Repetir";

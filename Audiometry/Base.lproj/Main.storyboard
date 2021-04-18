@@ -88,6 +88,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiu-a3-waO">
                                 <rect key="frame" x="20" y="0.0" width="118" height="30"/>
                                 <state key="normal" title="Switch Language"/>
+                                <connections>
+                                    <action selector="changeLanguage:" destination="cTp-f6-a1r" eventType="touchUpInside" id="3Ul-8O-uwD"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

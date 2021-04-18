@@ -150,6 +150,7 @@
                         <outlet property="pbNoSound" destination="E4k-zd-n8R" id="GKj-Hn-Egw"/>
                         <outlet property="pbPause" destination="vga-Ag-dLw" id="EPH-cL-wKN"/>
                         <outlet property="pbRepeat" destination="lHW-Ue-LL4" id="qKd-hG-VIW"/>
+                        <outlet property="pbReturnToTitle" destination="YKS-n1-fbd" id="130-yD-9TS"/>
                         <outlet property="pbSecondInterval" destination="lgb-LX-Ddq" id="kpc-Jf-UuA"/>
                         <outlet property="svIcons" destination="Qrf-f3-cWA" id="yNa-L0-In9"/>
                         <segue destination="4xs-O5-bdk" kind="show" identifier="segueSwitchEar" id="2bL-Pn-Pg0"/>
@@ -183,8 +184,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="quV-DB-wKK">
                                 <rect key="frame" x="268" y="440.5" width="830" height="143.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1m-eF-kpG">
-                                        <rect key="frame" x="359" y="0.0" width="112.5" height="57.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Great job! Half way done!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1m-eF-kpG">
+                                        <rect key="frame" x="159.5" y="0.0" width="511" height="57.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -214,6 +215,7 @@
                     <connections>
                         <outlet property="lbCaption" destination="V1m-eF-kpG" id="uf7-b9-VMw"/>
                         <outlet property="pbContinue" destination="QpW-sO-Uze" id="hP6-Xq-lTP"/>
+                        <outlet property="pbReturnToTitle" destination="bgb-fT-YWn" id="JPw-oe-aUC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1e-7J-rNe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -341,8 +343,9 @@
                         <outlet property="pbFirstInterval" destination="31P-D8-G7k" id="OCc-Rv-QuO"/>
                         <outlet property="pbNoSound" destination="56B-kK-FHh" id="iQG-bE-1Iw"/>
                         <outlet property="pbRepeat" destination="Yvl-4D-QvU" id="yKy-k5-XVP"/>
+                        <outlet property="pbReturnToTitle" destination="yiQ-Cw-ZiX" id="XP3-nM-Vom"/>
                         <outlet property="pbSecondInterval" destination="OuR-k4-rLI" id="5mG-l5-Xkk"/>
-                        <outlet property="pbStart" destination="Ww6-wk-edI" id="uu8-lh-odh"/>
+                        <outlet property="pbStartTesting" destination="Ww6-wk-edI" id="uu8-lh-odh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eQR-01-Hmd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -355,7 +358,7 @@
                 <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="TitleView" id="EJU-Ww-3zb" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdD-AW-EKo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="250" y="687"/>
+            <point key="canvasLocation" x="250" y="695"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
