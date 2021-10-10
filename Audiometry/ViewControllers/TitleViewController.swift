@@ -63,7 +63,7 @@ class TitleViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         do {
-            try AudioKit.stop()
+            try AKManager.stop()
         } catch let error as NSError {
             print("Cant stop AudioKit", error)
         }

@@ -22,7 +22,6 @@ class ChildrenTestPlayer : TestPlayer {
     var startTimer2: Timer?
     var stopTimer: Timer?
     
-    var isStarted: Bool!
     var leftCorrFactor: Double!
     var rightCorrFactor: Double!
     
@@ -31,37 +30,37 @@ class ChildrenTestPlayer : TestPlayer {
     var isLeft: Bool!
     
     required init() {
-        
         leftCorrFactor = 0.0
         rightCorrFactor = 0.0
         
-        do {
-            try AudioKit.stop()
-            
-            player = AKPlayer()
-            AudioKit.output = player
-            updateFreq(250)
-            updateVolume(0, true)
-            
-            isStarted = true
-            try AudioKit.start()
-            start()
-            stop()
-        } catch {
-            print(error)
-        }
+        updateFreq(250)
     }
     
     func updateFreq (_ newFreq: Int!) {
         do {
+            try AKManager.stop()
+            
             zFactor = Z_FACTORS[newFreq] ?? 0.0
+            
             let filePath = "Animal_Tones/\(newFreq!)Hz.wav"
-            let file = try AKAudioFile(readFileName: filePath)
-            player.load(audioFile: file)
-            player.endTime = PULSE_TIME_CHILDREN * 2
+            let fileUrl = Bundle.main.resourceURL?.appendingPathComponent(filePath)
+            let akPlayer = AKPlayer(url: fileUrl!)!
+            akPlayer.endTime = PULSE_TIME_CHILDREN * 2
+            
+            player = akPlayer
+            AKManager.output = player
+            
+            if !AKManager.engine.isRunning {
+                try AKManager.start()
+            }
         } catch {
             print(error)
         }
+        
+        // force a short play to fix bug
+        updateVolume(0, true)
+        start()
+        stop()
     }
     
     func updateVolume(_ newExpectedVol: Double!, _ isLeft: Bool!) {
@@ -99,13 +98,11 @@ class ChildrenTestPlayer : TestPlayer {
     }
     
     @objc internal func start() {
-        if(!isStarted) {return}
-        
         self.player.volume = 0
         self.player.play()
         
         let corrFactor: Double! = isLeft ? leftCorrFactor : rightCorrFactor
-        let playingLevel: Double! = self.currentVol + corrFactor + zFactor
+        let playingLevel: Double! = currentVol + corrFactor + zFactor
         print("Playing Actual: ", playingLevel)
         for i in stride(from: 0, through: 1, by: 0.1){
             // Attacking/Ramping up

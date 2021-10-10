@@ -15,13 +15,12 @@ class AdultTestPlayer : TestPlayer {
     var startTimer: Timer?
     var stopTimer: Timer?
     
-    var isStarted: Bool!
     var leftCorrFactor: Double!
     var rightCorrFactor: Double!
     
     required init() {
         do {
-            try AudioKit.stop()
+            try AKManager.stop()
         } catch {
             print(error)
         }
@@ -53,23 +52,28 @@ class AdultTestPlayer : TestPlayer {
             return [leftOutput, rightOutput]
         }
         
-        AudioKit.output = generator
+        AKManager.output = generator
         
-        do {
-            isStarted = true
-            try AudioKit.start()
-            updateFreq(Int(1))
-            start()
-            stop()
-        } catch {
-            print(error)
-        }
+        updateFreq(Int(1))
     }
     
     func updateFreq (_ newFreq: Int!) {
+        do {
+            if !AKManager.engine.isRunning {
+                try AKManager.start()
+            }
+        } catch {
+            print(error)
+        }
+        
+        // update params
         generator.parameters[0] = Double(newFreq)
         generator.parameters[1] = 0
         generator.parameters[2] = 0
+        
+        // force a short play to fix bug
+        start()
+        stop()
     }
     
     func updateVolume(_ newExpectedVol: Double!, _ isLeft: Bool!) {
@@ -117,7 +121,6 @@ class AdultTestPlayer : TestPlayer {
     }
     
     @objc internal func start() {
-        if(!isStarted) {return}
         self.generator.restart()
     }
     
