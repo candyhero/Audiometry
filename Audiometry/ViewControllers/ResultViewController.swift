@@ -104,6 +104,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             if let popOver = activityVC.popoverPresentationController {
                 popOver.sourceView = self.view
+                popOver.sourceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
             }
             
         } catch {
@@ -120,7 +121,8 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // Top Title Bar
         csvText.append("Patient Name,")
-        csvText.append("Group,")
+        csvText.append("Patient Group,")
+        csvText.append("Patient Type,")
         csvText.append("Start Time,")
         csvText.append("End Time,")
         csvText.append("Duration(sec),")
@@ -159,7 +161,7 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var csvText = ""
         csvText.append("\(patientProfile.name!),")
         csvText.append("\(patientProfile.group ?? "N/A"),")
-        
+        csvText.append(patientProfile.isAdult ? "Adult," : "Child,")
         csvText.append(
             (patientProfile.timestamp != nil) ?
                 "\(patientProfile.timestamp!)," : "N/A,"
@@ -259,8 +261,8 @@ class ResultViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let patient = _patients[section]
         let title = "[\(patient.group ?? "NO_GROUP")] \(patient.name ?? "NO_NAME")"
-            + "\(patient.isAdult ? "(Adult)":"(Child)")"
-            + "\(patient.isPractice ? "[Practice]" : "")"
+            + (patient.isAdult ? "(Adult)" : "(Child)")
+            + (patient.isPractice ? "[Practice]" : "")
         
         button.setTitle(title, for: .normal)
         button.tag = section
